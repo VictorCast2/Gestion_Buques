@@ -26,7 +26,7 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "Nombre de usuario", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "Email", unique = true)
+    @Column(name = "Email")
     private String email;
 
     @Column(name = "Contraseña", nullable = false)
