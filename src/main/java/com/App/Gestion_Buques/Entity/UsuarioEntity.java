@@ -20,15 +20,21 @@ public class UsuarioEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(unique = true)
+    @Column(name = "Nombre")
+    private String name;
+
+    @Column(name = "Nombre de usuario", unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "Email", unique = true)
+    private String email;
+
+    @Column(name = "Contraseña", nullable = false)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "Usuario_Id"))
-    @Column(name = "Rol")
+    @Column(name = "Rol", nullable = false)
     private Set<String> Roles;
 
     /**
