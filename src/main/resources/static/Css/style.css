@@ -1,0 +1,124 @@
+:root {
+    /*========== Colors ==========*/
+    --color-primario: #13294B;
+    --color-secundario: #FFD500;
+    --color-tercario: #ffffff;
+    --color-cuartario: #4488FF;
+}
+
+body {
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: var(--color-primario);
+    width: 100%;
+    height: 100%;
+    max-height: 130px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden; 
+}
+
+.header__nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+    height: 100%; 
+    margin-right: 30px;
+}
+
+.nav__list {
+    list-style: none;
+    margin: 0; 
+    padding: 0; 
+    display: flex;
+    align-items: center; 
+}
+
+.list__item {
+    margin: 0 10px;
+}
+
+.item__link {
+    color: var(--color-tercario);
+    font: 400 20px "NotoSans";
+    text-decoration: none;
+    text-transform: capitalize;
+    position: relative;
+    display: inline-block;
+}
+
+.item__link::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    width: 0;
+    height: 3.5px;
+    background-color: var(--color-secundario);
+    transition: width 0.3s ease;
+}
+
+.item__link:hover::after {
+    width: 100%;
+}
+
+
+.btn--signin {
+    padding: 8px 25px;
+    background-color: transparent;
+    border: 2px solid var(--color-secundario);
+    border-radius: 30px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    z-index: 1;
+    color: var(--color-secundario);
+    font: 400 18px "NotoSans";
+    text-align: center;
+    text-transform: capitalize;
+    transition: color 0.7s ease; 
+}
+
+.btn--signin::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-secundario);
+    transform: translateX(-100%);
+    transition: transform 0.7s ease-in-out;
+    z-index: -1;
+}
+
+.btn--signin:hover::before {
+    transform: translateX(0);
+}
+
+.btn--signin:hover {
+    color: var(--color-primario);
+    transition-delay: .3s; 
+}
+
+
+/* Botón Sign Up */
+.btn--signup {
+    padding: 8px 25px;
+    background-color: var(--color-secundario);
+    border: 2px solid var(--color-secundario);
+    border-radius: 30px;
+    position: relative;
+    display: inline-block;
+    color: var(--color-primario);
+    font: 400 18px "NotoSans";
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.btn--signup::after {
+    content: none;
+}
