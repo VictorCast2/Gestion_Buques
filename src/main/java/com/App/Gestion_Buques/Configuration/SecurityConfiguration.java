@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,7 +31,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securedFilterChain(final HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Deshabilita CSRF
+                .csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/Api/Auth/Login", "/Api/Auth/Logout").permitAll() // Permite acceso público
                         .requestMatchers("/Css/**", "/Img/**", "/Js/**").permitAll() // Permite acceso público
@@ -108,8 +109,7 @@ public class SecurityConfiguration {
                     .findFirst()
                     .orElse("");
             String redirectUrl = switch (role) {
-                case "Admin" -> "/Api/";
-                case "User" -> "/Api/";
+                case "Admin", "User" -> "/Api/";
                 default -> "/Api/Auth/Login";
             };
             response.sendRedirect(redirectUrl);
