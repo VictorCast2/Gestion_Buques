@@ -1,5 +1,7 @@
 package com.App.Gestion_Buques.Configuration;
 
+import com.App.Gestion_Buques.Repository.UsuarioRepository;
+import com.App.Gestion_Buques.Services.CustomUserDetailsServices;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -34,7 +36,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/Api/Auth/Login", "/Api/Auth/Logout").permitAll() // Permite acceso público
-                        .requestMatchers("/Css/**", "/Img/**", "/Js/**").permitAll() // Permite acceso público
+                        .requestMatchers("/Css/**", "/Img/**", "/Js/**", "/assets/¨**").permitAll() // Permite acceso público
                         .requestMatchers("/Error/**", "/Error").permitAll()
                         .anyRequest().authenticated() // Autenticación para otras rutas
                 )
@@ -70,6 +72,16 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * Configura el servicio de usuarios.
+     * @param usuarioRepository El repositorio de usuarios.
+     * @return El servicio de usuarios personalizado.
+     */
+    @Bean
+    public UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
+        return new CustomUserDetailsServices(usuarioRepository);
     }
 
     /**
