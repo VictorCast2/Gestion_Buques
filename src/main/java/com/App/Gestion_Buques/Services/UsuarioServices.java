@@ -40,6 +40,15 @@ public class UsuarioServices {
     }
 
     /**
+     * Elimina un usuario de la base de datos
+     */
+    public void modificarUser(UsuarioEntity usuario){
+        if(usuarioRepository.existsById(usuario.getId())) {
+            usuarioRepository.save(usuario);
+        }
+    }
+
+    /**
      * Elimina un usuario por su ID.
      * @param Id El ID del usuario a eliminar.
      */
