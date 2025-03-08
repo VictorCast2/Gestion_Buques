@@ -42,7 +42,7 @@ public class UsuarioServices {
     /**
      * Elimina un usuario de la base de datos
      */
-    public void modificarUser(UsuarioEntity usuario){
+    public void modificarUsuario(UsuarioEntity usuario){
         if(usuarioRepository.existsById(usuario.getId())) {
             usuarioRepository.save(usuario);
         }
@@ -62,7 +62,7 @@ public class UsuarioServices {
      * @param Id El ID del usuario.
      * @return Un Optional que contiene el usuario si se encuentra.
      */
-    public Optional<UsuarioEntity> EncontrarUsuarioPorID(Long Id) {
+    public Optional<UsuarioEntity> encontrarUsuarioPorID(Long Id) {
         return usuarioRepository.findById(Id);
     }
 
