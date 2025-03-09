@@ -13,6 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/Api/Auth/")
 public class AuthController {
 
+    /**
+     * Redirige a la página de inicio de sesión.
+     * @param Error El error de inicio de sesión.
+     * @param principal El usuario autenticado.
+     * @param Logout El mensaje de cierre de sesión.
+     * @param model El modelo de la vista.
+     * @param attributes Los atributos de redirección.
+     * @return La página de inicio de sesión.
+     */
     @GetMapping("/Login")
     public String Login(@RequestParam(name = "Error", required = false) String Error, Principal principal,
                         @RequestParam(name = "Logout",required = false) String Logout, Model model,
