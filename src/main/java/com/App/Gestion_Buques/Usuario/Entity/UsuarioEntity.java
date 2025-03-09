@@ -23,10 +23,7 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "Name")
     private String name;
 
-    @Column(name = "Username", unique = true, nullable = false)
-    private String username;
-
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "Password", nullable = false)
@@ -90,7 +87,7 @@ public class UsuarioEntity implements UserDetails {
      */
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     /**

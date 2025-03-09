@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/Error")
 public class ErrorController {
+
+    /**
+     * Redirige a la página de error correspondiente.
+     * @param Code El código de error.
+     * @return La página de error correspondiente.
+     */
     @GetMapping("/{Code}")
     public String error(@PathVariable int Code) {
         return switch (Code) {
@@ -17,4 +23,5 @@ public class ErrorController {
             default -> "/Error/Error";
         };
     }
+
 }
