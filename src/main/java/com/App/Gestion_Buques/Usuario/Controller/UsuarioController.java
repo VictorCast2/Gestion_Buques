@@ -12,7 +12,7 @@ import com.App.Gestion_Buques.Usuario.Services.UsuarioServices;
 @Data
 @Controller
 @AllArgsConstructor
-@RequestMapping("/Api/Usuario/")
+@RequestMapping("/Api/Usuario")
 public class UsuarioController {
 
     @Autowired
