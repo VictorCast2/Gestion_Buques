@@ -1,6 +1,6 @@
 package com.App.Gestion_Buques.Configuration;
 
-import com.App.Gestion_Buques.Repository.UsuarioRepository;
+import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
 import com.App.Gestion_Buques.Services.CustomUserDetailsServices;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +36,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/Api/Auth/Login", "/Api/Auth/Logout").permitAll() // Permite acceso público
-                        .requestMatchers("/Css/**", "/Img/**", "/Js/**", "/assets/¨**").permitAll() // Permite acceso público
+                        .requestMatchers("/Api/").permitAll()
+                        .requestMatchers("/Css/**", "/Img/**", "/Js/**", "/assets/**").permitAll() // Permite acceso público
                         .requestMatchers("/Error/**", "/Error").permitAll()
                         .requestMatchers("/Api/Home").permitAll()
                         .anyRequest().authenticated() // Autenticación para otras rutas
@@ -46,8 +47,12 @@ public class SecurityConfiguration {
                         .loginProcessingUrl("/Api/Auth/Login") // URL de procesamiento de inicio de sesión
                         .usernameParameter("username") // Parámetro de nombre de usuario
                         .passwordParameter("password") // Parámetro de contraseña
+                        .failureUrl("/Error/")
                         .successHandler(AllSuccessHandler()) // Manejador de éxito personalizado
                         .permitAll() // Permitir acceso a la página de login
+                )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/Error/403") // Página de acceso denegado
                 )
                 .logout(logout -> logout
                         .logoutUrl("/Api/Auth/Logout") // URL de cierre de sesión
@@ -122,7 +127,7 @@ public class SecurityConfiguration {
                     .findFirst()
                     .orElse("");
             String redirectUrl = switch (role) {
-                case "Admin", "User" -> "/Api/";
+                case "Admin", "User" -> "hello";
                 default -> "/Api/Auth/Login";
             };
             response.sendRedirect(redirectUrl);
