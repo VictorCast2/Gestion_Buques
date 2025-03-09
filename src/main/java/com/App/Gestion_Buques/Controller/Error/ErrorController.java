@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/Error")
 public class ErrorController {
     @GetMapping("/{Code}")
-    public String handleError(@PathVariable int Code) {
+    public String error(@PathVariable int Code) {
         return switch (Code) {
             case 300 -> "/Error/300";
             case 400 -> "/Error/400";

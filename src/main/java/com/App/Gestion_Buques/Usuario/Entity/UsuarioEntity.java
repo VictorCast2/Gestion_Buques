@@ -1,4 +1,4 @@
-package com.App.Gestion_Buques.Entity;
+package com.App.Gestion_Buques.Usuario.Entity;
 
 import lombok.*;
 import java.util.*;
@@ -20,16 +20,16 @@ public class UsuarioEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "Nombre")
+    @Column(name = "Name")
     private String name;
 
-    @Column(name = "Nombre de usuario", unique = true, nullable = false)
+    @Column(name = "Username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "Contraseña", nullable = false)
+    @Column(name = "Password", nullable = false)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)

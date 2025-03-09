@@ -1,7 +1,7 @@
 package com.App.Gestion_Buques.Services;
 
-import com.App.Gestion_Buques.Entity.UsuarioEntity;
-import com.App.Gestion_Buques.Repository.UsuarioRepository;
+import com.App.Gestion_Buques.Usuario.Repository.Entity.UsuarioEntity;
+import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;

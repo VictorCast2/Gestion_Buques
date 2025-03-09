@@ -1,6 +1,6 @@
-package com.App.Gestion_Buques.Repository;
+package com.App.Gestion_Buques.Usuario.Repository;
 
-import com.App.Gestion_Buques.Entity.UsuarioEntity;
+import com.App.Gestion_Buques.Usuario.Entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

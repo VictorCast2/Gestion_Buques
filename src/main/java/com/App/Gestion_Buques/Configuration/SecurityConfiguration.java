@@ -1,6 +1,6 @@
 package com.App.Gestion_Buques.Configuration;
 
-import com.App.Gestion_Buques.Repository.UsuarioRepository;
+import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
 import com.App.Gestion_Buques.Services.CustomUserDetailsServices;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
