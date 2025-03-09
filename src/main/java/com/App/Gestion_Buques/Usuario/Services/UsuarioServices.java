@@ -16,7 +16,7 @@ import lombok.Data;
 public class UsuarioServices {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository; // Repositorio de la entidad UsuarioEntity.
 
     /**
      * Guarda un nuevo usuario en la base de datos.
@@ -53,6 +53,10 @@ public class UsuarioServices {
         return usuarioRepository.findById(Id);
     }
 
+    /**
+     * Encuentra todos los usuarios en la base de datos.
+     * @return Una lista con todos los usuarios.
+     */
     public List<UsuarioEntity> encontrarTodosUsuario() {
         return usuarioRepository.findAll();
     }
