@@ -2,9 +2,9 @@ package com.App.Gestion_Buques.Usuario.Controller;
 
 import lombok.*;
 import java.util.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 import com.App.Gestion_Buques.Usuario.Entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.App.Gestion_Buques.Usuario.Services.UsuarioServices;
@@ -12,7 +12,7 @@ import com.App.Gestion_Buques.Usuario.Services.UsuarioServices;
 @Data
 @Controller
 @AllArgsConstructor
-@RequestMapping("/Api/Usuario/")
+@RequestMapping("/Api/Usuario")
 public class UsuarioController {
 
     @Autowired

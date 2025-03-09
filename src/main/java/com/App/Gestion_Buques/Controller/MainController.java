@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Controlador principal de la aplicación.
  */
 @Controller
-@RequestMapping("/Api/")
+@RequestMapping("/Api")
 public class MainController {
 
     /**

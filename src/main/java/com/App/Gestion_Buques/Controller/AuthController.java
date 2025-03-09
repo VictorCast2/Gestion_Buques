@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * Controlador de autenticación.
  */
 @Controller
-@RequestMapping("/Api/Auth/")
+@RequestMapping("/Api/Auth")
 public class AuthController {
 
     /**

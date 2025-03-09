@@ -127,7 +127,8 @@ public class SecurityConfiguration {
                     .findFirst()
                     .orElse("");
             String redirectUrl = switch (role) {
-                case "Admin", "User" -> "hello";
+                case "User" -> "hello";
+                case "Admin" -> "hello";
                 default -> "/Api/Auth/Login";
             };
             response.sendRedirect(redirectUrl);
