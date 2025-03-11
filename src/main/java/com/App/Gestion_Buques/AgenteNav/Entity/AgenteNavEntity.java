@@ -1,11 +1,11 @@
 package com.App.Gestion_Buques.AgenteNav.Entity;
 
-import com.App.Gestion_Buques.Empresa.Entity.EmpresaEntity;
 import lombok.*;
 import java.util.*;
 import jakarta.persistence.*;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
+import com.App.Gestion_Buques.Empresa.Entity.EmpresaEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuarios")
+@Table(name = "agentesNav")
 public class AgenteNavEntity implements UserDetails {
 
     @Id
