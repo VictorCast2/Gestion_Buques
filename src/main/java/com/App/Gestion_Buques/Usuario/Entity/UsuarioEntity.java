@@ -1,5 +1,6 @@
 package com.App.Gestion_Buques.Usuario.Entity;
 
+import com.App.Gestion_Buques.Empresa.Entity.EmpresaEntity;
 import lombok.*;
 import java.util.*;
 import jakarta.persistence.*;
@@ -9,11 +10,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
-@Entity
-@Builder
-@Table(name = "Usuario")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "usuarios")
 public class UsuarioEntity implements UserDetails {
 
     @Id
@@ -29,10 +30,17 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "Password", nullable = false)
     private String password;
 
+    // Cardinalidad para la tabla roles
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "Usuario_Id"))
+    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "usuario_Id"))
     @Column(name = "Rol", nullable = false)
     private Set<String> Roles;
+
+    // Cardinalidad para la tabla empresas
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", referencedColumnName = "Id",
+                foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
+    private EmpresaEntity empresa;
 
     /**
      * Obtiene los roles del usuario.
