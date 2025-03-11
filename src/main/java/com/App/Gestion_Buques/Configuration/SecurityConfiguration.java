@@ -35,28 +35,28 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/Api/Auth/Login", "/Api/Auth/Logout").permitAll() // Permite acceso público
-                        .requestMatchers("/Api/").permitAll()
-                        .requestMatchers("/Css/**", "/Css/ErrorStyles/**", "/Img/**", "/Js/**", "/assets/**").permitAll() // Permite acceso público
-                        .requestMatchers("/Error/**", "/Error").permitAll()
-                        .requestMatchers("/Api/Home").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/logout").permitAll() // Permite acceso público
+                        .requestMatchers("/api/**").authenticated() // Autenticación para otras rutas
+                        .requestMatchers("/css/**", "/css/ErrorStyles/**", "/img/**", "/js/**", "/assets/**").permitAll() // Permite acceso público
+                        .requestMatchers("/error/**", "/error").permitAll()
+                        .requestMatchers("/api/home").permitAll()
                         .anyRequest().authenticated() // Autenticación para otras rutas
                 )
                 .formLogin(form -> form
-                        .loginPage("/Api/Auth/Login") // Página de inicio de sesión personalizada
-                        .loginProcessingUrl("/Api/Auth/Login") // URL de procesamiento de inicio de sesión
-                        .usernameParameter("username") // Parámetro de nombre de usuario
+                        .loginPage("/api/auth/login") // Página de inicio de sesión personalizada
+                        .loginProcessingUrl("/api/auth/login") // URL de procesamiento de inicio de sesión
+                        .usernameParameter("email") // Parámetro de nombre de usuario
                         .passwordParameter("password") // Parámetro de contraseña
-                        .failureUrl("/Error/")
+                        .failureUrl("/error/")
                         .successHandler(AllSuccessHandler()) // Manejador de éxito personalizado
                         .permitAll() // Permitir acceso a la página de login
                 )
                 .exceptionHandling(exception -> exception
-                        .accessDeniedPage("/Error/403") // Página de acceso denegado
+                        .accessDeniedPage("/error/403") // Página de acceso denegado
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/Api/Auth/Logout") // URL de cierre de sesión
-                        .logoutSuccessUrl("/Api/Auth/Login?Logout") // Redirige tras cerrar sesión
+                        .logoutUrl("/api/auth/logout") // URL de cierre de sesión
+                        .logoutSuccessUrl("/api/auth/login?logout") // Redirige tras cerrar sesión
                         .invalidateHttpSession(true) // Invalida completamente la sesión
                         .clearAuthentication(true) // Borra la autenticación actual
                         .deleteCookies("JSESSIONID") // Borra la cookie de sesión
@@ -64,7 +64,7 @@ public class SecurityConfiguration {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Crea nueva sesión al autenticarse
-                        .invalidSessionUrl("/Api/Auth/Login") // Redirige si la sesión es inválida
+                        .invalidSessionUrl("/api/auth/login") // Redirige si la sesión es inválida
                         .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession) // Nueva sesión tras autenticarse
                 )
                 .httpBasic(Customizer.withDefaults()); // Habilita autenticación básica
@@ -119,6 +119,10 @@ public class SecurityConfiguration {
                 .build();
     }
 
+    /**
+     * Configura el manejador de éxito de autenticación.
+     * @return El manejador de éxito de autenticación personalizado.
+     */
     @Bean
     public AuthenticationSuccessHandler AllSuccessHandler() {
         return (request, response, authentication) -> {
@@ -127,9 +131,11 @@ public class SecurityConfiguration {
                     .findFirst()
                     .orElse("");
             String redirectUrl = switch (role) {
-                case "User" -> "hello";
-                case "Admin" -> "hello";
-                default -> "/Api/Auth/Login";
+                case "ADMIN" -> "api/admin/home";
+                case "OPERADOR_PORTUARIO" -> "api/operador/home";
+                case "INSPECTOR" -> "api/inspector/home";
+                case "AGENTE_NAVIERO" -> "api/agente/home";
+                default -> "/api/auth/login";
             };
             response.sendRedirect(redirectUrl);
         };

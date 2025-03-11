@@ -30,13 +30,17 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "Password", nullable = false)
     private String password;
 
-    // Cardinalidad para la tabla roles
+    /**
+     * Relación con la tabla roles.
+     */
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "usuario_Id"))
     @Column(name = "Rol", nullable = false)
     private Set<String> roles;
 
-    // Cardinalidad para la tabla empresas
+    /**
+     * Relación con la tabla empresa.
+     */
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "Id",
             foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
