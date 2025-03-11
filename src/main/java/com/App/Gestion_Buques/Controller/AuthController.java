@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * Controlador de autenticación.
  */
 @Controller
-@RequestMapping("/Api/Auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     /**
@@ -22,9 +22,9 @@ public class AuthController {
      * @param attributes Los atributos de redirección.
      * @return La página de inicio de sesión.
      */
-    @GetMapping("/Login")
+    @GetMapping("/login")
     public String Login(@RequestParam(name = "Error", required = false) String Error, Principal principal,
-                        @RequestParam(name = "Logout",required = false) String Logout, Model model,
+                        @RequestParam(name = "Logout", required = false) String Logout, Model model,
                         RedirectAttributes attributes) {
         if(Error != null){
             model.addAttribute("Error", "El Usuario o La Contraseña es incorrecta");
