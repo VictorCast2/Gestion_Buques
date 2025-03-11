@@ -26,22 +26,22 @@ public class EmpresaEntity {
     private String NIT;
 
     @Column(name = "Pais")
-    private String Pais;
+    private String pais;
 
     @Column(name = "Ciudad")
-    private String Ciudad;
+    private String ciudad;
 
     @Column(name = "Direccion")
-    private String Direccion;
+    private String direccion;
 
     @Column(name = "Telefono")
-    private String Telefono;
+    private String telefono;
 
     @Column(name = "Correo")
-    private String Correo;
+    private String correo;
 
     @Column(name = "Cantidad_Buques")
-    private int Cantidad_Buques;
+    private int cantidad_Buques;
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     private Set<UsuarioEntity> agentesNavieros = new HashSet<>();
@@ -61,4 +61,5 @@ public class EmpresaEntity {
             agenteNaviero.setEmpresa(null);
         }
     }
+
 }

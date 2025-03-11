@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/Api/Auth/Login", "/Api/Auth/Logout").permitAll() // Permite acceso público
                         .requestMatchers("/Api/").permitAll()
-                        .requestMatchers("/Css/**", "/Img/**", "/Js/**", "/assets/**").permitAll() // Permite acceso público
+                        .requestMatchers("/Css/**", "/Css/ErrorStyles/**", "/Img/**", "/Js/**", "/assets/**").permitAll() // Permite acceso público
                         .requestMatchers("/Error/**", "/Error").permitAll()
                         .requestMatchers("/Api/Home").permitAll()
                         .anyRequest().authenticated() // Autenticación para otras rutas

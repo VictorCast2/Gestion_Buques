@@ -34,12 +34,13 @@ public class UsuarioEntity implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "usuario_Id"))
     @Column(name = "Rol", nullable = false)
-    private Set<String> Roles;
+    private Set<String> roles;
 
     // Cardinalidad para la tabla empresas
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "Id",
-                foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
+            foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
+    @Column(name = "Empresa")
     private EmpresaEntity empresa;
 
     /**
@@ -48,7 +49,7 @@ public class UsuarioEntity implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Roles.stream()
+        return roles.stream()
                 .map(SimpleGrantedAuthority::new) // Convierte cada rol en una autoridad
                 .collect(Collectors.toList());
     }
