@@ -1,5 +1,6 @@
 package com.App.Gestion_Buques.AgenteNav.Entity;
 
+import com.App.Gestion_Buques.Empresa.Entity.EmpresaEntity;
 import lombok.*;
 import java.util.*;
 import jakarta.persistence.*;
@@ -9,11 +10,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
-@Entity
-@Builder
-@Table(name = "Usuario")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "usuarios")
 public class AgenteNavEntity implements UserDetails {
 
     @Id
@@ -29,10 +30,22 @@ public class AgenteNavEntity implements UserDetails {
     @Column(name = "Password", nullable = false)
     private String password;
 
+    /**
+     * Relación con la tabla roles.
+     */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "Usuario_Id"))
+    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "usuario_Id"))
     @Column(name = "Rol", nullable = false)
-    private Set<String> Roles;
+    private Set<String> roles;
+
+    /**
+     * Relación con la tabla empresa.
+     */
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", referencedColumnName = "Id",
+            foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
+    @Column(name = "Empresa")
+    private EmpresaEntity empresa;
 
     /**
      * Obtiene los roles del usuario.
@@ -40,7 +53,7 @@ public class AgenteNavEntity implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Roles.stream()
+        return roles.stream()
                 .map(SimpleGrantedAuthority::new) // Convierte cada rol en una autoridad
                 .collect(Collectors.toList());
     }
