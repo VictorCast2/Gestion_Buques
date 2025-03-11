@@ -12,37 +12,37 @@ import com.App.Gestion_Buques.Empresa.Services.EmpresaServices;
 @Data
 @Controller
 @AllArgsConstructor
-@RequestMapping("/Api/Empresa")
+@RequestMapping("/api/empresa")
 public class EmpresaController {
 
     @Autowired
     private final EmpresaServices empresaServices;
 
-    @GetMapping("/Home")
+    @GetMapping("/home")
     public String Home(Model model) {
         model.addAttribute("empresa", empresaServices.encontrarTodasEmpresa());
         return "Empresa";
     }
 
-    @PostMapping("/Add")
+    @PostMapping("/add")
     public String registrar(@ModelAttribute EmpresaEntity empresa) {
         empresaServices.crearEmpresa(empresa);
         return "redirect:/Api/Empresa/Home";
     }
 
-    @PostMapping("/Delete")
+    @PostMapping("/delete")
     public String eliminar(@RequestParam("id") Long id) {
         empresaServices.eliminarEmpresa(id);
         return "redirect:/Api/Empresa/Home";
     }
 
-    @PostMapping("/Update")
+    @PostMapping("/update")
     public String modificar(@ModelAttribute EmpresaEntity empresa) {
         empresaServices.modificarEmpresa(empresa);
         return "redirect:/Api/Empresa/Home";
     }
 
-    @GetMapping("/Find")
+    @GetMapping("/find")
     public String encontrar(@RequestParam("id") Long id, Model model) {
         Optional<EmpresaEntity> usuario = empresaServices.encontrarEmpresaPorID(id);
         usuario.ifPresent(u -> model.addAttribute("empresa", u));
