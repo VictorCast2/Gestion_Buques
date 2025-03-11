@@ -1,6 +1,6 @@
 package com.App.Gestion_Buques.Configuration;
 
-import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
+import com.App.Gestion_Buques.AgenteNav.Repository.AgenteNavRepository;
 import com.App.Gestion_Buques.Services.CustomUserDetailsServices;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -86,7 +86,7 @@ public class SecurityConfiguration {
      * @return El servicio de usuarios personalizado.
      */
     @Bean
-    public UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
+    public UserDetailsService userDetailsService(AgenteNavRepository usuarioRepository) {
         return new CustomUserDetailsServices(usuarioRepository);
     }
 

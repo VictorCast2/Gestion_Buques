@@ -1,4 +1,4 @@
-package com.App.Gestion_Buques.Usuario.Entity;
+package com.App.Gestion_Buques.AgenteNav.Entity;
 
 import lombok.*;
 import java.util.*;
@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "Usuario")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioEntity implements UserDetails {
+public class AgenteNavEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

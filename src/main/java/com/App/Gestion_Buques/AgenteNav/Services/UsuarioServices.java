@@ -1,12 +1,12 @@
-package com.App.Gestion_Buques.Usuario.Services;
+package com.App.Gestion_Buques.AgenteNav.Services;
 
+import com.App.Gestion_Buques.AgenteNav.Entity.AgenteNavEntity;
 import lombok.*;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.App.Gestion_Buques.Usuario.Entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
+import com.App.Gestion_Buques.AgenteNav.Repository.AgenteNavRepository;
 
 @Data
 @Service
@@ -14,23 +14,23 @@ import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
 public class UsuarioServices {
 
     @Autowired
-    private UsuarioRepository usuarioRepository; // Repositorio de la entidad UsuarioEntity.
+    private AgenteNavRepository AgenteNavRepository; // Repositorio de la entidad AgenteNavEntity.
 
     /**
      * Guarda un nuevo usuario en la base de datos.
      * @param usuario El usuario a guardar.
      * @return El usuario guardado.
      */
-    public UsuarioEntity crearUsuario(UsuarioEntity usuario) {
-        return usuarioRepository.save(usuario);
+    public AgenteNavEntity crearUsuario(AgenteNavEntity usuario) {
+        return AgenteNavRepository.save(usuario);
     }
 
     /**
      * Elimina un usuario de la base de datos
      */
-    public void modificarUsuario(UsuarioEntity usuario){
-        if(usuarioRepository.existsById(usuario.getId())) {
-            usuarioRepository.save(usuario);
+    public void modificarUsuario(AgenteNavEntity usuario){
+        if(AgenteNavRepository.existsById(usuario.getId())) {
+            AgenteNavRepository.save(usuario);
         }
     }
 
@@ -39,7 +39,7 @@ public class UsuarioServices {
      * @param Id El ID del usuario a eliminar.
      */
     public void eliminarUsuario(Long Id) {
-        usuarioRepository.deleteById(Id);
+        AgenteNavRepository.deleteById(Id);
     }
 
     /**
@@ -47,16 +47,16 @@ public class UsuarioServices {
      * @param Id El ID del usuario.
      * @return Un Optional que contiene el usuario si se encuentra.
      */
-    public Optional<UsuarioEntity> encontrarUsuarioPorID(Long Id) {
-        return usuarioRepository.findById(Id);
+    public Optional<AgenteNavEntity> encontrarUsuarioPorID(Long Id) {
+        return AgenteNavRepository.findById(Id);
     }
 
     /**
      * Encuentra todos los usuarios en la base de datos.
      * @return Una lista con todos los usuarios.
      */
-    public List<UsuarioEntity> encontrarTodosUsuario() {
-        return usuarioRepository.findAll();
+    public List<AgenteNavEntity> encontrarTodosUsuario() {
+        return AgenteNavRepository.findAll();
     }
 
 }
