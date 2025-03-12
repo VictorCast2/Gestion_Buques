@@ -34,7 +34,7 @@ public class AgenteNavEntity implements UserDetails {
      * Relación con la tabla roles.
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "usuario_Id"))
+    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "agentesNav_Id"))
     @Column(name = "Rol", nullable = false)
     private Set<String> roles;
 
@@ -43,8 +43,7 @@ public class AgenteNavEntity implements UserDetails {
      */
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "Id",
-            foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
-    @Column(name = "Empresa")
+            foreignKey = @ForeignKey(name = "FK_agente-empresa"))
     private EmpresaEntity empresa;
 
     /**

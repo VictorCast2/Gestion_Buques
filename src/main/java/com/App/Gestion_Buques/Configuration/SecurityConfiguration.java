@@ -38,13 +38,13 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/login", "/api/auth/logout").permitAll() // Permite acceso público
                         .requestMatchers("/api/**").authenticated() // Autenticación para otras rutas
                         .requestMatchers("/css/**", "/css/ErrorStyles/**", "/img/**", "/js/**", "/assets/**").permitAll() // Permite acceso público
-                        .requestMatchers("/error/**", "/error").permitAll()
+                        .requestMatchers("/error/**", "/error").permitAll() // Permite acceso público a la página de error
                         .requestMatchers("/api/home").permitAll()
                         .anyRequest().authenticated() // Autenticación para otras rutas
                 )
                 .formLogin(form -> form
                         .loginPage("/api/auth/login") // Página de inicio de sesión personalizada
-                        .loginProcessingUrl("/api/auth/login") // URL de procesamiento de inicio de sesión
+                        .loginProcessingUrl("/api/home") // URL de procesamiento de inicio de sesión
                         .usernameParameter("email") // Parámetro de nombre de usuario
                         .passwordParameter("password") // Parámetro de contraseña
                         .failureUrl("/error/")
