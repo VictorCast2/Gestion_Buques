@@ -12,7 +12,7 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form th:action="@{/api/usuario/add}" method="post">
+            <form th:action="@{/api/agente/add}" method="post">
                 <div class="icono">
                     <ul class="example-2">
                         <li class="icon-content">
@@ -65,27 +65,27 @@
                 <h1>Create Account</h1>
                 <span>or use your email for registeration</span>
                 <div class="input-box">
-                    <input type="text" required autocomplete="off" name="name" id="nombre">
+                    <input type="text" required autocomplete="off" name="name" th:field="*{name}" id="nombre">
                     <label for="Nombre">Nombre</label>
                 </div>
                 <div class="input-box">
-                    <input type="text" required autocomplete="off" name="apellido" id="apellido">
+                    <input type="text" required autocomplete="off" name="apellido" th:field="*{apellido}" id="apellido">
                     <label for="Apellido">Apellido</label>
                 </div>
                 <div class="input-box">
-                    <input type="text" required autocomplete="off" name="cedula" id="cedula">
+                    <input type="text" required autocomplete="off" name="cedula" th:field="*{cedula}" id="cedula">
                     <label for="Cedula">Cedula</label>
                 </div>
                 <div class="input-box">
-                    <input type="email" required autocomplete="off" name="email" id="email">
+                    <input type="email" required autocomplete="off" name="email" th:field="*{email}" id="email">
                     <label for="Email">Email</label>
                 </div>
                 <div class="input-box">
-                    <input type="text" required autocomplete="off" name="telefono" id="telefono">
+                    <input type="text" required autocomplete="off" name="telefono" th:field="*{telefono}">
                     <label for="Telefono">Telefono</label>
                 </div>
                 <div class="input-box">
-                    <input type="password" required autocomplete="off" name="password" id="password">
+                    <input type="password" required autocomplete="off" name="password" th:field="*{password}">
                     <label for="Password">Password</label>
                 </div>
                 <button type="submit">Sig Up</button>

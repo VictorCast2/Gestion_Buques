@@ -12,7 +12,7 @@ import com.App.Gestion_Buques.AgenteNav.Services.AgenteServices;
 @Data
 @Controller
 @AllArgsConstructor
-@RequestMapping("/api/usuario")
+@RequestMapping("/api/agente")
 public class AgenteNavController {
 
     @Autowired
@@ -25,8 +25,8 @@ public class AgenteNavController {
     }
 
     @PostMapping("/add")
-    public String registrar(@ModelAttribute AgenteNavEntity usuario) {
-        agenteServices.addUsuario(usuario);
+    public String registrar(@ModelAttribute("agenteNavEntity") AgenteNavEntity agenteNavEntity) {
+        agenteServices.addUsuario(agenteNavEntity);
         return "redirect:/api/home";
     }
 
