@@ -43,8 +43,8 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated() // Autenticación para otras rutas
                 )
                 .formLogin(form -> form
-                        .loginPage("/api/auth/login") // Página de inicio de sesión personalizada
-                        .loginProcessingUrl("/api/home") // URL de procesamiento de inicio de sesión
+                        .loginPage("/api/home") // Página de inicio de sesión personalizada
+                        .loginProcessingUrl("/api/auth/login") // URL de procesamiento de inicio de sesión
                         .usernameParameter("email") // Parámetro de nombre de usuario
                         .passwordParameter("password") // Parámetro de contraseña
                         .failureUrl("/error/")
