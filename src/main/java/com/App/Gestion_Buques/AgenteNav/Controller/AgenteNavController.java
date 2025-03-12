@@ -27,7 +27,7 @@ public class AgenteNavController {
     @PostMapping("/add")
     public String registrar(@ModelAttribute AgenteNavEntity usuario) {
         agenteServices.addUsuario(usuario);
-        return "redirect:/api/usuario/home";
+        return "redirect:/api/home";
     }
 
     @PostMapping("/delete")

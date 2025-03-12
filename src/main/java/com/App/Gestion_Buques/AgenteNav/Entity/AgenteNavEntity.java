@@ -24,6 +24,16 @@ public class AgenteNavEntity implements UserDetails {
     @Column(name = "Name")
     private String name;
 
+    @Column(name = "Apellido")
+    private String apellido;
+
+    @Column(name = "Cedula")
+    private String cedula;
+
+    @Column(name = "Telefono")
+    private String telefono;
+
+
     @Column(name = "Email", unique = true, nullable = false)
     private String email;
 
