@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import com.App.Gestion_Buques.AgenteNav.Entity.AgenteNavEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.App.Gestion_Buques.AgenteNav.Services.UsuarioServices;
+import com.App.Gestion_Buques.AgenteNav.Services.AgenteServices;
 
 @Data
 @Controller
@@ -16,35 +16,35 @@ import com.App.Gestion_Buques.AgenteNav.Services.UsuarioServices;
 public class AgenteNavController {
 
     @Autowired
-    private final UsuarioServices usuarioServices;
+    private final AgenteServices agenteServices;
 
     @GetMapping("/home")
     public String Home(Model model) {
-        model.addAttribute("usuarios", usuarioServices.encontrarTodosUsuario());
-        return "Usuarios";
+        model.addAttribute("usuarios", agenteServices.getAgentes());
+        return "usuarios";
     }
 
     @PostMapping("/add")
     public String registrar(@ModelAttribute AgenteNavEntity usuario) {
-        usuarioServices.crearUsuario(usuario);
-        return "redirect:/Api/Usuario/Home";
+        agenteServices.addUsuario(usuario);
+        return "redirect:/api/usuario/home";
     }
 
     @PostMapping("/delete")
     public String eliminar(@RequestParam("id") Long id) {
-        usuarioServices.eliminarUsuario(id);
-        return "redirect:/Api/Usuario/Home";
+        agenteServices.deleteAgente(id);
+        return "redirect:/api/usuario/home";
     }
 
     @PostMapping("/update")
     public String modificar(@ModelAttribute AgenteNavEntity usuario) {
-        usuarioServices.modificarUsuario(usuario);
-        return "redirect:/Api/Usuario/Home";
+        agenteServices.updateUsuario(usuario);
+        return "redirect:/api/usuario/home";
     }
 
     @GetMapping("/find")
     public String encontrar(@RequestParam("id") Long id, Model model) {
-        Optional<AgenteNavEntity> usuario = usuarioServices.encontrarUsuarioPorID(id);
+        Optional<AgenteNavEntity> usuario = agenteServices.getAgenteById(id);
         usuario.ifPresent(u -> model.addAttribute("usuario", u));
         return "UsuarioDetalle";
     }

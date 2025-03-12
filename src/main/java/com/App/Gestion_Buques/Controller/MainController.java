@@ -14,7 +14,7 @@ public class MainController {
      * Redirige a la página de inicio.
      * @return La página de inicio.
      */
-    @RequestMapping("home")
+    @RequestMapping("/home")
     public String Home() {
         return "Index";
     }
