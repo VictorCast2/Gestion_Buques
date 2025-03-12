@@ -1,4 +1,4 @@
-package com.App.Gestion_Buques.Services;
+package com.App.Gestion_Buques.Configuration.Services;
 
 import com.App.Gestion_Buques.AgenteNav.Entity.AgenteNavEntity;
 import com.App.Gestion_Buques.AgenteNav.Repository.AgenteNavRepository;

@@ -11,24 +11,24 @@ import com.App.Gestion_Buques.AgenteNav.Repository.AgenteNavRepository;
 @Data
 @Service
 @AllArgsConstructor
-public class UsuarioServices {
+public class AgenteServices {
 
     @Autowired
     private AgenteNavRepository AgenteNavRepository; // Repositorio de la entidad AgenteNavEntity.
 
     /**
      * Guarda un nuevo usuario en la base de datos.
-     * @param usuario El usuario a guardar.
+     * @param agente_naviero El usuario a guardar.
      * @return El usuario guardado.
      */
-    public AgenteNavEntity crearUsuario(AgenteNavEntity usuario) {
-        return AgenteNavRepository.save(usuario);
+    public AgenteNavEntity addUsuario(AgenteNavEntity agente_naviero) {
+        return AgenteNavRepository.save(agente_naviero);
     }
 
     /**
      * Elimina un usuario de la base de datos
      */
-    public void modificarUsuario(AgenteNavEntity usuario){
+    public void updateUsuario(AgenteNavEntity usuario){
         if(AgenteNavRepository.existsById(usuario.getId())) {
             AgenteNavRepository.save(usuario);
         }
@@ -38,7 +38,7 @@ public class UsuarioServices {
      * Elimina un usuario por su ID.
      * @param Id El ID del usuario a eliminar.
      */
-    public void eliminarUsuario(Long Id) {
+    public void deleteAgente(Long Id) {
         AgenteNavRepository.deleteById(Id);
     }
 
@@ -47,7 +47,7 @@ public class UsuarioServices {
      * @param Id El ID del usuario.
      * @return Un Optional que contiene el usuario si se encuentra.
      */
-    public Optional<AgenteNavEntity> encontrarUsuarioPorID(Long Id) {
+    public Optional<AgenteNavEntity> getAgenteById(Long Id) {
         return AgenteNavRepository.findById(Id);
     }
 
@@ -55,7 +55,7 @@ public class UsuarioServices {
      * Encuentra todos los usuarios en la base de datos.
      * @return Una lista con todos los usuarios.
      */
-    public List<AgenteNavEntity> encontrarTodosUsuario() {
+    public List<AgenteNavEntity> getAgentes() {
         return AgenteNavRepository.findAll();
     }
 
