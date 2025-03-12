@@ -1,8 +1,7 @@
-package com.App.Gestion_Buques.Services;
+package com.App.Gestion_Buques.Configuration.Services;
 
-import com.App.Gestion_Buques.Usuario.Entity.UsuarioEntity;
-import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
-import com.App.Gestion_Buques.Usuario.Services.UsuarioServices;
+import com.App.Gestion_Buques.AgenteNav.Entity.AgenteNavEntity;
+import com.App.Gestion_Buques.AgenteNav.Repository.AgenteNavRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -14,13 +13,13 @@ import lombok.*;
 public class CustomUserDetailsServices implements UserDetailsService {
 
     @Autowired
-    private final UsuarioRepository usuarioRepository;
+    private final AgenteNavRepository usuarioRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("Intentando autenticar usuario: " + email);
-        UsuarioEntity usuario = usuarioRepository.findByEmail(email)
+        AgenteNavEntity usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> {
                     System.out.println("Usuario no encontrado en la base de datos.");
                     return new UsernameNotFoundException("Usuario no encontrado ... ");

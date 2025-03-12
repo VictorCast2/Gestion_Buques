@@ -1,7 +1,7 @@
 package com.App.Gestion_Buques.Configuration;
 
-import com.App.Gestion_Buques.Usuario.Repository.UsuarioRepository;
-import com.App.Gestion_Buques.Services.CustomUserDetailsServices;
+import com.App.Gestion_Buques.AgenteNav.Repository.AgenteNavRepository;
+import com.App.Gestion_Buques.Configuration.Services.CustomUserDetailsServices;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,12 +38,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/login", "/api/auth/logout").permitAll() // Permite acceso público
                         .requestMatchers("/api/**").authenticated() // Autenticación para otras rutas
                         .requestMatchers("/css/**", "/css/ErrorStyles/**", "/img/**", "/js/**", "/assets/**").permitAll() // Permite acceso público
-                        .requestMatchers("/error/**", "/error").permitAll()
+                        .requestMatchers("/error/**", "/error").permitAll() // Permite acceso público a la página de error
                         .requestMatchers("/api/home").permitAll()
                         .anyRequest().authenticated() // Autenticación para otras rutas
                 )
                 .formLogin(form -> form
-                        .loginPage("/api/auth/login") // Página de inicio de sesión personalizada
+                        .loginPage("/api/home") // Página de inicio de sesión personalizada
                         .loginProcessingUrl("/api/auth/login") // URL de procesamiento de inicio de sesión
                         .usernameParameter("email") // Parámetro de nombre de usuario
                         .passwordParameter("password") // Parámetro de contraseña
@@ -86,7 +86,7 @@ public class SecurityConfiguration {
      * @return El servicio de usuarios personalizado.
      */
     @Bean
-    public UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
+    public UserDetailsService userDetailsService(AgenteNavRepository usuarioRepository) {
         return new CustomUserDetailsServices(usuarioRepository);
     }
 

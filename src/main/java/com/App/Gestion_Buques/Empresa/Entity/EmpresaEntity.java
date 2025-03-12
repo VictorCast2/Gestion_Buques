@@ -1,11 +1,9 @@
 package com.App.Gestion_Buques.Empresa.Entity;
 
-import com.App.Gestion_Buques.Usuario.Entity.UsuarioEntity;
+import com.App.Gestion_Buques.AgenteNav.Entity.AgenteNavEntity;
 import jakarta.persistence.*;
+import java.util.*;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -44,18 +42,24 @@ public class EmpresaEntity {
     private int cantidad_Buques;
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-    private Set<UsuarioEntity> agentesNavieros = new HashSet<>();
+    private Set<AgenteNavEntity> agentesNavieros = new HashSet<>();
 
-    // Metodo para Adicionar un Agente Naviero (Usuario)
-    public void addAgenteNaviero(UsuarioEntity agenteNaviero) {
+    /**
+     * Método que permite agregar un Agente Naviero (Usuario).
+     * @param agenteNaviero
+     */
+    public void addAgenteNaviero(AgenteNavEntity agenteNaviero) {
         if (agenteNaviero != null) {
             agentesNavieros.add(agenteNaviero);
             agenteNaviero.setEmpresa(this);
         }
     }
 
-    // Metodo para eliminar un Agente Naviero (Usuario)
-    public void deleteAgenteNaviero(UsuarioEntity agenteNaviero) {
+    /**
+     * Método que permite eliminar un Agente Naviero (Usuario).
+     * @param agenteNaviero
+     */
+    public void deleteAgenteNaviero(AgenteNavEntity agenteNaviero) {
         if (agenteNaviero != null) {
             agentesNavieros.remove(agenteNaviero);
             agenteNaviero.setEmpresa(null);

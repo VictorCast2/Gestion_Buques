@@ -1,11 +1,11 @@
-package com.App.Gestion_Buques.Usuario.Entity;
+package com.App.Gestion_Buques.AgenteNav.Entity;
 
-import com.App.Gestion_Buques.Empresa.Entity.EmpresaEntity;
 import lombok.*;
 import java.util.*;
 import jakarta.persistence.*;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
+import com.App.Gestion_Buques.Empresa.Entity.EmpresaEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuarios")
-public class UsuarioEntity implements UserDetails {
+@Table(name = "agentesNav")
+public class AgenteNavEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,16 @@ public class UsuarioEntity implements UserDetails {
 
     @Column(name = "Name")
     private String name;
+
+    @Column(name = "Apellido")
+    private String apellido;
+
+    @Column(name = "Cedula")
+    private String cedula;
+
+    @Column(name = "Telefono")
+    private String telefono;
+
 
     @Column(name = "Email", unique = true, nullable = false)
     private String email;
@@ -34,7 +44,7 @@ public class UsuarioEntity implements UserDetails {
      * Relación con la tabla roles.
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "usuario_Id"))
+    @CollectionTable(name = "Roles", joinColumns = @JoinColumn(name = "agentesNav_Id"))
     @Column(name = "Rol", nullable = false)
     private Set<String> roles;
 
@@ -43,8 +53,7 @@ public class UsuarioEntity implements UserDetails {
      */
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "Id",
-            foreignKey = @ForeignKey(name = "FK_usuario-empresa"))
-    @Column(name = "Empresa")
+            foreignKey = @ForeignKey(name = "FK_agente-empresa"))
     private EmpresaEntity empresa;
 
     /**
