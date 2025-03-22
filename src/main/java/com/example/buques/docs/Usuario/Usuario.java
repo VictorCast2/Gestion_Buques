@@ -1,6 +1,7 @@
 package com.example.buques.docs.Usuario;
 
 import com.example.buques.docs.Empresa.Empresa;
+import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -19,13 +20,14 @@ public class Usuario {
     private String nombres;
     private String apellidos;
     private int telefono;
+
     @Email(message = "El correo debe tener un formato válido") // Email verifica que el correo tenga un formato válido
     @NotBlank(message = "El correo no puede estar vacío")
     private String correo;
     @NotBlank(message = "La contraseña no puede estar vacía")
     private String password;
 
-
+    @NotNull(message = "El rol no puede estar vacío")
     private EnumRol rol;
 
     @DBRef
