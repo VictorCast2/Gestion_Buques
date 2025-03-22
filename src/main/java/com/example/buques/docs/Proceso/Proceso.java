@@ -1,6 +1,5 @@
-package com.example.buques.document.Proceso;
+package com.example.buques.docs.Proceso;
 
-import com.example.buques.document.Usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

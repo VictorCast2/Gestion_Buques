@@ -1,13 +1,9 @@
-package com.example.buques.document.Buque;
+package com.example.buques.docs.Buque;
 
-import com.example.buques.document.Usuario.Usuario;
+import com.example.buques.docs.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-
 import java.time.LocalDate;
 
 @Data

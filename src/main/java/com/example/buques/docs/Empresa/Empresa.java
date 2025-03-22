@@ -1,23 +1,12 @@
-package com.example.buques.document.Empresa;
+package com.example.buques.docs.Empresa;
 
-import com.example.buques.document.Usuario.Usuario;
+import com.example.buques.docs.Usuario.Usuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import lombok.*;
+import org.springframework.data.annotation.*;
+import org.springframework.data.mongodb.core.mapping.*;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -34,6 +23,8 @@ public class Empresa {
     private String ciudad;
     private String direccion;
     private int telefono;
+    @Email(message = "El correo debe tener un formato válido") // Email verifica que el correo tenga un formato válido
+    @NotBlank(message = "El correo no puede estar vacío") // NotBlank solo verifica que no sea null o vacío
     private String correo;
 
     @Transient // para que no se guarde en la base de datos
