@@ -1,7 +1,7 @@
 package com.example.buques.docs.Usuario;
 
 import com.example.buques.docs.Empresa.Empresa;
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
+import com.example.buques.docs.Usuario.Enum.EnumRol;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;

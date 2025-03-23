@@ -1,4 +1,4 @@
-package com.example.buques.docs.Usuario;
+package com.example.buques.docs.Usuario.Enum;
 
 public enum EnumRol {
     ADMIN,
