@@ -1,5 +1,8 @@
 package com.example.buques.docs.Buque;
 
+import com.example.buques.docs.Buque.pojo.Dimension;
+import com.example.buques.docs.Buque.pojo.Inspeccion;
+import com.example.buques.docs.Buque.pojo.SolicitudAtraque;
 import com.example.buques.docs.Usuario.Usuario;
 import lombok.*;
 import org.springframework.data.annotation.Id;

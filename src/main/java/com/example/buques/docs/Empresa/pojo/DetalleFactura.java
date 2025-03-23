@@ -1,4 +1,4 @@
-package com.example.buques.docs.Empresa;
+package com.example.buques.docs.Empresa.pojo;
 
 import lombok.*;
 

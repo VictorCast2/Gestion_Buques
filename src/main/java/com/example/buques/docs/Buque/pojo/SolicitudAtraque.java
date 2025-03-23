@@ -1,4 +1,4 @@
-package com.example.buques.docs.Buque;
+package com.example.buques.docs.Buque.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -18,5 +18,5 @@ public class SolicitudAtraque {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaSalida;
 
-    private String estadoSolicitud;
+    private String estadoSolicitud; // este atributo se puede trabajar mejor como una clase enum
 }

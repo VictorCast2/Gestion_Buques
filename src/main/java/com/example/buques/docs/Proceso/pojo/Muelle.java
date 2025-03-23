@@ -1,4 +1,4 @@
-package com.example.buques.docs.Proceso;
+package com.example.buques.docs.Proceso.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Maquina {
+public class Muelle {
 
     private String id;
     private String nombre;
-    private String estado; // este atributo se puede trabajar mejor como una clase enum
     private int cantidad;
+    private int capacidad;
+    private String estado; // este atributo se puede trabajar mejor como una clase enum
 }

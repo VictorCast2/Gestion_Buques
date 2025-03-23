@@ -1,4 +1,4 @@
-package com.example.buques.docs.Buque;
+package com.example.buques.docs.Buque.pojo;
 
 import com.example.buques.docs.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,7 +16,7 @@ public class Inspeccion {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fecha;
-    private String resultado;
+    private String resultado; // este atributo se puede trabajar mejor como una clase enum
     private String observaciones;
 
     @DBRef
