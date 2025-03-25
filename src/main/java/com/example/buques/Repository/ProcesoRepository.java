@@ -1,4 +1,4 @@
-package com.example.buques.repository.Proceso;
+package com.example.buques.repository;
 
 import com.example.buques.docs.Proceso.Proceso;
 import org.springframework.data.mongodb.repository.MongoRepository;

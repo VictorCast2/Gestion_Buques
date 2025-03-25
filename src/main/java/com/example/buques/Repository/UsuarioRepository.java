@@ -1,4 +1,4 @@
-package com.example.buques.repository.Usuario;
+package com.example.buques.repository;
 
 import com.example.buques.docs.Usuario.Usuario;
 import org.springframework.data.mongodb.repository.MongoRepository;
