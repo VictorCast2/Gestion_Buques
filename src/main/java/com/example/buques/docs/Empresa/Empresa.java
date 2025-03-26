@@ -24,8 +24,6 @@ public class Empresa {
     private String ciudad;
     private String direccion;
     private int telefono;
-    @Email(message = "El correo debe tener un formato válido") // Email verifica que el correo tenga un formato válido
-    @NotBlank(message = "El correo no puede estar vacío") // NotBlank solo verifica que no sea null o vacío
     private String correo;
 
     @Transient // para que no se guarde en la base de datos

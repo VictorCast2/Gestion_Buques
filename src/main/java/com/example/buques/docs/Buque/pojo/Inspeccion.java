@@ -16,7 +16,7 @@ public class Inspeccion {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fecha;
-    private String resultado; // este atributo se puede trabajar mejor como una clase enum
+    private EResultado resultado;
     private String observaciones;
 
     @DBRef

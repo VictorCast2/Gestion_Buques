@@ -1,8 +1,8 @@
 package com.example.buques.docs.Usuario;
 
 import com.example.buques.docs.Empresa.Empresa;
-import com.example.buques.docs.Usuario.Enum.EnumRol;
-import jakarta.validation.constraints.*;
+import com.example.buques.docs.Usuario.Enum.EIdentificacion;
+import com.example.buques.docs.Usuario.Enum.ERol;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
@@ -16,19 +16,15 @@ public class Usuario {
 
     @Id
     private String id;
-    private Long cedula;
+    private EIdentificacion tipoIdentificacion;
+    private int numeroIdentificacion;
     private String nombres;
     private String apellidos;
     private int telefono;
-
-    @Email(message = "El correo debe tener un formato válido") // Email verifica que el correo tenga un formato válido
-    @NotBlank(message = "El correo no puede estar vacío")
     private String correo;
-    @NotBlank(message = "La contraseña no puede estar vacía")
     private String password;
 
-    @NotNull(message = "El rol no puede estar vacío")
-    private EnumRol rol;
+    private ERol rol;
 
     @DBRef
     private Empresa empresa;
