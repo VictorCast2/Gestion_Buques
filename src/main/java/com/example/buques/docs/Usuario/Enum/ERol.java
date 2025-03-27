@@ -1,6 +1,6 @@
 package com.example.buques.docs.Usuario.Enum;
 
-public enum EnumRol {
+public enum ERol {
     ADMIN,
     OPERADOR_PORTUARIO,
     INSPECTOR,
