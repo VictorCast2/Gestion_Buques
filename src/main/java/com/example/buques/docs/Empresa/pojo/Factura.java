@@ -23,8 +23,12 @@ public class Factura {
     private double iva;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime fecha;
-    private String estado; // este atributo se puede trabajar mejor como una clase enum
+    private LocalDateTime fechaEmision;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime fechaVencimiento;
+
+    private EEstadoFactura estado;
 
     private Set<DetalleFactura> detalles = new HashSet<>();
 }

@@ -15,5 +15,5 @@ public class Muelle {
     private String nombre;
     private int cantidad;
     private int capacidad;
-    private String estado; // este atributo se puede trabajar mejor como una clase enum
+    private EEstado estado;
 }
