@@ -6,7 +6,8 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

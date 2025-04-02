@@ -11,7 +11,8 @@ import org.springframework.data.mongodb.core.mapping.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,7 +21,7 @@ public class Buque {
 
     @Id
     private String id;
-    private String imagen;
+    private String imagen; // considerar remover imagen
     private String matricula;
     private String nombre;
     private String tipoBuque;

@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,5 +19,5 @@ public class SolicitudAtraque {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaSalida;
 
-    private String estadoSolicitud; // este atributo se puede trabajar mejor como una clase enum
+    private EResultado estadoSolicitud;
 }

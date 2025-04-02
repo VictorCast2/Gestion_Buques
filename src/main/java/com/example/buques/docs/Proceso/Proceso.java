@@ -1,9 +1,6 @@
 package com.example.buques.docs.Proceso;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -11,7 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,6 +19,7 @@ public class Proceso {
     @Id
     private String id;
 
+    @Field("tipo_operacion")
     private String tipoOperacion;
     private String tipoCarga;
     private double pesoTotal;
