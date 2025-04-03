@@ -20,20 +20,13 @@ public class Proceso {
     private String id;
 
     @Field("tipo_operacion")
-    private String tipoOperacion;
-    private String tipoCarga;
+    private String tipoOperacion; // considerar trabajar este atributo como un Enum
+    private String tipoCarga; // considerar trabajar este atributo como un Enum
+    private String tipoProducto; // considerar trabajar este atributo como un Enum
+    private int cantidad;
     private double pesoTotal;
     private String descripcion;
 
-    @Field("_idBuque")
-    private String buqueId;
-
-    @Field("_idMuelle")
-    private String muelleId;
-
     @Field("_idOperadores")
     private Set<String> operadoresPortuariosId = new HashSet<>();
-
-    @Field("_idMaquinas")
-    private Set<String> maquinasId = new HashSet<>();
 }
