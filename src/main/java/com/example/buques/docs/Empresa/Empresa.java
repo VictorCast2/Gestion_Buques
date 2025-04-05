@@ -9,7 +9,8 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.*;
 import java.util.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

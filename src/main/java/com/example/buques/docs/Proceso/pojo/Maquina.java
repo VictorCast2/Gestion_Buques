@@ -13,6 +13,6 @@ public class Maquina {
 
     private String id;
     private String nombre;
-    private EEstado estado; // este atributo se puede trabajar mejor como una clase enum
+    private EEstado estado;
     private int cantidad;
 }
