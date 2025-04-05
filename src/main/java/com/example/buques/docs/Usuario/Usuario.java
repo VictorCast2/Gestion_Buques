@@ -17,7 +17,9 @@ public class Usuario {
 
     @Id
     private String id;
+    @Field("tipo_identificacion")
     private EIdentificacion tipoIdentificacion;
+    @Field("numero_identificacion")
     private int numeroIdentificacion;
     private String nombres;
     private String apellidos;

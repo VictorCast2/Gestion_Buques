@@ -1,4 +1,4 @@
-package com.example.buques.docs.Proceso.pojo;
+package com.example.buques.docs.Muelle.pojo;
 
 public enum EEstado {
     DISPONIBLE,

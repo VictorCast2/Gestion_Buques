@@ -30,12 +30,6 @@ public class Empresa {
     @Transient // para que no se guarde en la base de datos
     private int cantidad_buques;
 
-    //considerar si es necesario listar los agentes navieros de una empresa
-    @Transient
-    @DBRef
-    @Field("agentes_navieros")
-    private Set<Usuario> agentesNavieros = new HashSet<>();
-
     private Set<Factura> facturas = new HashSet<>();
 
 }
