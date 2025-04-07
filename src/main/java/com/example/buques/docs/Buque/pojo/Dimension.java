@@ -2,7 +2,8 @@ package com.example.buques.docs.Buque.pojo;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

@@ -1,17 +1,15 @@
 package com.example.buques.docs.Buque;
 
 import com.example.buques.docs.Buque.pojo.Dimension;
-import com.example.buques.docs.Buque.pojo.Inspeccion;
-import com.example.buques.docs.Buque.pojo.SolicitudAtraque;
+import com.example.buques.docs.Muelle.Muelle;
+import com.example.buques.docs.Proceso.Proceso;
 import com.example.buques.docs.Usuario.Usuario;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,7 +18,7 @@ public class Buque {
 
     @Id
     private String id;
-    private String imagen;
+    private String imagen; // considerar remover imagen
     private String matricula;
     private String nombre;
     private String tipoBuque;
@@ -30,7 +28,9 @@ public class Buque {
     @Field("agente_naviero")
     private Usuario agenteNaviero;
 
-    private Set<Inspeccion> inspecciones = new HashSet<>();
-    @Field("solicitudes_atraque")
-    private Set<SolicitudAtraque> solicitudAtraques = new HashSet<>();
+    @DBRef
+    private Muelle muelle;
+
+    @DBRef
+    private Proceso proceso;
 }

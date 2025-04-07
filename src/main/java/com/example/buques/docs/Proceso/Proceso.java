@@ -1,9 +1,6 @@
 package com.example.buques.docs.Proceso;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -11,7 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,20 +19,14 @@ public class Proceso {
     @Id
     private String id;
 
-    private String tipoOperacion;
-    private String tipoCarga;
+    @Field("tipo_operacion")
+    private String tipoOperacion; // considerar trabajar este atributo como un Enum
+    private String tipoCarga; // considerar trabajar este atributo como un Enum
+    private String tipoProducto; // considerar trabajar este atributo como un Enum
+    private int cantidad;
     private double pesoTotal;
     private String descripcion;
 
-    @Field("_idBuque")
-    private String buqueId;
-
-    @Field("_idMuelle")
-    private String muelleId;
-
     @Field("_idOperadores")
     private Set<String> operadoresPortuariosId = new HashSet<>();
-
-    @Field("_idMaquinas")
-    private Set<String> maquinasId = new HashSet<>();
 }

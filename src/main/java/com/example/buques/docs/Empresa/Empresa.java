@@ -9,7 +9,8 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.*;
 import java.util.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,17 +24,11 @@ public class Empresa {
     private String pais;
     private String ciudad;
     private String direccion;
-    private int telefono;
+    private String telefono;
     private String correo;
 
     @Transient // para que no se guarde en la base de datos
     private int cantidad_buques;
-
-    //considerar si es necesario listar los agentes navieros de una empresa
-    @Transient
-    @DBRef
-    @Field("agentes_navieros")
-    private Set<Usuario> agentesNavieros = new HashSet<>();
 
     private Set<Factura> facturas = new HashSet<>();
 
