@@ -33,7 +33,7 @@
                 <li class="list__item"><a class="item__link" href="Noticias.html">Noticias</a></li>
                 <li class="list__item"><a class="item__link" href="Testimonio.html">Testimonios</a></li>
                 <li class="list__item"><a class="item__link" href="Contactos.html">contactos</a></li>
-                <li class="list__item"><a class="item__link  btn--signin" href="login.html" target="_blank">sign in</a>
+                <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
                 </li>
             </ul>
         </nav>
@@ -109,9 +109,9 @@
             <a class="content__button" href="">Mas Informacion</a>
 
             <div class="content__img">
-                <img src="assets/image/puertobuques.png" alt="">
+                <img th:src="@{/css/assets/image/puertobuques.png}" alt="">
                 <div class="img-text">
-                    <img loading="lazy" src="assets/image/puerto-nosotros.jpg" alt="">
+                    <img loading="lazy" th:src="@{/css/assets/image/puerto-nosotros.jpg}" alt="">
                     <h3 class="impacto__subtitulo">Nuestro Compromiso</h3>
                     <p class="impacto__descripcion">
                         En Gestión Integral De Buques & Contenedores Cartagena, trabajamos para optimizar el comercio
@@ -140,7 +140,7 @@
         <div class="noticias__content">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicios1.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios1.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -156,7 +156,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias imgnoticias--changed" src="assets/image/servicio2.jpeg"
+                    <img class="imgnoticias imgnoticias--changed" th:src="@{/css/assets/image/servicio2.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -171,7 +171,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias imgnoticias--changed" src="assets/image/servicio3.jpeg"
+                    <img class="imgnoticias imgnoticias--changed" th:src="@{/css/assets/image/servicio3.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -193,13 +193,13 @@
             <button class="lineas-navieras__boton lineas-navieras__boton--prev"><i
                     class="ri-arrow-left-s-line"></i></button>
             <div class="lineas-navieras__carousel">
-                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras.png" alt="Hapag-Lloyd"></div>
-                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras2.png" alt="Cosco Shipping">
+                <div class="lineas-navieras__item"><img th:src="@{/css/assets/image/lineasnavieras.png}" alt="Hapag-Lloyd"></div>
+                <div class="lineas-navieras__item"><img th:src="@{/css/assets/image/lineasnavieras2.png}" alt="Cosco Shipping">
                 </div>
-                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras3.png" alt="Alianca Ltd"></div>
-                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras4.png" alt="APL"></div>
-                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras5.png" alt="Hapag-Lloyd"></div>
-                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras6.png" alt="Yang Ming">
+                <div class="lineas-navieras__item"><img th:src="@{/css/assets/image/lineasnavieras3.png}" alt="Alianca Ltd"></div>
+                <div class="lineas-navieras__item"><img th:src="@{/css/assets/image/lineasnavieras4.png}" alt="APL"></div>
+                <div class="lineas-navieras__item"><img th:src="@{/css/assets/image/lineasnavieras5.png}" alt="Hapag-Lloyd"></div>
+                <div class="lineas-navieras__item"><img th:src="@{/css/assets/image/lineasnavieras6.png}" alt="Yang Ming">
                 </div>
             </div>
             <button class="lineas-navieras__boton lineas-navieras__boton--next"><i
@@ -220,7 +220,7 @@
         <div class="noticias__content">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias1.avif" alt="MV Madrid Express en el Puerto de Cartagena">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias1.avif}" alt="MV Madrid Express en el Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">MV Madrid Express en el Puerto de Cartagena</figcaption>
                 </figure>
                 <header>
@@ -237,7 +237,7 @@
     
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias2.avif" alt="Índice de Conectividad del Puerto de Cartagena">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias2.avif}" alt="Índice de Conectividad del Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">Índice de Conectividad del Puerto de Cartagena</figcaption>
                 </figure>
                 <header>
@@ -254,7 +254,7 @@
     
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias3.jpg" alt="Mujeres líderes en el Puerto de Cartagena">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias3.jpg}" alt="Mujeres líderes en el Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">Mujeres líderes en el Puerto de Cartagena</figcaption>
                 </figure>
                 <header>
