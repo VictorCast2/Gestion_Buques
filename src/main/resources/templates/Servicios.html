@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicios</title>
-    <link rel="stylesheet" href="Servicios.css">
+    <link rel="stylesheet" th:href="@{/css/Servicios.css}">
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
@@ -27,13 +27,13 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="nav__list">
-                <li class="list__item"><a class="item__link" href="index.html">inicio</a></li>
-                <li class="list__item"><a class="item__link" href="QuienesSomos.html">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/index}">inicio</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/QuienesSomos}">quienes somos</a></li>
                 <li class="list__item"><a class="item__link" href="#">servicios</a></li>
-                <li class="list__item"><a class="item__link" href="Noticias.html">Noticias</a></li>
-                <li class="list__item"><a class="item__link" href="Testimonio.html">Testimonios</a></li>
-                <li class="list__item"><a class="item__link" href="Contactos.html">contactos</a></li>
-                <li class="list__item"><a class="item__link  btn--signin" href="login.html" target="_blank">sign in</a>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Noticias}">Noticias</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Testimonio}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Contactos}">contactos</a></li>
+                <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
                 </li>
             </ul>
         </nav>
@@ -52,7 +52,7 @@
         <div class="noticias__content">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicios1.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios1.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -68,7 +68,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicio2.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicio2.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -83,7 +83,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicio3.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicio3.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -100,7 +100,7 @@
         <div class="noticias__content content--changed">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicios4.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios4.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -115,7 +115,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicio5.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicio5.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -130,7 +130,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicios6.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios6.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -147,7 +147,7 @@
         <div class="noticias__content content--changed">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicios7.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios7.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -162,7 +162,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/servicios8.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios8.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -177,7 +177,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/valores3.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/valores3.jpeg}"
                         alt="">
                 </figure>
                 <header>
@@ -239,7 +239,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 
 </html>

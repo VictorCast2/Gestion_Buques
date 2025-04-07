@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
         integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="Registro.css">
+    <link rel="stylesheet" th:href="@{/css/Registro.css}">
     <title>Registro</title>
 </head>
 
@@ -194,7 +194,7 @@
 
     </form>
 
-    <script src="js/registro.js"></script>
+    <script th:src="@{/js/registro.js}"></script>
 </body>
 
 </html>

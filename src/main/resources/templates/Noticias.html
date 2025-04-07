@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noticias</title>
-    <link rel="stylesheet" href="Noticias.css">
+    <link rel="stylesheet" th:href="@{/css/Noticias.css}">
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
@@ -27,13 +27,13 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="nav__list">
-                <li class="list__item"><a class="item__link" href="index.html">inicio</a></li>
-                <li class="list__item"><a class="item__link" href="QuienesSomos.html">quienes somos</a></li>
-                <li class="list__item"><a class="item__link" href="Servicios.html">servicios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/index}">inicio</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/QuienesSomos}">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Servicios}">servicios</a></li>
                 <li class="list__item"><a class="item__link" href="#">Noticias</a></li>
-                <li class="list__item"><a class="item__link" href="Testimonio.html">Testimonios</a></li>
-                <li class="list__item"><a class="item__link" href="Contactos.html">contactos</a></li>
-                <li class="list__item"><a class="item__link  btn--signin" href="login.html" target="_blank">sign in</a>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Testimonio}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Contactos}">contactos</a></li>
+                <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
                 </li>
             </ul>
         </nav>
@@ -93,7 +93,7 @@
         <div class="noticias__content">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias1.avif"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias1.avif}"
                         alt="MV Madrid Express en el Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">MV Madrid Express en el Puerto de Cartagena</figcaption>
                 </figure>
@@ -113,7 +113,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias2.avif"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias2.avif}"
                         alt="Índice de Conectividad del Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">Índice de Conectividad del Puerto de Cartagena</figcaption>
                 </figure>
@@ -132,7 +132,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias3.jpg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias3.jpg}"
                         alt="Mujeres líderes en el Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">Mujeres líderes en el Puerto de Cartagena</figcaption>
                 </figure>
@@ -153,7 +153,7 @@
         <div class="noticias__content content--changed">
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias5.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias5.jpeg}"
                         alt="Índice de Conectividad del Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">La Media Maratón del Mar 2025 inició desde el Puerto de
                         Cartagena</figcaption>
@@ -173,7 +173,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias4.png"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias4.png}"
                         alt="Enero, el mes de mayor actividad con 35 barcos y más de 100,000 visitantes">
                     <figcaption class="imgnoticias__sub">Enero, el mes de mayor actividad con 35 barcos y más de 100,000
                         visitantes.</figcaption>
@@ -193,7 +193,7 @@
 
             <article class="content__card">
                 <figure class="card__imgnoticias">
-                    <img class="imgnoticias" src="assets/image/noticias6.jpeg"
+                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias6.jpeg}"
                         alt="Mujeres líderes en el Puerto de Cartagena">
                     <figcaption class="imgnoticias__sub">Cuatro cruceros llegaron a Cartagena</figcaption>
                 </figure>
@@ -260,7 +260,7 @@
         </div>
     </footer>
 
-    <script src="js/noticias.js"></script>
+    <script th:src="@{/js/noticias.js}"></script>
 </body>
 
 </html>

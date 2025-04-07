@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
         integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
     <title>Iniciar Seccion</title>
 </head>
 
@@ -113,13 +113,13 @@
             </div>
 
             <div class="registre-link">
-                <p>No tienes una cuenta?<a href="Registro.html" target="_blank">Registro</a></p>
+                <p>No tienes una cuenta?<a th:href="@{/auth/Registro}" target="_blank">Registro</a></p>
             </div>
         </div>
 
     </form>
 
-    <script src="js/login.js"></script>
+    <script th:src="@{/js/login.js}"></script>
 </body>
 
 </html>

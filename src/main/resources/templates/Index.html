@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -28,11 +28,11 @@
         <nav class="header__nav">
             <ul class="nav__list">
                 <li class="list__item"><a class="item__link" href="#">inicio</a></li>
-                <li class="list__item"><a class="item__link" href="QuienesSomos.html">quienes somos</a></li>
-                <li class="list__item"><a class="item__link" href="Servicios.html">servicios</a></li>
-                <li class="list__item"><a class="item__link" href="Noticias.html">Noticias</a></li>
-                <li class="list__item"><a class="item__link" href="Testimonio.html">Testimonios</a></li>
-                <li class="list__item"><a class="item__link" href="Contactos.html">contactos</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/QuienesSomos}">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Servicios}">servicios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Noticias}">Noticias</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Testimonio}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Contactos}">contactos</a></li>
                 <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
                 </li>
             </ul>
@@ -128,7 +128,7 @@
     </section>
 
     <section class="servicios">
-        <a href="Servicios.html" class="servicios__btn">Ver Todos</a>
+        <a th:href="@{/auth/Servicios}" class="servicios__btn">Ver Todos</a>
         <h2 class="servicios__title">servicios</h2>
         <p class="servicios__text">
             En nuestra plataforma, ofrecemos una solución integral para la gestión eficiente de buques y contenedores.
@@ -412,7 +412,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 
 </html>

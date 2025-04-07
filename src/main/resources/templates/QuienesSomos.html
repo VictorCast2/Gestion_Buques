@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quienes Somos</title>
-    <link rel="stylesheet" href="QuienesSomos.css">
+    <link rel="stylesheet" th:href="@{/css/QuienesSomos.css}">
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
@@ -27,13 +27,13 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="nav__list">
-                <li class="list__item"><a class="item__link" href="index.html">inicio</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/index}">inicio</a></li>
                 <li class="list__item"><a class="item__link" href="#">quienes somos</a></li>
-                <li class="list__item"><a class="item__link" href="Servicios.html">servicios</a></li>
-                <li class="list__item"><a class="item__link" href="Noticias.html">Noticias</a></li>
-                <li class="list__item"><a class="item__link" href="Testimonio.html">Testimonios</a></li>
-                <li class="list__item"><a class="item__link" href="Contactos.html">contactos</a></li>
-                <li class="list__item"><a class="item__link  btn--signin" href="login.html" target="_blank">sign in</a>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Servicios}">servicios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Noticias}">Noticias</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Testimonio}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Contactos}">contactos</a></li>
+                <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
                 </li>
             </ul>
         </nav>
@@ -56,7 +56,7 @@
         <a class="historia__btn" href="">Mas Informacion</a>
 
         <div class="historia__img">
-            <img class="img__puerto" loading="lazy" src="assets/image/nuestrahistoria.jpg" alt="">
+            <img class="img__puerto" loading="lazy" th:src="@{/css/assets/image/nuestrahistoria.jpg}" alt="">
         </div>
     </section>
 
@@ -75,14 +75,14 @@
             </p>
 
 
-            <img loading="lazy" src="assets/image/puerto-somos.png" alt="quienes somos">
+            <img loading="lazy" th:src="@{/css/assets/image/puerto-somos.png}" alt="quienes somos">
 
             <!-- Modal del video -->
             <div id="videoModal" class="modal">
                 <div class="modal-content">
                     <span class="close"><i class="ri-close-line"></i></span>
                     <video id="videoPlayer" controls>
-                        <source src="assets/video/videopuerto.mp4" type="video/mp4">
+                        <source th:src="@{/css/assets/video/videopuerto.mp4}" type="video/mp4">
                         Tu navegador no soporta videos.
                     </video>
                 </div>
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="content__img">
-                    <img loading="lazy" src="assets/image/nosotros.jpg" alt="puerto nosotros">
+                    <img loading="lazy" th:src="@{/css/assets/image/nosotros.jpg}" alt="puerto nosotros">
                 </div>
 
                 <div class="content__rigth">
@@ -279,7 +279,7 @@
         </div>
     </footer>
 
-    <script src="js/video.js"></script>
+    <script th:src="@{/js/video.js}"></script>
 </body>
 
 </html>
