@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthUserController {
 
     @GetMapping("/hello")
-    public String hello() {
-        return "hello Word!";
+    public String index() {
+        return "index";
     }
 
     @GetMapping("/hello-protegido")

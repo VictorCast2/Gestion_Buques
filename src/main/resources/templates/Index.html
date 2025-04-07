@@ -1,181 +1,418 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buque Cartagena</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
+    <div class="content">
+        <a class="content__links" href="">+57 3214153612</a>
+        <a class="content__links" href="">buquescaribe@gmail.com</a>
+        <a class="content__links" href="">provedores</a>
+    </div>
+
     <!-- Encabezado header-->
     <header class="header">
         <nav class="header__nav">
             <ul class="nav__list">
-                <li class="list__item"><a class="item__link" href="#inicio">inicio</a></li>
-                <li class="list__item"><a class="item__link" href="#nosotros">nosotros</a></li>
-                <li class="list__item"><a class="item__link" href="">servicios</a></li>
-                <li class="list__item"><a class="item__link" href="#contactos">contactos</a></li>
-
-                <!-- Aquí mostramos el nombre del usuario -->
-                <li class="list__item user-info">
-                <span class="item__user">
-                    <span th:if="${usuario != null}">Bienvenido, <span class="username" th:text="${usuario}"></span></span>
-                    <span th:unless="${usuario != null}"><a class="item__link btn--signin" href="/api/agente/login">Sign in</a></span>
-                </span>
+                <li class="list__item"><a class="item__link" href="#">inicio</a></li>
+                <li class="list__item"><a class="item__link" href="QuienesSomos.html">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" href="Servicios.html">servicios</a></li>
+                <li class="list__item"><a class="item__link" href="Noticias.html">Noticias</a></li>
+                <li class="list__item"><a class="item__link" href="Testimonio.html">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" href="Contactos.html">contactos</a></li>
+                <li class="list__item"><a class="item__link  btn--signin" href="login.html" target="_blank">sign in</a>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="sectioninicio" id="inicio">
-            <div class="sectioninicio__bienvenida">
-                <h1 class="bienvenida__title">Gestión Integral De <span class="title__span">Buques </span> & <span class="title__span">Contenedores</span> Cartagena</h1>
-                <p class="bienvenido__text">
-                    Bienvenido a la plataforma líder en gestión y control de     buques en el <strong>Puerto de Cartagena</strong>.
-                    Optimiza operaciones, agiliza procesos y accede a información en tiempo real sobre arribos, salidas y logística marítima.  </p>
-                <a class="bienvenida__btn" href="">Mas Informacion</a>
+    <!-- section inicio-->
+    <section class="sectioninicio">
+        <div class="sectioninicio__carousel">
+            <div class="carousel__list">
+
+                <div class="list__unit">
+                    <div class="item__content">
+                        <h1 class="content__title title--changed">Gestión Integral De <span>Buques</span> &
+                            <span>Contenedores</span> Cartagena
+                        </h1>
+                        <p class="content__text">
+                            Bienvenido a la plataforma líder en gestión y control de buques en el <strong>Puerto de
+                                Cartagena</strong>.
+                            Optimiza operaciones, agiliza procesos y accede a información en tiempo real sobre arribos,
+                            salidas y logística marítima.
+                        </p>
+                        <a class="content__btn" href="">Mas Informacion</a>
+                    </div>
+                </div>
+
+                <div class="list__unit ">
+                    <div class="item__content">
+                        <h2 class="content__title">Nuestro Puerto</h2>
+                        <p class="content__text">
+                            Bienvenidos a nuestro puerto, un lugar donde el mar y la historia se encuentran.
+                            Aquí, cada muelle es testigo del esfuerzo y la dedicación de quienes trabajan día a día
+                            para que el comercio, la exploración y la conexión entre naciones nunca se detengan.
+                        </p>
+                        <a class="content__btn" href="">Mas Informacion</a>
+                    </div>
+                </div>
+
+                <div class="list__unit ">
+                    <div class="item__content">
+                        <h2 class="content__title">Nuestros Buques</h2>
+                        <p class="content__text">
+                            Cada buque que zarpa desde nuestro puerto es un emblema de determinación y compromiso.
+                            Grandes embarcaciones mercantes, elegantes barcos de pasajeros y resistentes naves de carga
+                            surcan nuestras aguas, llevando consigo historias, productos y esperanzas.
+                        </p>
+                        <a class="content__btn" href="">Mas Informacion</a>
+                    </div>
+                </div>
+
             </div>
-        </section>
-    </main>
 
-    <section class="Nosotros" id="nosotros">
-        <div class="Nosotros__content">
+            <!-- Indicators (Puntos de navegación) -->
+            <div class="carousel__indicators">
+                <span class="indicator active" data-index="0"></span>
+                <span class="indicator" data-index="1"></span>
+                <span class="indicator" data-index="2"></span>
+            </div>
+        </div>
+    </section>
 
-            <h2 class="Nosotros__titleinicio">Nosotros</h2>
-            <p class="Nosotros__textinicio">"Gestión y control de buques en el <strong>Puerto de Cartagena</strong>., tu
-                aliado estratégico en el transporte marítimo y la logística de carga. Con experiencia, innovación y
-                compromiso, llevamos tu mercancía a su destino de manera segura y eficiente. ¡Naveguemos juntos hacia el
-                éxito!"</p>
+    <!-- section inicio 2-->
+    <section class="section__impacto">
+        <div class="impacto__content">
 
-            <div class="content__main">
-                <div class="content__left">
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-ship"></i></span>
-                        <p class="item__text">
-                            En <strong>Gestión Integral De Buques & Contenedores Cartagena</strong>, somos líderes en el
-                            sector marítimo y logístico en Cartagena, brindando soluciones integrales para el transporte
-                            y manejo de carga a nivel nacional e internacional.
-                        </p>
-                    </div>
+            <h2 class="content__titulo">Nuestro Impacto</h2>
+            <p class="content__texto">El transporte marítimo es la columna vertebral del comercio global, moviendo
+                aproximadamente el 90% de las mercancías a nivel mundial.
+                Es una industria que conecta continentes, facilita el acceso a productos esenciales y contribuye al
+                desarrollo económico de innumerables países.
+                En [Tu Empresa/Proyecto], entendemos la importancia de este sector y trabajamos activamente para mejorar
+                su eficiencia, sostenibilidad y capacidad de crecimiento.</p>
 
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-ferry"></i></span>
-                        <p class="item__text">
-                            Con años de experiencia en la industria, nos especializamos en la operación de buques,
-                            almacenamiento y transporte de contenedores, garantizando eficiencia, seguridad y
-                            cumplimiento en cada envío.
-                        </p>
-                    </div>
-                </div>
+            <a class="content__button" href="">Mas Informacion</a>
 
-                <div class="content__img">
-                    <img loading="lazy" th:src="@{../assets/image/buque_nosotros.png}" alt="puerto nosotros">
-                </div>
-
-                <div class="content__rigth">
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-anchor"></i></span>
-                        <p class="item__text">
-                            Nuestro compromiso es ofrecer un servicio de calidad que optimice la cadena de suministro de
-                            nuestros clientes, adaptándonos a sus necesidades con tecnología avanzada, una flota moderna
-                            y un equipo altamente capacitado
-                        </p>
-                    </div>
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-water"></i></span>
-                        <p class="item__text">
-                            En <strong>Gestión Integral De Buques & Contenedores Cartagena</strong>, navegamos hacia el
-                            futuro con innovación y confiabilidad. ¡Confía en nosotros para llevar tu carga a su destino
-                            de manera segura y eficiente!
-                        </p>
-                    </div>
+            <div class="content__img">
+                <img src="assets/image/puertobuques.png" alt="">
+                <div class="img-text">
+                    <img loading="lazy" src="assets/image/puerto-nosotros.jpg" alt="">
+                    <h3 class="impacto__subtitulo">Nuestro Compromiso</h3>
+                    <p class="impacto__descripcion">
+                        En Gestión Integral De Buques & Contenedores Cartagena, trabajamos para optimizar el comercio
+                        marítimo,
+                        asegurando eficiencia, seguridad y sostenibilidad en cada operación. Conectamos mercados,
+                        facilitamos el transporte de carga
+                        y promovemos prácticas ecológicas que minimizan el impacto ambiental.
+                    </p>
+                    <a class="content__button button--changed" href="">Mas Informacion</a>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <section id="contactos" class="section-contactos">
-        <div class="container-contactos">
-            <div class="box-info">
-                <h2>CONTÁCTATE CON NOSOTROS</h2>
-                <div class="data">
-                    <p><i class="fa-solid fa-phone"></i> +1 408 224 4587</p>
-                    <p><i class="fa-solid fa-envelope"></i> livingcodedev@gmail.com</p>
-                    <p><i class="fa-solid fa-location-dot"></i> 30 Grant Ave San Francisco CA 94108-5834. USA</p>
+    <section class="servicios">
+        <a href="Servicios.html" class="servicios__btn">Ver Todos</a>
+        <h2 class="servicios__title">servicios</h2>
+        <p class="servicios__text">
+            En nuestra plataforma, ofrecemos una solución integral para la gestión eficiente de buques y contenedores.
+            Contamos con herramientas avanzadas que permiten el monitoreo en tiempo real de la ubicación, carga y estado
+            de cada embarcación y contenedor, asegurando una logística optimizada y segura.
+            Nuestro sistema facilita la planificación de rutas.
+        </p>
+
+        <div class="noticias__content">
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" src="assets/image/servicios1.jpeg"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Gestión de Programación de Buques</h3>
+                </header>
+                <p class="card__information">
+                    Accede a la programación actualizada de los buques que llegarán al puerto de Cartagena.
+                    Esta herramienta permite conocer con precisión los horarios de llegada y salida de cada embarcación,
+                    facilitando la planificaciónes portuarias.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias imgnoticias--changed" src="assets/image/servicio2.jpeg"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Seguimiento de Carga y Descarga</h3>
+                </header>
+                <p class="card__information">
+                    Permite a los agentes navieros monitorear el estado de la carga y descarga de los buques en tiempo real,
+                    facilitando la coordinación entre las diferentes partes involucradas (buques, operarios, autoridades portuarias).
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias imgnoticias--changed" src="assets/image/servicio3.jpeg"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Asignación de Muelles y Recursos</h3>
+                </header>
+                <p class="card__information">
+                    Herramienta para gestionar la asignación de muelles y recursos (grúas, espacio de almacenamiento, etc.)
+                    para cada buque, asegurando que cada llegada se maneje de manera eficiente.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+        </div>
+
+    </section>
+
+    <section class="lineas-navieras">
+        <h2 class="lineas-navieras__titulo">Líneas Navieras</h2>
+        <div class="lineas-navieras__contenedor">
+            <button class="lineas-navieras__boton lineas-navieras__boton--prev"><i
+                    class="ri-arrow-left-s-line"></i></button>
+            <div class="lineas-navieras__carousel">
+                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras.png" alt="Hapag-Lloyd"></div>
+                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras2.png" alt="Cosco Shipping">
                 </div>
-                <div class="links">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras3.png" alt="Alianca Ltd"></div>
+                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras4.png" alt="APL"></div>
+                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras5.png" alt="Hapag-Lloyd"></div>
+                <div class="lineas-navieras__item"><img src="assets/image/lineasnavieras6.png" alt="Yang Ming">
                 </div>
             </div>
-            <form>
-                <div class="input-box">
-                    <input type="text" placeholder="Nombre y apellido" required>
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="input-box">
-                    <input type="email" required placeholder="Correo electrónico">
-                    <i class="fa-solid fa-envelope"></i>
-                </div>
-                <div class="input-box">
-                    <input type="text" placeholder="Asunto">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </div>
-                <div class="input-box">
-                    <textarea placeholder="Escribe tu mensaje..."></textarea>
-                </div>
-                <button type="submit">Enviar mensaje</button>
-            </form>
+            <button class="lineas-navieras__boton lineas-navieras__boton--next"><i
+                    class="ri-arrow-right-s-line"></i></button>
+        </div>
+
+        <!-- Botón "Ver todas" -->
+        <div class="lineas-navieras__ver-todas">
+            <a class="lineas-navieras__boton-ver-todas">Ver todas</a>
         </div>
     </section>
+
+    
+    <section class="noticias">
+        <a class="noticias__btn" href="Noticias.html">Ver Todas</a>
+        <h2 class="noticias__title">Noticias</h2>
+    
+        <div class="noticias__content">
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" src="assets/image/noticias1.avif" alt="MV Madrid Express en el Puerto de Cartagena">
+                    <figcaption class="imgnoticias__sub">MV Madrid Express en el Puerto de Cartagena</figcaption>
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Llega a Cartagena el primer barco de la Alianza Gemini</h3>
+                    <time class="card__date" datetime="2025-03-16">16 MAR 2025</time>
+                </header>
+                <p class="card__information">
+                    Cartagena da un paso estratégico en el comercio marítimo internacional con la llegada del MV Madrid Express,
+                    el primer portacontenedores en atracar en el Grupo Puerto de Cartagena como parte del servicio US2 de la Cooperación Gemini, 
+                    la alianza global entre las navieras Hapag-Lloyd y Maersk.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+    
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" src="assets/image/noticias2.avif" alt="Índice de Conectividad del Puerto de Cartagena">
+                    <figcaption class="imgnoticias__sub">Índice de Conectividad del Puerto de Cartagena</figcaption>
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Cartagena, líder en conectividad marítima</h3>
+                    <time class="card__date" datetime="2025-03-14">14 MAR 2025</time>
+                </header>
+                <p class="card__information">
+                    Cartagena reafirma su liderazgo en la región al destacarse en el Índice de Conectividad de Transporte Marítimo 
+                    para Puertos (PLSCI) de la UNCTAD correspondiente al IV Trimestre de 2024. 
+                    Este indicador evalúa la integración de los puertos en las redes globales de transporte marítimo.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+    
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" src="assets/image/noticias3.jpg" alt="Mujeres líderes en el Puerto de Cartagena">
+                    <figcaption class="imgnoticias__sub">Mujeres líderes en el Puerto de Cartagena</figcaption>
+                </figure>
+                <header>
+                    <h3 class="card__titulo">SPRC y Contecar, impulsores de empleo para mujeres</h3>
+                    <time class="card__date" datetime="2025-03-07">7 MAR 2025</time>
+                </header>
+                <p class="card__information">
+                    La Sociedad Portuaria Regional de Cartagena (SPRC) y Contecar han sido reconocidas nuevamente como dos de Los Mejores Lugares 
+                    para Trabajar en Colombia, destacando su compromiso con la equidad de género y el desarrollo profesional de las mujeres.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+        </div>
+        
+    </section>
+
+    <section class="pqf">
+        <h2 class="pqf__title">Preguntas Frecuentes (FAQ)</h2>
+
+        <div class="pqf__content">
+            <div class="pqf__info">
+                <p class="pqf__text">
+                    ¿Tienes más dudas? En nuestra sección de Preguntas Frecuentes hemos recopilado las consultas más
+                    habituales de nuestros clientes para brindarte información clara y detallada sobre nuestros
+                    servicios.
+                    Aquí podrás encontrar respuestas sobre nuestros tiempos de entrega, métodos de envío, costos,
+                    restricciones de mercancías, seguimiento de paquetes y muchas otras dudas que puedan surgir en el
+                    proceso.
+
+                </p>
+                <a href="" class="pqf__button">Ver Todas</a>
+            </div>
+        </div>
+
+        <div class="pqf__questions">
+            <details class="questions__details">
+                <summary class="details__summary">
+                    <span class="summary__numero">01</span>
+                    ¿Cuánto tarda un envío internacional?
+                    <span class="summary__icon"><i class="ri-arrow-down-s-line"></i></span>
+                </summary>
+                <p class="summary__text">El tiempo de envío varía según la ruta y el destino. En promedio, los
+                    envíos internacionales pueden tardar entre 10 y 45 días,
+                    dependiendo del puerto de origen y destino, así como de las condiciones climáticas y aduaneras.
+                </p>
+            </details>
+
+            <details class="questions__details">
+                <summary class="details__summary">
+                    <span class="summary__numero">02</span>
+                    ¿Qué tipos de carga transportan?
+                    <span class="summary__icon"><i class="ri-arrow-down-s-line"></i></span>
+                </summary>
+                <p class="summary__text">Transportamos diversos tipos de carga, incluyendo carga general, carga
+                    refrigerada, productos químicos y mercancías peligrosas.
+                    Es importante verificar las regulaciones específicas para cada tipo de producto antes del envío.
+                </p>
+            </details>
+
+            <details class="questions__details">
+                <summary class="details__summary">
+                    <span class="summary__numero">03</span>
+                    ¿Qué sucede si mi carga se retrasa o se pierde?
+                    <span class="summary__icon"><i class="ri-arrow-down-s-line"></i></span>
+                </summary>
+                <p class="summary__text">En caso de retrasos, notificamos al cliente sobre la nueva fecha estimada
+                    de entrega. Si un envío se pierde, iniciamos una investigación
+                    y, si corresponde, aplicamos un seguro de carga para compensar al remitente según las
+                    condiciones acordadas.
+                </p>
+            </details>
+
+            <details class="questions__details">
+                <summary class="details__summary">
+                    <span class="summary__numero">04</span>
+                    ¿Qué tipo de mercancías tienen restricciones de envío?
+                    <span class="summary__icon"><i class="ri-arrow-down-s-line"></i></span>
+                </summary>
+                <p class="summary__text">Algunas mercancías, como productos inflamables, explosivos, sustancias
+                    tóxicas y materiales perecederos, tienen restricciones de envío.
+                    Se recomienda consultar la normativa vigente antes de realizar un envío.
+                </p>
+            </details>
+
+            <details class="questions__details">
+                <summary class="details__summary">
+                    <span class="summary__numero">05</span>
+                    ¿Ofrecen descuentos para clientes frecuentes?
+                    <span class="summary__icon"><i class="ri-arrow-down-s-line"></i></span>
+                </summary>
+                <p class="summary__text">Sí, contamos con un programa de fidelización para clientes frecuentes, que
+                    incluye descuentos en tarifas de envío y beneficios exclusivos.
+                    Contáctanos para obtener más información sobre cómo inscribirte.
+                </p>
+            </details>
+
+            <details class="questions__details">
+                <summary class="details__summary">
+                    <span class="summary__numero">06</span>
+                    ¿Se puede programar la fecha de entrega de un envío?
+                    <span class="summary__icon"><i class="ri-arrow-down-s-line"></i></span>
+                </summary>
+                <p class="summary__text">Sí, ofrecemos la opción de programar entregas en fechas específicas,
+                    dependiendo de la disponibilidad de rutas y transportistas.
+                    Se recomienda coordinarlo con anticipación para garantizar la mejor planificación posible.
+                </p>
+            </details>
+        </div>
+    </section>
+
 
     <footer class="footer">
-        <div class="container-footer">
-            <div class="row">
-                <div class="footer-col">
-                    <h4>company</h4>
-                    <ul>
-                        <li><a href="#">about us</a></li>
-                        <li><a href="#servicios">our services</a></li>
-                        <li><a href="#">privacy policy</a></li>
-                        <li><a href="/api/agente/cerrar-session">cerrar-sesion</a></li>
+        <div class="footer__content">
+            <div class="content__row">
+                <div class="row__item">
+                    <h4 class="item__title">company</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">about us</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#servicios">our services</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">privacy policy</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">affiliate program</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>get help</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">shipping</a></li>
-                        <li><a href="#">returns</a></li>
-                        <li><a href="#">order status</a></li>
-                        <li><a href="#">payment options</a></li>
+
+                <div class="row__item">
+                    <h4 class="item__title">get help</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">FAQ</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">shipping</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">returns</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">order status</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>online shop</h4>
-                    <ul>
-                        <li><a href="#">watch</a></li>
-                        <li><a href="#">bag</a></li>
-                        <li><a href="#">shoes</a></li>
-                        <li><a href="#">dress</a></li>
+
+                <div class="row__item">
+                    <h4 class="item__title">online shop</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">watch</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">bag</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">shoes</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">dress</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>follow us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+                <div class="row__item">
+                    <h4 class="item__title">follow us</h4>
+                    <div class="item__social">
+                        <a class="social__link" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-instagram"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+
+    <script src="js/main.js"></script>
 </body>
+
 </html>
