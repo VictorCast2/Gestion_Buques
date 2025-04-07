@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthUserController {
-
-
+    
     @GetMapping("/hello-protegido")
     public String helloProtegido() {
         return "hello Word! - Protegido";
