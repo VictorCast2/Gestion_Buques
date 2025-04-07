@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactos</title>
+    <link rel="stylesheet" th:href="@{/css/Contactos.css}">
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="content">
+        <a class="content__links" href="">+57 3214153612</a>
+        <a class="content__links" href="">buquescaribe@gmail.com</a>
+        <a class="content__links" href="">provedores</a>
+    </div>
+
+    <!-- Encabezado header-->
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="list__item"><a class="item__link" th:href="@{/auth/index}">inicio</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/QuienesSomos}">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Servicios}">servicios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Noticias}">Noticias</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Testimonio}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" href="#">contactos</a></li>
+                <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact">
+        <h1 class="contact__titulo">Contactos</h1>
+        <p class="contact__texto">
+            En nuestra empresa, nos especializamos en el transporte y logística de carga marítima, brindando soluciones eficientes para el manejo de buques y contenedores. Contamos con un equipo de profesionales listos para atender tus necesidades y garantizar un servicio seguro y confiable.Si tienes alguna consulta sobre nuestros servicios, cotizaciones o rutas de transporte, no dudes en contactarnos. Estamos aquí para ayudarte en cada paso del proceso logístico.
+        </p>
+        <div class="contact__grid">
+            <!-- Formulario de contacto -->
+            <div class="contact__grid-item contact__grid-item--form">
+                <form class="contact__form">
+                    <h2 class="contact__title">Envíanos un mensaje</h2>
+                    <div class="contact__input-box">
+                        <i class="fa-solid fa-user contact__icon"></i>
+                        <input type="text" placeholder="Nombre y apellido" required class="contact__input">
+                    </div>
+                    <div class="contact__input-box">
+                        <i class="fa-solid fa-envelope contact__icon"></i>
+                        <input type="email" required placeholder="Correo electrónico" class="contact__input">
+                    </div>
+                    <div class="contact__input-box">
+                        <i class="fa-solid fa-pen-to-square contact__icon"></i>
+                        <input type="text" placeholder="Asunto" class="contact__input">
+                    </div>
+                    <div class="contact__input-box contact__input-box--textarea">
+                        <textarea placeholder="Escribe tu mensaje..." class="contact__textarea"></textarea>
+                    </div>
+                    <button type="submit" class="contact__button">Enviar mensaje</button>
+                </form>
+            </div>
+
+            <!-- Información de contacto -->
+            <div class="contact__grid-item contact__grid-item--info">
+                <div class="contact__info">
+                    <h2 class="contact__title">Contáctanos</h2>
+                    <div class="contact__details">
+                        <div class="contact__detail-container">
+                            <span class="contact__icon-container"><i class="fa-solid fa-phone"></i></span>
+                            <p class="contact__detail">+1 408 224 4587</p>
+                        </div>
+                        <div class="contact__detail-container">
+                            <span class="contact__icon-container"><i class="fa-solid fa-envelope"></i></span>
+                            <p class="contact__detail">livingcodedev@gmail.com</p>
+                        </div>
+                        <div class="contact__detail-container">
+                            <span class="contact__icon-container container--changed"><i class="fa-solid fa-location-dot"></i></span>
+                            <p class="contact__detail">30 Grant Ave, San Francisco, CA</p>
+                        </div>
+                    </div>
+                    <div class="contact__social">
+                        <a href="#" class="contact__social-link"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="contact__social-link"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="contact__social-link"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="contact__social-link"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa -->
+            <div class="contact__grid-item contact__grid-item--map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4220.558016104448!2d-75.53697110825138!3d10.405746223116955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f63f853a641%3A0xc02a5d6c99d40497!2sSociedad%20Portuaria%20de%20Cartagena!5e1!3m2!1ses!2sco!4v1743284027506!5m2!1ses!2sco"
+                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="content__row">
+                <div class="row__item">
+                    <h4 class="item__title">company</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">about us</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#servicios">our services</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">privacy policy</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+
+                <div class="row__item">
+                    <h4 class="item__title">get help</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">FAQ</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">shipping</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">returns</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">order status</a></li>
+                    </ul>
+                </div>
+
+                <div class="row__item">
+                    <h4 class="item__title">online shop</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">watch</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">bag</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">shoes</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">dress</a></li>
+                    </ul>
+                </div>
+
+                <div class="row__item">
+                    <h4 class="item__title">follow us</h4>
+                    <div class="item__social">
+                        <a class="social__link" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-instagram"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

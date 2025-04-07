@@ -1,5 +1,6 @@
 package com.example.buques.controller;
 
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,10 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthUserController {
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello Word!";
-    }
 
     @GetMapping("/hello-protegido")
     public String helloProtegido() {
