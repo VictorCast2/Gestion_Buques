@@ -1,4 +1,4 @@
-package com.example.buques.docs.Muelle.pojo;
+package com.example.buques.docs.Muelle.Enum;
 
 import lombok.*;
 

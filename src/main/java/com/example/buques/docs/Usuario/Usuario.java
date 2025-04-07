@@ -5,6 +5,7 @@ import com.example.buques.docs.Usuario.Enum.EIdentificacion;
 import com.example.buques.docs.Usuario.Enum.ERol;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.*;
 
 @Getter
@@ -23,7 +24,7 @@ public class Usuario {
     private int numeroIdentificacion;
     private String nombres;
     private String apellidos;
-    private int telefono;
+    private String telefono;
     private String correo;
     private String password;
 
@@ -31,5 +32,17 @@ public class Usuario {
 
     @DBRef
     private Empresa empresa;
+
+    @Field(name = "is_enabled")
+    private boolean isEnabled;
+
+    @Field(name = "account_No_Expired")
+    private boolean accountNoExpired;
+
+    @Field(name = "account_No_Locked")
+    private boolean accountNoLocked;
+
+    @Field(name = "credential_No_Expired")
+    private boolean credentialNoExpired;
 
 }

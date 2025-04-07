@@ -24,7 +24,7 @@ public class Empresa {
     private String pais;
     private String ciudad;
     private String direccion;
-    private int telefono;
+    private String telefono;
     private String correo;
 
     @Transient // para que no se guarde en la base de datos
