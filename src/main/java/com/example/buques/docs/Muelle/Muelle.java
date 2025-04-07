@@ -1,6 +1,6 @@
 package com.example.buques.docs.Muelle;
 
-import com.example.buques.docs.Muelle.pojo.EEstado;
+import com.example.buques.docs.Muelle.Enum.EEstado;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
