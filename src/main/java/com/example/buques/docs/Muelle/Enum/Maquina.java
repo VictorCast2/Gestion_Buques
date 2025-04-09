@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Maquina {
-
     // considerar si trabajar máquina como un documento
     private String id;
     private String nombre;
