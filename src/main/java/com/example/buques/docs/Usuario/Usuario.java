@@ -49,13 +49,10 @@ public class Usuario implements UserDetails {
 
     @BsonProperty("is_enabled")
     private boolean isEnabled;
-
     @BsonProperty("account_No_Expired")
     private boolean accountNoExpired;
-
     @BsonProperty("account_No_Locked")
     private boolean accountNoLocked;
-
     @BsonProperty("credential_No_Expired")
     private boolean credentialNoExpired;
 
