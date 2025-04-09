@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Dimension {
-
     private double peso;
     private double largo;
     private double ancho;

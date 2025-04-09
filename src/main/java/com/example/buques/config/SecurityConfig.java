@@ -3,12 +3,11 @@ package com.example.buques.config;
 import com.example.buques.config.filter.JwtTokenValidatorFilter;
 import com.example.buques.service.UserDetailServiceImpl;
 import com.example.buques.utils.JwtUtils;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -20,12 +19,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+@Data
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
-    private JwtUtils jwtUtils;
+    private JwtUtils jwtUtils; // inyectamos el JwtUtils para poder usarlo en el filtro
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -57,21 +57,20 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+        return authenticationConfiguration.getAuthenticationManager(); // devuelve el AuthenticationManager por defecto
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailService) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailService);
-        provider.setPasswordEncoder(passwordEncoder());
-
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(); // AuthenticationProvider por defecto
+        provider.setUserDetailsService(userDetailService); // inyectamos el UserDetailServiceImpl para poder usarlo en el provider
+        provider.setPasswordEncoder(passwordEncoder()); // encriptador de contraseñas
         return provider;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Enncriptador de contraseñas
     }
 
 }

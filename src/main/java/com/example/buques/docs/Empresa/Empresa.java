@@ -1,9 +1,6 @@
 package com.example.buques.docs.Empresa;
 
 import com.example.buques.docs.Empresa.pojo.Factura;
-import com.example.buques.docs.Usuario.Usuario;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.*;
