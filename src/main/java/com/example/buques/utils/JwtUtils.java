@@ -25,6 +25,7 @@ public class JwtUtils {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining());
+
         return null;
     }
 
