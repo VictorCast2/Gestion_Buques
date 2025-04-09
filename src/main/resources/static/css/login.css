@@ -1,156 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
-body{
+body {
     background-color: #c9d6ff;
     background: linear-gradient(to right, #e2e2e2, #c9d6ff);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    min-height:95vh;
 }
 
-.container{
-    background-color: #fff;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    position: relative;
-    overflow: hidden;
-    width: 968px;
-    max-width: 100%;
-    min-height: 630px;
+
+.form .formulario__title{
+    font: 700 35px "Montserrat";
+    text-align: center;
+    margin: 0 0 20px 0;
 }
 
-.container p{
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.3px;
-    margin: 20px 0;
-}
-
-.container span{
-    font-size: 12px;
-}
-
-.container a{
-    color: #333;
-    font-size: 13px;
-    text-decoration: none;
-    margin: 15px 0 10px;
-}
-
-.container button{
-    background-color: #4488FF;
-    color: #fff;
-    font-size: 12px;
-    padding: 10px 45px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.container button.hidden{
-    background-color: #4488FF;
-    
-}
-
-.container form{
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    height: 100%;
-}
-
-.input-box {
-    position: relative;
-}
-
-.input-box label {
-    position: absolute;
-    color: #8d8d8d;
-    pointer-events: none;
-    background-color: transparent;
-    left: 30px;
-    top: 15px;
-    transform: translateY(0.6rem);
-    transition: all 0.3s ease;
-}
-
-.input-box input {
-    margin: 10px;
-    background-color: #eee;
-    border: none;
-    padding: 10px 15px;
-    font-size: 1em;
-    border-radius: 8px;
-    width: 400px;
-    height: 50px;
-    letter-spacing: 1px;
-    outline: none;
-}
-
-.input-box input:focus,
-.input-box input:valid {
-    outline: none;
-    border:1px solid #0034de;
-}
-
-.input-box input:focus~label,
-.input-box input:valid~label {
-    background-color: #fff;
-    transform: translateY(-80%) translateX(-10px) scale(0.8);
-    padding: 0 5px;
-    color: #0034de;
-    font-weight: bold;
-    letter-spacing: 1px;
-    border: none;
-    border-radius: 100px;
-}
-
-.form-container{
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
-}
-
-.sign-in{
-    left: 0;
-    width: 50%;
-    z-index: 2;
-}
-
-.container.active .sign-in{
-    transform: translateX(100%);
-}
-
-.sign-up{
-    left: 0;
-    width: 50%;
-    opacity: 0;
-    z-index: 1;
-}
-
-.container.active .sign-up{
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-    animation: move 0.6s;
+/* * Estilo para el login los iconos*/
+.icono{
+    margin:0 0 20px 0;
 }
 
 ul {
@@ -262,80 +138,208 @@ ul {
     #34A853); /* Verde */
 }
 
-@keyframes move{
-    0%, 49.99%{
-        opacity: 0;
-        z-index: 1;
-    }
-    50%, 100%{
-        opacity: 1;
-        z-index: 5;
-    }
+
+.form .formulario__title2{
+    font: 900 15px "Montserrat";
+    text-align: center;
+    margin: 0 0 0 25%;
 }
 
 
-.toggle-container{
+.input-box {
+    position: relative;
+}
+
+.input-box label {
+    font: 500 15px "Montserrat";
     position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
-    z-index: 1000;
+    color: #8d8d8d;
+    pointer-events: none;
+    background-color: transparent;
+    left: 50px;
+    top: 20px;
+    transform: translateY(0.6rem);
+    transition: all 0.3s ease;
+}
+
+.input-box input {
+    margin: 10px 0 25px 30px;
+    background-color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    width: 550px;
+    height: 55px;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+.input-box input:focus {
+    outline: none;
+    border:2px solid #0034de;
+}
+
+.input-box input:focus~label,
+.input-box input:not(:placeholder-shown)~label {
+    background-color: #fff;
+    transform: translateY(-80%) translateX(-10px) scale(0.8);
+    padding: 0 5px;
+    color: #0034de;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 100px;
+}
+
+
+.box__icon i{
+    position: absolute;
+    top: 25px;
+    left: 93%;
+    font:900 18px "Montserrat";
     
 }
 
-.container.active .toggle-container{
-    transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
-}
-
-.toggle{
-    height: 100%;
-    background: url("../assets/image/puertodecarganoche.jpg") center center / cover no-repeat;
+.box__icon .ri-check-line{
+    background-color: #34A853;
+    border-radius: 50%;
+    padding: 1px 1px;
     color: #fff;
-    position: relative;
-    left: -100%;
-    height: 100%;
-    width: 200%;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
+    display: none;
 }
 
-.container.active .toggle{
-    transform: translateX(50%);
+.box__icon .ri-close-line{
+    background-color: #fd1f1f;
+    border-radius: 50%;
+    padding: 1px 1px;
+    color: #fff;
+    display: none;
 }
 
-.toggle-panel{
-    position: absolute;
-    width: 50%;
-    height: 100%;
+.input-box.input-error label {
+    color: #fd1f1f !important;
+}
+
+.input__error{
+    font: 600 15px "Montserrat";
+    width: 500px;
+    margin: 0 0 15px 33px;
+    display: none;
+}
+
+
+.error--changed{
+    margin: 30px 0 0 33px;
+}
+
+.input__advertencia{
+    font:700 15px "Montserrat";
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 550px;
+    background-color: #fd1f1f;
+    padding: 20px 15px;
+    border-radius: 5px;
+    grid-column: span 2; 
+    margin: 20px 0 0 30px; 
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 30px;
-    text-align: center;
+    justify-content: flex-start;
+    display:none;
+}
+
+.input__advertencia i {
+    font-size: 1.7rem; 
+    margin:-5px 10px 0 0; 
+}
+
+
+
+.remember-forgot .forgot__label {
+    accent-color: #0034de;
+    font: 700 15px "Montserrat";
+    margin-left: 30px;
+}
+
+
+.remember-forgot input {
+    margin-right: 15px;
+}
+
+.remember-forgot a { 
+    color: gray;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    margin: 0 0 0 90px;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+
+.form .formulario__btn {
+    font: 700 20px "Montserrat";
+    background-color: #fff;
+    width:100%;
+    max-width: 600px;
+    height: 55px;
+    margin: 30px 0 30px 30px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0,0.3),
+        -6px -6px 12px #fff;
+    cursor: pointer;
+}
+
+.form .formulario__btn::before {
+    content: '';
+    width: 0;
+    height: 55px;
+    border-radius: 5px;
+    position: absolute;
     top: 0;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
+    left: 0;
+    background: linear-gradient(to right, #4D8FD8, #512da8 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
 }
 
-.toggle-left{
-    transform: translateX(-200%);
+
+.form .formulario__btn:hover::before{
+    width: 100%;
 }
 
-.container.active .toggle-left{
-    transform: translateX(0);
+.formulario__btn-container {
+    grid-column: span 2;
+    margin-top: 5px; 
+    display: flex;
+    justify-content: center; 
 }
 
-.toggle-right{
-    right: 0;
-    transform: translateX(0);
+.registre-link{
+    margin: 0 0 0 150px;
 }
 
-.container.active .toggle-right{
-    transform: translateX(200%);
+.registre-link a {
+    margin: 20px 0 0 20px;
 }
+
+.registre-link p a {
+    color: gray;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 20px 0 0 20px;
+}
+
+.registre-link p a:hover {
+    text-decoration: underline;
+}
+

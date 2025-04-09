@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/Servicios.css}">
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="content">
+        <a class="content__links" href="">+57 3214153612</a>
+        <a class="content__links" href="">buquescaribe@gmail.com</a>
+        <a class="content__links" href="">provedores</a>
+    </div>
+
+    <!-- Encabezado header-->
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="list__item"><a class="item__link" th:href="@{/auth/index}">inicio</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/QuienesSomos}">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" href="#">servicios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Noticias}">Noticias</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Testimonio}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/auth/Contactos}">contactos</a></li>
+                <li class="list__item"><a class="item__link  btn--signin" th:href="@{/auth/login}" target="_blank">sign in</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- section servicios-->
+    <section class="servicios">
+        <h2 class="servicios__title">servicios</h2>
+        <p class="servicios__text">
+            En nuestra plataforma, ofrecemos una solución integral para la gestión eficiente de buques y contenedores.
+            Contamos con herramientas avanzadas que permiten el monitoreo en tiempo real de la ubicación, carga y estado
+            de cada embarcación y contenedor, asegurando una logística optimizada y segura.
+            Nuestro sistema facilita la planificación de rutas.
+        </p>
+
+        <div class="noticias__content">
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios1.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Gestión de Programación de Buques</h3>
+                </header>
+                <p class="card__information">
+                    Accede a la programación actualizada de los buques que llegarán al puerto de Cartagena.
+                    Esta herramienta permite conocer con precisión los horarios de llegada y salida de cada embarcación,
+                    facilitando la planificaciónes portuarias.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicio2.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Seguimiento de Carga y Descarga</h3>
+                </header>
+                <p class="card__information">
+                    Permite a los agentes navieros monitorear el estado de la carga y descarga de los buques en tiempo real,
+                    facilitando la coordinación entre las diferentes partes involucradas (buques, operarios, autoridades portuarias).
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicio3.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Asignación de Muelles y Recursos</h3>
+                </header>
+                <p class="card__information">
+                    Herramienta para gestionar la asignación de muelles y recursos (grúas, espacio de almacenamiento, etc.)
+                    para cada buque, asegurando que cada llegada se maneje de manera eficiente.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+        </div>
+
+        <div class="noticias__content content--changed">
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios4.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Notificaciones en Tiempo Real</h3>
+                </header>
+                <p class="card__information">
+                    Sistema de notificación que informa en tiempo real sobre cualquier cambio en la programación,
+                        disponibilidad de muelles o problemas operativos, garantizando que el agente naviero esté siempre actualizado.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicio5.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Documentación y Trámites</h3>
+                </header>
+                <p class="card__information">
+                    Herramienta para gestionar toda la documentación necesaria para la operación de los buques y la carga,
+                    como permisos, facturas y otros trámites burocráticos. Asegura que todo esté en regla para evitar retrasos.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios6.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Informes de Actividades Portuarias</h3>
+                </header>
+                <p class="card__information">
+                    Los agentes navieros pueden generar informes detallados sobre las actividades de los buques y la operación portuaria,
+                        lo que permite un análisis exhaustivo de las actividades realizadas y el desempeño del puerto.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+        </div>
+
+        <div class="noticias__content content--changed">
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios7.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Gestión de Despachos y Recibos</h3>
+                </header>
+                <p class="card__information">
+                    Esta herramienta facilita la comunicación entre las diferentes partes involucradas en la cadena logística,
+                    permitiendo un mejor control de los tiempos y reduciendo posibles retrasos. Además, contribuye a la optimización de los procesos.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/servicios8.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Seguimiento de Costos y Tarifas</h3>
+                </header>
+                <p class="card__information">
+                    La plataforma permite gestionar y rastrear los costos asociados a las operaciones portuarias, incluyendo tarifas de muelles, grúas y otros servicios,
+                    para ayudar al agente naviero a mantener el control del presupuesto.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+
+            <article class="content__card">
+                <figure class="card__imgnoticias">
+                    <img class="imgnoticias" th:src="@{/css/assets/image/valores3.jpeg}"
+                        alt="">
+                </figure>
+                <header>
+                    <h3 class="card__titulo">Mejora de la Logística Portuaria</h3>
+                </header>
+                <p class="card__information">
+                    Herramienta que facilita la optimización de las operaciones logísticas dentro del puerto, desde la llegada de los buques hasta el despacho de la carga.
+                    Se integra con las operaciones de los muelles para evitar congestiones y retrasos.
+                </p>
+                <a class="card__buttonnoticias" href="#">Leer Más</a>
+            </article>
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="content__row">
+                <div class="row__item">
+                    <h4 class="item__title">company</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">about us</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#servicios">our services</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">privacy policy</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+
+                <div class="row__item">
+                    <h4 class="item__title">get help</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">FAQ</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">shipping</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">returns</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">order status</a></li>
+                    </ul>
+                </div>
+
+                <div class="row__item">
+                    <h4 class="item__title">online shop</h4>
+                    <ul class="item__list">
+                        <li class="list__footer"><a class="footer__link" href="#">watch</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">bag</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">shoes</a></li>
+                        <li class="list__footer"><a class="footer__link" href="#">dress</a></li>
+                    </ul>
+                </div>
+
+                <div class="row__item">
+                    <h4 class="item__title">follow us</h4>
+                    <div class="item__social">
+                        <a class="social__link" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-instagram"></i></a>
+                        <a class="social__link" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>
