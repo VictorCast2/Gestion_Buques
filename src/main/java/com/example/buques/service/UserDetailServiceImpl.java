@@ -2,17 +2,15 @@ package com.example.buques.service;
 
 import com.example.buques.docs.Usuario.Usuario;
 import com.example.buques.repository.UsuarioRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Data
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -22,13 +20,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
 
+        // Aquí puedes agregar la lógica para buscar el usuario en tu base de datos
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("el usuario " + correo + " no existe."));
 
-        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-
-        authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(usuario.getRol().name())));
-
+        // Si el usuario no existe, lanza una excepción
         return new User(
                 usuario.getUsername(),
                 usuario.getPassword(),
@@ -36,7 +32,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 usuario.isAccountNoExpired(),
                 usuario.isCredentialNoExpired(),
                 usuario.isAccountNoLocked(),
-                authorityList
+                usuario.getAuthorities()
         );
+
     }
 }

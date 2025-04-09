@@ -1,17 +1,16 @@
 package com.example.buques.docs.Usuario;
 
 import com.example.buques.docs.Empresa.Empresa;
-import com.example.buques.docs.Usuario.Enum.EIdentificacion;
-import com.example.buques.docs.Usuario.Enum.ERol;
+import com.example.buques.docs.Usuario.Enum.*;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.*;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -27,10 +26,8 @@ public class Usuario implements UserDetails {
     private String id;
 
     @BsonProperty("tipo_identificacion")
-    @Field("tipo_identificacion")
     private EIdentificacion tipoIdentificacion;
     @BsonProperty("numero_identificacion")
-    @Field("numero_identificacion")
     private int numeroIdentificacion;
     @BsonProperty("nombres")
     private String nombres;
@@ -51,24 +48,25 @@ public class Usuario implements UserDetails {
     private Empresa empresa;
 
     @BsonProperty("is_enabled")
-    @Field(name = "is_enabled")
     private boolean isEnabled;
 
     @BsonProperty("account_No_Expired")
-    @Field(name = "account_No_Expired")
     private boolean accountNoExpired;
 
     @BsonProperty("account_No_Locked")
-    @Field(name = "account_No_Locked")
     private boolean accountNoLocked;
 
     @BsonProperty("credential_No_Expired")
-    @Field(name = "credential_No_Expired")
     private boolean credentialNoExpired;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (rol == null){
+            return List.of();
+        }
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority("ROLE_" + this.rol.name()));
+        return authorityList;
     }
 
     @Override
