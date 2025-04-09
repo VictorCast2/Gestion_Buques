@@ -30,7 +30,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(usuario.getRol().name())));
 
         return new User(
-                usuario.getCorreo(),
+                usuario.getUsername(),
                 usuario.getPassword(),
                 usuario.isEnabled(),
                 usuario.isAccountNoExpired(),
