@@ -1,6 +1,9 @@
 package com.example.buques.config;
 
+import com.example.buques.config.filter.JwtTokenValidatorFilter;
 import com.example.buques.service.UserDetailServiceImpl;
+import com.example.buques.utils.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,36 +13,45 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(Customizer.withDefaults()) // habilitamos csrf por defecto
+                .csrf(csrf -> csrf.disable()) // deshabilitamos csrf por problemas con el jwt, bloquea los endpoints (post, put, delete), investigar como trabajar con cookies si se desea habilitar
+                .httpBasic(Customizer.withDefaults()) // habilitamos httpBasic (autenticación básica) por defecto
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
                 .authorizeHttpRequests(auth -> {
 
                     // Configurar endpoints públicos
-                    auth.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 
                     // Configurar endpoints privados
-                    auth.requestMatchers(HttpMethod.GET, "/auth/hello-protegido").hasAnyRole("ADMIN", "INSPECTOR");
-                    auth.requestMatchers(HttpMethod.GET, "/auth/admin").hasRole("ADMIN");
-                    auth.requestMatchers(HttpMethod.GET, "/auth/inspector").hasRole("INSPECTOR");
+                    auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").hasAnyRole("ADMIN", "INSPECTOR");
+                    auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
-                .httpBasic(Customizer.withDefaults())
+                // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
+                .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
     }
 
