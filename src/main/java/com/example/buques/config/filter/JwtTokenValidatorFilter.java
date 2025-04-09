@@ -31,27 +31,21 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-
         // obtención del token (recodar que se envía en el header de la petición)
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (jwtToken != null) { // Bearer mkdmsvjskdcmdjnskdcdknfhvgcfhyghj
             jwtToken = jwtToken.substring(7);
-
             DecodedJWT decodedJWT = jwtUtils.validarToken(jwtToken);
-
             String username = jwtUtils.extraerUsuario(decodedJWT);
             String stringAutorizaciones = jwtUtils.getClaimByName(decodedJWT, "authorities").asString();
-
             Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAutorizaciones);
-
             // seteamos al usuario al contexto de Spring Security
             SecurityContext context = SecurityContextHolder.getContext();
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
             context.setAuthentication(authentication);
             SecurityContextHolder.setContext(context);
         }
-
         filterChain.doFilter(request, response);
     }
 }

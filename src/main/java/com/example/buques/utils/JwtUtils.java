@@ -19,13 +19,11 @@ public class JwtUtils {
 
     public String crearToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(llavePrivada);
-
         String usuario = authentication.getPrincipal().toString(); // obtenemos al usuario
         String permisos = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining());
-
         return null;
     }
 
