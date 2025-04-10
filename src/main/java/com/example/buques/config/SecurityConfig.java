@@ -40,6 +40,10 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
+                    auth.requestMatchers(HttpMethod.GET,"/Error/**", "/Error").permitAll();
+
+                    // Configurar endpoints públicos (static)
+                    auth.requestMatchers("/Css/**", "/Js/**").permitAll();
 
                     // Configurar endpoints privados
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").hasAnyRole("ADMIN", "INSPECTOR");
