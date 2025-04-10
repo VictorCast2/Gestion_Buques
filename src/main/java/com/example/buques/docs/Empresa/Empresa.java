@@ -18,6 +18,7 @@ public class Empresa {
     @Id
     @BsonProperty("_id")
     private String id;
+
     @BsonProperty("nit")
     private String nit;
     @BsonProperty("nombre")

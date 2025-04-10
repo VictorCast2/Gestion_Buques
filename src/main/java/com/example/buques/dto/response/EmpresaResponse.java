@@ -14,5 +14,5 @@ public record EmpresaResponse(
         @JsonProperty("correo") String correo,
         @JsonProperty("jwt") String jwt,
         @JsonProperty("cantidad_buques") int cantidad_buques
-) {
+        ) {
 }
