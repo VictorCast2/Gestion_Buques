@@ -18,12 +18,14 @@ public class AuthenticationController {
 
     @GetMapping("/login")
 
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest) {
         return new ResponseEntity<>(userDetailService.loginUser(userRequest), HttpStatus.OK);
     }
 
     @GetMapping("/resgitro")
+
 
     @PostMapping("/resgitro")
     public ResponseEntity<AuthResponse> registro(@RequestBody @Valid AuthLoginRequest userRequest) {

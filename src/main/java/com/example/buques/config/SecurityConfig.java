@@ -36,9 +36,9 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
                 .authorizeHttpRequests(auth -> {
-
                     // Configurar endpoints públicos
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 
                     // Configurar endpoints privados
@@ -50,6 +50,8 @@ public class SecurityConfig {
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
+                .formLogin(Customizer.withDefaults()) // habilitamos el login por defecto
+                .logout(Customizer.withDefaults()) // habilitamos el logout por defecto
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
                 .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
