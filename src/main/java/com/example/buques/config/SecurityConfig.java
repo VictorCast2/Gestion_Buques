@@ -56,7 +56,6 @@ public class SecurityConfig {
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
-                .formLogin(Customizer.withDefaults()) // habilitamos el login por defecto
                 .logout(Customizer.withDefaults()) // habilitamos el logout por defecto
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
                 .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
