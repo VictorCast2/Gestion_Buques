@@ -2,7 +2,7 @@
 ¡Hola! 🖐️ Gracias por tu interés en contribuir a **Gestion_Buque**. Tu ayuda es muy valiosa para que este proyecto crezca y mejore. Antes de comenzar, sigue estas sencillas pautas:
 
 ## Cómo contribuir 🚀
-1. **Haz un fork del repositorio** 🍴
+1. **Haz un fork del repositorio**
 2. **Clona tu fork** 🖥️
 3. **Crea una rama para tu cambio** 🌱
 4. **Realiza tus mejoras o correcciones** ✨
