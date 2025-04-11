@@ -11,6 +11,7 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Data
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -36,10 +38,14 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
                 .authorizeHttpRequests(auth -> {
-
                     // Configurar endpoints públicos
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
+                    auth.requestMatchers(HttpMethod.GET,"/Error/**", "/Error").permitAll();
+
+                    // Configurar endpoints públicos (static)
+                    auth.requestMatchers("/Css/**", "/Js/**").permitAll();
 
                     // Configurar endpoints privados
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").hasAnyRole("ADMIN", "INSPECTOR");
@@ -50,6 +56,7 @@ public class SecurityConfig {
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
+                .logout(Customizer.withDefaults()) // habilitamos el logout por defecto
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
                 .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
                 .build();

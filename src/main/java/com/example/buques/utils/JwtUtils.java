@@ -44,7 +44,6 @@ public class JwtUtils {
                 .withJWTId(UUID.randomUUID().toString()) // generación del id del token
                 .withNotBefore(new Date()) // especifica el momento en el que el token se considera válido (en este caso, desde su generación)
                 .sign(algorithm); // firma del token
-
         return jwtToken;
     }
 

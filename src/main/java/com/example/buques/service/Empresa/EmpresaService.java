@@ -16,7 +16,7 @@ public class EmpresaService {
     @Autowired
     private final EmpresaRepository empresaRepository;
 
-    public EmpresaResponse createEmpresa(EmpresaRequest request, String jwt) {
+    public EmpresaResponse createEmpresa(EmpresaRequest request) {
         // Verificar si el NIT ya existe
         boolean exists = empresaRepository.findAll()
                 .stream()
@@ -45,22 +45,22 @@ public class EmpresaService {
                 .cantidad_buques(cantidadBuques)
                 .build();
         empresaRepository.save(empresa);
-        return toResponse(empresa, jwt);
+        return toResponse(empresa);
     }
 
     public List<EmpresaResponse> getAllEmpresas() {
         return empresaRepository.findAll().stream()
-                .map(empresa -> toResponse(empresa, null))
+                .map(this::toResponse)
                 .toList();
     }
 
     public EmpresaResponse getEmpresaById(String id) {
         Empresa empresa = empresaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
-        return toResponse(empresa, null);
+        return toResponse(empresa);
     }
 
-    public EmpresaResponse updateEmpresa(String id, EmpresaRequest request, String jwt) {
+    public EmpresaResponse updateEmpresa(String id, EmpresaRequest request) {
         Empresa empresa = empresaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
 
@@ -81,14 +81,14 @@ public class EmpresaService {
         empresa.setCorreo(request.correo());
         empresa.setCantidad_buques(Integer.parseInt(request.cantidad_buques()));
         empresaRepository.save(empresa);
-        return toResponse(empresa, jwt);
+        return toResponse(empresa);
     }
 
     public void deleteEmpresa(String id) {
         empresaRepository.deleteById(id);
     }
 
-    private EmpresaResponse toResponse(Empresa empresa, String jwt) {
+    private EmpresaResponse toResponse(Empresa empresa) {
         return new EmpresaResponse(
                 empresa.getNit(),
                 empresa.getNombre(),
@@ -97,7 +97,6 @@ public class EmpresaService {
                 empresa.getDireccion(),
                 empresa.getTelefono(),
                 empresa.getCorreo(),
-                jwt,
                 empresa.getCantidad_buques()
         );
     }

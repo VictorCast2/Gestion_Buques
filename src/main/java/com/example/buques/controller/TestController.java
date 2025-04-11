@@ -27,4 +27,5 @@ public class TestController {
     public String inspector() {
         return "hello Word! - Inspector";
     }
+
 }
