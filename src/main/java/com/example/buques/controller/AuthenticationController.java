@@ -32,4 +32,9 @@ public class AuthenticationController {
         return "Registro";
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthLoginRequest userRequest) {
+        return new ResponseEntity<>(userDetailService.loginUser(userRequest), HttpStatus.OK);
+    }
+
 }

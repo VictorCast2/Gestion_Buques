@@ -1,4 +1,4 @@
-package com.example.buques.service.Empresa;
+package com.example.buques.service;
 
 import com.example.buques.docs.Empresa.Empresa;
 import com.example.buques.dto.request.EmpresaRequest;
