@@ -12,6 +12,7 @@ public class ErrorController {
         return switch (Code) {
             case 300 -> "/Error/300";
             case 400 -> "/Error/400";
+            case 401 -> "/Error/401";
             case 403 -> "/Error/403";
             case 404 -> "/Error/404";
             case 500 -> "/Error/500";

@@ -45,7 +45,7 @@ public class BuquesApplication {
 					.apellidos("Torres Diaz")
 					.telefono("+57 310 5566778")
 					.correo("carlos@email.com")
-					.password("$2a$10$rj3PmRqB76o2VrobVRdCf.s2Q4S3HDnvVHeAmi8Uxdp.GWrLoqiMq")
+					.password("$2a$10$Ek.Cou/rsSJMQk/NQR96jeCE9ImW.pzSaf.OXMptcNDzUOPFQz7EC")
 					.rol(ERol.INSPECTOR)
 					.empresa(null)
 					.isEnabled(true)

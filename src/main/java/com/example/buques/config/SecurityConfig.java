@@ -36,10 +36,12 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults()) // habilitamos httpBasic (autenticación básica) por defecto
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
+                        .invalidSessionUrl("/Api/Auth/Login") // Redirige si la sesión es inválida
                 )
                 .authorizeHttpRequests(auth -> {
                     // Configurar endpoints públicos
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
                     auth.requestMatchers(HttpMethod.GET,"/Error/**", "/Error").permitAll();
@@ -56,7 +58,13 @@ public class SecurityConfig {
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
-                .logout(Customizer.withDefaults()) // habilitamos el logout por defecto
+                .logout(logout -> logout
+                                .logoutUrl("/auth/logout") // URL de cierre de sesión
+                                .logoutSuccessUrl("/auth/logout") // Redirige tras cerrar sesión
+                                .clearAuthentication(true) // Borra la autenticación actual
+                                .deleteCookies("JSESSIONID") // Borra la cookie de sesión
+                                .permitAll()
+                )
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
                 .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
