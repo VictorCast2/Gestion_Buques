@@ -86,4 +86,23 @@ Object.keys(fields).forEach(fieldId => {
     checkbox.addEventListener("change", function () {
         errorMessageBox.style.display = "none";
     });
-}); 
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const errorMessageBox = document.querySelector(".input__advertencia");
+    if (errorMessageBox) {
+        setTimeout(function () {
+            errorMessageBox.style.display = "none";
+        }, 20000); // Ocultar después de 20 segundos
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const errorChanged2 = document.querySelector(".input__error error--changed2");
+    if (errorChanged2 && errorChanged2.style.display !== "none") {
+        setTimeout(function () {
+            errorChanged2.style.display = "none";
+        }, 20000); // Ocultar después de 20 segundos
+    }
+});
