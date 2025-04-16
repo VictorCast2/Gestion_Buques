@@ -37,7 +37,11 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> {
 
-                    // Configurar endpoints públicos
+                    // Configurar endpoints públicos staticos (sin autenticación)
+                    auth.requestMatchers("/css/**").permitAll();
+                    auth.requestMatchers("/js/**").permitAll();
+
+                    // Configurar endpoints públicos (sin autenticación)
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 

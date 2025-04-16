@@ -91,7 +91,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (!encoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
-
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
     }
 }
