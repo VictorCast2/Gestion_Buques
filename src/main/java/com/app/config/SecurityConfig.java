@@ -3,6 +3,7 @@ package com.app.config;
 import com.app.config.filter.JwtTokenValidatorFilter;
 import com.app.service.UserDetailServiceImpl;
 import com.app.utils.JwtUtils;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,8 +22,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+@Data
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -54,6 +58,15 @@ public class SecurityConfig {
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
+
+                // Configuración de logout
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout") // Ruta para cerrar sesión
+                        .clearAuthentication(true) // Borra la autenticación actual
+                        .invalidateHttpSession(true) // Invalida la sesión HTTP
+                        .deleteCookies("JSESSIONID") // Borra la cookie de sesión
+                )
+
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
                 .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
