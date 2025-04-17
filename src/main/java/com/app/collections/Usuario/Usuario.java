@@ -25,7 +25,7 @@ public class Usuario {
     @Field("tipo_identificacion")
     private EIdentificacion tipoIdentificacion;
     @Field("numero_identificacion")
-    private int numeroIdentificacion;
+    private String numeroIdentificacion;
     private String nombres;
     private String apellidos;
     private String telefono;

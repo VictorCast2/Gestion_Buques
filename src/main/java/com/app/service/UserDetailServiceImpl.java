@@ -1,10 +1,14 @@
 package com.app.service;
 
+import com.app.collections.Usuario.Enum.EIdentificacion;
+import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
+import com.app.dto.request.AuthCreateUserRequest;
 import com.app.dto.request.AuthLoginRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,6 +59,52 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     /**
+     * Método para la creación de un usuario
+     * @param authCreateUserRequest parámetro con los datos básicos del usuario
+     * @return un objeto de tipo authResponse que contiene el correo del usuario, un mensaje de satisfacción, el token de acceso y el estado
+     * @nota: el usuario creado tendrá por defecto el rol de Invitado y lo referente a los datos de su empresa ó inspecciones,
+     * serán nulos, por ser la primera vez que se crea al usuario
+     */
+    public AuthResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
+        EIdentificacion tipoIdentificacion = EIdentificacion.obtenerPorDescripcion(authCreateUserRequest.tipoIdentificacion());
+        String numeroIdentificacion = authCreateUserRequest.numeroIdentificacion();
+        String nombres = authCreateUserRequest.nombres();
+        String apellidos = authCreateUserRequest.apellidos();
+        String telefono = authCreateUserRequest.telefono();
+        String correo = authCreateUserRequest.correo();
+        String password = authCreateUserRequest.password();
+
+        // creamos al usuario con los datos del dto y valores por defecto
+        Usuario usuario = Usuario.builder()
+                .tipoIdentificacion(tipoIdentificacion)
+                .numeroIdentificacion(numeroIdentificacion)
+                .nombres(nombres)
+                .apellidos(apellidos)
+                .telefono(telefono)
+                .correo(correo)
+                .password(encoder.encode(password))
+                .rol(ERol.INVITADO)
+                .empresa(null)
+                .inspecciones(null)
+                .isEnabled(true)
+                .accountNoExpired(true)
+                .accountNoLocked(true)
+                .credentialNoExpired(true)
+                .build();
+
+        Usuario usuarioCreado = usuarioRepository.save(usuario); // salvamos al usuario
+
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>(); // permisos del usuario
+        authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(usuarioCreado.getRol().name())));
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(usuarioCreado.getCorreo(), usuarioCreado.getPassword(), authorityList);
+        String tokenDeAcceso = jwtUtils.crearToken(authentication);
+
+        AuthResponse authResponse = new AuthResponse(usuarioCreado.getCorreo(), "usuario creado exitosamente", tokenDeAcceso, true);
+        return authResponse;
+    }
+
+    /**
      * Método para loguear al usuario
      * @param authLoginRequest parámetro con los datos necesarios para el logueo del usuario (username, password)
      * @return un objeto de tipo authResponse que contiene el correo del usuario, un mensaje de satisfacción, el token de acceso y el estado
@@ -93,4 +143,5 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
     }
+
 }
