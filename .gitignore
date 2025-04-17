@@ -31,6 +31,9 @@ build/
 
 ### APPLICATION.PROPERTIES y .env ###
 .env
+.env.*
+*.env
+*.env.*
 
 ### VS Code ###
 .vscode/
