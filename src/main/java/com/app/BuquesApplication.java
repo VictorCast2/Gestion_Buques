@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
-@EnableCaching
 @SpringBootApplication
 public class BuquesApplication {
 
