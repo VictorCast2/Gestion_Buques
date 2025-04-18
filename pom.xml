@@ -15,7 +15,11 @@
 	<description>Proyecto de prueba para la gestión de buques en Cartagena</description>
 	<url/>
 	<licenses>
-		<license/>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+			<comments>Licencia Apache aplicada al proyecto, ver archivo LICENSE.md para más detalles.</comments>
+		</license>
 	</licenses>
 	<developers>
 		<developer/>
