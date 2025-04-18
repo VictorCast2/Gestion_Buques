@@ -41,7 +41,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
 
         Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("el usuario " + correo + " no existe."));
+                .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
@@ -107,13 +107,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String correo = authLoginRequest.correo();
         String password = authLoginRequest.password();
 
-        Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String tokenDeAcceso = jwtUtils.crearToken(authentication);
 
-        String tokenDeAcceso = jwtUtils.crearToken(authentication);
+            return new AuthResponse("Usuario Logueado Exitosamente");
 
-        AuthResponse authResponse = new AuthResponse("Usuario Logueado Exitosamente");
-        return authResponse;
+        } catch (BadCredentialsException | UsernameNotFoundException exception) {
+            throw exception;
+        }
+
     }
 
     /**

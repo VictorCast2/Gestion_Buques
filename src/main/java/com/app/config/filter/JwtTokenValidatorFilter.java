@@ -20,8 +20,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collection;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 
     private JwtUtils jwtUtils;
@@ -38,7 +36,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
         // obtención del token (recodar que se envía en el header de la petición)
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (jwtToken != null) { // Bearer mkdmsvjskdcmdjnskdcdknfhvgcfhyghj
+        if (jwtToken != null && jwtToken.startsWith("Bearer ")) { // Bearer mkdmsvjskdcmdjnskdcdknfhvgcfhyghj
             jwtToken = jwtToken.substring(7);
 
             DecodedJWT decodedJWT = jwtUtils.validarToken(jwtToken);
