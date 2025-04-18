@@ -1,5 +1,7 @@
 package com.app.collections.Factura.pojo;
 
+import com.app.collections.Factura.Enum.ECarga;
+import com.app.collections.Factura.Enum.EOperacion;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -14,15 +16,15 @@ import java.util.Set;
 public class Proceso {
 
     @Field("tipo_operacion")
-    private String tipoOperacion; // considerar trabajar este atributo como un Enum
+    private EOperacion tipoOperacion;
     @Field("tipo_carga")
-    private String tipoCarga; // considerar trabajar este atributo como un Enum
+    private ECarga tipoCarga;
     @Field("tipo_producto")
-    private String tipoProducto; // considerar trabajar este atributo como un Enum
+    private String tipoProducto; // especifica el producto a cargar o descargar
     private int cantidad;
     @Field("peso_total")
     private double pesoTotal;
-    private String descripcion;
+    private String descripcion; // descripción de la solicitud del proceso a realizar
 
     private Set<Maquina> maquinas = new HashSet<>();
 }

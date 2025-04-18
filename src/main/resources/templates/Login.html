@@ -15,7 +15,7 @@
 
 <body>
 
-    <form class="form">
+    <form action="/auth/login" method="post" class="form">
         <h1 class="formulario__title">Iniciar Seccion</h1>
         <div class="icono">
             <ul class="example-2">
@@ -75,7 +75,7 @@
 
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="email" autocomplete="off" placeholder="" name="Email" id="email">
+                    <input type="email" autocomplete="off" placeholder="" name="correo" id="email">
                     <label for="email">Email</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -89,7 +89,7 @@
 
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="password" autocomplete="off" placeholder="" name="Password" id="password">
+                    <input type="password" autocomplete="off" placeholder="" name="password" id="password">
                     <label for="password">Password</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -109,6 +109,10 @@
             <p class="input__advertencia">
                 <i class="ri-error-warning-line"></i> Por favor rellene el formulario correctamente.
             </p>
+
+            <div th:if="${mensaje != null}" class="alert alert-danger">
+                <p th:text="${mensaje}"></p>
+            </div>
 
             <div class="formulario__input formulario__btn-container">
                 <button class="formulario__btn" type="submit">Registrar</button>
