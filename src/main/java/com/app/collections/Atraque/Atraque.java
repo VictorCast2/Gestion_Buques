@@ -26,6 +26,20 @@ public class Atraque {
     @Id
     private String id;
 
+    @Field("pais_procedencia")
+    private String paisProcedencia;
+    @Field("ciudad_procedencia")
+    private String ciudadProcedencia;
+    @Field("puerto_procedencia")
+    private String puertoProcedencia;
+
+    @Field("pais_destino")
+    private String paisDestino;
+    @Field("ciudad_destino")
+    private String ciudadDestino;
+    @Field("puerto_destino")
+    private String puertoDestino;
+
     @Field("fecha_llegada")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaLlegada;

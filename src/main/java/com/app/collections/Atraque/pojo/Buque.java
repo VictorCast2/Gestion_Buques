@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Builder
 public class Buque {
 
-    private String imagen; // considerar remover imagen
     private String matricula;
     private String nombre;
     @Field("tipo_buque")

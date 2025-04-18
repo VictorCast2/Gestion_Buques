@@ -66,7 +66,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * serán nulos, por ser la primera vez que se crea al usuario
      */
     public AuthResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
-        EIdentificacion tipoIdentificacion = EIdentificacion.obtenerPorDescripcion(authCreateUserRequest.tipoIdentificacion());
+        EIdentificacion tipoIdentificacion = EIdentificacion.valueOf(authCreateUserRequest.tipoIdentificacion());
         String numeroIdentificacion = authCreateUserRequest.numeroIdentificacion();
         String nombres = authCreateUserRequest.nombres();
         String apellidos = authCreateUserRequest.apellidos();
@@ -94,14 +94,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         Usuario usuarioCreado = usuarioRepository.save(usuario); // salvamos al usuario
 
-        List<SimpleGrantedAuthority> authorityList = new ArrayList<>(); // permisos del usuario
-        authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(usuarioCreado.getRol().name())));
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(usuarioCreado.getCorreo(), usuarioCreado.getPassword(), authorityList);
-        String tokenDeAcceso = jwtUtils.crearToken(authentication);
-
-        AuthResponse authResponse = new AuthResponse(usuarioCreado.getCorreo(), "usuario creado exitosamente", tokenDeAcceso, true);
-        return authResponse;
+        return new AuthResponse("usuario creado exitosamente");
     }
 
     /**
@@ -119,7 +112,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         String tokenDeAcceso = jwtUtils.crearToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(correo, "Usuario Logueado Exitosamente", tokenDeAcceso, true);
+        AuthResponse authResponse = new AuthResponse("Usuario Logueado Exitosamente");
         return authResponse;
     }
 

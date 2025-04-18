@@ -16,7 +16,7 @@ public class DetalleProcesos {
     @Id
     private String id;
     @Field("descripcion_servicio")
-    private String descripcionServicio;
+    private String descripcionServicio; // esto lo especifica el admin, donde detalla que se le esta facturando al usuario
     private int cantidad;
     @Field("precio_unitario")
     private int precioUnitario;

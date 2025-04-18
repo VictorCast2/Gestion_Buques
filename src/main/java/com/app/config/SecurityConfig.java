@@ -22,10 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-@Data
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -50,7 +48,7 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 
                     // Configurar endpoints privados
-                    auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").hasAnyRole("ADMIN", "INSPECTOR");
+                    auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
 
