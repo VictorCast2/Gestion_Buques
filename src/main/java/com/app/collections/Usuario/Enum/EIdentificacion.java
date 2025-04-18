@@ -16,4 +16,13 @@ public enum EIdentificacion {
     TI("Tarjeta de Identidad");
 
     private final String descripcion;
+
+    public static EIdentificacion obtenerPorDescripcion(String descripcion) {
+        for (EIdentificacion tipo : values()) {
+            if (tipo.getDescripcion().equalsIgnoreCase(descripcion)) {
+                return tipo;
+            }
+        }
+        throw new IllegalArgumentException("Tipo de identificacion invalida: " + descripcion);
+    }
 }

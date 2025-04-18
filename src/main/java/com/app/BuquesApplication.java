@@ -26,7 +26,7 @@ public class BuquesApplication {
 			/* Crear Usuarios */
 			Usuario userJose = Usuario.builder()
 					.tipoIdentificacion(EIdentificacion.CC)
-					.numeroIdentificacion(12345)
+					.numeroIdentificacion("12345")
 					.nombres("Jose Andres")
 					.apellidos("Torres Diaz")
 					.telefono("+57 310 2233445")
@@ -42,7 +42,7 @@ public class BuquesApplication {
 
 			Usuario userCarlos = Usuario.builder()
 					.tipoIdentificacion(EIdentificacion.TI)
-					.numeroIdentificacion(123456)
+					.numeroIdentificacion("123456")
 					.nombres("Carlos Andres")
 					.apellidos("Torres Diaz")
 					.telefono("+57 310 5566778")

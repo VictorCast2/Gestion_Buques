@@ -1,10 +1,14 @@
 package com.app.service;
 
+import com.app.collections.Usuario.Enum.EIdentificacion;
+import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
+import com.app.dto.request.AuthCreateUserRequest;
 import com.app.dto.request.AuthLoginRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +41,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
 
         Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("el usuario " + correo + " no existe."));
+                .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
@@ -55,6 +59,45 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     /**
+     * Método para la creación de un usuario
+     * @param authCreateUserRequest parámetro con los datos básicos del usuario
+     * @return un objeto de tipo authResponse que contiene el correo del usuario, un mensaje de satisfacción, el token de acceso y el estado
+     * @nota: el usuario creado tendrá por defecto el rol de Invitado y lo referente a los datos de su empresa ó inspecciones,
+     * serán nulos, por ser la primera vez que se crea al usuario
+     */
+    public AuthResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
+        EIdentificacion tipoIdentificacion = EIdentificacion.valueOf(authCreateUserRequest.tipoIdentificacion());
+        String numeroIdentificacion = authCreateUserRequest.numeroIdentificacion();
+        String nombres = authCreateUserRequest.nombres();
+        String apellidos = authCreateUserRequest.apellidos();
+        String telefono = authCreateUserRequest.telefono();
+        String correo = authCreateUserRequest.correo();
+        String password = authCreateUserRequest.password();
+
+        // creamos al usuario con los datos del dto y valores por defecto
+        Usuario usuario = Usuario.builder()
+                .tipoIdentificacion(tipoIdentificacion)
+                .numeroIdentificacion(numeroIdentificacion)
+                .nombres(nombres)
+                .apellidos(apellidos)
+                .telefono(telefono)
+                .correo(correo)
+                .password(encoder.encode(password))
+                .rol(ERol.INVITADO)
+                .empresa(null)
+                .inspecciones(null)
+                .isEnabled(true)
+                .accountNoExpired(true)
+                .accountNoLocked(true)
+                .credentialNoExpired(true)
+                .build();
+
+        Usuario usuarioCreado = usuarioRepository.save(usuario); // salvamos al usuario
+
+        return new AuthResponse("usuario creado exitosamente");
+    }
+
+    /**
      * Método para loguear al usuario
      * @param authLoginRequest parámetro con los datos necesarios para el logueo del usuario (username, password)
      * @return un objeto de tipo authResponse que contiene el correo del usuario, un mensaje de satisfacción, el token de acceso y el estado
@@ -64,13 +107,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String correo = authLoginRequest.correo();
         String password = authLoginRequest.password();
 
-        Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String tokenDeAcceso = jwtUtils.crearToken(authentication);
 
-        String tokenDeAcceso = jwtUtils.crearToken(authentication);
+            return new AuthResponse("Usuario Logueado Exitosamente");
 
-        AuthResponse authResponse = new AuthResponse(correo, "Usuario Logueado Exitosamente", tokenDeAcceso, true);
-        return authResponse;
+        } catch (BadCredentialsException | UsernameNotFoundException exception) {
+            throw exception;
+        }
+
     }
 
     /**
@@ -93,4 +140,5 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
     }
+
 }

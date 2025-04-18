@@ -15,7 +15,7 @@
 
 <body>
 
-    <form class="form">
+    <form action="/auth/registro" method="post" class="form">
         <h1 class="formulario__title">Registro</h1>
         <div class="icono">
             <ul class="example-2">
@@ -74,7 +74,7 @@
         <div class="formulario">
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="text"  autocomplete="off" placeholder="" name="Nombre" id="nombre">
+                    <input type="text"  autocomplete="off" placeholder="" name="nombres" id="nombre">
                     <label for="nombre">Nombre</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -86,7 +86,7 @@
             
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="text" autocomplete="off" placeholder="" name="Apellido" id="apellido">
+                    <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido">
                     <label for="apellido">Apellido</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -95,7 +95,9 @@
                     El nombre debe tener al menos 3 letras y no contener números.
                 </p>
             </div>
-            
+
+            <input type="hidden" name="tipoIdentificacion" id="tipoIdentificacionInput">
+
             <div class="formulario__input">
                 <div class="custom-select">
                     <div class="select-box" id="selectBox">
@@ -103,14 +105,12 @@
                         <i class="fa-solid fa-chevron-down arrow"></i>
                     </div>
                     <ul class="options-list" id="optionsList">
-                        <li class="option" data-value="Cedula">CC(Cédula de Ciudadanía)</li>
-                        <li class="option" data-value="C.Extranjeria">CE(Cédula de Extranjería)</li>
-                        <li class="option" data-value="D.Extranjería">DE(Documento de Extranjería)</li>
-                        <li class="option" data-value="NIT">NIT(Identificación Tributaria)</li>
-                        <li class="option" data-value="PP">PP(Pasaporte)</li>
-                        <li class="option" data-value="RUT">RUT(Registro Único Tributario)</li>
-                        <li class="option" data-value="TEC">TE(Tarjeta de Extranjería)</li>
-                        <li class="option" data-value="T"> TI(Tarjeta de Identidad)</li>
+                        <li class="option"
+                            th:each="tipo : ${tiposIdentificacion}"
+                            th:text="${tipo.descripcion}"
+                            th:attr="data-value=${tipo.name}">
+                            Tipo Identificación
+                        </li>
                     </ul>
                 </div>
                 <p class="input__error error--changed">
@@ -120,7 +120,7 @@
             
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="text" autocomplete="off" placeholder="" name="Identificacion" id="identificacion">
+                    <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion">
                     <label for="identificacion">Identificacion</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -132,7 +132,7 @@
             
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="email"  autocomplete="off" placeholder="" name="Email" id="email">
+                    <input type="email"  autocomplete="off" placeholder="" name="correo" id="email">
                     <label for="email">Email</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -144,7 +144,7 @@
             
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="text" autocomplete="off" placeholder="" name="Telefono" id="telefono">
+                    <input type="text" autocomplete="off" placeholder="" name="telefono" id="telefono">
                     <label for="telefono">Telefono</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -156,7 +156,7 @@
             
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="password"  autocomplete="off" placeholder="" name="Password" id="password">
+                    <input type="password"  autocomplete="off" placeholder="" name="password" id="password">
                     <label for="password">Password</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>

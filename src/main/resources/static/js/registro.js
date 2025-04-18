@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectedText = selectBox?.querySelector(".selected");
     const options = document.querySelectorAll(".option");
     const errorTipoId = document.querySelector(".error--changed");
-    const errorMessageBox = document.querySelector(".input__advertencia"); 
+    const errorMessageBox = document.querySelector(".input__advertencia");
+    const tipoIdentificacionInput = document.getElementById("tipoIdentificacionInput");
     let tipoIdentificacionSeleccionado = false;
 
     if (selectBox && optionsList && selectedText && options) {
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 errorMessageBox.style.display = "none";
                 selectBox.classList.remove("open");
                 optionsList.classList.remove("open");
+                tipoIdentificacionInput.value = option.getAttribute("data-value");
             });
         });
 
