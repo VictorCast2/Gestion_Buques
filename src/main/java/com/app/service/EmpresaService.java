@@ -19,7 +19,7 @@ public class EmpresaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public EmpresaResponse registrarEmpresaAUsuario(@Valid EmpresaRequest request, String correoUsuario) {
+    public EmpresaResponse asignarEmpresa(@Valid EmpresaRequest request, String correoUsuario) {
 
         Usuario usuario = usuarioRepository.findByCorreo(correoUsuario)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el correo: " + correoUsuario));

@@ -23,7 +23,7 @@ public class EmpresaController {
 
     @PostMapping("/registrar")
     public String registrarEmpresa(@Valid @RequestBody EmpresaRequest request, String correoUsuario) {
-        EmpresaResponse response = empresaService.registrarEmpresaAUsuario(request, correoUsuario);
+        EmpresaResponse response = empresaService.asignarEmpresa(request, correoUsuario);
         return "Empresa";
     }
 
