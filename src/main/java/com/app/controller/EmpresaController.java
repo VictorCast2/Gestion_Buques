@@ -16,7 +16,7 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    @GetMapping("/registro")
+    @GetMapping("/registrar")
     public String registro(Model model) {
         return "Empresa";
     }
