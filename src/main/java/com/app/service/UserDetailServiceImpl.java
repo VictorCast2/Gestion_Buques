@@ -1,32 +1,28 @@
 package com.app.service;
 
-import com.app.collections.Usuario.Enum.EIdentificacion;
-import com.app.collections.Usuario.Enum.ERol;
+import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
-import com.app.dto.request.AuthCreateUserRequest;
-import com.app.dto.request.AuthLoginRequest;
+import com.app.dto.request.*;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
