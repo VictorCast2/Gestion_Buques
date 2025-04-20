@@ -8,6 +8,8 @@ import com.app.dto.request.AuthLoginRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -97,12 +99,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new AuthResponse("usuario creado exitosamente");
     }
 
+
     /**
      * Método para loguear al usuario
      * @param authLoginRequest parámetro con los datos necesarios para el logueo del usuario (username, password)
-     * @return un objeto de tipo authResponse que contiene el correo del usuario, un mensaje de satisfacción, el token de acceso y el estado
+     * @return el token codificado, el cual en el controller se le pasa a una cookie de session
      */
-    public AuthResponse loginUser(AuthLoginRequest authLoginRequest) {
+    public String loginUser(AuthLoginRequest authLoginRequest) {
 
         String correo = authLoginRequest.correo();
         String password = authLoginRequest.password();
@@ -110,9 +113,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         try {
             Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String tokenDeAcceso = jwtUtils.crearToken(authentication);
 
-            return new AuthResponse("Usuario Logueado Exitosamente");
+            return jwtUtils.crearToken(authentication);
 
         } catch (BadCredentialsException | UsernameNotFoundException exception) {
             throw exception;

@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.app.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
@@ -33,11 +34,21 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        // obtención del token (recodar que se envía en el header de la petición)
-        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        Cookie[] cookies = request.getCookies();
+        String jwtToken = null;
 
-        if (jwtToken != null && jwtToken.startsWith("Bearer ")) { // Bearer mkdmsvjskdcmdjnskdcdknfhvgcfhyghj
-            jwtToken = jwtToken.substring(7);
+        // recorremos las cookies para obtener la que tiene el token
+        if (cookies != null) {
+            for (Cookie cookie: cookies) {
+                // "access_token" este es el nombre de la cookie que tienen el token
+                if ("access_token".equals(cookie.getName())) {
+                    jwtToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (jwtToken != null) {
 
             DecodedJWT decodedJWT = jwtUtils.validarToken(jwtToken);
 
