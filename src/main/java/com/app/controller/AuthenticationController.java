@@ -5,6 +5,8 @@ import com.app.dto.request.AuthCreateUserRequest;
 import com.app.dto.request.AuthLoginRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.service.UserDetailServiceImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,11 +28,20 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@ModelAttribute @Valid AuthLoginRequest authLoginRequest, Model model) {
+    public String postLogin(@ModelAttribute @Valid AuthLoginRequest authLoginRequest, HttpServletResponse response, Model model) {
 
         try {
-            AuthResponse response = this.userDetailService.loginUser(authLoginRequest);
-            model.addAttribute("mensaje", response.mensaje());
+            String tokenDeAcceso = this.userDetailService.loginUser(authLoginRequest);
+
+            Cookie cookie = new Cookie("access_token", tokenDeAcceso);
+            cookie.setHttpOnly(true); // para que no se pueda acceder a la cookie por JS
+            cookie.setMaxAge(7200); // tiempo de expiración de la cookie en segundos (2hrs), coincide con la expiración del token
+            cookie.setPath("/"); // asi nos aseguramos de que esté en todas las rutas del sitio web
+            response.addCookie(cookie); // añadimos la cookie al HttpServletResponse
+
+            response.addCookie(cookie);
+            model.addAttribute("mensaje", "Usuario Logueado Exitosamente");
+
             return "Login";
         } catch (BadCredentialsException | UsernameNotFoundException exception) {
             model.addAttribute("mensaje", exception.getMessage());

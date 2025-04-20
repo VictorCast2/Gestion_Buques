@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -32,7 +33,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable()) // deshabilitamos csrf por problemas con el jwt, bloquea los endpoints (post, put, delete), investigar como trabajar con cookies si se desea habilitar
+                    .csrf(csrf -> csrf
+                            .ignoringRequestMatchers("/auth/login", "auth/registro")
+                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    ) // habilitamos la protección CSRF usando cookies
                 .httpBasic(Customizer.withDefaults()) // habilitamos httpBasic (autenticación básica) por defecto
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
@@ -40,10 +44,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
 
                     // Configurar endpoints públicos estáticos (sin autenticación)
-                    auth.requestMatchers("/css/**").permitAll();
-                    auth.requestMatchers("/js/**").permitAll();
+                    auth.requestMatchers("/", "/css/**", "/js/**").permitAll();
 
                     // Configurar endpoints públicos (sin autenticación)
+                    auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 
@@ -62,7 +66,7 @@ public class SecurityConfig {
                         .logoutUrl("/auth/logout") // Ruta para cerrar sesión
                         .clearAuthentication(true) // Borra la autenticación actual
                         .invalidateHttpSession(true) // Invalida la sesión HTTP
-                        .deleteCookies("JSESSIONID") // Borra la cookie de sesión
+                        .deleteCookies("JSESSIONID", "access_token") // Borra la cookie de sesión y el token de la session
                 )
 
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
