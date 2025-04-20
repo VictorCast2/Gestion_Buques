@@ -1,4 +1,4 @@
-# 🚢 Gestión Inteligente de Horarios y Buques de Carga – Puerto de Cartagena
+# 🚢 Gestión Inteligente de Horarios y Buques de Carga Puerto de Cartagena
 
 Una aplicación web desarrollada con **Spring Boot**, diseñada para optimizar la **planificación, programación y gestión operativa de buques de carga** en el puerto de Cartagena. Con soporte de autenticación segura, control de accesos por roles, sesiones concurrentes y manejo eficiente de datos en tiempo real.
 
