@@ -1,39 +1,33 @@
-# Etapa 1: Compilar la app con Maven
+# Etapa 1: Construcción de la app
 FROM eclipse-temurin:21.0.3_9-jdk AS builder
 
-# Establecer el directorio de trabajo
 LABEL authors="Víctor-José-Yubliam-Keyner"
 WORKDIR /app
 
-# Copiar el archivo pom.xml, .mvn y mvnw
-COPY ./pom.xml .
-COPY ./.mvn .mvn
-COPY ./mvnw .
+# Copiar archivos necesarios para preparar dependencias
+COPY pom.xml ./
+COPY .mvn .mvn
+COPY mvnw ./
 
 # Descargar dependencias sin compilar
 RUN ./mvnw dependency:go-offline
 
-# Copiar el resto del código fuente
-RUN mvn clean install -DskipTests
-
-# Copiar el código fuente
+# Copiar el código fuente completo
 COPY src ./src
 
-# Construir el JAR de la aplicación
-RUN mvn package -DskipTests && mvn clean
+# Construir el JAR sin ejecutar tests
+RUN ./mvnw clean package -DskipTests
 
 # Etapa 2: Imagen final
 FROM eclipse-temurin:21.0.3_9-jre
 
-# Establecer el directorio de trabajo
 LABEL authors="Víctor-José-Yubliam-Keyner"
 WORKDIR /app
 
-# Copiar solo el JAR generado desde la etapa de construcción
-COPY --from=build /app/target/buques-0.0.1-SNAPSHOT.jar /app/buques.jar
+# Copiar el JAR desde la etapa builder
+COPY --from=builder /app/target/buques-0.0.1-SNAPSHOT.jar ./buques.jar
 
 # Exponer el puerto en el que Spring Boot escucha por defecto (8080)
 EXPOSE 8080
 
-# Comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "/app/buques.jar"]
+ENTRYPOINT ["java", "-jar", "buques.jar"]
