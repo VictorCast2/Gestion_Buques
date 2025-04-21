@@ -1,0 +1,13 @@
+# Ignorar directorios de compilación y configuración
+target/
+# Ignorar archivos de configuración de VsCode
+.vscode/
+# Ignorar archivos de configuración de IntelijiJ
+.idea/
+
+# Ignorar archivos de configuración de proyecto y logs
+*.iml
+*.log
+
+# Ignorar repositorio Git
+.git
