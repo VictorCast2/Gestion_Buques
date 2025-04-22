@@ -1,4 +1,16 @@
-fields = { 
+// Función para abrir el modal
+function openModal() {
+    const modal = document.getElementById("modalSuccess");
+    modal.style.display = "block"; // Mostrar el modal
+}
+
+// Función para cerrar el modal
+function closeModal() {
+    const modal = document.getElementById("modalSuccess");
+    modal.style.display = "none"; // Ocultar el modal
+}
+
+const fields = {
     email: {
         regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
         errorMessage: "El correo solo puede contener letras, números, puntos, guiones y guion bajo."
@@ -42,67 +54,51 @@ Object.keys(fields).forEach(fieldId => {
             inputBox.classList.add("input-error");
         }
     });
+});
 
-    const form = document.querySelector("form");
-    const errorMessageBox = document.querySelector(".input__advertencia");
-    const errorMessages = document.querySelectorAll(".input__error");
-    const inputs = document.querySelectorAll("input:not([type='checkbox'])"); // Todos los inputs excepto el checkbox
-    const checkbox = document.querySelector(".remember-forgot input"); // Selecciona el checkbox
+const form = document.querySelector("form");
+const errorMessageBox = document.querySelector(".input__advertencia");
+const errorMessages = document.querySelectorAll(".input__error");
+const inputs = document.querySelectorAll("input:not([type='checkbox'])"); // Todos los inputs excepto el checkbox
+const checkbox = document.querySelector(".remember-forgot input"); // Selecciona el checkbox
 
-    form.addEventListener("submit", function (event) {
-        let valid = true;
+form.addEventListener("submit", function (event) {
+    let formValid = true;
 
-        // Ocultar mensajes de error individuales
-        errorMessages.forEach(error => {
-            error.style.display = "none";
-        });
-
-        // Verificar si los campos de texto están vacíos
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                valid = false;
-            }
-        });
-
-        // Verificar si el checkbox está marcado
-        if (!checkbox.checked) {
-            valid = false;
-        }
-
-        // Si hay errores, mostrar solo el mensaje general y evitar el envío
-        if (!valid) {
-            errorMessageBox.style.display = "flex";
-            event.preventDefault();
-        }
-    });
-
-    // Ocultar el mensaje de advertencia cuando el usuario empieza a escribir o marca el checkbox
+    // Verificar si algún campo está vacío o inválido
     inputs.forEach(input => {
-        input.addEventListener("input", function () {
-            errorMessageBox.style.display = "none";
-        });
+        const value = input.value.trim();
+        if (value === "" || !fields[input.id].regex.test(value)) {
+            formValid = false;
+        }
     });
 
-    checkbox.addEventListener("change", function () {
+    // Verificar si el checkbox está marcado
+    if (!checkbox.checked) {
+        formValid = false;
+    }
+
+    if (!formValid) {
+        // Si el formulario no es válido, mostrar el mensaje de advertencia
+        errorMessageBox.style.display = "block";
+        event.preventDefault(); // Evitar el envío del formulario
+    } else {
+        // Si el formulario es válido, mostrar el modal de éxito
+        openModal();
+        event.preventDefault(); // Evitar el envío real hasta que el modal se cierre
+        setTimeout(function () {
+            form.submit(); // Enviar el formulario después de un tiempo (simulando un retardo de éxito)
+        }, 2000); // Ajusta el tiempo según necesites
+    }
+});
+
+// Ocultar el mensaje de advertencia cuando el usuario empieza a escribir o marca el checkbox
+inputs.forEach(input => {
+    input.addEventListener("input", function () {
         errorMessageBox.style.display = "none";
     });
-
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const errorMessageBox = document.querySelector(".input__advertencia");
-    if (errorMessageBox) {
-        setTimeout(function () {
-            errorMessageBox.style.display = "none";
-        }, 20000); // Ocultar después de 20 segundos
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const errorChanged2 = document.querySelector(".input__error error--changed2");
-    if (errorChanged2 && errorChanged2.style.display !== "none") {
-        setTimeout(function () {
-            errorChanged2.style.display = "none";
-        }, 20000); // Ocultar después de 20 segundos
-    }
+checkbox.addEventListener("change", function () {
+    errorMessageBox.style.display = "none";
 });

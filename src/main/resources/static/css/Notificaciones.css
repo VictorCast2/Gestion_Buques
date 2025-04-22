@@ -255,7 +255,7 @@ body {
 
 .modal-title {
     margin-bottom: 20px;
-    font:500 1.4rem "Poppins";
+    font: 500 1.4rem "Poppins";
     color: #222;
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
@@ -264,18 +264,18 @@ body {
 .modal-info .modal__text {
     margin: 8px 0;
     font-size: 0.95rem;
-    font:400 1.1rem "Poppins";
+    font: 400 1.1rem "Poppins";
 }
 
 .modal-info .text__str {
-    font:600 1.2rem "Noto Sans";
+    font: 600 1.2rem "Noto Sans";
 }
 
 .modal-description {
     margin-top: 20px;
     padding-top: 15px;
     border-top: 1px dashed #ccc;
-    font:500 0.95rem "Montserrat";
+    font: 500 0.95rem "Montserrat";
     text-align: justify;
 }
 
