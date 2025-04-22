@@ -37,4 +37,14 @@ public class MainController {
         return "Contactos";
     }
 
+    @RequestMapping("/perfil")
+    public String perfil() {
+        return "Perfil";
+    }
+
+    @RequestMapping("/notificaciones")
+    public String Notificaciones() {
+        return "Notificaciones";
+    }
+
 }
