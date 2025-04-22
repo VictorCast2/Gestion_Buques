@@ -75,21 +75,20 @@
 
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="email" autocomplete="off" placeholder="" name="correo" id="email">
+                    <input type="email" autocomplete="off" placeholder="" name="Email" id="email">
                     <label for="email">Email</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
                 </div>
                 <p class="input__error error--changed2">
-                    El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.
+                    El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
                 </p>
-
             </div>
 
 
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="password" autocomplete="off" placeholder="" name="password" id="password">
+                    <input type="password" autocomplete="off" placeholder="" name="Password" id="password">
                     <label for="password">Password</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -107,12 +106,8 @@
             </div>
 
             <p class="input__advertencia">
-                <i class="ri-error-warning-line"></i> Por favor rellene el formulario correctamente.
+                <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
             </p>
-
-            <div th:if="${mensaje != null}" class="alert alert-danger">
-                <p th:text="${mensaje}"></p>
-            </div>
 
             <div class="formulario__input formulario__btn-container">
                 <button class="formulario__btn" type="submit">Registrar</button>

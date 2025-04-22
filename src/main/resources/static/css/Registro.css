@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -8,7 +10,6 @@
 }
 
 body {
-    background-color: #c9d6ff;
     background: linear-gradient(to right, #e2e2e2, #c9d6ff);
     display: flex;
     align-items: center;
@@ -140,7 +141,7 @@ ul {
 
 
 .form .formulario__title2{
-    font: 900 15px "Montserrat";
+    font: 700 15px "Montserrat";
     text-align: center;
     margin: 0 0 0 40%;
 }
@@ -156,7 +157,7 @@ ul {
 }
 
 .input-box label {
-    font: 500 15px "Montserrat";
+    font: 500 17px "Montserrat";
     position: absolute;
     color: #8d8d8d;
     pointer-events: none;
@@ -198,78 +199,53 @@ ul {
 }
 
 
-.custom-select {
+.custom-select-wrapper {
     position: relative;
     width: 400px;
     margin: 10px 0 10px 30px;
 }
 
-.selected {
-    font-size: 15px !important;  
-    font-weight: bold;  
-    color: #333;
-}
-
-.select-box {
+.styled-select {
+    width: 100%;
     height: 55px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
     padding: 12px 16px;
+    padding-right: 40px;
+    border: none;
     border-radius: 8px;
-    cursor: pointer;
+    background: #ffffff;
+    font: 600 17px "Poppins";
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: 0.3s ease-in-out;
+    cursor: pointer;
 }
 
-.arrow {
-    transition: 0.3s;
+
+.styled-select option {
+    color: #333;
+    background-color: #ffffff;
+    font: 500 17px "Noto Sans";
+}
+
+.styled-select:focus {
+    outline: none;
+}
+
+.custom-arrow {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
     font-size: 16px;
     color: #666;
+    pointer-events: none;
 }
 
-.select-box.open .arrow {
-    transform: rotate(180deg);
-}
-
-
-.options-list {
-    list-style: none;
-    margin: 8px 0 0 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: none;
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-    padding: 0 10px;
-    max-height: 200px;  
-    overflow-y: auto;  
-}
-
-
-.option {
-    padding: 12px 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border-radius: 10px;
-    background-color: transparent;
-    transition: background-color 1s ease;
-}
-
-.option:first-child {
-    margin-top: 10px;
-}
-
-.option:hover {
-    background-color: #f2f2f2;
-}
-
-.select-box.open + .options-list {
-    display: block;
+.custom-arrow.rotate {
+    transform: translateY(-50%) rotate(180deg);
 }
 
 .box__icon i{
@@ -299,13 +275,13 @@ ul {
 .input__error{
     font: 600 15px "Montserrat";
     width: 400px;
-    margin: 0 0 0 33px;
+    margin: 0 0 10px 33px;
     display: none;
 }
 
 
 .error--changed{
-    margin: 30px 0 0 33px;
+    margin: 30px 0 10px 33px;
 }
 
 .input__advertencia{
@@ -386,4 +362,93 @@ ul {
     margin-top: 5px; 
     display: flex;
     justify-content: center; 
+}
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    animation: fadeBackground 0.3s ease-in;
+}
+
+.modal-content {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    margin: auto;
+    margin-top: 20%;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.4s ease-in-out;
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+    animation: popIn 0.4s ease-out;
+}
+
+.modal-content h2 {
+    color: #2e7d32;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    color: #999;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeBackground {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
 }
