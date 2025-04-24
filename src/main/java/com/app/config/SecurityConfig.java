@@ -1,6 +1,7 @@
 package com.app.config;
 
 import com.app.config.filter.JwtTokenValidatorFilter;
+import com.app.repository.UsuarioRepository;
 import com.app.service.UserDetailServiceImpl;
 import com.app.utils.JwtUtils;
 import lombok.Data;
@@ -30,19 +31,20 @@ public class SecurityConfig {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                     .csrf(csrf -> csrf
-                            .ignoringRequestMatchers("/auth/login", "auth/registro")
+                            .ignoringRequestMatchers("/auth/login", "/auth/registro")
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     ) // habilitamos la protección CSRF usando cookies
-                .httpBasic(Customizer.withDefaults()) // habilitamos httpBasic (autenticación básica) por defecto
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
                 .authorizeHttpRequests(auth -> {
-
                     // Configurar endpoints públicos estáticos (sin autenticación)
                     auth.requestMatchers("/", "/css/**", "/js/**").permitAll();
 
@@ -70,7 +72,7 @@ public class SecurityConfig {
                 )
 
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
-                .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils, usuarioRepository), BasicAuthenticationFilter.class)
                 .build();
     }
 

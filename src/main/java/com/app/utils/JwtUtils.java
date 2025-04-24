@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Data
 @Component
 public class JwtUtils {
 

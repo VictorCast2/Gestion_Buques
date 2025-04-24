@@ -27,11 +27,11 @@ public class Usuario {
     @Field("numero_identificacion")
     private String numeroIdentificacion;
     private String nombres;
+    private String imagen;
     private String apellidos;
     private String telefono;
     private String correo;
     private String password;
-
     private ERol rol;
     private Empresa empresa;
     private Set<Inspeccion> inspecciones = new HashSet<>();

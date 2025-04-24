@@ -1,26 +1,22 @@
 package com.app.service;
 
+import com.app.security.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Service
@@ -37,23 +33,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
-
-        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-
-        authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(usuario.getRol().name())));
-
-        return new User(
-                usuario.getCorreo(),
-                usuario.getPassword(),
-                usuario.isEnabled(),
-                usuario.isAccountNoExpired(),
-                usuario.isCredentialNoExpired(),
-                usuario.isAccountNoLocked(),
-                authorityList
-        );
+        return new CustomUserDetails(usuario);
     }
 
     /**
@@ -94,7 +76,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         return new AuthResponse("usuario creado exitosamente");
     }
-
 
     /**
      * Método para loguear al usuario
