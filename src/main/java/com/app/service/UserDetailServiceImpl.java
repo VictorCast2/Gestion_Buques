@@ -8,6 +8,7 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Data
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -31,24 +33,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
-
-//        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-//
-//        authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(usuario.getRol().name())));
-//
-//        return new User(
-//                usuario.getCorreo(),
-//                usuario.getPassword(),
-//                usuario.isEnabled(),
-//                usuario.isAccountNoExpired(),
-//                usuario.isCredentialNoExpired(),
-//                usuario.isAccountNoLocked(),
-//                authorityList
-//        );
-
         return new CustomUserDetails(usuario);
     }
 
@@ -90,7 +76,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         return new AuthResponse("usuario creado exitosamente");
     }
-
 
     /**
      * Método para loguear al usuario

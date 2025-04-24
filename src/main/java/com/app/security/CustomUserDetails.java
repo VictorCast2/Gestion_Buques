@@ -36,7 +36,6 @@ public class CustomUserDetails implements UserDetails {
         this.accountNoExpired = usuario.isAccountNoExpired();
         this.accountNoLocked = usuario.isAccountNoLocked();
         this.credentialNoExpired = usuario.isCredentialNoExpired();
-
         this.nombres = usuario.getNombres();
         this.apellidos = usuario.getApellidos();
     }
@@ -75,4 +74,5 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
 }
