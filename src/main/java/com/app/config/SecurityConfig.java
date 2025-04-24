@@ -1,6 +1,7 @@
 package com.app.config;
 
 import com.app.config.filter.JwtTokenValidatorFilter;
+import com.app.repository.UsuarioRepository;
 import com.app.service.UserDetailServiceImpl;
 import com.app.utils.JwtUtils;
 import lombok.Data;
@@ -29,6 +30,9 @@ public class SecurityConfig {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -70,7 +74,7 @@ public class SecurityConfig {
                 )
 
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
-                .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils, usuarioRepository), BasicAuthenticationFilter.class)
                 .build();
     }
 

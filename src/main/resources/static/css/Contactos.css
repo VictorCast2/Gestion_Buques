@@ -186,6 +186,95 @@ body {
 
 }
 
+/* Estilos del usuario cuando inicia seccion */
+.nav__img{
+    width: 80px;
+    cursor: pointer;
+}
+
+.nav__menu{
+    position: absolute;
+    top: 80%;
+    right: 1%;
+    width: 320px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+
+.nav__menu.open__menu{
+    max-height: 400px;
+}
+
+.menu__sub{
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+}
+
+.sub__info{
+    display: flex;
+    align-items: center;
+}
+
+.sub__info .info__title{
+    font: 600 25px "Poppins";
+    color: #525252;
+}
+
+.sub__info .info__img{
+    width: 70px;
+    border-radius: 50%;
+    margin:0 15px 0 -10px;
+}
+
+.menu__sub hr{
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #ccc;
+    margin: 15px 0 10px;
+
+}
+
+.sub__link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+}
+
+.sub__link .link__text{
+    width: 100%;
+    font: 500 17px "Noto Sans";
+
+}
+
+.sub__link:hover .link__text{
+    font-weight: 700;
+
+}
+
+.sub__link i:not(.ri-arrow-right-s-line){
+    font-size: 20px;
+    background-color: #e5e5e5;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+}
+
+.sub__link .link__flec{
+    transition: transform .5s;
+    color: #555;
+    font: 900 22px "Noto Sans";
+
+}
+
+.sub__link:hover .link__flec{
+    transform: translateX(5px);
+
+}
 
 /* Grid principal */
 .contact__grid {
