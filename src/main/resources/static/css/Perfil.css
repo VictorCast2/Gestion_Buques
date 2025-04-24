@@ -1,0 +1,789 @@
+:root {
+    /*========== Colors ==========*/
+    --color-primario: #13294B;
+    --color-secundario: #FFD500;
+    --color-tercario: #ffffff;
+    --color-cuartario: #4488FF;
+    --color-quintario: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    
+}
+
+body{
+    margin: 0;
+}
+
+
+.parent {
+    background-color: #f0f0f0;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto auto auto;
+    gap: 20px;
+}
+
+.parent__item {
+    background-color: var(--color-tercario);
+    border-radius: 25px;
+    box-shadow: 5px 5px 30px 5px rgba(0, 0, 0, 0.2);
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    min-height: 300px;
+    min-width: 450px;
+    margin:  50px 0 0 100px;
+
+}
+
+.item__img {
+    margin: 50px 0 0 150px;
+    border-radius: 50%;
+    width: 100%;
+    max-width: 150px;
+    height: 150px;
+    border: 1px solid #e0e0e0;
+    padding: 2px 2px;
+
+}
+
+.item__nombre {
+    font: 400 20px "Poppins";
+    text-align: center;
+    color: #212f3d;
+}
+
+.item__rol {
+    width: 90px;
+    color: #658eab;
+    margin: -5px 0 0 175px;
+    font: 600 15px "Poppins";
+    background-color: #d4eafc;
+    border-radius: 25px;
+    padding: 5px 15px;
+}
+
+.item__details {
+    font: 500 20px "Poppins";
+    margin: 20px 0 10px 20px;
+    color: #212f3d;
+}
+
+.parent__item hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    max-width: 380px;
+    background-color: #ccc;
+
+}
+
+.item__info:not(.info__imp) {
+    font: 500 18px "Montserrat";
+    color: #797d7f;
+    margin: 0 0 15px 20px;
+}
+
+.info__imp {
+    font: 600 18px "Montserrat";
+    color: #212f3d;
+    margin: 0 5px 0 0;
+}
+
+.item__btn {
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: 0 -10px 20px 20px;
+    border-radius: 8px;
+    border: 0;
+    font: 500 17px "Noto Sans";
+    background-color: var(--color-cuartario);
+    transition: background-color .8s ease;
+    color: var(--color-tercario);
+}
+
+.item__btn:hover {
+    background-color: #2980B9;
+}
+
+.div2 {
+    border-radius: 25px;
+    background-color: var(--color-tercario);
+    box-shadow: 5px 5px 30px 5px rgba(0, 0, 0, 0.2);
+    grid-column: span 5 / span 5;
+    grid-row: span 1 / span 1;
+    grid-column-start: 3;
+    min-height: 400px;
+    max-width: 820px;
+    margin: 50px 0 0 10px;
+}
+
+.pass__title {
+    font: 500 20px "Poppins";
+    margin: 20px 0 0 20px;
+}
+
+
+.input-box {
+    position: relative;
+}
+
+.input-box .label {
+    font: 500 16px "Montserrat";
+    position: absolute;
+    color: #8d8d8d;
+    pointer-events: none;
+    background-color: transparent;
+    left: 40px;
+    top: 27px;
+    transform: translateY(0.6rem);
+    transition: all 0.3s ease;
+}
+
+.input-box .label--changed {
+    left: 40px;
+}
+
+.input-box input {
+    margin: 20px 0 10px 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 770px;
+    height: 50px;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+.input--changed input {
+    margin-bottom: 30px;
+}
+
+
+
+.input-box input:focus {
+    outline: none;
+    border: 2px solid #0034de;
+}
+
+.input-box input:focus~.label,
+.input-box input:not(:placeholder-shown)~.label {
+    background-color: #fff;
+    transform: translateY(-80%) translateX(-10px) scale(0.8);
+    padding: 0 5px;
+    color: #0034de;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 100px;
+}
+
+.box__icon i {
+    position: absolute;
+    top: 35px;
+    left: 91%;
+    font: 900 18px "Montserrat";
+
+}
+
+
+.icon--changed i {
+    left: 91%;
+}
+
+.box__icon .ri-check-line {
+    background-color: #34A853;
+    border-radius: 50%;
+    padding: 1px 1px;
+    color: #fff;
+    display:none ;
+}
+
+.box__icon .ri-close-line {
+    background-color: #fd1f1f;
+    border-radius: 50%;
+    padding: 1px 1px;
+    color: #fff;
+    display: none;
+}
+
+
+.input__error {
+    font: 600 15px "Montserrat";
+    width: 400px;
+    margin: 10px 0 0px 20px;
+    display: none;
+}
+
+
+.error--changed {
+    margin: -10px 0 20px 20px;
+}
+
+.error--cambio1{
+    margin-top:20px ;
+}
+
+.error--pais{
+    margin:20px 0 -10px 20px ;
+}
+
+.error--cambio5{
+    margin-top:20px ;
+}
+
+.error--ciudad{
+    margin:20px 0 -10px 20px ;
+}
+
+.error--tipoIdentificacion{
+    margin: 25px 0 0 20px;
+}
+
+.error--cambio2{
+    width: 99%;
+}
+
+.error--cambio3{
+    width: 100%;
+}
+
+.error--cambio4{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input__advertencia {
+    font: 700 15px "Montserrat";
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 770px;
+    background-color: #fd1f1f;
+    padding: 20px 15px;
+    border-radius: 5px;
+    grid-column: span 2;
+    margin: -10px 0 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    display:none;
+}
+
+.advertencia--change{
+    max-width: 880px;
+    margin-top:5px ;
+}
+
+.advertencia--changed{
+    margin-left: 250px;
+}
+
+.input__advertencia i {
+    font-size: 1.7rem;
+    margin: -5px 10px 0 0;
+}
+
+.formulario .formulario__button {
+    background-color: var(--color-cuartario);
+    color: var(--color-tercario);
+    font: 600 15px "Noto Sans";
+    width: 100%;
+    max-width: 200px;
+    height: 50px;
+    margin: 10px 0 20px 20px;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3),
+        -6px -6px 12px #fff;
+    cursor: pointer;
+    transition:background-color .7s ease ;
+}
+
+.formulario .formulario__button:hover {
+    background-color: #2980B9;
+}
+
+
+.div3 {
+    border-radius: 25px;
+    background-color: var(--color-tercario);
+    box-shadow: 5px 5px 30px 5px rgba(0, 0, 0, 0.2);
+    grid-column: span 5 / span 5;
+    grid-row: span 1 / span 1;
+    min-height: 300px;
+    max-width: 820px;
+    padding: 0 40px;
+    margin: 0 0 0 10px;
+    position: relative;
+
+}
+
+/* Título de las notificaciones */
+.notification__title {
+    font: 600 24px "Poppins", sans-serif;
+    color: #34495e;
+    text-align: left;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.notification__btn{
+    position: absolute;
+    background-color: var(--color-cuartario);
+    color: var(--color-tercario);
+    font: 600 15px "Noto Sans";
+    padding: 10px 20px;
+    margin: 30px 0 20px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    top: -10px;
+    right: 35px;
+    text-decoration: none;
+    transition:background-color .7s ease ;
+}
+
+.notification__btn:hover{
+    background-color: #2980B9;
+}
+
+
+.notification__table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    padding-bottom: 20px;
+}
+
+.notification__table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px 12px;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.notification__table tbody {
+    display: block;
+    max-height: 310px;
+    overflow-y: auto;
+}
+
+.notification__table thead,
+.notification__table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.notification__table tbody tr:hover { 
+    background-color: #f4fbff; 
+    transition: background-color 0.7s ease;
+}
+.notification__table th {
+    position: relative;
+    text-align: center;
+    padding: 12px 20px;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.notification__table th,
+.notification__table td {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.notification__table td {
+    text-align: center;
+    padding: 26px 20px;
+    vertical-align: middle;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.notification__table td.notification__description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    font-size: 14px;
+}
+
+.name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.role {
+    font-size: 12px;
+    color: #95a5a6;
+}
+
+
+.div4 {
+    border-radius: 25px;
+    background-color: var(--color-tercario);
+    grid-column: span 7 / span 7;
+    grid-row: span 1 / span 1;
+    grid-row-start: 3;
+    min-height: 550px;
+    max-width: 1300px;
+    margin: 0 0 0 100px;
+    box-shadow: 5px 5px 30px 5px rgba(0, 0, 0, 0.2);
+}
+
+.perfil__cabecera{
+    position: relative;
+}
+
+.cabecera__img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    padding: 2px 2px;
+    margin: 20px 0 0 20px;
+}
+
+#input-foto {
+    display: none;
+}
+
+.perfil__botones{
+    display: inline-block;
+    position: absolute;
+    top: 50px;
+    right: 62%;
+}
+
+.perfil__boton{
+    font: 600 15px "Noto Sans";
+    background-color: #48f;
+    width: 170px;
+    height: 45px;
+    margin: 0 0 0 15px;
+    cursor: pointer;
+    color: var(--color-tercario);
+    border: none;
+    border-radius: 5px;
+    transition:background-color .7s ease ;
+}
+
+.perfil__boton:hover:not(.perfil__boton--reset){
+    background-color: #2980B9;
+}
+
+.perfil__boton--upload{
+    padding: 14px 20px;
+}
+
+.perfil__boton--reset{
+    background-color: transparent;
+    border: 1px solid #fd1f1f;
+    color: #fd1f1f;
+    width: 100px;
+}
+
+.perfil__nota{
+    font: 600 15px "Noto Sans";
+    position: absolute;
+    top: 60px;
+    left: 5%;
+    width: 120%;
+    color: #797d7f;
+}
+
+
+
+.perfil__formulario{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.box--changed input{
+    max-width: 610px;
+}
+
+
+.perfil__formulario .formulario__button {
+    background-color: var(--color-cuartario);
+    color: var(--color-tercario);
+    font: 600 15px "Noto Sans";
+    width: 100%;
+    max-width: 610px;
+    height: 50px;
+    margin: 20px 0 20px 20px;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3),
+        -6px -6px 12px #fff;
+    cursor: pointer;
+    transition:background-color .7s ease ;
+}
+
+.perfil__formulario .formulario__button:hover{
+    background-color: #2980B9;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+.modal-close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #555;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.modal-title {
+    margin-bottom: 20px;
+    font:500 1.4rem "Poppins";
+    color: #222;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.modal-info .modal__text {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    font:400 1.1rem "Poppins";
+}
+
+.modal-info .text__str {
+    font:600 1.2rem "Noto Sans";
+}
+
+.modal-description {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+    font:500 0.95rem "Montserrat";
+    text-align: justify;
+}
+
+.modal-description h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal Editar */
+.modal__editar{
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* fondo oscuro translúcido */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalEditar {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.close {
+    float: right;
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #555;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.content--changed{
+    width: 100%;
+    max-width: 950px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    position: relative;
+    padding: 20px;
+    background-color: var(--color-tercario);
+}
+
+.edit__formulario{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 40px 0 0;
+}
+
+.content--changed .content__titulo{
+    font: 600 25px "Poppins";
+    margin:0 0 0 20px;
+    color: var(--color-primario);
+}
+
+
+.edit__formulario .formulario__button{
+    background-color: var(--color-cuartario);
+    color: var(--color-tercario);
+    font: 600 15px "Noto Sans";
+    width: 100%;
+    max-width: 200px;
+    height: 50px;
+    margin: 0 0 0 20px;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3),
+        -6px -6px 12px #fff;
+    cursor: pointer;
+    transition:background-color .7s ease ;
+}
+
+.edit__formulario .formulario__button:hover{
+    background-color: #2980B9;
+}
+
+.box--change input{
+    height: 55px;
+    margin: 10px 0 5px 20px;
+}
+
+.box--change .label--change{
+    top: 20px;
+}
+
+.select--change{
+    margin: 10px 0 10px 20px;
+}
+
+.icon--change i{
+    top: 27px;
+    left: 95%;
+}
+
+
+.error--change{
+    margin: 20px 0 -10px 20px;
+}
+
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 425px;
+    margin: 10px 0 10px 20px;
+}
+
+
+
+.wrapper--changed1{
+    max-width: 610px;
+}
+
+.styled-select {
+    width: 100%;
+    max-width: 700px;
+    height: 55px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    font: 400 16px "Poppins";
+    color: #8d8d8d;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+.select--change1{
+    max-width: 770px;
+    height: 50px;
+}
+
+.styled-select option {
+    color: #333;
+    background-color: #ffffff;
+    font: 500 17px "Noto Sans";
+}
+
+
+.styled-select:focus {
+    outline: none;
+}
+
+
+.custom-arrow {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+    font-size: 16px;
+    color: #666;
+    pointer-events: none;
+}
+
+.custom-arrow.rotate {
+    transform: translateY(-50%) rotate(180deg);
+}

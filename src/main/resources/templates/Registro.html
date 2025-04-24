@@ -74,7 +74,7 @@
         <div class="formulario">
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="text"  autocomplete="off" placeholder="" name="nombres" id="nombre">
+                    <input type="text" autocomplete="off" placeholder="" name="nombres" id="nombre">
                     <label for="nombre">Nombre</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -83,7 +83,7 @@
                     El nombre debe tener al menos 3 letras y no contener números.
                 </p>
             </div>
-            
+
             <div class="formulario__input">
                 <div class="input-box">
                     <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido">
@@ -96,28 +96,22 @@
                 </p>
             </div>
 
-            <input type="hidden" name="tipoIdentificacion" id="tipoIdentificacionInput">
-
             <div class="formulario__input">
-                <div class="custom-select">
-                    <div class="select-box" id="selectBox">
-                        <span class="selected">Tipo De Identificación</span>
-                        <i class="fa-solid fa-chevron-down arrow"></i>
-                    </div>
-                    <ul class="options-list" id="optionsList">
-                        <li class="option"
-                            th:each="tipo : ${tiposIdentificacion}"
-                            th:text="${tipo.descripcion}"
-                            th:attr="data-value=${tipo.name}">
-                            Tipo Identificación
-                        </li>
-                    </ul>
+                <div class="custom-select-wrapper">
+                    <select class="styled-select" name="tipoIdentificacion" id="tipoIdentificacion">
+                        <option disabled selected>Tipo De Identificación</option>
+                        <option th:each="tipo : ${tiposIdentificacion}"
+                                th:value="${tipo.name()}"
+                                th:text="${tipo.descripcion}"
+                        ></option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                 </div>
                 <p class="input__error error--changed">
                     Por favor, seleccione un tipo de identificación.
                 </p>
             </div>
-            
+
             <div class="formulario__input">
                 <div class="input-box">
                     <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion">
@@ -129,10 +123,10 @@
                     La cédula debe contener entre 6 y 10 dígitos numéricos.
                 </p>
             </div>
-            
+
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="email"  autocomplete="off" placeholder="" name="correo" id="email">
+                    <input type="email" autocomplete="off" placeholder="" name="correo" id="email">
                     <label for="email">Email</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -141,7 +135,7 @@
                     El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
                 </p>
             </div>
-            
+
             <div class="formulario__input">
                 <div class="input-box">
                     <input type="text" autocomplete="off" placeholder="" name="telefono" id="telefono">
@@ -153,10 +147,10 @@
                     El teléfono solo puede contener numeros y el maximo son 10 digitos.
                 </p>
             </div>
-            
+
             <div class="formulario__input">
                 <div class="input-box">
-                    <input type="password"  autocomplete="off" placeholder="" name="password" id="password">
+                    <input type="password" autocomplete="off" placeholder="" name="password" id="password">
                     <label for="password">Password</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -165,7 +159,7 @@
                     La contraseña tiene que ser de 4 a 15 digitos
                 </p>
             </div>
-            
+
             <div class="formulario__input">
                 <div class="input-box">
                     <input type="password" autocomplete="off" placeholder="" name="RepetirPassword" id="repeatPassword">
@@ -180,7 +174,8 @@
 
             <div class="formulario__input">
                 <div class="remember-forgot">
-                    <label class="forgot__label"><input type="checkbox" name="terminos">Acepto Terminos Y Condiciones</label>
+                    <label class="forgot__label"><input type="checkbox" name="terminos">Acepto Terminos Y
+                        Condiciones</label>
                 </div>
             </div>
 
@@ -188,14 +183,20 @@
                 <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
             </p>
 
-<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-
             <div class="formulario__input formulario__btn-container">
                 <button class="formulario__btn" type="submit">Registrar</button>
             </div>
         </div>
 
     </form>
+
+    <div id="modalSuccess" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <i class="ri-check-line success-icon"></i>
+            <h2>Inicio de sesión exitoso</h2>
+        </div>
+    </div>
 
     <script th:src="@{/js/registro.js}"></script>
 </body>

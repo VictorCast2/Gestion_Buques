@@ -81,9 +81,8 @@
                     <span class="box__icon"><i class="ri-close-line"></i></span>
                 </div>
                 <p class="input__error error--changed2">
-                    El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.
+                    El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
                 </p>
-
             </div>
 
 
@@ -107,7 +106,7 @@
             </div>
 
             <p class="input__advertencia">
-                <i class="ri-error-warning-line"></i> Por favor rellene el formulario correctamente.
+                <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
             </p>
 
             <div th:if="${mensaje != null}" class="alert alert-danger">
@@ -119,7 +118,7 @@
             </div>
 
             <div class="registre-link">
-                <p>No tienes una cuenta?<a th:href="@{/auth/registro}" target="_blank">Registro</a></p>
+                <p>No tienes una cuenta?<a th:href="@{/auth/registro}">Registro</a></p>
             </div>
         </div>
 

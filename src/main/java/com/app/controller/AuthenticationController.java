@@ -39,7 +39,6 @@ public class AuthenticationController {
             cookie.setPath("/"); // asi nos aseguramos de que esté en todas las rutas del sitio web
             response.addCookie(cookie); // añadimos la cookie al HttpServletResponse
 
-            response.addCookie(cookie);
             model.addAttribute("mensaje", "Usuario Logueado Exitosamente");
 
             return "Login";
@@ -60,7 +59,7 @@ public class AuthenticationController {
         AuthResponse response = this.userDetailService.createUser(authCreateUserRequest);
         model.addAttribute("tiposIdentificacion", EIdentificacion.values());
         model.addAttribute("mensajeExitoso", response.mensaje());
-        return "Registro";
+        return "redirect:/auth/login";
     }
 
 }
