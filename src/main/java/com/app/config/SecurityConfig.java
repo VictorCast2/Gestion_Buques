@@ -38,15 +38,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                     .csrf(csrf -> csrf
-                            .ignoringRequestMatchers("/auth/login", "auth/registro")
+                            .ignoringRequestMatchers("/auth/login", "/auth/registro")
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     ) // habilitamos la protección CSRF usando cookies
-                .httpBasic(Customizer.withDefaults()) // habilitamos httpBasic (autenticación básica) por defecto
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
                 .authorizeHttpRequests(auth -> {
-
                     // Configurar endpoints públicos estáticos (sin autenticación)
                     auth.requestMatchers("/", "/css/**", "/js/**").permitAll();
 
