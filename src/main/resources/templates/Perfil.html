@@ -20,79 +20,32 @@
     <div class="parent">
         <div class="parent__item">
             <img class="item__img" th:src="@{/css/assets/image/testimonio3.avif}" alt="">
-            <h2 class="item__nombre" th:text="${usuario.nombres + usuario.apellidos}">Nombre Usuario</h2>
-            <h3 class="item__rol" th:text="${usuario.rol}">Ninguno</h3>
+            <h2 class="item__nombre">Keyner Reyes</h2>
+            <h3 class="item__rol">Ninguno</h3>
             <h4 class="item__details">Detalles</h4>
             <hr>
-            <p class="item__info">
-                <strong class="info__imp">Nombre:</strong>
-                <span th:text="${usuario.nombres}">Nombres</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Apellido:</strong>
-                <span th:text="${usuario.apellidos}">Apellidos</span>
-            </p>
-
-            <p class="item__info" th:if="${usuario.empresa != null}">
-                <strong class="info__imp">Empresa:</strong>
-                <span th:text="${usuario.empresa.nombre}">Empresa</span>
-            </p>
-
-            <p class="item__info" th:if="${usuario.empresa != null}">
-                <strong class="info__imp">Nit:</strong>
-                <span th:text="${usuario.empresa.nit}">N.I.T</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Email:</strong>
-                <span th:text="${usuario.correo}">Correo Usuario</span>
-            </p>
-
-            <p class="item__info" th:if="${usuario.empresa != null}">
-                <strong class="info__imp">Email Empresa:</strong>
-                <span th:text="${usuario.empresa.email}">Correo Empresa</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Tipo Identificación:</strong>
-                <span th:text="${usuario.tipoIdentificacion.descripcion}">Tipo de Identifiacaión</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Identificación:</strong>
-                <span th:text="${usuario.numeroIdentificacion}">Número de Identificación</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Teléfono:</strong>
-                <span th:text="${usuario.telefono}">telefono usuario</span>
-            </p>
-
-            <p class="item__info" th:if="${usuario.empresa != null}">
-                <strong class="info__imp">País:</strong>
-                <span th:text="${usuario.empresa.pais}">pais</span>
-            </p>
-
-            <p class="item__info" th:if="${usuario.empresa != null}">
-                <strong class="info__imp">Ciudad:</strong>
-                <span th:text="${usuario.empresa.ciudad}">ciudad</span>
-            </p>
-
-            <p class="item__info" th:if="${usuario.empresa != null}">
-                <strong class="info__imp">Dirección:</strong>
-                <span th:text="${usuario.empresa.direccion}">direccion</span>
-            </p>
+            <p class="item__info"><strong class="info__imp">Nombre:</strong>Keyner Alfonso </p>
+            <p class="item__info"><strong class="info__imp">Apellido:</strong> Reyes Tejedor</p>
+            <p class="item__info"><strong class="info__imp">Empresa:</strong>Marijuana Express</p>
+            <p class="item__info"><strong class="info__imp">Nit:</strong>001015465</p>
+            <p class="item__info"><strong class="info__imp">Email:</strong>Keyner@gmail.com</p>
+            <p class="item__info"><strong class="info__imp">Email Empresa:</strong>PuertoFrances@gmail.com</p>
+            <p class="item__info"><strong class="info__imp">Tipo Identificacion:</strong>Cedula</p>
+            <p class="item__info"><strong class="info__imp">Identificacion:</strong>1043650217</p>
+            <p class="item__info"><strong class="info__imp">Telefono:</strong>3136431536</p>
+            <p class="item__info"><strong class="info__imp">Pais:</strong>Francia</p>
+            <p class="item__info"><strong class="info__imp">Ciudad:</strong>Paris</p>
+            <p class="item__info"><strong class="info__imp">Direccion:</strong>MFLT9</p>
             <button class="item__btn" id="btnEditar" type="submit">Editar</button>
         </div>
         <div class="div2">
             <h2 class="pass__title">Cambiar Contraseña</h2>
 
-            <form action="/buques/actualizar-contraseña" method="post" class="formulario">
+            <form class="formulario" action="">
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="password" autocomplete="off" placeholder="" name="currentPassword"
+                        <input type="password" autocomplete="off" placeholder="" name="ContraseñaAntigua"
                             id="contraseñaAntigua">
                         <label class="label" for="contraseñaAntigua">Contraseña Antigua</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -105,7 +58,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="password" autocomplete="off" placeholder="" name="newPassword"
+                        <input type="password" autocomplete="off" placeholder="" name="NuevaContraseña"
                             id="nuevaContraseña">
                         <label class="label" for="nuevaContraseña">Nueva Contraseña</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -132,12 +85,6 @@
                 <p class="input__advertencia">
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
-
-                <div th:if="${mensaje != null}">
-                     <p class="input__advertencia" th:text="${mensaje}">
-                         <i class="ri-error-warning-line"></i>
-                     </p>
-                </div>
 
                 <button class="formulario__button" type="submit">Cambiar Contraseña</button>
             </form>
@@ -230,7 +177,7 @@
             </div>
 
         </div>
-        <div class="div4" th:if="${usuario.rol.name == 'INVITADO' || usuario.rol.name == 'AGENTE_NAVIERO'}">
+        <div class="div4">
             <div class="perfil__cabecera">
                 <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/testimonio3.avif}" alt="Foto de perfil">
 

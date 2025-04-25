@@ -37,7 +37,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable()) // deshabilitamos csrf por problemas con el token jwt
+                    .csrf(csrf -> csrf
+                            .ignoringRequestMatchers("/auth/login", "/auth/registro")
+                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    ) // habilitamos la protección CSRF usando cookies
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
@@ -54,8 +57,6 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
-                    auth.requestMatchers(HttpMethod.GET, "/buques/perfil").authenticated();
-                    auth.requestMatchers(HttpMethod.PUT, "/buques/actualizar-contraseña").authenticated();
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();
