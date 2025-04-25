@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Data
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -36,6 +35,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
         return new CustomUserDetails(usuario);
+    }
+
+    /**
+     * Método para buscar a un usuario en la base de datos
+     * @param correo parametro por el cual vamos a buscar al usuario, este campo es único
+     * @return al modelo Usuario con todos sus datos (tener cuidado con los datos que se mostraran en las vistas)
+     */
+    public Usuario getUsuarioByCorreo(String correo) {
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
+        return usuario;
     }
 
     /**
@@ -118,6 +128,28 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
+    }
+
+    public AuthResponse updatePassword(@Valid UpdatePasswordRequest updatePasswordRequest, CustomUserDetails userDetails) {
+
+        Usuario usuario = this.getUsuarioByCorreo(userDetails.getCorreo()); // usuario actual de la sesión
+        String currentPassword = updatePasswordRequest.currentPassword();
+        String newPassword = updatePasswordRequest.newPassword();
+
+        // validamos que la contraseña sean iguales, sinó se manda el error
+        if (!encoder.matches(currentPassword, usuario.getPassword())) {
+            return new AuthResponse("Error: contraseña actual incorrecta");
+        }
+
+        // validamos que la nueva contraseña no sea igual a la anterior
+        if (encoder.matches(newPassword, usuario.getPassword())) {
+            return new AuthResponse("La nueva contraseña no puede ser igual a la anterior");
+        }
+
+        usuario.setPassword(encoder.encode(newPassword));
+        usuarioRepository.save(usuario);
+
+        return new AuthResponse("contraseña actualizada correctamente");
     }
 
 }

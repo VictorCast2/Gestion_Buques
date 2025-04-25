@@ -1,5 +1,6 @@
 package com.app.security;
 
+import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
