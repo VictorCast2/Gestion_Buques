@@ -10,6 +10,7 @@ import com.app.utils.JwtUtils;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Data
 @Service
@@ -30,6 +37,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    @Value("${imagenes.upload.usuario}")
+    private String uploadBaseDir;
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
@@ -118,6 +129,41 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
+    }
+
+    /**
+     * Método para guardar la imagen del usuario
+     * @param archivo archivo que el usuario sube
+     * @param nombreCarpetaUsuario nombre de la carpeta donde se guardará la imagen
+     * @return la ruta relativa de la imagen guardada
+     * @throws IOException si ocurre un error al guardar el archivo
+     */
+    public String guardarImagenDeUsuario(MultipartFile archivo, String nombreCarpetaUsuario) throws IOException {
+        // Ruta base + nombre carpeta (ej: Img/Usuario/nombreUsuario)
+        Path carpetaUsuario = Paths.get(uploadBaseDir, nombreCarpetaUsuario);
+        if (!Files.exists(carpetaUsuario)) {
+            Files.createDirectories(carpetaUsuario);
+        }
+
+        String nombreArchivo = System.currentTimeMillis() + "_" + archivo.getOriginalFilename();
+        Path rutaFinal = carpetaUsuario.resolve(nombreArchivo);
+
+        Files.write(rutaFinal, archivo.getBytes());
+
+        // Ruta relativa para guardar en la entidad
+        return carpetaUsuario.getFileName() + "/" + nombreArchivo;
+    }
+
+    /**
+     * Método para obtener la imagen del usuario
+     * @param nombreUsuario nombre de la carpeta donde se guardó la imagen
+     * @param nombreArchivo nombre del archivo que se guardó
+     * @return un array de bytes con la imagen
+     * @throws IOException si ocurre un error al leer el archivo
+     */
+    public byte[] obtenerImagen(String nombreUsuario, String nombreArchivo) throws IOException {
+        Path ruta = Paths.get(uploadBaseDir, nombreUsuario, nombreArchivo);
+        return Files.readAllBytes(ruta);
     }
 
 }
