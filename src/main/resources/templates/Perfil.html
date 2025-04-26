@@ -191,15 +191,15 @@
                         Cargar Nueva Foto
                     </label>
 
-                    <button class="perfil__boton perfil__boton--reset">Reiniciar</button>
+                    <button class="perfil__boton perfil__boton--reset" type="button">Reiniciar</button>
                     <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 800K</small>
                 </div>
             </div>
 
-            <form class="perfil__formulario">
+            <form class="perfil__formulario"  th:action="@{/empresa/registrar}" method="post" enctype="multipart/form-data">>
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Nit" id="nit">
+                        <input type="text" autocomplete="off" placeholder="" name="nit" id="nit">
                         <label class="label" for="nit">Nit</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="formulario__input input--cambio">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Name" id="nombreEmpresa">
+                        <input type="text" autocomplete="off" placeholder="" name="nombre" id="nombreEmpresa">
                         <label class="label" for="nombreEmpresa">Nombre Empresa</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -223,7 +223,7 @@
                 <!-- Selector de país -->
                 <div class="formulario__input">
                     <div class="custom-select-wrapper wrapper--changed1">
-                        <select class="styled-select select--changed1" id="selectPais">
+                        <select class="styled-select select--changed1" id="selectPais" name="pais">
                             <option disabled selected>Pais</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -234,7 +234,7 @@
                 <!-- Selector de ciudad -->
                 <div class="formulario__input">
                     <div class="custom-select-wrapper wrapper--changed1">
-                        <select class="styled-select select--changed1" id="selectCiudad">
+                        <select class="styled-select select--changed1" id="selectCiudad" name="ciudad">
                             <option disabled selected>Ciudad</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -244,7 +244,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Direccion" id="direccion">
+                        <input type="text" autocomplete="off" placeholder="" name="direccion" id="direccion">
                         <label class="label" for="direccion">Direccion</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -257,7 +257,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="email" autocomplete="off" placeholder="" name="email" id="emailEmpresa">
+                        <input type="email" autocomplete="off" placeholder="" name="correo" id="emailEmpresa">
                         <label class="label" for="emailEmpresa">Email Empresa</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -269,7 +269,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Telefono" id="telefono">
+                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="telefono">
                         <label class="label" for="telefono">Telefono</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
