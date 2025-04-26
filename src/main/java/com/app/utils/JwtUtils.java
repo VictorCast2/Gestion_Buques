@@ -118,4 +118,9 @@ public class JwtUtils {
         throw new RuntimeException("No se encontró el token de autorización en la petición");
     }
 
+    public String extractUserEmailFromToken(String token) {
+        DecodedJWT decodedJWT = validarToken(token);  // Validamos y decodificamos el token
+        return extraerUsuario(decodedJWT);  // Extraemos el correo que es el subject
+    }
+
 }

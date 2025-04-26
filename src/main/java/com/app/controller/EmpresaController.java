@@ -29,22 +29,23 @@ public class EmpresaController {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @GetMapping("/registrar")
-    public String registro(Model model) {
-        return "Empresa";
-    }
-
     @PostMapping("/registrar")
     public String registrarEmpresa(
-            @ModelAttribute EmpresaRequest requestEmpresa,
-            @RequestParam("correoUsuario") String correoUsuario,
-            @RequestParam("foto") MultipartFile file,
-            HttpServletRequest request
+            @ModelAttribute EmpresaRequest requestEmpresa,  // Esto capturará los datos de la empresa
+            @RequestParam("foto") MultipartFile file,      // Captura la foto enviada
+            HttpServletRequest request                     // Captura la solicitud para obtener el token
     ) {
+        // Extraer el token del JWT desde la solicitud
         String token = jwtUtils.extractTokenFromRequest(request);
+
+        // Subir la imagen
         MensajeResponse response = userDetailService.uploadImagenUsuario(file, token);
-        empresaService.asignarEmpresa(requestEmpresa, correoUsuario);
-        return "Empresa"; // Puedes cambiarlo si quieres redireccionar o dar feedback
+
+        // Asignar la empresa al usuario correspondiente
+        empresaService.asignarEmpresa(requestEmpresa, token);
+
+        // Redirigir o dar feedback al usuario
+        return "redirect:/buques/perfil";  // Puedes cambiarlo si quieres redireccionar a otra página
     }
 
 }
