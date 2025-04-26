@@ -37,11 +37,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth/login", "/auth/registro", "/auth/logout")
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                )
-                // habilitamos la protección CSRF usando cookies
+                    .csrf(csrf -> csrf
+                            .ignoringRequestMatchers("/auth/login", "/auth/registro")
+                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    ) // habilitamos la protección CSRF usando cookies
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
@@ -66,11 +65,10 @@ public class SecurityConfig {
 
                 // Configuración de logout
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth/login?logout") // redirección después de cerrar sesión
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID", "access_token")
+                        .logoutUrl("/auth/logout") // Ruta para cerrar sesión
+                        .clearAuthentication(true) // Borra la autenticación actual
+                        .invalidateHttpSession(true) // Invalida la sesión HTTP
+                        .deleteCookies("JSESSIONID", "access_token") // Borra la cookie de sesión y el token de la session
                 )
 
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
