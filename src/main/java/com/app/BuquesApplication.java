@@ -54,7 +54,16 @@ public class BuquesApplication {
 					.accountNoLocked(true)
 					.credentialNoExpired(true)
 					.build();
-			usuarioRepository.saveAll(List.of(userJose, userCarlos));
+
+			// Verificar si ya existe el usuario por correo
+			if (!usuarioRepository.existsByCorreo(userJose.getCorreo())) {
+				usuarioRepository.save(userJose);
+			}
+
+			if (!usuarioRepository.existsByCorreo(userCarlos.getCorreo())) {
+				usuarioRepository.save(userCarlos);
+			}
 		};
 	}
+
 }
