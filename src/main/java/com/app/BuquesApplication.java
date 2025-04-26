@@ -55,6 +55,22 @@ public class BuquesApplication {
 					.credentialNoExpired(true)
 					.build();
 
+			Usuario userVictor = Usuario.builder()
+					.tipoIdentificacion(EIdentificacion.CC)
+					.numeroIdentificacion("123456")
+					.nombres("Victor Jose")
+					.apellidos("Torres Diaz")
+					.telefono("+57 310 5566778")
+					.correo("victor@gmail.com")
+					.password("$2a$10$rj3PmRqB76o2VrobVRdCf.s2Q4S3HDnvVHeAmi8Uxdp.GWrLoqiMq")
+					.rol(ERol.INVITADO)
+					.empresa(null)
+					.isEnabled(true)
+					.accountNoExpired(true)
+					.accountNoLocked(true)
+					.credentialNoExpired(true)
+					.build();
+
 			// Verificar si ya existe el usuario por correo
 			if (!usuarioRepository.existsByCorreo(userJose.getCorreo())) {
 				usuarioRepository.save(userJose);
@@ -63,6 +79,11 @@ public class BuquesApplication {
 			if (!usuarioRepository.existsByCorreo(userCarlos.getCorreo())) {
 				usuarioRepository.save(userCarlos);
 			}
+
+			if (!usuarioRepository.existsByCorreo(userCarlos.getCorreo())) {
+				usuarioRepository.save(userVictor);
+			}
+
 		};
 	}
 
