@@ -67,8 +67,12 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a href="" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
+                    <!-- Formulario oculto para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm" style="display: none;">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    </form>
+                    <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                    <i class="ri-logout-box-r-fill"></i>
                         <p class="link__text">Cerrar Seccion</p>
                         <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
                     </a>
