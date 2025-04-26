@@ -1,329 +1,440 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quienes Somos</title>
-    <link rel="stylesheet" th:href="@{/css/QuienesSomos.css}">
-    <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/x-icon" th:href="@{/css/assets/image/icons/Ships.png}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quienes Somos</title>
+        <link rel="stylesheet" th:href="@{/css/QuienesSomos.css}">
+        <link rel="stylesheet" href="font.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="icon" type="image/x-icon"
+            th:href="@{/css/assets/image/icons/Ships.png}">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+    </head>
 
-<body>
-    <div class="content">
-        <a class="content__links" href="">+57 3214153612</a>
-        <a class="content__links" href="">buquescaribe@gmail.com</a>
-        <a class="content__links" href="">provedores</a>
-    </div>
+    <body>
+        <div class="content">
+            <a class="content__links" href>+57 3214153612</a>
+            <a class="content__links" href>buquescaribe@gmail.com</a>
+            <a class="content__links" href>provedores</a>
+        </div>
 
-    <!-- Encabezado header-->
-    <header class="header">
-        <nav class="header__nav">
-            <ul class="nav__list">
-                <li class="list__item"><a class="item__link" th:href="@{/buques/}">inicio</a></li>
-                <li class="list__item"><a class="item__link" href="#">quienes somos</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/servicios}">servicios</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/noticias}">Noticias</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/testimonios}">Testimonios</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/contactos}">contactos</a></li>
-                <li class="list__item" sec:authorize="!isAuthenticated()">
-                    <a class="item__link  btn--signin" th:href="@{/auth/login}">sign in</a>
-                </li>
-            </ul>
+        <!-- Encabezado header-->
+        <header class="header">
+            <nav class="header__nav">
+                <ul class="nav__list">
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/}">inicio</a></li>
+                    <li class="list__item"><a class="item__link"
+                            href="#">quienes somos</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/servicios}">servicios</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/noticias}">Noticias</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/testimonios}">Testimonios</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/contactos}">contactos</a></li>
+                    <li class="list__item" sec:authorize="!isAuthenticated()">
+                        <a class="item__link  btn--signin"
+                            th:href="@{/auth/login}">sign in</a>
+                    </li>
+                </ul>
 
-            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+                <img class="nav__img" sec:authorize="isAuthenticated()"
+                    th:src="@{/css/assets/image/fotousuario.webp}"
+                    onclick="toggleMenu()">
 
-            <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
-                <div class="menu__sub">
-                    <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}" >
-                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
+                <div class="nav__menu" id="SubMenu"
+                    sec:authorize="isAuthenticated()">
+                    <div class="menu__sub">
+                        <div class="sub__info">
+                            <img class="info__img"
+                                th:src="@{/css/assets/image/fotousuario.webp}">
+                            <h2 class="info__title"
+                                th:text="${#authentication.principal?.nombres}">Nombre
+                                Usuario</h2>
+                        </div>
+                        <hr>
+
+                        <a th:href="@{/buques/perfil}" class="sub__link">
+                            <i class="ri-user-fill"></i>
+                            <p class="link__text">Perfil</p>
+                            <span class="link__flec"> <i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
+
+                        <a th:href="@{/buques/configuraciones}"
+                            class="sub__link">
+                            <i class="ri-settings-5-fill"></i>
+                            <p class="link__text">Configuracion</p>
+                            <span class="link__flec"> <i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
+
+                        <a th:href="@{/buques/notificaciones}"
+                            class="sub__link">
+                            <i class="ri-notification-2-fill"></i>
+                            <p class="link__text">Notificaciones</p>
+                            <span class="link__flec"> <i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
+
+                        <!-- Formulario oculto para logout -->
+                        <form th:action="@{/auth/logout}" method="post"
+                            id="logoutForm" style="display: none;">
+                            <input type="hidden" name="_csrf"
+                                th:value="${_csrf.token}" />
+                        </form>
+                        <a href="#" class="sub__link"
+                            onclick="document.getElementById('logoutForm').submit(); return false;">
+
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
                     </div>
-                    <hr>
-
-                    <a th:href="@{/buques/perfil}" class="sub__link">
-                        <i class="ri-user-fill"></i>
-                        <p class="link__text">Perfil</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-
-                    <a th:href="@{/buques/configuraciones}" class="sub__link">
-                        <i class="ri-settings-5-fill"></i>
-                        <p class="link__text">Configuracion</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-
-                    <a th:href="@{/buques/notificaciones}" class="sub__link">
-                        <i class="ri-notification-2-fill"></i>
-                        <p class="link__text">Notificaciones</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-
-                    <!-- Formulario oculto para logout -->
-                    <form th:action="@{/auth/logout}" method="post" id="logoutForm" style="display: none;">
-                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-                    </form>
-                    <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
-
-                    <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
                 </div>
+
+            </nav>
+        </header>
+
+        <section class="historia">
+            <h1 class="historia__title">Nuestra Historia</h1>
+            <p class="historia__text">
+                Todo comenzó en el año 1890, con una idea clara y un pequeño
+                equipo apasionado por marcar la diferencia.No
+                éramos los más grandes ni los más conocidos, pero teníamos algo
+                invaluable: determinación, creatividad y el
+                deseo genuino de transformar nuestra industria.
+                Con esfuerzo y dedicación, nos propusimos construir algo más que
+                una empresa:queríamos crear un impacto
+                positivo en la vida de nuestros clientes y en la sociedad.
+                Sabíamos que el camino no sería fácil, pero
+                estábamos dispuestos a superar cualquier obstáculo con trabajo
+                duro,
+                perseverancia y un compromiso inquebrantable con nuestra
+                visión.En aquellos primeros días, nuestra oficina
+                era pequeña, pero nuestros sueños eran grandes. Cada idea, cada
+                proyecto y cada paso que dábamos estaba
+                lleno de ilusión. Trabajábamos largas horas, sacrificando fines
+                de semana y noches de descanso, pero cada
+                sacrificio valía la pena. Cada pequeño logro nos llenaba de
+                energía para seguir adelante.
+            </p>
+            <a class="historia__btn" href>Mas Informacion</a>
+
+            <div class="historia__img">
+                <img class="img__puerto" loading="lazy"
+                    th:src="@{/css/assets/image/nuestrahistoria.jpg}" alt>
+            </div>
+        </section>
+
+        <section class="sectionsomos" id="somos">
+            <div class="sectionsomos__content">
+
+                <h2 class="content__title title--somos">quienes somos</h2>
+                <p class="content__text text--somos">
+                    En Gestión Integral de Buques & Contenedores Cartagena,
+                    somos una empresa comprometida con la excelencia
+                    en la administración,
+                    operación y logística de embarcaciones y contenedores en uno
+                    de los puertos más estratégicos del Caribe.
+                    Nuestra misión es ofrecer soluciones eficientes y seguras
+                    para la gestión de buques y carga,
+                    garantizando procesos optimizados que cumplan con los más
+                    altos estándares de calidad y seguridad.
+                    Trabajamos de la mano con armadores, operadores portuarios y
+                    empresas logísticas para asegurar un flujo
+                    continuo y confiable en cada operación.
+                </p>
+
+                <img loading="lazy"
+                    th:src="@{/css/assets/image/puerto-somos.png}"
+                    alt="quienes somos">
+
+                <!-- Modal del video -->
+                <div id="videoModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close"><i class="ri-close-line"></i></span>
+                        <video id="videoPlayer" controls>
+                            <source
+                                th:src="@{/css/assets/video/videopuerto.mp4}"
+                                type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+                    </div>
+                </div>
+
+                <button class="content__icon"><i
+                        class="ri-play-large-line"></i></button>
+                <p class="content__video">ver video</p>
             </div>
 
-        </nav>
-    </header>
+            <div class="Nosotros__content">
 
-    <section class="historia">
-        <h1 class="historia__title">Nuestra Historia</h1>
-        <p class="historia__text">
-            Todo comenzó en el año 1890, con una idea clara y un pequeño equipo apasionado por marcar la diferencia.No
-            éramos los más grandes ni los más conocidos, pero teníamos algo invaluable: determinación, creatividad y el
-            deseo genuino de transformar nuestra industria.
-            Con esfuerzo y dedicación, nos propusimos construir algo más que una empresa:queríamos crear un impacto
-            positivo en la vida de nuestros clientes y en la sociedad. Sabíamos que el camino no sería fácil, pero
-            estábamos dispuestos a superar cualquier obstáculo con trabajo duro,
-            perseverancia y un compromiso inquebrantable con nuestra visión.En aquellos primeros días, nuestra oficina
-            era pequeña, pero nuestros sueños eran grandes. Cada idea, cada proyecto y cada paso que dábamos estaba
-            lleno de ilusión. Trabajábamos largas horas, sacrificando fines de semana y noches de descanso, pero cada
-            sacrificio valía la pena. Cada pequeño logro nos llenaba de energía para seguir adelante.
-        </p>
-        <a class="historia__btn" href="">Mas Informacion</a>
+                <h2 class="Nosotros__titleinicio">Nosotros</h2>
+                <p class="Nosotros__textinicio">Nos encargamos de la gestión y
+                    control de buques y contenedores en el Puerto
+                    de Cartagena, ofreciendo soluciones eficientes en logística
+                    y transporte marítimo. Desde la
+                    planificación hasta la ejecución, aseguramos que cada
+                    operación se realice con la mayor seguridad,
+                    puntualidad y eficiencia.
+                    Nuestra experiencia en el sector nos permite manejar cada
+                    detalle del proceso portuario: coordinación de
+                    embarques, almacenamiento de contenedores, supervisión de
+                    carga y descarga, y optimización de rutas para
+                    garantizar tiempos de entrega precisos.. ¡Naveguemos juntos
+                    hacia el
+                    éxito!"
+                </p>
 
-        <div class="historia__img">
-            <img class="img__puerto" loading="lazy" th:src="@{/css/assets/image/nuestrahistoria.jpg}" alt="">
-        </div>
-    </section>
+                <div class="content__main">
 
-    <section class="sectionsomos" id="somos">
-        <div class="sectionsomos__content">
+                    <div class="content__left">
+                        <div class="content__item">
+                            <span class="item__icon"><i
+                                    class="fa-solid fa-ship"></i></span>
+                            <h2 class="item__title">Soluciones Marítimas y
+                                Logísticas</h2>
+                            <p class="item__text">
+                                En <strong>Gestión Integral De Buques &
+                                    Contenedores Cartagena</strong>, somos
+                                líderes en el
+                                sector marítimo y logístico en Cartagena,
+                                brindando soluciones integrales para el
+                                transporte.
+                            </p>
+                            <a class="item__btn" href>ver mas</a>
+                        </div>
 
-            <h2 class="content__title title--somos">quienes somos</h2>
-            <p class="content__text text--somos">
-                En Gestión Integral de Buques & Contenedores Cartagena, somos una empresa comprometida con la excelencia
-                en la administración,
-                operación y logística de embarcaciones y contenedores en uno de los puertos más estratégicos del Caribe.
-                Nuestra misión es ofrecer soluciones eficientes y seguras para la gestión de buques y carga,
-                garantizando procesos optimizados que cumplan con los más altos estándares de calidad y seguridad.
-                Trabajamos de la mano con armadores, operadores portuarios y empresas logísticas para asegurar un flujo
-                continuo y confiable en cada operación.
+                        <div class="content__item">
+                            <span class="item__icon"><i
+                                    class="fa-solid fa-ferry"></i></span>
+                            <h2 class="item__title">Experiencia y Seguridad</h2>
+                            <p class="item__text">
+                                Con años de experiencia en la industria, nos
+                                especializamos en la operación de buques,
+                                almacenamiento y transporte de contenedores,
+                                garantizando eficiencia, seguridad y
+                                cumplimiento en cada envío.
+                            </p>
+                            <a class="item__btn" href>ver mas</a>
+                        </div>
+                    </div>
+
+                    <div class="content__img">
+                        <img loading="lazy"
+                            th:src="@{/css/assets/image/nosotros.jpg}"
+                            alt="puerto nosotros">
+                    </div>
+
+                    <div class="content__rigth">
+                        <div class="content__item">
+                            <span class="item__icon"><i
+                                    class="fa-solid fa-anchor"></i></span>
+                            <h2 class="item__title">Compromiso con la
+                                Calidad</h2>
+                            <p class="item__text">
+                                Nuestro compromiso es ofrecer un servicio de
+                                calidad que optimice la cadena de suministro de
+                                nuestros clientes, adaptándonos a sus
+                                necesidades con tecnología avanzada
+                            </p>
+                            <a class="item__btn" href>ver mas</a>
+                        </div>
+
+                        <div class="content__item">
+                            <span class="item__icon"><i
+                                    class="fa-solid fa-water"></i></span>
+                            <h2 class="item__title">Innovación y
+                                Confiabilidad</h2>
+                            <p class="item__text">
+                                En <strong>Gestión Integral De Buques &
+                                    Contenedores Cartagena</strong>, navegamos
+                                hacia el
+                                futuro con innovación y confiabilidad. ¡Confía
+                                en nosotros para llevar tu carga a su destino
+
+                            </p>
+                            <a class="item__btn" href>ver mas</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!--Section Valores-->
+        <section class="valores">
+            <h2 class="valores__title">Nuestros Valores</h2>
+            <p class="valores__text">
+                En Gestión Integral de Buques & Contenedores Cartagena, nos
+                regimos por valores fundamentales que definen
+                nuestra identidad y guían cada una de nuestras acciones.
+                Creemos que la excelencia no solo se alcanza con grandes ideas,
+                sino también con principios sólidos que
+                fomentan la confianza y el compromiso con nuestros clientes y la
+                sociedad.
             </p>
 
+            <div class="valores__container">
+                <div class="container__card">
+                    <span class="card__icon"><i
+                            class="ri-calendar-todo-fill"></i></span>
+                    <h2 class="card__title">Responsibilidad</h2>
+                    <p class="card__text">
+                        Nos comprometemos con la calidad y el profesionalismo en
+                        cada tarea que realizamos.
+                        Valoramos el cumplimiento de nuestros compromisos y
+                        trabajamos con ética para garantizar soluciones
+                        efectivas y confiables.
+                    </p>
+                </div>
 
-            <img loading="lazy" th:src="@{/css/assets/image/puerto-somos.png}" alt="quienes somos">
+                <div class="container__card">
+                    <span class="card__icon"><i
+                            class="ri-search-eye-line"></i></span>
+                    <h2 class="card__title">Transparencia</h2>
+                    <p class="card__text">
+                        Actuamos con honestidad y claridad en todas nuestras
+                        relaciones. Fomentamos la comunicación abierta y
+                        directa,
+                        asegurando que nuestros clientes y colaboradores siempre
+                        tengan información veraz y accesible.
+                    </p>
+                </div>
 
-            <!-- Modal del video -->
-            <div id="videoModal" class="modal">
-                <div class="modal-content">
-                    <span class="close"><i class="ri-close-line"></i></span>
-                    <video id="videoPlayer" controls>
-                        <source th:src="@{/css/assets/video/videopuerto.mp4}" type="video/mp4">
-                        Tu navegador no soporta videos.
-                    </video>
+                <div class="container__card">
+                    <span class="card__icon"><i
+                            class="ri-alarm-warning-line"></i></span>
+                    <h2 class="card__title">Innovación</h2>
+                    <p class="card__text">
+                        Buscamos constantemente nuevas formas de mejorar y
+                        evolucionar.
+                        Apostamos por la creatividad y el desarrollo de
+                        soluciones innovadoras que nos permitan adaptarnos a los
+                        cambios y ofrecer el mejor servicio posible.
+                    </p>
                 </div>
             </div>
 
-            <button class="content__icon"><i class="ri-play-large-line"></i></button>
-            <p class="content__video">ver video</p>
-        </div>
+            <div class="valores__container container--changed">
+                <div class="container__card">
+                    <span class="card__icon"><i
+                            class="ri-shake-hands-fill"></i></span>
+                    <h2 class="card__title">Compromiso</h2>
+                    <p class="card__text">
+                        Nos dedicamos al 100% en cada proyecto, garantizando que
+                        nuestros clientes y colaboradores reciban siempre la
+                        mejor atención y soluciones efectivas
+                        Creemos en la perseverancia y en la importancia de
+                        cumplir nuestras promesas
+                    </p>
+                </div>
 
-        <div class="Nosotros__content">
+                <div class="container__card">
+                    <span class="card__icon"><i class="ri-team-line"></i></span>
+                    <h2 class="card__title">Trabajo en equipo</h2>
+                    <p class="card__text">
+                        Fomentamos un ambiente de colaboración donde cada
+                        persona aporta su talento y conocimientos.
+                        Creemos que la unión de diferentes perspectivas nos
+                        ayuda a alcanzar objetivos más grandes y a crecer
+                        juntos.
+                    </p>
+                </div>
 
-            <h2 class="Nosotros__titleinicio">Nosotros</h2>
-            <p class="Nosotros__textinicio">Nos encargamos de la gestión y control de buques y contenedores en el Puerto
-                de Cartagena, ofreciendo soluciones eficientes en logística y transporte marítimo. Desde la
-                planificación hasta la ejecución, aseguramos que cada operación se realice con la mayor seguridad,
-                puntualidad y eficiencia.
-                Nuestra experiencia en el sector nos permite manejar cada detalle del proceso portuario: coordinación de
-                embarques, almacenamiento de contenedores, supervisión de carga y descarga, y optimización de rutas para
-                garantizar tiempos de entrega precisos.. ¡Naveguemos juntos hacia el
-                éxito!"
-            </p>
+                <div class="container__card">
+                    <span class="card__icon"><i
+                            class="ri-speak-line"></i></span>
+                    <h2 class="card__title">Empatía</h2>
+                    <p class="card__text">
+                        Nos esforzamos por comprender las necesidades de
+                        nuestros clientes y colaboradores.
+                        Actuamos con respeto, amabilidad y sensibilidad,
+                        asegurando que cada decisión que tomamos tenga un
+                        impacto positivo en la comuni
+                    </p>
+                </div>
+            </div>
 
-            <div class="content__main">
+        </section>
 
-                <div class="content__left">
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-ship"></i></span>
-                        <h2 class="item__title">Soluciones Marítimas y Logísticas</h2>
-                        <p class="item__text">
-                            En <strong>Gestión Integral De Buques & Contenedores Cartagena</strong>, somos líderes en el
-                            sector marítimo y logístico en Cartagena, brindando soluciones integrales para el
-                            transporte.
-                        </p>
-                        <a class="item__btn" href="">ver mas</a>
+        <footer class="footer">
+            <div class="footer__content">
+                <div class="content__row">
+                    <div class="row__item">
+                        <h4 class="item__title">company</h4>
+                        <ul class="item__list">
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">about us</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#servicios">our services</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">privacy policy</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">affiliate program</a></li>
+                        </ul>
                     </div>
 
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-ferry"></i></span>
-                        <h2 class="item__title">Experiencia y Seguridad</h2>
-                        <p class="item__text">
-                            Con años de experiencia en la industria, nos especializamos en la operación de buques,
-                            almacenamiento y transporte de contenedores, garantizando eficiencia, seguridad y
-                            cumplimiento en cada envío.
-                        </p>
-                        <a class="item__btn" href="">ver mas</a>
-                    </div>
-                </div>
-
-                <div class="content__img">
-                    <img loading="lazy" th:src="@{/css/assets/image/nosotros.jpg}" alt="puerto nosotros">
-                </div>
-
-                <div class="content__rigth">
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-anchor"></i></span>
-                        <h2 class="item__title">Compromiso con la Calidad</h2>
-                        <p class="item__text">
-                            Nuestro compromiso es ofrecer un servicio de calidad que optimice la cadena de suministro de
-                            nuestros clientes, adaptándonos a sus necesidades con tecnología avanzada
-                        </p>
-                        <a class="item__btn" href="">ver mas</a>
+                    <div class="row__item">
+                        <h4 class="item__title">get help</h4>
+                        <ul class="item__list">
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">FAQ</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">shipping</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">returns</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">order status</a></li>
+                        </ul>
                     </div>
 
-                    <div class="content__item">
-                        <span class="item__icon"><i class="fa-solid fa-water"></i></span>
-                        <h2 class="item__title">Innovación y Confiabilidad</h2>
-                        <p class="item__text">
-                            En <strong>Gestión Integral De Buques & Contenedores Cartagena</strong>, navegamos hacia el
-                            futuro con innovación y confiabilidad. ¡Confía en nosotros para llevar tu carga a su destino
-
-                        </p>
-                        <a class="item__btn" href="">ver mas</a>
+                    <div class="row__item">
+                        <h4 class="item__title">online shop</h4>
+                        <ul class="item__list">
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">watch</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">bag</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">shoes</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">dress</a></li>
+                        </ul>
                     </div>
-                </div>
-            </div>
 
-        </div>
-    </section>
-
-    <!--Section Valores-->
-    <section class="valores">
-        <h2 class="valores__title">Nuestros Valores</h2>
-        <p class="valores__text">
-            En Gestión Integral de Buques & Contenedores Cartagena, nos regimos por valores fundamentales que definen
-            nuestra identidad y guían cada una de nuestras acciones.
-            Creemos que la excelencia no solo se alcanza con grandes ideas, sino también con principios sólidos que
-            fomentan la confianza y el compromiso con nuestros clientes y la sociedad.
-        </p>
-
-        <div class="valores__container">
-            <div class="container__card">
-                <span class="card__icon"><i class="ri-calendar-todo-fill"></i></span>
-                <h2 class="card__title">Responsibilidad</h2>
-                <p class="card__text">
-                    Nos comprometemos con la calidad y el profesionalismo en cada tarea que realizamos.
-                    Valoramos el cumplimiento de nuestros compromisos y trabajamos con ética para garantizar soluciones
-                    efectivas y confiables.
-                </p>
-            </div>
-
-            <div class="container__card">
-                <span class="card__icon"><i class="ri-search-eye-line"></i></span>
-                <h2 class="card__title">Transparencia</h2>
-                <p class="card__text">
-                    Actuamos con honestidad y claridad en todas nuestras relaciones. Fomentamos la comunicación abierta y directa,
-                    asegurando que nuestros clientes y colaboradores siempre tengan información veraz y accesible.
-                </p>
-            </div>
-
-            <div class="container__card">
-                <span class="card__icon"><i class="ri-alarm-warning-line"></i></span>
-                <h2 class="card__title">Innovación</h2>
-                <p class="card__text">
-                    Buscamos constantemente nuevas formas de mejorar y evolucionar.
-                    Apostamos por la creatividad y el desarrollo de soluciones innovadoras que nos permitan adaptarnos a los cambios y ofrecer el mejor servicio posible.
-                </p>
-            </div>
-        </div>
-
-        <div class="valores__container container--changed">
-            <div class="container__card">
-                <span class="card__icon"><i class="ri-shake-hands-fill"></i></span>
-                <h2 class="card__title">Compromiso</h2>
-                <p class="card__text">
-                    Nos dedicamos al 100% en cada proyecto, garantizando que nuestros clientes y colaboradores reciban siempre la mejor atención y soluciones efectivas
-                    Creemos en la perseverancia y en la importancia de cumplir nuestras promesas
-                </p>
-            </div>
-
-            <div class="container__card">
-                <span class="card__icon"><i class="ri-team-line"></i></span>
-                <h2 class="card__title">Trabajo en equipo</h2>
-                <p class="card__text">
-                    Fomentamos un ambiente de colaboración donde cada persona aporta su talento y conocimientos.
-                    Creemos que la unión de diferentes perspectivas nos ayuda a alcanzar objetivos más grandes y a crecer juntos.
-                </p>
-            </div>
-
-            <div class="container__card">
-                <span class="card__icon"><i class="ri-speak-line"></i></span>
-                <h2 class="card__title">Empatía</h2>
-                <p class="card__text">
-                    Nos esforzamos por comprender las necesidades de nuestros clientes y colaboradores.
-                        Actuamos con respeto, amabilidad y sensibilidad, asegurando que cada decisión que tomamos tenga un impacto positivo en la comuni
-                </p>
-            </div>
-        </div>
-
-    </section>
-
-    <footer class="footer">
-        <div class="footer__content">
-            <div class="content__row">
-                <div class="row__item">
-                    <h4 class="item__title">company</h4>
-                    <ul class="item__list">
-                        <li class="list__footer"><a class="footer__link" href="#">about us</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#servicios">our services</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">privacy policy</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">affiliate program</a></li>
-                    </ul>
-                </div>
-
-                <div class="row__item">
-                    <h4 class="item__title">get help</h4>
-                    <ul class="item__list">
-                        <li class="list__footer"><a class="footer__link" href="#">FAQ</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">shipping</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">returns</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">order status</a></li>
-                    </ul>
-                </div>
-
-                <div class="row__item">
-                    <h4 class="item__title">online shop</h4>
-                    <ul class="item__list">
-                        <li class="list__footer"><a class="footer__link" href="#">watch</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">bag</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">shoes</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">dress</a></li>
-                    </ul>
-                </div>
-
-                <div class="row__item">
-                    <h4 class="item__title">follow us</h4>
-                    <div class="item__social">
-                        <a class="social__link" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="social__link" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="social__link" href="#"><i class="fab fa-instagram"></i></a>
-                        <a class="social__link" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <div class="row__item">
+                        <h4 class="item__title">follow us</h4>
+                        <div class="item__social">
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <script th:src="@{/js/video.js}"></script>
-</body>
+        <script th:src="@{/js/video.js}"></script>
+    </body>
 
 </html>

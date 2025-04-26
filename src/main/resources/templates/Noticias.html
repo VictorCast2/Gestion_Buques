@@ -1,309 +1,409 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias</title>
-    <link rel="stylesheet" th:href="@{/css/Noticias.css}">
-    <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/x-icon" th:href="@{/css/assets/image/icons/Ships.png}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Noticias</title>
+        <link rel="stylesheet" th:href="@{/css/Noticias.css}">
+        <link rel="stylesheet" href="font.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="icon" type="image/x-icon"
+            th:href="@{/css/assets/image/icons/Ships.png}">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+    </head>
 
-<body>
-    <div class="content">
-        <a class="content__links" href="">+57 3214153612</a>
-        <a class="content__links" href="">buquescaribe@gmail.com</a>
-        <a class="content__links" href="">provedores</a>
-    </div>
+    <body>
+        <div class="content">
+            <a class="content__links" href>+57 3214153612</a>
+            <a class="content__links" href>buquescaribe@gmail.com</a>
+            <a class="content__links" href>provedores</a>
+        </div>
 
-    <!-- Encabezado header-->
-    <header class="header">
-        <nav class="header__nav">
-            <ul class="nav__list">
-                <li class="list__item"><a class="item__link" th:href="@{/buques/}">inicio</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/quienes-somos}">quienes somos</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/servicios}">servicios</a></li>
-                <li class="list__item"><a class="item__link" href="#">Noticias</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/testimonios}">Testimonios</a></li>
-                <li class="list__item"><a class="item__link" th:href="@{/buques/contactos}">contactos</a></li>
-                <li class="list__item" sec:authorize="!isAuthenticated()">
-                    <a class="item__link  btn--signin" th:href="@{/auth/login}">sign in</a>
-                </li>
-            </ul>
+        <!-- Encabezado header-->
+        <header class="header">
+            <nav class="header__nav">
+                <ul class="nav__list">
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/}">inicio</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/quienes-somos}">quienes
+                            somos</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/servicios}">servicios</a></li>
+                    <li class="list__item"><a class="item__link"
+                            href="#">Noticias</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/testimonios}">Testimonios</a></li>
+                    <li class="list__item"><a class="item__link"
+                            th:href="@{/buques/contactos}">contactos</a></li>
+                    <li class="list__item" sec:authorize="!isAuthenticated()">
+                        <a class="item__link  btn--signin"
+                            th:href="@{/auth/login}">sign in</a>
+                    </li>
+                </ul>
 
-            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+                <img class="nav__img" sec:authorize="isAuthenticated()"
+                    th:src="@{/css/assets/image/fotousuario.webp}"
+                    onclick="toggleMenu()">
 
-            <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
-                <div class="menu__sub">
-                    <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}" >
-                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
+                <div class="nav__menu" id="SubMenu"
+                    sec:authorize="isAuthenticated()">
+                    <div class="menu__sub">
+                        <div class="sub__info">
+                            <img class="info__img"
+                                th:src="@{/css/assets/image/fotousuario.webp}">
+                            <h2 class="info__title"
+                                th:text="${#authentication.principal?.nombres}">Nombre
+                                Usuario</h2>
+                        </div>
+                        <hr>
+
+                        <a th:href="@{/buques/perfil}" class="sub__link">
+                            <i class="ri-user-fill"></i>
+                            <p class="link__text">Perfil</p>
+                            <span class="link__flec"> <i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
+
+                        <a th:href="@{/buques/configuraciones}"
+                            class="sub__link">
+                            <i class="ri-settings-5-fill"></i>
+                            <p class="link__text">Configuracion</p>
+                            <span class="link__flec"> <i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
+
+                        <a th:href="@{/buques/notificaciones}"
+                            class="sub__link">
+                            <i class="ri-notification-2-fill"></i>
+                            <p class="link__text">Notificaciones</p>
+                            <span class="link__flec"> <i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
+
+                        <!-- Formulario oculto para logout -->
+                        <form th:action="@{/auth/logout}" method="post"
+                            id="logoutForm" style="display: none;">
+                            <input type="hidden" name="_csrf"
+                                th:value="${_csrf.token}" />
+                        </form>
+                        <a href="#" class="sub__link"
+                            onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i
+                                    class="ri-arrow-right-s-line"></i></span>
+                        </a>
                     </div>
-                    <hr>
-
-                    <a th:href="@{/buques/perfil}" class="sub__link">
-                        <i class="ri-user-fill"></i>
-                        <p class="link__text">Perfil</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-
-                    <a th:href="@{/buques/configuraciones}" class="sub__link">
-                        <i class="ri-settings-5-fill"></i>
-                        <p class="link__text">Configuracion</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-
-                    <a th:href="@{/buques/notificaciones}" class="sub__link">
-                        <i class="ri-notification-2-fill"></i>
-                        <p class="link__text">Notificaciones</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-
-                    <!-- Formulario oculto para logout -->
-                    <form th:action="@{/auth/logout}" method="post" id="logoutForm" style="display: none;">
-                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-                    </form>
-                    <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
-                    <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
-                </div>
-            </div>
-
-        </nav>
-    </header>
-
-    <section class="noticiashome">
-        <h2 class="noticiashome__titulo">Noticias</h2>
-
-        <div class="noticiashome__grid">
-            <div class="noticiashome__item noticiashome__item--large">
-                <div class="noticiashome__content">
-                    <a href="" class="noticiashome__btn">Leer Más</a>
-                    <h2 class="noticiashome__title">Récord histórico del Grupo Puerto de Cartagena en 2024</h2>
-                    <span class="noticiashome__date">14 Ene 2025</span>
-                    <p class="noticiashome__text">
-                        El Grupo Puerto de Cartagena cerró el 2024 con un hito sin precedentes al registrar un movimiento histórico
-                        de 3,702,044 TEU (unidades equivalentes a contenedores de 20 pies).
-                    </p>    
-                </div>
-            </div>
-            <div class="noticiashome__item noticiashome__item--wide">
-                <div class="noticiashome__content">
-                    <a href="" class="noticiashome__btn">Leer Más</a>
-                    <h2 class="noticiashome__title">Cartagena Recibira Mas De 400.000 Visitantes De Cruceros </h2>
-                    <span class="noticiashome__date">5 Ene 2025</span>
-                    <p class="noticiashome__text">
-                        De la mano de las autoridades de la ciudad y de ProColombia, se lanzó la temporada de cruceros 2024-2025 que se calcula traerá  402.848 visitantes para un impacto económico estimado en $42.580.726 de dólares.
-                    </p>
-                </div>
-            </div>
-            <div class="noticiashome__item noticiashome__item--small">
-                <div class="noticiashome__content">
-                    <a href="" class="noticiashome__btn">Leer Más</a>
-                    <h2 class="noticiashome__title">Cartagena, clave en la Cooperación Gemini: el puerto colombiano se consolida como hub globa</h2>
-                    <span class="noticiashome__date">06 FEB 2025</span>
-                    <p class="noticiashome__text">
-                        Las terminales del Grupo Puerto de Cartagena (GPC), Sociedad Portuaria Regional de Cartagena (SPRC) y Contecar, han sido seleccionadas como piezas fundamentales en la Cooperación Gemini
-                    </p>
-                </div>
-            </div>
-            <div class="noticiashome__item noticiashome__item--banner">
-                <div class="noticiashome__content">
-                    <a href="" class="noticiashome__btn">Leer Más</a>
-                    <h2 class="noticiashome__title ">De Cartagena a Madrid: cuando la disciplina abre caminos y transforma vidas</h2>
-                    <span class="noticiashome__date">28 FEB 2025</span>
-                    <p class="noticiashome__text text--changed">
-                        Para cinco jóvenes cartageneros, un viaje a Madrid no es solo una oportunidad de conocer otra cultura, sino la posibilidad de imaginar un futuro diferente. Son beneficiarios de la Fundación Puerto de Cartagena (FPC)
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- section Noticias-->
-    <section class="noticias">
-
-        <div class="noticias__content">
-            <article class="content__card">
-                <figure class="card__imgnoticias">
-                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias1.jpeg}"
-                        alt="MV Madrid Express en el Puerto de Cartagena">
-                    <figcaption class="imgnoticias__sub">MV Madrid Express en el Puerto de Cartagena</figcaption>
-                </figure>
-                <header>
-                    <h3 class="card__titulo">Llega a Cartagena el primer barco de la Alianza Gemini</h3>
-                    <time class="card__date" datetime="2025-03-16">16 MAR 2025</time>
-                </header>
-                <p class="card__information">
-                    Cartagena da un paso estratégico en el comercio marítimo internacional con la llegada del MV Madrid
-                    Express,
-                    el primer portacontenedores en atracar en el Grupo Puerto de Cartagena como parte del servicio US2
-                    de la Cooperación Gemini,
-                    la alianza global entre las navieras Hapag-Lloyd y Maersk.
-                </p>
-                <a class="card__buttonnoticias" href="#">Leer Más</a>
-            </article>
-
-            <article class="content__card">
-                <figure class="card__imgnoticias">
-                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias2.jpeg}"
-                        alt="Índice de Conectividad del Puerto de Cartagena">
-                    <figcaption class="imgnoticias__sub">Índice de Conectividad del Puerto de Cartagena</figcaption>
-                </figure>
-                <header>
-                    <h3 class="card__titulo">Cartagena, líder en conectividad marítima</h3>
-                    <time class="card__date" datetime="2025-03-14">14 MAR 2025</time>
-                </header>
-                <p class="card__information">
-                    Cartagena reafirma su liderazgo en la región al destacarse en el Índice de Conectividad de
-                    Transporte Marítimo
-                    para Puertos (PLSCI) de la UNCTAD correspondiente al IV Trimestre de 2024.
-                    Este indicador evalúa la integración de los puertos en las redes globales de transporte marítimo.
-                </p>
-                <a class="card__buttonnoticias" href="#">Leer Más</a>
-            </article>
-
-            <article class="content__card">
-                <figure class="card__imgnoticias">
-                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias3.jpg}"
-                        alt="Mujeres líderes en el Puerto de Cartagena">
-                    <figcaption class="imgnoticias__sub">Mujeres líderes en el Puerto de Cartagena</figcaption>
-                </figure>
-                <header>
-                    <h3 class="card__titulo">SPRC y Contecar, impulsores de empleo para mujeres</h3>
-                    <time class="card__date" datetime="2025-03-07">7 MAR 2025</time>
-                </header>
-                <p class="card__information">
-                    La Sociedad Portuaria Regional de Cartagena (SPRC) y Contecar han sido reconocidas nuevamente como
-                    dos de Los Mejores Lugares
-                    para Trabajar en Colombia, destacando su compromiso con la equidad de género y el desarrollo
-                    profesional de las mujeres.
-                </p>
-                <a class="card__buttonnoticias" href="#">Leer Más</a>
-            </article>
-        </div>
-
-        <div class="noticias__content content--changed">
-            <article class="content__card">
-                <figure class="card__imgnoticias">
-                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias5.jpeg}"
-                        alt="Índice de Conectividad del Puerto de Cartagena">
-                    <figcaption class="imgnoticias__sub">La Media Maratón del Mar 2025 inició desde el Puerto de
-                        Cartagena</figcaption>
-                </figure>
-                <header>
-                    <h3 class="card__titulo">La media Maratón arrancó con fuerza desde el Puerto de Cartagena</h3>
-                    <time class="card__date" datetime="2025-03-14">16 FEB 2025</time>
-                </header>
-                <p class="card__information">
-                    tomaron la línea de partida en la Media Maratón del Mar 2025, que inició su recorrido desde la
-                    Sociedad Portuaria de Cartagena,
-                    terminal del Grupo Puerto de Cartagena, uno de los puntos logísticos más importantes de América
-                    Latina
-                </p>
-                <a class="card__buttonnoticias" href="#">Leer Más</a>
-            </article>
-
-            <article class="content__card">
-                <figure class="card__imgnoticias">
-                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias4.png}"
-                        alt="Enero, el mes de mayor actividad con 35 barcos y más de 100,000 visitantes">
-                    <figcaption class="imgnoticias__sub">Enero, el mes de mayor actividad con 35 barcos y más de 100,000
-                        visitantes.</figcaption>
-                </figure>
-                <header>
-                    <h3 class="card__titulo">CRUISE NEWSLETTER</h3>
-                    <time class="card__date" datetime="2025-03-16">20 ENE 2025</time>
-                </header>
-                <p class="card__information">
-                    Como se esperaba, enero fue el mes de mayor actividad de la temporada por un amplio margen: 35
-                    barcos trajeron 100,812 visitantes
-                    (70,886 pasajeros y 29,926 tripulantes), lo que resultó en un impacto económico de $10,773,69.24
-                    USD. Hubo 3 escalas inaugurales y 12 fechas con múltiples arribos
-                </p>
-                <a class="card__buttonnoticias" href="#">Leer Más</a>
-            </article>
-
-            <article class="content__card">
-                <figure class="card__imgnoticias">
-                    <img class="imgnoticias" th:src="@{/css/assets/image/noticias6.jpeg}"
-                        alt="Mujeres líderes en el Puerto de Cartagena">
-                    <figcaption class="imgnoticias__sub">Cuatro cruceros llegaron a Cartagena</figcaption>
-                </figure>
-                <header>
-                    <h3 class="card__titulo">4 cruceros, más de 1 millón de dólares en jornada de cruceros</h3>
-                    <time class="card__date" datetime="2025-03-07">24 ENE 2025</time>
-                </header>
-                <p class="card__information">
-                    La Terminal de Cruceros de Cartagena de Indias es epicentro hoy de una jornada destacada con la
-                    llegada simultánea de cuatro imponentes cruceros,
-                    que traen consigo un total aproximado de 19.242 visitantes, incluyendo pasajeros y tripulantes, y
-                    generan un impacto económico 
-                </p>
-                <a class="card__buttonnoticias" href="#">Leer Más</a>
-            </article>
-        </div>
-
-    </section>
-
-
-    <footer class="footer">
-        <div class="footer__content">
-            <div class="content__row">
-                <div class="row__item">
-                    <h4 class="item__title">company</h4>
-                    <ul class="item__list">
-                        <li class="list__footer"><a class="footer__link" href="#">about us</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#servicios">our services</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">privacy policy</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">affiliate program</a></li>
-                    </ul>
                 </div>
 
-                <div class="row__item">
-                    <h4 class="item__title">get help</h4>
-                    <ul class="item__list">
-                        <li class="list__footer"><a class="footer__link" href="#">FAQ</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">shipping</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">returns</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">order status</a></li>
-                    </ul>
-                </div>
+            </nav>
+        </header>
 
-                <div class="row__item">
-                    <h4 class="item__title">online shop</h4>
-                    <ul class="item__list">
-                        <li class="list__footer"><a class="footer__link" href="#">watch</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">bag</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">shoes</a></li>
-                        <li class="list__footer"><a class="footer__link" href="#">dress</a></li>
-                    </ul>
-                </div>
+        <section class="noticiashome">
+            <h2 class="noticiashome__titulo">Noticias</h2>
 
-                <div class="row__item">
-                    <h4 class="item__title">follow us</h4>
-                    <div class="item__social">
-                        <a class="social__link" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="social__link" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="social__link" href="#"><i class="fab fa-instagram"></i></a>
-                        <a class="social__link" href="#"><i class="fab fa-linkedin-in"></i></a>
+            <div class="noticiashome__grid">
+                <div class="noticiashome__item noticiashome__item--large">
+                    <div class="noticiashome__content">
+                        <a href class="noticiashome__btn">Leer Más</a>
+                        <h2 class="noticiashome__title">Récord histórico del
+                            Grupo Puerto de Cartagena en 2024</h2>
+                        <span class="noticiashome__date">14 Ene 2025</span>
+                        <p class="noticiashome__text">
+                            El Grupo Puerto de Cartagena cerró el 2024 con un
+                            hito sin precedentes al registrar un movimiento
+                            histórico
+                            de 3,702,044 TEU (unidades equivalentes a
+                            contenedores de 20 pies).
+                        </p>
+                    </div>
+                </div>
+                <div class="noticiashome__item noticiashome__item--wide">
+                    <div class="noticiashome__content">
+                        <a href class="noticiashome__btn">Leer Más</a>
+                        <h2 class="noticiashome__title">Cartagena Recibira Mas
+                            De 400.000 Visitantes De Cruceros </h2>
+                        <span class="noticiashome__date">5 Ene 2025</span>
+                        <p class="noticiashome__text">
+                            De la mano de las autoridades de la ciudad y de
+                            ProColombia, se lanzó la temporada de cruceros
+                            2024-2025 que se calcula traerá 402.848 visitantes
+                            para un impacto económico estimado en $42.580.726 de
+                            dólares.
+                        </p>
+                    </div>
+                </div>
+                <div class="noticiashome__item noticiashome__item--small">
+                    <div class="noticiashome__content">
+                        <a href class="noticiashome__btn">Leer Más</a>
+                        <h2 class="noticiashome__title">Cartagena, clave en la
+                            Cooperación Gemini: el puerto colombiano se
+                            consolida como hub globa</h2>
+                        <span class="noticiashome__date">06 FEB 2025</span>
+                        <p class="noticiashome__text">
+                            Las terminales del Grupo Puerto de Cartagena (GPC),
+                            Sociedad Portuaria Regional de Cartagena (SPRC) y
+                            Contecar, han sido seleccionadas como piezas
+                            fundamentales en la Cooperación Gemini
+                        </p>
+                    </div>
+                </div>
+                <div class="noticiashome__item noticiashome__item--banner">
+                    <div class="noticiashome__content">
+                        <a href class="noticiashome__btn">Leer Más</a>
+                        <h2 class="noticiashome__title ">De Cartagena a Madrid:
+                            cuando la disciplina abre caminos y transforma
+                            vidas</h2>
+                        <span class="noticiashome__date">28 FEB 2025</span>
+                        <p class="noticiashome__text text--changed">
+                            Para cinco jóvenes cartageneros, un viaje a Madrid
+                            no es solo una oportunidad de conocer otra cultura,
+                            sino la posibilidad de imaginar un futuro diferente.
+                            Son beneficiarios de la Fundación Puerto de
+                            Cartagena (FPC)
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </section>
 
-    <script th:src="@{/js/noticias.js}"></script>
-</body>
+        <!-- section Noticias-->
+        <section class="noticias">
+
+            <div class="noticias__content">
+                <article class="content__card">
+                    <figure class="card__imgnoticias">
+                        <img class="imgnoticias"
+                            th:src="@{/css/assets/image/noticias1.jpeg}"
+                            alt="MV Madrid Express en el Puerto de Cartagena">
+                        <figcaption class="imgnoticias__sub">MV Madrid Express
+                            en el Puerto de Cartagena</figcaption>
+                    </figure>
+                    <header>
+                        <h3 class="card__titulo">Llega a Cartagena el primer
+                            barco de la Alianza Gemini</h3>
+                        <time class="card__date" datetime="2025-03-16">16 MAR
+                            2025</time>
+                    </header>
+                    <p class="card__information">
+                        Cartagena da un paso estratégico en el comercio marítimo
+                        internacional con la llegada del MV Madrid
+                        Express,
+                        el primer portacontenedores en atracar en el Grupo
+                        Puerto de Cartagena como parte del servicio US2
+                        de la Cooperación Gemini,
+                        la alianza global entre las navieras Hapag-Lloyd y
+                        Maersk.
+                    </p>
+                    <a class="card__buttonnoticias" href="#">Leer Más</a>
+                </article>
+
+                <article class="content__card">
+                    <figure class="card__imgnoticias">
+                        <img class="imgnoticias"
+                            th:src="@{/css/assets/image/noticias2.jpeg}"
+                            alt="Índice de Conectividad del Puerto de Cartagena">
+                        <figcaption class="imgnoticias__sub">Índice de
+                            Conectividad del Puerto de Cartagena</figcaption>
+                    </figure>
+                    <header>
+                        <h3 class="card__titulo">Cartagena, líder en
+                            conectividad marítima</h3>
+                        <time class="card__date" datetime="2025-03-14">14 MAR
+                            2025</time>
+                    </header>
+                    <p class="card__information">
+                        Cartagena reafirma su liderazgo en la región al
+                        destacarse en el Índice de Conectividad de
+                        Transporte Marítimo
+                        para Puertos (PLSCI) de la UNCTAD correspondiente al IV
+                        Trimestre de 2024.
+                        Este indicador evalúa la integración de los puertos en
+                        las redes globales de transporte marítimo.
+                    </p>
+                    <a class="card__buttonnoticias" href="#">Leer Más</a>
+                </article>
+
+                <article class="content__card">
+                    <figure class="card__imgnoticias">
+                        <img class="imgnoticias"
+                            th:src="@{/css/assets/image/noticias3.jpg}"
+                            alt="Mujeres líderes en el Puerto de Cartagena">
+                        <figcaption class="imgnoticias__sub">Mujeres líderes en
+                            el Puerto de Cartagena</figcaption>
+                    </figure>
+                    <header>
+                        <h3 class="card__titulo">SPRC y Contecar, impulsores de
+                            empleo para mujeres</h3>
+                        <time class="card__date" datetime="2025-03-07">7 MAR
+                            2025</time>
+                    </header>
+                    <p class="card__information">
+                        La Sociedad Portuaria Regional de Cartagena (SPRC) y
+                        Contecar han sido reconocidas nuevamente como
+                        dos de Los Mejores Lugares
+                        para Trabajar en Colombia, destacando su compromiso con
+                        la equidad de género y el desarrollo
+                        profesional de las mujeres.
+                    </p>
+                    <a class="card__buttonnoticias" href="#">Leer Más</a>
+                </article>
+            </div>
+
+            <div class="noticias__content content--changed">
+                <article class="content__card">
+                    <figure class="card__imgnoticias">
+                        <img class="imgnoticias"
+                            th:src="@{/css/assets/image/noticias5.jpeg}"
+                            alt="Índice de Conectividad del Puerto de Cartagena">
+                        <figcaption class="imgnoticias__sub">La Media Maratón
+                            del Mar 2025 inició desde el Puerto de
+                            Cartagena</figcaption>
+                    </figure>
+                    <header>
+                        <h3 class="card__titulo">La media Maratón arrancó con
+                            fuerza desde el Puerto de Cartagena</h3>
+                        <time class="card__date" datetime="2025-03-14">16 FEB
+                            2025</time>
+                    </header>
+                    <p class="card__information">
+                        tomaron la línea de partida en la Media Maratón del Mar
+                        2025, que inició su recorrido desde la
+                        Sociedad Portuaria de Cartagena,
+                        terminal del Grupo Puerto de Cartagena, uno de los
+                        puntos logísticos más importantes de América
+                        Latina
+                    </p>
+                    <a class="card__buttonnoticias" href="#">Leer Más</a>
+                </article>
+
+                <article class="content__card">
+                    <figure class="card__imgnoticias">
+                        <img class="imgnoticias"
+                            th:src="@{/css/assets/image/noticias4.png}"
+                            alt="Enero, el mes de mayor actividad con 35 barcos y más de 100,000 visitantes">
+                        <figcaption class="imgnoticias__sub">Enero, el mes de
+                            mayor actividad con 35 barcos y más de 100,000
+                            visitantes.</figcaption>
+                    </figure>
+                    <header>
+                        <h3 class="card__titulo">CRUISE NEWSLETTER</h3>
+                        <time class="card__date" datetime="2025-03-16">20 ENE
+                            2025</time>
+                    </header>
+                    <p class="card__information">
+                        Como se esperaba, enero fue el mes de mayor actividad de
+                        la temporada por un amplio margen: 35
+                        barcos trajeron 100,812 visitantes
+                        (70,886 pasajeros y 29,926 tripulantes), lo que resultó
+                        en un impacto económico de $10,773,69.24
+                        USD. Hubo 3 escalas inaugurales y 12 fechas con
+                        múltiples arribos
+                    </p>
+                    <a class="card__buttonnoticias" href="#">Leer Más</a>
+                </article>
+
+                <article class="content__card">
+                    <figure class="card__imgnoticias">
+                        <img class="imgnoticias"
+                            th:src="@{/css/assets/image/noticias6.jpeg}"
+                            alt="Mujeres líderes en el Puerto de Cartagena">
+                        <figcaption class="imgnoticias__sub">Cuatro cruceros
+                            llegaron a Cartagena</figcaption>
+                    </figure>
+                    <header>
+                        <h3 class="card__titulo">4 cruceros, más de 1 millón de
+                            dólares en jornada de cruceros</h3>
+                        <time class="card__date" datetime="2025-03-07">24 ENE
+                            2025</time>
+                    </header>
+                    <p class="card__information">
+                        La Terminal de Cruceros de Cartagena de Indias es
+                        epicentro hoy de una jornada destacada con la
+                        llegada simultánea de cuatro imponentes cruceros,
+                        que traen consigo un total aproximado de 19.242
+                        visitantes, incluyendo pasajeros y tripulantes, y
+                        generan un impacto económico
+                    </p>
+                    <a class="card__buttonnoticias" href="#">Leer Más</a>
+                </article>
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            <div class="footer__content">
+                <div class="content__row">
+                    <div class="row__item">
+                        <h4 class="item__title">company</h4>
+                        <ul class="item__list">
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">about us</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#servicios">our services</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">privacy policy</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">affiliate program</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="row__item">
+                        <h4 class="item__title">get help</h4>
+                        <ul class="item__list">
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">FAQ</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">shipping</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">returns</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">order status</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="row__item">
+                        <h4 class="item__title">online shop</h4>
+                        <ul class="item__list">
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">watch</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">bag</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">shoes</a></li>
+                            <li class="list__footer"><a class="footer__link"
+                                    href="#">dress</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="row__item">
+                        <h4 class="item__title">follow us</h4>
+                        <div class="item__social">
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a class="social__link" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script th:src="@{/js/noticias.js}"></script>
+    </body>
 
 </html>

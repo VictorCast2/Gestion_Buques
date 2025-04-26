@@ -38,7 +38,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth/login", "/auth/registro", "/auth/logout")
+                        .ignoringRequestMatchers("/auth/login", "/auth/registro", "/auth/logout", "/empresa/registrar")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
                 // habilitamos la protección CSRF usando cookies
@@ -54,14 +54,13 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
+                    auth.requestMatchers("/empresa/registrar").permitAll();
 
                     // Configurar endpoints privados
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
 
-                    // Configurar endpoints NO ESPECIFICADOS
-                    // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
 
