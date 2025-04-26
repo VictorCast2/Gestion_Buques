@@ -37,7 +37,6 @@ public class EmpresaService {
                 .telefono(request.telefono())
                 .correo(request.correo())
                 .build();
-
         usuario.setEmpresa(empresa);
         usuario.setRol(ERol.AGENTE_NAVIERO);
         usuarioRepository.save(usuario);

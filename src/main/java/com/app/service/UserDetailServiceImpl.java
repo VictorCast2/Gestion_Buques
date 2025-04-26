@@ -4,12 +4,14 @@ import com.app.security.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
-import com.app.dto.response.AuthResponse;
+import com.app.dto.response.MensajeResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Data
 @Service
@@ -30,6 +36,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    @Value("${imagenes.upload.usuario}")
+    private String usuarioPath;
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
@@ -45,7 +55,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @nota: el usuario creado tendrá por defecto el rol de Invitado y lo referente a los datos de su empresa ó inspecciones,
      * serán nulos, por ser la primera vez que se crea al usuario
      */
-    public AuthResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
+    public MensajeResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
         EIdentificacion tipoIdentificacion = EIdentificacion.valueOf(authCreateUserRequest.tipoIdentificacion());
         String numeroIdentificacion = authCreateUserRequest.numeroIdentificacion();
         String nombres = authCreateUserRequest.nombres();
@@ -74,7 +84,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         Usuario usuarioCreado = usuarioRepository.save(usuario); // salvamos al usuario
 
-        return new AuthResponse("usuario creado exitosamente");
+        return new MensajeResponse("usuario creado exitosamente");
     }
 
     /**
@@ -118,6 +128,45 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
+    }
+
+    /**
+     * Método para actualizar la imagen del usuario
+     * @param file archivo de tipo MultipartFile que contiene la imagen
+     * @param token token de autenticación del usuario
+     * @return un objeto de tipo MensajeResponse con el mensaje de éxito o error
+     */
+    public MensajeResponse uploadImagenUsuario(MultipartFile file, String token) {
+        try {
+            // Validar token primero
+            DecodedJWT decodedJWT = jwtUtils.validarToken(token);
+
+            // Extraer correo
+            String correo = jwtUtils.extraerUsuario(decodedJWT);
+
+            // Buscar usuario
+            Usuario usuario = usuarioRepository.findByCorreo(correo)
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+            // Validar archivo
+            if (file.isEmpty()) {
+                throw new IllegalArgumentException("El archivo está vacío");
+            }
+
+            // Guardar imagen
+            String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path path = Paths.get(usuarioPath, filename);
+            Files.createDirectories(path.getParent()); // Crear carpeta si no existe
+            Files.write(path, file.getBytes());
+
+            // Actualizar usuario
+            usuario.setImagen("/" + usuarioPath + "/" + filename); // ruta relativa
+            usuarioRepository.save(usuario);
+
+            return new MensajeResponse("Imagen subida y actualizada correctamente");
+        } catch (Exception e) {
+            throw new RuntimeException("Error subiendo la imagen: " + e.getMessage());
+        }
     }
 
 }

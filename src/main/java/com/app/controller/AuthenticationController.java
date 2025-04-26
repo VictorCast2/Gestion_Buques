@@ -3,7 +3,7 @@ package com.app.controller;
 import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.dto.request.AuthCreateUserRequest;
 import com.app.dto.request.AuthLoginRequest;
-import com.app.dto.response.AuthResponse;
+import com.app.dto.response.MensajeResponse;
 import com.app.service.UserDetailServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -56,7 +56,7 @@ public class AuthenticationController {
 
     @PostMapping("/registro")
     public String postRegister(@ModelAttribute @Valid AuthCreateUserRequest authCreateUserRequest, Model model) {
-        AuthResponse response = this.userDetailService.createUser(authCreateUserRequest);
+        MensajeResponse response = this.userDetailService.createUser(authCreateUserRequest);
         model.addAttribute("tiposIdentificacion", EIdentificacion.values());
         model.addAttribute("mensajeExitoso", response.mensaje());
         return "redirect:/auth/login";

@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -102,6 +103,19 @@ public class JwtUtils {
      */
     public Map<String, Claim> getClaims(DecodedJWT decodedJWT) {
         return decodedJWT.getClaims();
+    }
+
+    /**
+     * Método para extraer el token del header o de la cookie
+     * @param request parámetro con la petición HTTP
+     * @return el token extraído del header o de la cookie
+     */
+    public String extractTokenFromRequest(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            return token.substring(7); // Quita "Bearer "
+        }
+        throw new RuntimeException("No se encontró el token de autorización en la petición");
     }
 
 }
