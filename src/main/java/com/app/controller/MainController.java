@@ -83,4 +83,14 @@ public class MainController {
         return "Notificaciones";
     }
 
+    @RequestMapping("/procesos")
+    public String Procesos() {
+        return "Procesos";
+    }
+
+    @RequestMapping("/configuraciones")
+    public String Configuraciones() {
+        return "Configuraciones";
+    }
+
 }
