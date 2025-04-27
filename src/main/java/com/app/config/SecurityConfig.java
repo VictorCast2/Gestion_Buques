@@ -37,7 +37,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable()) // deshabilitamos csrf por problemas con el token jwt
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/auth/login", "/auth/registro", "/auth/logout")
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                )
+                // habilitamos la protección CSRF usando cookies
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
@@ -54,8 +58,6 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
-                    auth.requestMatchers(HttpMethod.GET, "/buques/perfil").authenticated();
-                    auth.requestMatchers(HttpMethod.PUT, "/buques/actualizar-contraseña").authenticated();
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();
@@ -64,10 +66,11 @@ public class SecurityConfig {
 
                 // Configuración de logout
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout") // Ruta para cerrar sesión
-                        .clearAuthentication(true) // Borra la autenticación actual
-                        .invalidateHttpSession(true) // Invalida la sesión HTTP
-                        .deleteCookies("JSESSIONID", "access_token") // Borra la cookie de sesión y el token de la session
+                        .logoutUrl("/auth/logout")
+                        .logoutSuccessUrl("/auth/login?logout") // redirección después de cerrar sesión
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID", "access_token")
                 )
 
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)

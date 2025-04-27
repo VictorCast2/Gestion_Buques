@@ -41,7 +41,7 @@ public class AuthenticationController {
 
             model.addAttribute("mensaje", "Usuario Logueado Exitosamente");
 
-            return "redirect:/buques/";
+            return "redirect:/"; // redirigimos a la página principal
         } catch (BadCredentialsException | UsernameNotFoundException exception) {
             model.addAttribute("mensaje", exception.getMessage());
             return "Login";
