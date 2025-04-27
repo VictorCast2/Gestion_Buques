@@ -12,174 +12,226 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/x-icon" th:href="@{/css/assets/image/icons/Ships.png}">
     <link
-            rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-<div class="parent">
-    <div class="parent__item">
-        <img class="item__img" th:src="@{/css/assets/image/testimonio3.avif}" alt="">
-        <h2 class="item__nombre">Keyner Reyes</h2>
-        <h3 class="item__rol">Ninguno</h3>
-        <h4 class="item__details">Detalles</h4>
-        <hr>
-        <p class="item__info"><strong class="info__imp">Nombre:</strong>Keyner Alfonso </p>
-        <p class="item__info"><strong class="info__imp">Apellido:</strong> Reyes Tejedor</p>
-        <p class="item__info"><strong class="info__imp">Empresa:</strong>Marijuana Express</p>
-        <p class="item__info"><strong class="info__imp">Nit:</strong>001015465</p>
-        <p class="item__info"><strong class="info__imp">Email:</strong>Keyner@gmail.com</p>
-        <p class="item__info"><strong class="info__imp">Email Empresa:</strong>PuertoFrances@gmail.com</p>
-        <p class="item__info"><strong class="info__imp">Tipo Identificacion:</strong>Cedula</p>
-        <p class="item__info"><strong class="info__imp">Identificacion:</strong>1043650217</p>
-        <p class="item__info"><strong class="info__imp">Telefono:</strong>3136431536</p>
-        <p class="item__info"><strong class="info__imp">Pais:</strong>Francia</p>
-        <p class="item__info"><strong class="info__imp">Ciudad:</strong>Paris</p>
-        <p class="item__info"><strong class="info__imp">Direccion:</strong>MFLT9</p>
-        <button class="item__btn" id="btnEditar" type="submit">Editar</button>
-    </div>
-    <div class="div2">
-        <h2 class="pass__title">Cambiar Contraseña</h2>
-
-        <form class="formulario" action="">
-
-            <div class="formulario__input">
-                <div class="input-box">
-                    <input type="password" autocomplete="off" placeholder="" name="ContraseñaAntigua"
-                           id="contraseñaAntigua">
-                    <label class="label" for="contraseñaAntigua">Contraseña Antigua</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error">
-                    La contraseña tiene que ser de 4 a 15 digitos
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box">
-                    <input type="password" autocomplete="off" placeholder="" name="NuevaContraseña"
-                           id="nuevaContraseña">
-                    <label class="label" for="nuevaContraseña">Nueva Contraseña</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error">
-                    La contraseña tiene que ser de 4 a 15 digitos
-                </p>
-            </div>
-
-            <div class="formulario__input input--changed">
-                <div class="input-box">
-                    <input type="password" autocomplete="off" placeholder="" name="ConfirmarNuevaContraseña"
-                           id="CNContraseña">
-                    <label class="label label--changed" for="CNContraseña">Confirmar Nueva Contraseña</label>
-                    <span class="box__icon icon--changed"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--changed"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--changed">
-                    Ambas contraseña tienen que ser iguales.
-                </p>
-            </div>
-
-            <p class="input__advertencia">
-                <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+    <div class="parent">
+        <div class="parent__item">
+            <img class="item__img" th:src="@{/css/assets/image/testimonio3.avif}" alt="">
+            <h2 class="item__nombre" th:text="${usuario.nombres + usuario.apellidos}">Nombre Usuario</h2>
+            <h3 class="item__rol" th:text="${usuario.rol}">Ninguno</h3>
+            <h4 class="item__details">Detalles</h4>
+            <hr>
+            <p class="item__info">
+                <strong class="info__imp">Nombre:</strong>
+                <span th:text="${usuario.nombres}">Nombres</span>
             </p>
 
-            <button class="formulario__button" type="submit">Cambiar Contraseña</button>
-        </form>
-    </div>
-    <div class="div3">
-        <h2 class="notification__title">Notificaciones</h2>
-        <a th:href="@{/buques/Notificaciones.html}" target="_blank" class="notification__btn">Ver Todo</a>
+            <p class="item__info">
+                <strong class="info__imp">Apellido:</strong>
+                <span th:text="${usuario.apellidos}">Apellidos</span>
+            </p>
 
-        <div class="notification__table-container">
-            <table class="notification__table">
-                <thead>
-                <tr>
-                    <th>Tipo</th>
-                    <th>Descripción</th>
-                    <th>Fecha</th>
-                    <th>ID/Código</th>
-                    <th>Ubicación</th>
-                    <th>Estado</th>
-                </tr>
-                </thead>
-                <div class="notification__table-scroll">
-                    <tbody id="notificationBody">
-                    <tr>
-                        <td>Buque</td>
-                        <td class="notification__description">
-                            El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
-                            trayendo mercancía importante para los sectores industriales clave del país.
-                            Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
-                            ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
-                            Se espera que la descarga comience en las próximas horas, priorizando productos
-                            tecnológicos, componentes automotrices y suministros médicos.
-                        </td>
-                        <td>9 Abril</td>
-                        <td>IMO9834721</td>
-                        <td>Manzanillo</td>
-                        <td>Llegado</td>
-                    </tr>
-                    <tr>
-                        <td>Contenedor</td>
-                        <td class="notification__description">
-                            El contenedor "ABC123" está en proceso de descarga en el Muelle 5. Este contenedor
-                            contiene productos químicos peligrosos que requieren manejo especializado para
-                            garantizar la seguridad en su manipulación.
-                            La descarga está siendo supervisada por un equipo especializado en materiales
-                            peligrosos, y se estima que el proceso se completará en las próximas 2 horas, tras
-                            lo cual se realizará un inspección de seguridad antes de que el contenedor sea
-                            trasladado al almacén asignado.
-                        </td>
-                        </td>
-                        <td>30 Minutos</td>
-                        <td>CONT123456</td>
-                        <td>Muelle 5</td>
-                        <td>Descargando</td>
-                    </tr>
-                    <tr>
-                        <td>Buque</td>
-                        <td class="notification__description">
-                            Buque "Viking Star" ha zarpado del puerto después de completar con éxito todas las
-                            verificaciones de seguridad y documentación necesarias. Esta nave, con destino a
-                            Europa,
-                            transporta cargas clave que se espera lleguen a tiempo para la temporada alta. Se
-                            estima que llegará a su puerto de destino en aproximadamente 10 días, dependiendo de
-                            las condiciones del mar.
-                        </td>
-                        <td>30/03/25</td>
-                        <td>IMO7896543</td>
-                        <td>En tránsito</td>
-                        <td>Zarpado</td>
-                    </tr>
-                    <tr>
-                        <td>Contenedor</td>
-                        <td class="notification__description">
-                            El contenedor "ABC123" está actualmente en inspección en el Puerto de Veracruz. Se
-                            está verificando el cumplimiento de todas las normativas de seguridad y aduaneras
-                            antes de ser liberado para su distribución.
-                            El proceso de inspección se espera que dure entre 24 a 48 horas, dependiendo de los
-                            resultados de la revisión y si se requieren más verificaciones. Este contenedor
-                            contiene mercancías de alto valor, por lo que el procedimiento está siendo manejado
-                            con prioridad.
-                        </td>
-                        <td>5 Abril</td>
-                        <td>CONT654321</td>
-                        <td>Veracruz</td>
-                        <td>inspección</td>
-                    </tr>
-                    <!-- Más filas si es necesario -->
-                    </tbody>
-                </div>
-            </table>
+            <p class="item__info" th:if="${usuario.empresa != null}">
+                <strong class="info__imp">Empresa:</strong>
+                <span th:text="${usuario.empresa.nombre}">Empresa</span>
+            </p>
+
+            <p class="item__info" th:if="${usuario.empresa != null}">
+                <strong class="info__imp">Nit:</strong>
+                <span th:text="${usuario.empresa.nit}">N.I.T</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Email:</strong>
+                <span th:text="${usuario.correo}">Correo Usuario</span>
+            </p>
+
+            <p class="item__info" th:if="${usuario.empresa != null}">
+                <strong class="info__imp">Email Empresa:</strong>
+                <span th:text="${usuario.empresa.email}">Correo Empresa</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Tipo Identificación:</strong>
+                <span th:text="${usuario.tipoIdentificacion.descripcion}">Tipo de Identifiacaión</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Identificación:</strong>
+                <span th:text="${usuario.numeroIdentificacion}">Número de Identificación</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Teléfono:</strong>
+                <span th:text="${usuario.telefono}">telefono usuario</span>
+            </p>
+
+            <p class="item__info" th:if="${usuario.empresa != null}">
+                <strong class="info__imp">País:</strong>
+                <span th:text="${usuario.empresa.pais}">pais</span>
+            </p>
+
+            <p class="item__info" th:if="${usuario.empresa != null}">
+                <strong class="info__imp">Ciudad:</strong>
+                <span th:text="${usuario.empresa.ciudad}">ciudad</span>
+            </p>
+
+            <p class="item__info" th:if="${usuario.empresa != null}">
+                <strong class="info__imp">Dirección:</strong>
+                <span th:text="${usuario.empresa.direccion}">direccion</span>
+            </p>
+            <button class="item__btn" id="btnEditar" type="submit">Editar</button>
         </div>
+        <div class="div2">
+            <h2 class="pass__title">Cambiar Contraseña</h2>
 
-    </div>
-    <div class="div4">
-        <form class="perfil__formulario" method="POST" action="/empresa/registrar" enctype="multipart/form-data">
+            <form action="/buques/actualizar-contraseña" method="post" class="formulario">
 
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="password" autocomplete="off" placeholder="" name="currentPassword"
+                            id="contraseñaAntigua">
+                        <label class="label" for="contraseñaAntigua">Contraseña Antigua</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        La contraseña tiene que ser de 4 a 15 digitos
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="password" autocomplete="off" placeholder="" name="newPassword"
+                            id="nuevaContraseña">
+                        <label class="label" for="nuevaContraseña">Nueva Contraseña</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        La contraseña tiene que ser de 4 a 15 digitos
+                    </p>
+                </div>
+
+                <div class="formulario__input input--changed">
+                    <div class="input-box">
+                        <input type="password" autocomplete="off" placeholder="" name="ConfirmarNuevaContraseña"
+                            id="CNContraseña">
+                        <label class="label label--changed" for="CNContraseña">Confirmar Nueva Contraseña</label>
+                        <span class="box__icon icon--changed"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--changed"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--changed">
+                        Ambas contraseña tienen que ser iguales.
+                    </p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <div th:if="${mensaje != null}">
+                     <p class="input__advertencia" th:text="${mensaje}">
+                         <i class="ri-error-warning-line"></i>
+                     </p>
+                </div>
+
+                <button class="formulario__button" type="submit">Cambiar Contraseña</button>
+            </form>
+        </div>
+        <div class="div3">
+            <h2 class="notification__title">Notificaciones</h2>
+            <a th:href="@{/buques/Notificaciones.html}" target="_blank" class="notification__btn">Ver Todo</a>
+
+            <div class="notification__table-container">
+                <table class="notification__table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>ID/Código</th>
+                            <th>Ubicación</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <div class="notification__table-scroll">
+                        <tbody id="notificationBody">
+                            <tr>
+                                <td>Buque</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
+                                <td>9 Abril</td>
+                                <td>IMO9834721</td>
+                                <td>Manzanillo</td>
+                                <td>Llegado</td>
+                            </tr>
+                            <tr>
+                                <td>Contenedor</td>
+                                <td class="notification__description">
+                                    El contenedor "ABC123" está en proceso de descarga en el Muelle 5. Este contenedor
+                                    contiene productos químicos peligrosos que requieren manejo especializado para
+                                    garantizar la seguridad en su manipulación.
+                                    La descarga está siendo supervisada por un equipo especializado en materiales
+                                    peligrosos, y se estima que el proceso se completará en las próximas 2 horas, tras
+                                    lo cual se realizará un inspección de seguridad antes de que el contenedor sea
+                                    trasladado al almacén asignado.
+                                </td>
+                                </td>
+                                <td>30 Minutos</td>
+                                <td>CONT123456</td>
+                                <td>Muelle 5</td>
+                                <td>Descargando</td>
+                            </tr>
+                            <tr>
+                                <td>Buque</td>
+                                <td class="notification__description">
+                                    Buque "Viking Star" ha zarpado del puerto después de completar con éxito todas las
+                                    verificaciones de seguridad y documentación necesarias. Esta nave, con destino a
+                                    Europa,
+                                    transporta cargas clave que se espera lleguen a tiempo para la temporada alta. Se
+                                    estima que llegará a su puerto de destino en aproximadamente 10 días, dependiendo de
+                                    las condiciones del mar.
+                                </td>
+                                <td>30/03/25</td>
+                                <td>IMO7896543</td>
+                                <td>En tránsito</td>
+                                <td>Zarpado</td>
+                            </tr>
+                            <tr>
+                                <td>Contenedor</td>
+                                <td class="notification__description">
+                                    El contenedor "ABC123" está actualmente en inspección en el Puerto de Veracruz. Se
+                                    está verificando el cumplimiento de todas las normativas de seguridad y aduaneras
+                                    antes de ser liberado para su distribución.
+                                    El proceso de inspección se espera que dure entre 24 a 48 horas, dependiendo de los
+                                    resultados de la revisión y si se requieren más verificaciones. Este contenedor
+                                    contiene mercancías de alto valor, por lo que el procedimiento está siendo manejado
+                                    con prioridad.
+                                </td>
+                                <td>5 Abril</td>
+                                <td>CONT654321</td>
+                                <td>Veracruz</td>
+                                <td>inspección</td>
+                            </tr>
+                            <!-- Más filas si es necesario -->
+                        </tbody>
+                    </div>
+                </table>
+            </div>
+
+        </div>
+        <div class="div4" th:if="${usuario.rol.name == 'INVITADO' || usuario.rol.name == 'AGENTE_NAVIERO'}">
             <div class="perfil__cabecera">
                 <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/testimonio3.avif}" alt="Foto de perfil">
 
@@ -197,289 +249,290 @@
                 </div>
             </div>
 
-            <div class="formulario__input">
-                <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="nit" id="nit">
-                    <label class="label" for="nit">Nit</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
+            <form class="perfil__formulario">
+                <div class="formulario__input">
+                    <div class="input-box box--changed">
+                        <input type="text" autocomplete="off" placeholder="" name="Nit" id="nit">
+                        <label class="label" for="nit">Nit</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--cambio2">
+                        El NIT no puede estar vacío y debe contener solo números.
+                    </p>
                 </div>
-                <p class="input__error error--cambio2">
-                    El NIT no puede estar vacío y debe contener solo números.
+                <div class="formulario__input input--cambio">
+                    <div class="input-box box--changed">
+                        <input type="text" autocomplete="off" placeholder="" name="Name" id="nombreEmpresa">
+                        <label class="label" for="nombreEmpresa">Nombre Empresa</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        El nombre de la empresa es obligatorio.
+                    </p>
+                </div>
+
+                <!-- Selector de país -->
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper wrapper--changed1">
+                        <select class="styled-select select--changed1" id="selectPais">
+                            <option disabled selected>Pais</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--cambio1">Por favor, seleccione un país.</p>
+                </div>
+
+                <!-- Selector de ciudad -->
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper wrapper--changed1">
+                        <select class="styled-select select--changed1" id="selectCiudad">
+                            <option disabled selected>Ciudad</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--cambio5">Por favor, seleccione una ciudad.</p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--changed">
+                        <input type="text" autocomplete="off" placeholder="" name="Direccion" id="direccion">
+                        <label class="label" for="direccion">Direccion</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--cambio2">
+                        Ingresa una dirección válida (ej. Calle 45 #10-23, 130002 o San Fernando, Calle 45 #10-23,
+                        130002).
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--changed">
+                        <input type="email" autocomplete="off" placeholder="" name="email" id="emailEmpresa">
+                        <label class="label" for="emailEmpresa">Email Empresa</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--cambio3">
+                        El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--changed">
+                        <input type="text" autocomplete="off" placeholder="" name="Telefono" id="telefono">
+                        <label class="label" for="telefono">Telefono</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--cambio4">
+                        El teléfono solo puede contener numeros y el maximo son 10 digitos.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <button class="formulario__button" type="submit">Registrar</button>
+                </div>
+
+                <p class="input__advertencia advertencia--changed">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
-            </div>
-            <div class="formulario__input input--cambio">
-                <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="nombre" id="nombreEmpresa">
-                    <label class="label" for="nombreEmpresa">Nombre Empresa</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error">
-                    El nombre de la empresa es obligatorio.
-                </p>
-            </div>
-
-            <!-- Selector de país -->
-            <div class="formulario__input">
-                <div class="custom-select-wrapper wrapper--changed1">
-                    <select class="styled-select select--changed1" id="selectPais" name="pais">
-                        <option disabled selected>Pais</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
-                </div>
-                <p class="input__error error--cambio1">Por favor, seleccione un país.</p>
-            </div>
-
-            <!-- Selector de ciudad -->
-            <div class="formulario__input">
-                <div class="custom-select-wrapper wrapper--changed1">
-                    <select class="styled-select select--changed1" id="selectCiudad" name="ciudad">
-                        <option disabled selected>Ciudad</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
-                </div>
-                <p class="input__error error--cambio5">Por favor, seleccione una ciudad.</p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="direccion" id="direccion">
-                    <label class="label" for="direccion">Direccion</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--cambio2">
-                    Ingresa una dirección válida (ej. Calle 45 #10-23, 130002 o San Fernando, Calle 45 #10-23,
-                    130002).
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--changed">
-                    <input type="email" autocomplete="off" placeholder="" name="correo" id="emailEmpresa">
-                    <label class="label" for="emailEmpresa">Email Empresa</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--cambio3">
-                    El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="telefono" id="telefono">
-                    <label class="label" for="telefono">Telefono</label>
-                    <span class="box__icon"><i class="ri-check-line"></i></span>
-                    <span class="box__icon"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--cambio4">
-                    El teléfono solo puede contener numeros y el maximo son 10 digitos.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <button class="formulario__button" type="submit">Registrar</button>
-            </div>
-
-            <p class="input__advertencia advertencia--changed">
-                <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
-            </p>
-        </form>
-    </div>
-</div>
-
-<!-- Modal Detalles -->
-<div id="modalNotificacion" class="modal hidden">
-    <div class="modal-content">
-        <span class="modal-close" id="closeModal">&times;</span>
-        <h2 class="modal-title">📝 Detalles de la Notificación</h2>
-        <div class="modal-info">
-            <p class="modal__text"><strong class="text__str">Tipo:</strong> <span id="modalTipo"></span></p>
-            <p class="modal__text"><strong class="text__str">Fecha:</strong> <span id="modalFecha"></span></p>
-            <p class="modal__text"><strong class="text__str">ID/Código:</strong> <span id="modalCodigo"></span></p>
-            <p class="modal__text"><strong class="text__str">Ubicación:</strong> <span id="modalUbicacion"></span>
-            </p>
-            <p class="modal__text"><strong class="text__str">Estado:</strong> <span id="modalEstado"></span></p>
-        </div>
-        <div class="modal-description">
-            <h3>📄 Descripción:</h3>
-            <p id="modalDescripcion"></p>
+            </form>
         </div>
     </div>
-</div>
 
-<!--Modal editar-->
-<div class="modal__editar" id="modalEditar">
-    <div class="modal-content content--changed">
-        <span class="close">&times;</span>
-        <h2 class="content__titulo">Editar Información</h2>
-
-        <form class="edit__formulario" action="">
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="Name" id="nombre">
-                    <label class="label label--change" for="nombre">Nombre</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El nombre debe tener al menos 3 letras.
+    <!-- Modal Detalles -->
+    <div id="modalNotificacion" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2 class="modal-title">📝 Detalles de la Notificación</h2>
+            <div class="modal-info">
+                <p class="modal__text"><strong class="text__str">Tipo:</strong> <span id="modalTipo"></span></p>
+                <p class="modal__text"><strong class="text__str">Fecha:</strong> <span id="modalFecha"></span></p>
+                <p class="modal__text"><strong class="text__str">ID/Código:</strong> <span id="modalCodigo"></span></p>
+                <p class="modal__text"><strong class="text__str">Ubicación:</strong> <span id="modalUbicacion"></span>
                 </p>
+                <p class="modal__text"><strong class="text__str">Estado:</strong> <span id="modalEstado"></span></p>
             </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="Apellido" id="apellido">
-                    <label class="label label--change" for="apellido">Apellido</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El nombre debe tener al menos 3 letras.
-                </p>
+            <div class="modal-description">
+                <h3>📄 Descripción:</h3>
+                <p id="modalDescripcion"></p>
             </div>
-
-            <div class="formulario__input ">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="NameEmpresa" id="nameEmpresa">
-                    <label class="label label--change" for="nameEmpresa">Nombre Empresa</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El nombre de la empresa es obligatorio.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="email" autocomplete="off" placeholder="" name="EmailEmpresa" id="emailCompany">
-                    <label class="label label--change" for="emailCompany">Email Empresa</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="Nit" id="niT">
-                    <label class="label label--change" for="niT">Nit</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El NIT no puede estar vacío y debe contener solo números.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="email" autocomplete="off" placeholder="" name="Email" id="email">
-                    <label class="label label--change" for="email">Email </label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="custom-select-wrapper">
-                    <select class="styled-select" id="tipoIdentificacion">
-                        <option disabled selected>Tipo De Identificación</option>
-                        <option value="Cedula">CC (Cédula de Ciudadanía)</option>
-                        <option value="C.Extranjeria">CE (Cédula de Extranjería)</option>
-                        <option value="D.Extranjería">DE (Documento de Extranjería)</option>
-                        <option value="NIT">NIT (Identificación Tributaria)</option>
-                        <option value="PP">PP (Pasaporte)</option>
-                        <option value="RUT">RUT (Registro Único Tributario)</option>
-                        <option value="TEC">TE (Tarjeta de Extranjería)</option>
-                        <option value="T">TI (Tarjeta de Identidad)</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
-                </div>
-                <p class="input__error error--tipoIdentificacion">
-                    Por favor, seleccione un tipo de identificación.
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="Identificacion" id="identificacion">
-                    <label class="label label--change" for="identificacion">Identificacion</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    La cédula debe contener entre 6 y 10 dígitos numéricos.
-                </p>
-            </div>
-
-            <!-- Selector de país -->
-            <div class="formulario__input">
-                <div class="custom-select-wrapper wrapper--changed1">
-                    <select class="styled-select select--changed1" id="selectPais2">
-                        <option disabled selected>Pais</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
-                </div>
-                <p class="input__error error--pais">Por favor, seleccione un país.</p>
-            </div>
-
-            <!-- Selector de ciudad -->
-            <div class="formulario__input">
-                <div class="custom-select-wrapper wrapper--changed1">
-                    <select class="styled-select select--changed1" id="selectCiudad2">
-                        <option disabled selected>Ciudad</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
-                </div>
-                <p class="input__error error--ciudad">Por favor, seleccione una ciudad.</p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="Direccion" id="address">
-                    <label class="label label--change" for="address">Direccion</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    Ingresa una dirección válida (ej. Calle 45 #10-23, 130002 o San Fernando, Calle 45 #10-23,
-                    130002).
-                </p>
-            </div>
-
-            <div class="formulario__input">
-                <div class="input-box box--change">
-                    <input type="text" autocomplete="off" placeholder="" name="Telefono" id="phone">
-                    <label class="label label--change" for="phone">Telefono</label>
-                    <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
-                    <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
-                </div>
-                <p class="input__error error--change">
-                    El teléfono solo puede contener numeros y el maximo son 10 digitos.
-                </p>
-            </div>
-
-            <p class="input__advertencia advertencia--change">
-                <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
-            </p>
-
-            <button class="formulario__button" type="submit">Guardar Cambios</button>
-        </form>
+        </div>
     </div>
-</div>
+
+    <!--Modal editar-->
+    <div class="modal__editar" id="modalEditar">
+        <div class="modal-content content--changed">
+            <span class="close">&times;</span>
+            <h2 class="content__titulo">Editar Información</h2>
+
+            <form class="edit__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="Name" id="nombre">
+                        <label class="label label--change" for="nombre">Nombre</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El nombre debe tener al menos 3 letras.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="Apellido" id="apellido">
+                        <label class="label label--change" for="apellido">Apellido</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El nombre debe tener al menos 3 letras.
+                    </p>
+                </div>
+
+                <div class="formulario__input ">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="NameEmpresa" id="nameEmpresa">
+                        <label class="label label--change" for="nameEmpresa">Nombre Empresa</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El nombre de la empresa es obligatorio.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="email" autocomplete="off" placeholder="" name="EmailEmpresa" id="emailCompany">
+                        <label class="label label--change" for="emailCompany">Email Empresa</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="Nit" id="niT">
+                        <label class="label label--change" for="niT">Nit</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El NIT no puede estar vacío y debe contener solo números.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="email" autocomplete="off" placeholder="" name="Email" id="email">
+                        <label class="label label--change" for="email">Email </label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El correo solo puede contener letras,numeros,puntos,guiones y guion bajo.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="tipoIdentificacion">
+                            <option disabled selected>Tipo De Identificación</option>
+                            <option value="Cedula">CC (Cédula de Ciudadanía)</option>
+                            <option value="C.Extranjeria">CE (Cédula de Extranjería)</option>
+                            <option value="D.Extranjería">DE (Documento de Extranjería)</option>
+                            <option value="NIT">NIT (Identificación Tributaria)</option>
+                            <option value="PP">PP (Pasaporte)</option>
+                            <option value="RUT">RUT (Registro Único Tributario)</option>
+                            <option value="TEC">TE (Tarjeta de Extranjería)</option>
+                            <option value="T">TI (Tarjeta de Identidad)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoIdentificacion">
+                        Por favor, seleccione un tipo de identificación.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="Identificacion" id="identificacion">
+                        <label class="label label--change" for="identificacion">Identificacion</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        La cédula debe contener entre 6 y 10 dígitos numéricos.
+                    </p>
+                </div>
+
+                <!-- Selector de país -->
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper wrapper--changed1">
+                        <select class="styled-select select--changed1" id="selectPais2">
+                            <option disabled selected>Pais</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--pais">Por favor, seleccione un país.</p>
+                </div>
+
+                <!-- Selector de ciudad -->
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper wrapper--changed1">
+                        <select class="styled-select select--changed1" id="selectCiudad2">
+                            <option disabled selected>Ciudad</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--ciudad">Por favor, seleccione una ciudad.</p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="Direccion" id="address">
+                        <label class="label label--change" for="address">Direccion</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        Ingresa una dirección válida (ej. Calle 45 #10-23, 130002 o San Fernando, Calle 45 #10-23,
+                        130002).
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box box--change">
+                        <input type="text" autocomplete="off" placeholder="" name="Telefono" id="phone">
+                        <label class="label label--change" for="phone">Telefono</label>
+                        <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
+                        <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--change">
+                        El teléfono solo puede contener numeros y el maximo son 10 digitos.
+                    </p>
+                </div>
+
+                <p class="input__advertencia advertencia--change">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
 
 
-<script th:src="@{/js/Perfil.js}"></script>
+    <script th:src="@{/js/Perfil.js}"></script>
 </body>
 
 </html>
