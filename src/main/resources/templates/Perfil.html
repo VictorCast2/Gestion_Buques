@@ -51,7 +51,7 @@
 
             <p class="item__info" th:if="${usuario.empresa != null}">
                 <strong class="info__imp">Email Empresa:</strong>
-                <span th:text="${usuario.empresa.email}">Correo Empresa</span>
+                <span th:text="${usuario.empresa.correo}">Correo Empresa</span>
             </p>
 
             <p class="item__info">
@@ -134,13 +134,13 @@
                 </p>
 
                 <div th:if="${mensaje != null && #strings.startsWith(mensaje, 'Error:')}">
-                     <p id="mensaje-servidor-error"
+                     <p id="mensaje-password-error"
                         class="input__error__interno"
                         th:text="${mensaje}">
                      </p>
                 </div>
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:')}">
-                    <p id="mensaje-servidor-exitoso"
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:') && !#strings.startsWith(mensaje, 'Sus')}">
+                    <p id="mensaje-password-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">
                     </p>
@@ -375,11 +375,11 @@
             <span class="close">&times;</span>
             <h2 class="content__titulo">Editar Información</h2>
 
-            <form class="edit__formulario" action="">
+            <form action="/buques/actualizar-datos" method="post" class="edit__formulario">
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="Name" id="nombre">
+                        <input type="text" autocomplete="off" placeholder="" name="nombres" id="nombre">
                         <label class="label label--change" for="nombre">Nombre</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -391,7 +391,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="Apellido" id="apellido">
+                        <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido">
                         <label class="label label--change" for="apellido">Apellido</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -401,9 +401,9 @@
                     </p>
                 </div>
 
-                <div class="formulario__input ">
+                <div class="formulario__input " th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="NameEmpresa" id="nameEmpresa">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.nombre" id="nameEmpresa">
                         <label class="label label--change" for="nameEmpresa">Nombre Empresa</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -413,9 +413,9 @@
                     </p>
                 </div>
 
-                <div class="formulario__input">
+                <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="email" autocomplete="off" placeholder="" name="EmailEmpresa" id="emailCompany">
+                        <input type="email" autocomplete="off" placeholder="" name="empresa.correo" id="emailCompany">
                         <label class="label label--change" for="emailCompany">Email Empresa</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -425,9 +425,9 @@
                     </p>
                 </div>
 
-                <div class="formulario__input">
+                <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="Nit" id="niT">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.nit" id="niT">
                         <label class="label label--change" for="niT">Nit</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -439,7 +439,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="email" autocomplete="off" placeholder="" name="Email" id="email">
+                        <input type="email" autocomplete="off" placeholder="" name="correo" id="email">
                         <label class="label label--change" for="email">Email </label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -451,16 +451,12 @@
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" id="tipoIdentificacion">
+                        <select class="styled-select" name="tipoIdentificacion" id="tipoIdentificacion">
                             <option disabled selected>Tipo De Identificación</option>
-                            <option value="Cedula">CC (Cédula de Ciudadanía)</option>
-                            <option value="C.Extranjeria">CE (Cédula de Extranjería)</option>
-                            <option value="D.Extranjería">DE (Documento de Extranjería)</option>
-                            <option value="NIT">NIT (Identificación Tributaria)</option>
-                            <option value="PP">PP (Pasaporte)</option>
-                            <option value="RUT">RUT (Registro Único Tributario)</option>
-                            <option value="TEC">TE (Tarjeta de Extranjería)</option>
-                            <option value="T">TI (Tarjeta de Identidad)</option>
+                            <option th:each="tipo : ${tiposIdentificacion}"
+                                    th:value="${tipo.name()}"
+                                    th:text="${tipo.descripcion}"
+                            ></option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -471,7 +467,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="Identificacion" id="identificacion">
+                        <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion">
                         <label class="label label--change" for="identificacion">Identificacion</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -482,9 +478,9 @@
                 </div>
 
                 <!-- Selector de país -->
-                <div class="formulario__input">
+                <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="custom-select-wrapper wrapper--changed1">
-                        <select class="styled-select select--changed1" id="selectPais2">
+                        <select class="styled-select select--changed1" name="empresa.pais" id="selectPais2">
                             <option disabled selected>Pais</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -493,9 +489,9 @@
                 </div>
 
                 <!-- Selector de ciudad -->
-                <div class="formulario__input">
+                <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="custom-select-wrapper wrapper--changed1">
-                        <select class="styled-select select--changed1" id="selectCiudad2">
+                        <select class="styled-select select--changed1" name="empresa.ciudad" id="selectCiudad2">
                             <option disabled selected>Ciudad</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -503,9 +499,9 @@
                     <p class="input__error error--ciudad">Por favor, seleccione una ciudad.</p>
                 </div>
 
-                <div class="formulario__input">
+                <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="Direccion" id="address">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.direccion" id="address">
                         <label class="label label--change" for="address">Direccion</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -518,7 +514,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="Telefono" id="phone">
+                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="phone">
                         <label class="label label--change" for="phone">Telefono</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -532,6 +528,13 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
+                <div th:if="${mensaje != null}">
+                    <p id="mensaje-update-exitoso"
+                       class="input__mensaje__satisfactorio"
+                       th:text="${mensaje}">
+                    </p>
+                </div>
+
                 <button class="formulario__button" type="submit">Guardar Cambios</button>
             </form>
         </div>
@@ -543,12 +546,16 @@
     <!-- Script para desvanecer el mensaje que proviene del servidor -->
     <script>
         setTimeout(function() {
-            const mensajeError = document.getElementById('mensaje-servidor-error');
-            const mensajeExitoso = document.getElementById('mensaje-servidor-exitoso');
-            if (mensajeError) {
-                mensajeError.style.display = 'none';
-            } else if (mensajeExitoso) {
-                mensajeExitoso.style.display = 'none';
+            const MENSAJE_PASSWORD_ERROR = document.getElementById('mensaje-password-error');
+            const MENSAJE_PASSWORD_EXISTOSO = document.getElementById('mensaje-password-exitoso');
+            const MENSAJE_UPDATE_EXISTOSO = document.getElementById('mensaje-update-exitoso');
+
+            if (MENSAJE_PASSWORD_ERROR) {
+                MENSAJE_PASSWORD_ERROR.style.display = 'none';
+            } else if (MENSAJE_PASSWORD_EXISTOSO) {
+                MENSAJE_PASSWORD_EXISTOSO.style.display = 'none';
+            } else if (MENSAJE_UPDATE_EXISTOSO) {
+                MENSAJE_UPDATE_EXISTOSO.style.display = 'none';
             }
         }, 5000);
     </script>

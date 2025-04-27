@@ -1,5 +1,6 @@
 package com.app.service;
 
+import com.app.collections.Usuario.pojo.Empresa;
 import com.app.security.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
@@ -8,7 +9,6 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
 import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,7 +51,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     /**
      * Método para la creación de un usuario
      * @param authCreateUserRequest parámetro con los datos básicos del usuario
-     * @return un objeto de tipo authResponse que contiene el correo del usuario, un mensaje de satisfacción, el token de acceso y el estado
+     * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
      * @nota: el usuario creado tendrá por defecto el rol de Invitado y lo referente a los datos de su empresa ó inspecciones,
      * serán nulos, por ser la primera vez que se crea al usuario
      */
@@ -75,15 +75,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .password(encoder.encode(password))
                 .rol(ERol.INVITADO)
                 .empresa(null)
-                .inspecciones(null)
                 .isEnabled(true)
                 .accountNoExpired(true)
                 .accountNoLocked(true)
                 .credentialNoExpired(true)
                 .build();
-
-        Usuario usuarioCreado = usuarioRepository.save(usuario); // salvamos al usuario
-
+        usuarioRepository.save(usuario); // salvamos al usuario
         return new AuthResponse("usuario creado exitosamente");
     }
 
@@ -130,6 +127,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
+    /**
+     * Método para actualizar contraseña al usuario
+     * @param updatePasswordRequest parámetro con los datos necesarios para actualizar la contraseña (currentPassword, newPassword)
+     * @param userDetails parámetro para extraer al usuario de la session
+     * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
+     */
     public AuthResponse updatePassword(@Valid UpdatePasswordRequest updatePasswordRequest, CustomUserDetails userDetails) {
 
         Usuario usuario = this.getUsuarioByCorreo(userDetails.getCorreo()); // usuario actual de la sesión
@@ -149,7 +152,54 @@ public class UserDetailServiceImpl implements UserDetailsService {
         usuario.setPassword(encoder.encode(newPassword));
         usuarioRepository.save(usuario);
 
-        return new AuthResponse("contraseña actualizada correctamente");
+        return new AuthResponse("contraseña actualizada exitosamente");
     }
 
+    /**
+     * Método para actualizar los datos del usuario
+     * @param updateUsuarioRequest parámetro con los datos necesarios para actualizar al usuario
+     * @param customUserDetails parámetro para extraer al usuario de la session
+     * @return
+     */
+    public AuthResponse updateUsuario(@Valid UpdateUsuarioRequest updateUsuarioRequest, CustomUserDetails customUserDetails) {
+
+        Usuario usuarioActualizado = this.getUsuarioByCorreo(customUserDetails.getCorreo()); // usuarioActualizado actual de la sesión
+
+        // Le seteamos los nuevos datos al usuarioActualizado
+        usuarioActualizado.setTipoIdentificacion(EIdentificacion.valueOf(updateUsuarioRequest.tipoIdentificacion()));
+        usuarioActualizado.setNumeroIdentificacion(updateUsuarioRequest.numeroIdentificacion());
+        usuarioActualizado.setNombres(updateUsuarioRequest.nombres());
+        usuarioActualizado.setApellidos(updateUsuarioRequest.apellidos());
+        usuarioActualizado.setTelefono(updateUsuarioRequest.telefono());
+        usuarioActualizado.setCorreo(updateUsuarioRequest.correo());
+
+        // validamos si el usuario tiene una empresa asignada para actualizar
+        if (usuarioActualizado.getEmpresa() != null) {
+            Empresa empresaActualizada = getEmpresa(updateUsuarioRequest, usuarioActualizado); // obtenemos los datos de la empresa
+            usuarioActualizado.setEmpresa(empresaActualizada);
+        }
+
+        usuarioRepository.save(usuarioActualizado);
+
+        return new AuthResponse("Sus datos se han actualizado exitosamente");
+    }
+
+    /**
+     * Método para actualizar los datos de la empresa
+     * @param updateUsuarioRequest parámetro con los datos necesarios para actualizar la empresa
+     * @param usuarioActualizado objeto del cual extraemos la empresa al usuario (esto para actualizar sus datos)
+     * @return La empresa con sus datos actualizados
+     */
+    private static Empresa getEmpresa(UpdateUsuarioRequest updateUsuarioRequest, Usuario usuarioActualizado) {
+        Empresa empresaActualizada = usuarioActualizado.getEmpresa();
+
+        // Le seteamos los nuevos datos a la empresa actualizada
+        empresaActualizada.setNit(updateUsuarioRequest.empresa().nit());
+        empresaActualizada.setNombre(updateUsuarioRequest.empresa().nombre());
+        empresaActualizada.setPais(updateUsuarioRequest.empresa().pais());
+        empresaActualizada.setCiudad(updateUsuarioRequest.empresa().ciudad());
+        empresaActualizada.setDireccion(updateUsuarioRequest.empresa().direccion());
+        empresaActualizada.setCorreo(updateUsuarioRequest.empresa().correo());
+        return empresaActualizada;
+    }
 }

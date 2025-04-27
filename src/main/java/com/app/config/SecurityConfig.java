@@ -37,10 +37,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth/login", "/auth/registro", "/auth/logout")
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                )
+                .csrf(csrf -> csrf.disable())
                 // habilitamos la protección CSRF usando cookies
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
@@ -58,6 +55,9 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
+                    auth.requestMatchers(HttpMethod.GET, "/buques/perfil").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-contraseña").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-datos").authenticated();
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();

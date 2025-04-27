@@ -33,17 +33,18 @@ public class AuthenticationController {
         try {
             String tokenDeAcceso = this.userDetailService.loginUser(authLoginRequest);
 
+            // Creación de la cookie para JWT
             Cookie cookie = new Cookie("access_token", tokenDeAcceso);
             cookie.setHttpOnly(true); // para que no se pueda acceder a la cookie por JS
             cookie.setMaxAge(7200); // tiempo de expiración de la cookie en segundos (2hrs), coincide con la expiración del token
             cookie.setPath("/"); // asi nos aseguramos de que esté en todas las rutas del sitio web
             response.addCookie(cookie); // añadimos la cookie al HttpServletResponse
 
-            model.addAttribute("mensaje", "Usuario Logueado Exitosamente");
+            model.addAttribute("mensajeExitoso", "Inicio de sesión exitoso");
 
-            return "redirect:/"; // redirigimos a la página principal
+            return "Login";
         } catch (BadCredentialsException | UsernameNotFoundException exception) {
-            model.addAttribute("mensaje", exception.getMessage());
+            model.addAttribute("mensajeError", exception.getMessage());
             return "Login";
         }
     }
@@ -57,7 +58,6 @@ public class AuthenticationController {
     @PostMapping("/registro")
     public String postRegister(@ModelAttribute @Valid AuthCreateUserRequest authCreateUserRequest, Model model) {
         AuthResponse response = this.userDetailService.createUser(authCreateUserRequest);
-        model.addAttribute("tiposIdentificacion", EIdentificacion.values());
         model.addAttribute("mensajeExitoso", response.mensaje());
         return "redirect:/auth/login";
     }
