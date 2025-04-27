@@ -273,6 +273,36 @@ body{
     display:none;
 }
 
+/* Estilos para el mensaje que proviene del servidor */
+.input__error__interno {
+    font: 700 15px "Montserrat";
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 770px;
+    background-color: #fd1f1f;
+    padding: 20px 15px;
+    border-radius: 5px;
+    grid-column: span 2;
+    margin: -10px 0 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.input__mensaje__satisfactorio {
+    font: 700 15px "Montserrat";
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 770px;
+    background-color: #28a745;
+    padding: 20px 15px;
+    border-radius: 5px;
+    grid-column: span 2;
+    margin: -10px 0 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    color: white;
+}
+
 .advertencia--change{
     max-width: 880px;
     margin-top:5px ;

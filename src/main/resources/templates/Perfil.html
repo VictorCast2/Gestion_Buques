@@ -133,10 +133,17 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
-                <div th:if="${mensaje != null}">
-                     <p class="input__advertencia" th:text="${mensaje}">
-                         <i class="ri-error-warning-line"></i>
+                <div th:if="${mensaje != null && #strings.startsWith(mensaje, 'Error:')}">
+                     <p id="mensaje-servidor-error"
+                        class="input__error__interno"
+                        th:text="${mensaje}">
                      </p>
+                </div>
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:')}">
+                    <p id="mensaje-servidor-exitoso"
+                       class="input__mensaje__satisfactorio"
+                       th:text="${mensaje}">
+                    </p>
                 </div>
 
                 <button class="formulario__button" type="submit">Cambiar Contraseña</button>
@@ -532,6 +539,20 @@
 
 
     <script th:src="@{/js/Perfil.js}"></script>
+
+    <!-- Script para desvanecer el mensaje que proviene del servidor -->
+    <script>
+        setTimeout(function() {
+            const mensajeError = document.getElementById('mensaje-servidor-error');
+            const mensajeExitoso = document.getElementById('mensaje-servidor-exitoso');
+            if (mensajeError) {
+                mensajeError.style.display = 'none';
+            } else if (mensajeExitoso) {
+                mensajeExitoso.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+
 </body>
 
 </html>

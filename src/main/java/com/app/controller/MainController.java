@@ -14,11 +14,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriUtils;
+
+import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequestMapping("/buques")
@@ -58,17 +58,19 @@ public class MainController {
     }
 
     @RequestMapping("/perfil")
-    public String perfil(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model model) {
+    public String perfil(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(value = "mensaje", required = false) String mensaje, Model model) {
         Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
         model.addAttribute("usuario", usuario);
+        model.addAttribute("mensaje", mensaje);
+
         return "Perfil";
     }
 
     @PostMapping("/actualizar-contraseña")
-    public String updatePassword(@ModelAttribute @Valid UpdatePasswordRequest updatePasswordRequest, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+    public String updatePassword(@ModelAttribute @Valid UpdatePasswordRequest updatePasswordRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
         AuthResponse response = userDetailService.updatePassword(updatePasswordRequest, userDetails);
-        model.addAttribute("mensaje", response.mensaje());
-        return "redirect:/buques/perfil";
+        String mensaje = response.mensaje();
+        return "redirect:/buques/perfil?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 
     @RequestMapping("/notificaciones")

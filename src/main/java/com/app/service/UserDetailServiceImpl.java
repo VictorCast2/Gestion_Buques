@@ -143,7 +143,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         // validamos que la nueva contraseña no sea igual a la anterior
         if (encoder.matches(newPassword, usuario.getPassword())) {
-            return new AuthResponse("La nueva contraseña no puede ser igual a la anterior");
+            return new AuthResponse("Error: la nueva contraseña no puede ser igual a la anterior");
         }
 
         usuario.setPassword(encoder.encode(newPassword));
