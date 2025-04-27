@@ -36,7 +36,13 @@ public class EmpresaController {
             HttpServletRequest request                     // Captura la solicitud para obtener el token
     ) {
         // Extraer el token del JWT desde la solicitud
-        String token = jwtUtils.extractTokenFromRequest(request);
+        String token = "";
+        try {
+            token = jwtUtils.extractTokenFromRequest(request);
+            // Aquí puedes verificar si el token es válido
+        } catch (RuntimeException e) {
+            e.getMessage();
+        }
 
         // Subir la imagen
         MensajeResponse response = userDetailService.uploadImagenUsuario(file, token);

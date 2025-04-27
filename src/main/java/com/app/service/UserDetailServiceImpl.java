@@ -38,7 +38,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Autowired
-    @Value("${imagenes.upload.usuario}")
+    @Value("Img/Usuario")
     private String usuarioPath;
 
     @Override

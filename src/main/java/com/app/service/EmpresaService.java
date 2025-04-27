@@ -25,7 +25,7 @@ public class EmpresaService {
 
     public EmpresaResponse asignarEmpresa(@Valid EmpresaRequest request, String token) {
         // Extraemos el correo del usuario desde el token JWT
-        String correoUsuario = jwtUtils.extractUserEmailFromToken(token);
+        String correoUsuario = jwtUtils.extraerUsuario(token);
 
         // Buscamos al usuario en la base de datos
         Usuario usuario = usuarioRepository.findByCorreo(correoUsuario)
@@ -47,11 +47,14 @@ public class EmpresaService {
                 .correo(request.correo())
                 .build();
 
+        // Asociamos la empresa al usuario
         usuario.setEmpresa(empresa);
         usuario.setRol(ERol.AGENTE_NAVIERO);  // Ajusta el rol si es necesario
+
+        // Guardamos los cambios en el repositorio
         usuarioRepository.save(usuario);
 
+        // Devolvemos una respuesta exitosa
         return new EmpresaResponse("Empresa registrada y asociada exitosamente al usuario.");
     }
-
 }

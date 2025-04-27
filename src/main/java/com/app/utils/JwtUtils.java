@@ -3,6 +3,7 @@ package com.app.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -87,6 +88,21 @@ public class JwtUtils {
     }
 
     /**
+     * Método para obtener el usuario que viene del token
+     * @param token parámetro para la obtención del token de usuario
+     * @return el correo del usuario que genero el token
+     */
+    public String extraerUsuario(String token) {
+        try {
+            DecodedJWT decodedJWT = JWT.decode(token); // Decodifica el token
+            return decodedJWT.getSubject(); // Extrae el "subject"
+        } catch (JWTDecodeException e) {
+            throw new RuntimeException("Error al decodificar el token", e); // Manejo de excepciones
+        }
+    }
+
+
+    /**
      * Método para obtener un Claim por su correo del token
      * @param decodedJWT parámetro para la obtención del token decodificado (incluye el claim)
      * @param claimName parámetro con el correo del Claim a obtener
@@ -116,11 +132,6 @@ public class JwtUtils {
             return token.substring(7); // Quita "Bearer "
         }
         throw new RuntimeException("No se encontró el token de autorización en la petición");
-    }
-
-    public String extractUserEmailFromToken(String token) {
-        DecodedJWT decodedJWT = validarToken(token);  // Validamos y decodificamos el token
-        return extraerUsuario(decodedJWT);  // Extraemos el correo que es el subject
     }
 
 }

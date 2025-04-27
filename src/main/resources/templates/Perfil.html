@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/x-icon" th:href="@{/css/assets/image/icons/Ships.png}">
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet">
 </head>
@@ -180,27 +179,28 @@
 
     </div>
     <div class="div4">
-        <div class="perfil__cabecera">
-            <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/testimonio3.avif}" alt="Foto de perfil">
+        <form class="perfil__formulario" method="POST" action="/empresa/registrar" enctype="multipart/form-data">
 
-            <div class="perfil__botones">
-                <!-- Input file oculto -->
-                <input type="file" id="input-foto" name="foto" accept="image/*" style="display: none;">
+            <div class="perfil__cabecera">
+                <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/testimonio3.avif}" alt="Foto de perfil">
 
-                <!-- Label que actúa como botón -->
-                <label for="input-foto" class="perfil__boton perfil__boton--upload">
-                    Cargar Nueva Foto
-                </label>
+                <div class="perfil__botones">
+                    <!-- Input file oculto -->
+                    <input type="file" id="input-foto" name="foto" accept="image/*" style="display: none;">
 
-                <button class="perfil__boton perfil__boton--reset">Reiniciar</button>
-                <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 800K</small>
+                    <!-- Label que actúa como botón -->
+                    <label for="input-foto" class="perfil__boton perfil__boton--upload">
+                        Cargar Nueva Foto
+                    </label>
+
+                    <button class="perfil__boton perfil__boton--reset">Reiniciar</button>
+                    <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 800K</small>
+                </div>
             </div>
-        </div>
 
-        <form class="perfil__formulario">
             <div class="formulario__input">
                 <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="Nit" id="nit">
+                    <input type="text" autocomplete="off" placeholder="" name="nit" id="nit">
                     <label class="label" for="nit">Nit</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -211,7 +211,7 @@
             </div>
             <div class="formulario__input input--cambio">
                 <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="Name" id="nombreEmpresa">
+                    <input type="text" autocomplete="off" placeholder="" name="nombre" id="nombreEmpresa">
                     <label class="label" for="nombreEmpresa">Nombre Empresa</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -224,7 +224,7 @@
             <!-- Selector de país -->
             <div class="formulario__input">
                 <div class="custom-select-wrapper wrapper--changed1">
-                    <select class="styled-select select--changed1" id="selectPais">
+                    <select class="styled-select select--changed1" id="selectPais" name="pais">
                         <option disabled selected>Pais</option>
                     </select>
                     <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -235,7 +235,7 @@
             <!-- Selector de ciudad -->
             <div class="formulario__input">
                 <div class="custom-select-wrapper wrapper--changed1">
-                    <select class="styled-select select--changed1" id="selectCiudad">
+                    <select class="styled-select select--changed1" id="selectCiudad" name="ciudad">
                         <option disabled selected>Ciudad</option>
                     </select>
                     <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -245,7 +245,7 @@
 
             <div class="formulario__input">
                 <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="Direccion" id="direccion">
+                    <input type="text" autocomplete="off" placeholder="" name="direccion" id="direccion">
                     <label class="label" for="direccion">Direccion</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -258,7 +258,7 @@
 
             <div class="formulario__input">
                 <div class="input-box box--changed">
-                    <input type="email" autocomplete="off" placeholder="" name="email" id="emailEmpresa">
+                    <input type="email" autocomplete="off" placeholder="" name="correo" id="emailEmpresa">
                     <label class="label" for="emailEmpresa">Email Empresa</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -270,7 +270,7 @@
 
             <div class="formulario__input">
                 <div class="input-box box--changed">
-                    <input type="text" autocomplete="off" placeholder="" name="Telefono" id="telefono">
+                    <input type="text" autocomplete="off" placeholder="" name="telefono" id="telefono">
                     <label class="label" for="telefono">Telefono</label>
                     <span class="box__icon"><i class="ri-check-line"></i></span>
                     <span class="box__icon"><i class="ri-close-line"></i></span>
