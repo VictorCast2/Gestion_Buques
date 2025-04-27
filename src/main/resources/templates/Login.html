@@ -109,8 +109,11 @@
                 <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
             </p>
 
-            <div th:if="${mensaje != null}" class="alert alert-danger">
-                <p th:text="${mensaje}"></p>
+            <div th:if="${mensajeError != null}">
+                <p id="mensaje-password-error"
+                   class="input__error__interno"
+                   th:text="${mensajeError}">
+                </p>
             </div>
 
             <div class="formulario__input formulario__btn-container">
@@ -124,15 +127,26 @@
 
     </form>
 
-    <div id="modalSuccess" class="modal">
+    <div id="modalSuccess" class="modal" th:if="${mensajeExitoso != null}">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <i class="ri-check-line success-icon"></i>
-            <h2>Inicio de sesión exitoso</h2>
+            <h2 th:text="${mensajeExitoso}">Inicio de sesión exitoso</h2>
         </div>
     </div>
 
     <script th:src="@{/js/login.js}"></script>
+
+    <!-- Script para desvanecer el mensaje que proviene del servidor -->
+    <script>
+        setTimeout(function() {
+            const MENSAJE_PASSWORD_ERROR = document.getElementById('mensaje-password-error');
+            if (MENSAJE_PASSWORD_ERROR) {
+                MENSAJE_PASSWORD_ERROR.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+
 </body>
 
 </html>

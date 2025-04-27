@@ -55,6 +55,9 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
+                    auth.requestMatchers(HttpMethod.GET, "/buques/perfil").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-contraseña").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-datos").authenticated();
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();

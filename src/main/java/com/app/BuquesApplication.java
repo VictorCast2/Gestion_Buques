@@ -3,6 +3,7 @@ package com.app;
 import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
+import com.app.collections.Usuario.pojo.Empresa;
 import com.app.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -54,7 +55,34 @@ public class BuquesApplication {
 					.accountNoLocked(true)
 					.credentialNoExpired(true)
 					.build();
-			usuarioRepository.saveAll(List.of(userJose, userCarlos));
+
+			Empresa empresaLeamitre = Empresa.builder()
+					.nit("123456789-3")
+					.nombre("Lemaitre Perfumeria")
+					.pais("Colombia")
+					.ciudad("Cartagena")
+					.direccion("ParquiAmérica - Mamonal Gambote")
+					.telefono("+57 310 2255889")
+					.correo("leamitre@perfumeria.com")
+					.build();
+
+			Usuario userTheresa = Usuario.builder()
+					.tipoIdentificacion(EIdentificacion.NIT)
+					.numeroIdentificacion("123456789 - 1")
+					.nombres("Theresa Andrea")
+					.apellidos("Torres Diaz")
+					.telefono("+57 310 5566778")
+					.correo("theresa@mail.com")
+					.password("$2a$10$rj3PmRqB76o2VrobVRdCf.s2Q4S3HDnvVHeAmi8Uxdp.GWrLoqiMq")
+					.rol(ERol.AGENTE_NAVIERO)
+					.empresa(empresaLeamitre)
+					.isEnabled(true)
+					.accountNoExpired(true)
+					.accountNoLocked(true)
+					.credentialNoExpired(true)
+					.build();
+
+			usuarioRepository.saveAll(List.of(userJose, userCarlos, userTheresa));
 		};
 	}
 }

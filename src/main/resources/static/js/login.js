@@ -1,8 +1,15 @@
 // Función para abrir el modal
-function openModal() {
+window.addEventListener('DOMContentLoaded', (event) => {
     const modal = document.getElementById("modalSuccess");
-    modal.style.display = "block"; // Mostrar el modal
-}
+    if (modal) {
+        modal.style.display = "block"; // Mostrar el modal
+
+        // Después de 2 segundos (2000 milisegundos), redirigir a buques
+        setTimeout(() => {
+            window.location.href = '/buques/';
+        }, 2000);
+    }
+});
 
 // Función para cerrar el modal
 function closeModal() {

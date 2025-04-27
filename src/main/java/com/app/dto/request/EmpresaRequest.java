@@ -2,13 +2,15 @@ package com.app.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public record EmpresaRequest(
-        @NotBlank String nit,
-        @NotBlank String nombre,
-        @NotBlank String pais,
-        @NotBlank String ciudad,
-        @NotBlank String direccion,
-        @NotBlank String telefono,
-        @Email String correo) {
+        String nit,
+        String nombre,
+        String pais,
+        String ciudad,
+        String direccion,
+        String telefono,
+        String correo) {
 }

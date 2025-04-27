@@ -251,6 +251,21 @@ ul {
     display: none;
 }
 
+/* Estilos para el mensaje que proviene del servidor */
+.input__error__interno {
+    font: 700 15px "Montserrat";
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 550px;
+    background-color: #fd1f1f;
+    padding: 20px 15px;
+    border-radius: 5px;
+    grid-column: span 2;
+    margin: 20px 0 0 30px;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .input__advertencia i {
     font-size: 1.7rem;
     margin: -5px 10px 0 0;
