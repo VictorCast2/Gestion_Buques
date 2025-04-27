@@ -320,17 +320,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const fotoPreview = document.getElementById("foto-preview");
     const resetButton = document.querySelector(".perfil__boton--reset");
 
-    inputFoto.addEventListener("change", function (event) {
+    inputFoto.addEventListener("change", async function (event) {
         const file = event.target.files[0];
-
         if (file) {
             const objectURL = URL.createObjectURL(file);
             fotoPreview.src = objectURL;
+
+            const formData = new FormData();
+            formData.append('foto', file);
+
+            try {
+                const response = await fetch('/usuario/actualizar-imagen', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result.mensaje);
+                    // Aquí podrías actualizar más cosas si quieres
+                } else {
+                    console.error('Error al subir la imagen');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     });
 
     resetButton.addEventListener("click", function () {
-        fotoPreview.src = "assets/image/testimonio3.avif";
+        fotoPreview.src = "/css/assets/image/testimonio3.avif";
         inputFoto.value = "";
     });
 

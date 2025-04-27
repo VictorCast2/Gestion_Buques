@@ -5,11 +5,13 @@ import com.app.security.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
-import com.app.dto.response.AuthResponse;
+import com.app.dto.response.MensajeResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -29,6 +35,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    @Value("Img/Usuario")
+    private String usuarioPath;
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
@@ -55,7 +65,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @nota: el usuario creado tendrá por defecto el rol de Invitado y lo referente a los datos de su empresa ó inspecciones,
      * serán nulos, por ser la primera vez que se crea al usuario
      */
-    public AuthResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
+    public MensajeResponse createUser(@Valid AuthCreateUserRequest authCreateUserRequest) {
         EIdentificacion tipoIdentificacion = EIdentificacion.valueOf(authCreateUserRequest.tipoIdentificacion());
         String numeroIdentificacion = authCreateUserRequest.numeroIdentificacion();
         String nombres = authCreateUserRequest.nombres();
@@ -81,7 +91,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .credentialNoExpired(true)
                 .build();
         usuarioRepository.save(usuario); // salvamos al usuario
-        return new AuthResponse("usuario creado exitosamente");
+
+        return new MensajeResponse("usuario creado exitosamente");
     }
 
     /**
@@ -133,7 +144,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @param userDetails parámetro para extraer al usuario de la session
      * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
      */
-    public AuthResponse updatePassword(@Valid UpdatePasswordRequest updatePasswordRequest, CustomUserDetails userDetails) {
+    public MensajeResponse updatePassword(@Valid UpdatePasswordRequest updatePasswordRequest, CustomUserDetails userDetails) {
 
         Usuario usuario = this.getUsuarioByCorreo(userDetails.getCorreo()); // usuario actual de la sesión
         String currentPassword = updatePasswordRequest.currentPassword();
@@ -141,18 +152,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         // validamos que la contraseña sean iguales, sinó se manda el error
         if (!encoder.matches(currentPassword, usuario.getPassword())) {
-            return new AuthResponse("Error: contraseña actual incorrecta");
+            return new MensajeResponse("Error: contraseña actual incorrecta");
         }
 
         // validamos que la nueva contraseña no sea igual a la anterior
         if (encoder.matches(newPassword, usuario.getPassword())) {
-            return new AuthResponse("Error: la nueva contraseña no puede ser igual a la anterior");
+            return new MensajeResponse("Error: la nueva contraseña no puede ser igual a la anterior");
         }
 
         usuario.setPassword(encoder.encode(newPassword));
         usuarioRepository.save(usuario);
 
-        return new AuthResponse("contraseña actualizada exitosamente");
+        return new MensajeResponse("contraseña actualizada exitosamente");
     }
 
     /**
@@ -161,7 +172,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @param customUserDetails parámetro para extraer al usuario de la session
      * @return
      */
-    public AuthResponse updateUsuario(@Valid UpdateUsuarioRequest updateUsuarioRequest, CustomUserDetails customUserDetails) {
+    public MensajeResponse updateUsuario(@Valid UpdateUsuarioRequest updateUsuarioRequest, CustomUserDetails customUserDetails) {
 
         Usuario usuarioActualizado = this.getUsuarioByCorreo(customUserDetails.getCorreo()); // usuarioActualizado actual de la sesión
 
@@ -181,7 +192,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         usuarioRepository.save(usuarioActualizado);
 
-        return new AuthResponse("Sus datos se han actualizado exitosamente");
+        return new MensajeResponse("Sus datos se han actualizado exitosamente");
     }
 
     /**
@@ -202,4 +213,43 @@ public class UserDetailServiceImpl implements UserDetailsService {
         empresaActualizada.setCorreo(updateUsuarioRequest.empresa().correo());
         return empresaActualizada;
     }
+
+     /** Método para actualizar la imagen del usuario
+     * @param file archivo de tipo MultipartFile que contiene la imagen
+     * @param token token de autenticación del usuario
+     * @return un objeto de tipo MensajeResponse con el mensaje de éxito o error
+     */
+    public MensajeResponse uploadImagenUsuario(MultipartFile file, String token) {
+        try {
+            // Validar token primero
+            DecodedJWT decodedJWT = jwtUtils.validarToken(token);
+
+            // Extraer correo
+            String correo = jwtUtils.extraerUsuario(decodedJWT);
+
+            // Buscar usuario
+            Usuario usuario = usuarioRepository.findByCorreo(correo)
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+            // Validar archivo
+            if (file.isEmpty()) {
+                throw new IllegalArgumentException("El archivo está vacío");
+            }
+
+            // Guardar imagen
+            String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path path = Paths.get(usuarioPath, filename);
+            Files.createDirectories(path.getParent()); // Crear carpeta si no existe
+            Files.write(path, file.getBytes());
+
+            // Actualizar usuario
+            usuario.setImagen("/" + usuarioPath + "/" + filename); // ruta relativa
+            usuarioRepository.save(usuario);
+
+            return new MensajeResponse("Imagen subida y actualizada correctamente");
+        } catch (Exception e) {
+            throw new RuntimeException("Error subiendo la imagen: " + e.getMessage());
+        }
+    }
+
 }

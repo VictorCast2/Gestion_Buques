@@ -22,7 +22,6 @@ public class BuquesApplication {
 	@Bean
 	public CommandLineRunner init(UsuarioRepository usuarioRepository) {
 		return args -> {
-
 			/* Crear Usuarios */
 			Usuario userJose = Usuario.builder()
 					.tipoIdentificacion(EIdentificacion.CC)
@@ -82,7 +81,40 @@ public class BuquesApplication {
 					.credentialNoExpired(true)
 					.build();
 
-			usuarioRepository.saveAll(List.of(userJose, userCarlos, userTheresa));
+			Usuario userVictor = Usuario.builder()
+					.tipoIdentificacion(EIdentificacion.CC)
+					.numeroIdentificacion("123456")
+					.nombres("Victor Jose")
+					.apellidos("Castillo")
+					.telefono("+57 319 556627")
+					.correo("victor@gmail.com")
+					.password("$2a$10$rj3PmRqB76o2VrobVRdCf.s2Q4S3HDnvVHeAmi8Uxdp.GWrLoqiMq")
+					.rol(ERol.INVITADO)
+					.empresa(empresaLeamitre)
+					.isEnabled(true)
+					.accountNoExpired(true)
+					.accountNoLocked(true)
+					.credentialNoExpired(true)
+					.build();
+
+			// Verificar si ya existe el usuario por correo
+			if (!usuarioRepository.existsByCorreo(userJose.getCorreo())) {
+				usuarioRepository.save(userJose);
+			}
+
+			if (!usuarioRepository.existsByCorreo(userCarlos.getCorreo())) {
+				usuarioRepository.save(userCarlos);
+			}
+
+			if (!usuarioRepository.existsByCorreo(userVictor.getCorreo())) {
+				usuarioRepository.save(userVictor);
+			}
+
+			if (!usuarioRepository.existsByCorreo(userTheresa.getCorreo())) {
+				usuarioRepository.save(userTheresa);
+			}
+
 		};
 	}
+
 }

@@ -39,6 +39,7 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 // habilitamos la protección CSRF usando cookies
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
                 )
@@ -50,6 +51,7 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
+                    auth.requestMatchers("/empresa/registrar").permitAll();
 
                     // Configurar endpoints privados
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
@@ -59,18 +61,15 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-contraseña").authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-datos").authenticated();
 
-                    // Configurar endpoints NO ESPECIFICADOS
-                    // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
 
                 // Configuración de logout
                 .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth/login?logout") // redirección después de cerrar sesión
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID", "access_token")
+                        .logoutUrl("/auth/logout") // Ruta para cerrar sesión
+                        .clearAuthentication(true) // Borra la autenticación actual
+                        .invalidateHttpSession(true) // Invalida la sesión HTTP
+                        .deleteCookies("JSESSIONID", "access_token") // Borra la cookie de sesión y el token de la session
                 )
 
                 // Añadimos el filtro que creamos y lo ejecutamos antes del filtro de BasicAuthenticationFilter (este es el encargado de verificar si estamos autorizados)
