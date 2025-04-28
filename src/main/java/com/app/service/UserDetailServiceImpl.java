@@ -159,7 +159,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * Método para actualizar los datos del usuario
      * @param updateUsuarioRequest parámetro con los datos necesarios para actualizar al usuario
      * @param customUserDetails parámetro para extraer al usuario de la session
-     * @return
+     * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
      */
     public AuthResponse updateUsuario(@Valid UpdateUsuarioRequest updateUsuarioRequest, CustomUserDetails customUserDetails) {
 
@@ -189,6 +189,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @param updateUsuarioRequest parámetro con los datos necesarios para actualizar la empresa
      * @param usuarioActualizado objeto del cual extraemos la empresa al usuario (esto para actualizar sus datos)
      * @return La empresa con sus datos actualizados
+     * @nota: Este método se usa en updateUsuario, se opto por crear una clase aparte para no sobrecargar la anterior
      */
     private static Empresa getEmpresa(UpdateUsuarioRequest updateUsuarioRequest, Usuario usuarioActualizado) {
         Empresa empresaActualizada = usuarioActualizado.getEmpresa();
@@ -201,5 +202,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         empresaActualizada.setDireccion(updateUsuarioRequest.empresa().direccion());
         empresaActualizada.setCorreo(updateUsuarioRequest.empresa().correo());
         return empresaActualizada;
+    }
+
+    private void deleteUsuario(CustomUserDetails customUserDetails) {
+        Usuario usuario = this.getUsuarioByCorreo(customUserDetails.getCorreo());
+        usuarioRepository.delete(usuario);
     }
 }

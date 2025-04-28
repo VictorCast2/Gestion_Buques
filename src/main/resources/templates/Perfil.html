@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -17,10 +17,69 @@
 
 <body>
 
+    <!-- Encabezado header-->
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="list__item"><a class="item__link" th:href="@{/buques/}">inicio</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/buques/quienes-somos}">quienes somos</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/buques/servicios}">servicios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/buques/noticias}">Noticias</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/buques/testimonios}">Testimonios</a></li>
+                <li class="list__item"><a class="item__link" th:href="@{/buques/contactos}">contactos</a></li>
+                <li class="list__item" sec:authorize="!isAuthenticated()">
+                    <a class="item__link  btn--signin" th:href="@{/auth/login}">Ingresar</a>
+                </li>
+            </ul>
+
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+
+            <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
+                <div class="menu__sub">
+                    <div class="sub__info">
+                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}" >
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
+                    </div>
+                    <hr>
+
+                    <a href="#" class="sub__link">
+                        <i class="ri-user-fill"></i>
+                        <p class="link__text">Perfil</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
+                        <i class="ri-settings-5-fill"></i>
+                        <p class="link__text">Configuracion</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
+                        <i class="ri-notification-2-fill"></i>
+                        <p class="link__text">Notificaciones</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <!-- Formulario oculto para logout -->
+                    <!--                    <form th:action="@{/auth/logout}" method="post" id="logoutForm" style="display: none;">-->
+                    <!--                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />-->
+                    <!--                    </form>-->
+                    <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                        <i class="ri-logout-box-r-fill"></i>
+                        <p class="link__text">Cerrar Seccion</p>
+                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                </div>
+            </div>
+
+        </nav>
+    </header>
+
     <div class="parent">
         <div class="parent__item">
-            <img class="item__img" th:src="@{/css/assets/image/testimonio3.avif}" alt="">
-            <h2 class="item__nombre" th:text="${usuario.nombres + usuario.apellidos}">Nombre Usuario</h2>
+            <img class="item__img" th:src="@{/css/assets/image/user_default.jpg}" alt="">
+            <h2 class="item__nombre" th:text="${usuario.nombres + ' ' + usuario.apellidos}">Nombre Usuario</h2>
             <h3 class="item__rol" th:text="${usuario.rol}">Ninguno</h3>
             <h4 class="item__details">Detalles</h4>
             <hr>
@@ -239,7 +298,7 @@
         </div>
         <div class="div4" th:if="${usuario.rol.name == 'INVITADO' || usuario.rol.name == 'AGENTE_NAVIERO'}">
             <div class="perfil__cabecera">
-                <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/testimonio3.avif}" alt="Foto de perfil">
+                <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/user_default.jpg}" alt="Foto de perfil">
 
                 <div class="perfil__botones">
                     <!-- Input file oculto -->
@@ -528,7 +587,7 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
-                <div th:if="${mensaje != null}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña')}">
                     <p id="mensaje-update-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">

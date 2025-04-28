@@ -1,5 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    /* Menú desplegable del perfil */
+    const subMenu = document.getElementById("SubMenu");
+    const profileImage = document.querySelector(".nav__img");
+
+    if (subMenu && profileImage) {
+        profileImage.addEventListener("click", function () {
+            subMenu.classList.toggle("open__menu");
+        });
+
+        // Opcional: cerrar menú al hacer clic fuera
+        document.addEventListener("click", function (e) {
+            if (!subMenu.contains(e.target) && !profileImage.contains(e.target)) {
+                subMenu.classList.remove("open__menu");
+            }
+        });
+
+    }
+
     //Ventana Modal de editar
     const btnEditar = document.getElementById("btnEditar");
     const modaleditar = document.getElementById("modalEditar");
@@ -330,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     resetButton.addEventListener("click", function () {
-        fotoPreview.src = "assets/image/testimonio3.avif";
+        fotoPreview.src = "assets/image/user_default.jpg";
         inputFoto.value = "";
     });
 
@@ -543,4 +561,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Activar carga de ciudades en ambos casos
     cargarCiudades(selectPais, selectCiudad);
     cargarCiudades(selectPais2, selectCiudad2);
+
 });
