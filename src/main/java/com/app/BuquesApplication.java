@@ -58,6 +58,7 @@ public class BuquesApplication {
 					.credentialNoExpired(true)
 					.build();
 
+			/* Crear Empresa */
 			Empresa empresaLeamitre = Empresa.builder()
 					.nit("123456789-3")
 					.nombre("Lemaitre Perfumeria")
@@ -85,7 +86,18 @@ public class BuquesApplication {
 					.credentialNoExpired(true)
 					.build();
 
-			usuarioRepository.saveAll(List.of(userJose, userCarlos, userTheresa));
+			if (!usuarioRepository.existsByCorreo(userJose.getCorreo())) {
+				usuarioRepository.save(userJose);
+			}
+
+			if (!usuarioRepository.existsByCorreo(userCarlos.getCorreo())) {
+				usuarioRepository.save(userCarlos);
+			}
+
+			if (!usuarioRepository.existsByCorreo(userTheresa.getCorreo())) {
+				usuarioRepository.save(userTheresa);
+			}
+
 		};
 	}
 }
