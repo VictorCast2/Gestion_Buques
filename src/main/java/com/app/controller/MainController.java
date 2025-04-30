@@ -47,4 +47,24 @@ public class MainController {
         return "Notificaciones";
     }
 
+    @RequestMapping("/AgenteNaviero")
+    public String AgenteNaviero() {
+        return "AgenteNaviero";
+    }
+
+    @RequestMapping("/Configuraciones")
+    public String Configuraciones() {
+        return "Configuraciones";
+    }
+
+    @RequestMapping("/Procesos")
+    public String Procesos() {
+        return "Procesos";
+    }
+
+    @RequestMapping("/SolicitudAtraque")
+    public String SolicitudAtraque() {
+        return "SolicitudAtraque";
+    }
+
 }

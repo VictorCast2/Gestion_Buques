@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente Naviero</title>
+    <link rel="stylesheet" th:href="@{/css/AgenteNaviero.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <hr>
+        <ul class="sidebar__menu">
+            <li class="sidebar__item active">
+                <i class="ri-home-2-fill"></i>
+                <span class="sidebar__text">Inicio</span>
+            </li>
+            <div class="sidebar__indicator"></div>
+            <li class="sidebar__item">
+                <i class="ri-ship-fill"></i>
+                <span class="sidebar__text">Solicitud Atraque</span>
+            </li>
+            <li class="sidebar__item">
+                <i class="ri-flow-chart"></i>
+                <span class="sidebar__text">Procesos</span>
+            </li>
+        </ul>
+
+        <div class="card">
+            <div class="circle">
+                <i class="ri-moon-fill"></i>
+            </div>
+            <h2 class="card__title">Upgrade to PRO</h2>
+            <p class="card__text">Improve your development process and start doing more with Horizon UI PRO!</p>
+            <button class="card__btn" type="button">Upgrade to PRO</button>
+        </div>
+    </aside>
+
+    <header class="header">
+        <nav class="header__nav">
+
+            <div class="nav__search">
+                <i class="ri-search-line search__icon"></i>
+                <input type="text" placeholder="Buscar..." class="search__input" />
+            </div>
+
+            <div class="language-wrapper">
+                <div class="language-selector" data-flag="https://flagcdn.com/w40/es.png"
+                    onclick="toggleLanguageMenu()">
+                    <img id="currentFlag" src="https://flagcdn.com/w40/es.png" alt="Español" />
+                </div>
+
+                <div class="language-menu" id="languageMenu">
+                    <div class="language-option" data-lang="es" data-flag="https://flagcdn.com/w40/es.png">
+                        <img src="https://flagcdn.com/w40/es.png" alt="Español" />
+                        <span>Español</span>
+                    </div>
+                    <div class="language-option" data-lang="zh" data-flag="https://flagcdn.com/w40/cn.png">
+                        <img src="https://flagcdn.com/w40/cn.png" alt="Chino" />
+                        <span>Chino</span>
+                    </div>
+                    <div class="language-option" data-lang="en" data-flag="https://flagcdn.com/w40/us.png">
+                        <img src="https://flagcdn.com/w40/us.png" alt="Inglés" />
+                        <span>Inglés</span>
+                    </div>
+                    <div class="language-option" data-lang="pt" data-flag="https://flagcdn.com/w40/pt.png">
+                        <img src="https://flagcdn.com/w40/pt.png" alt="Portugués" />
+                        <span>Portugués</span>
+                    </div>
+                    <div class="language-option" data-lang="fr" data-flag="https://flagcdn.com/w40/fr.png">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="Francés" />
+                        <span>Francés</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-toggle" title="Cambiar tema">
+                <i class="ri-moon-fill" id="moon-icon" onclick="setDarkTheme()"></i>
+            </div>
+
+
+            <div class="icono__notification">
+                <i class="ri-notification-2-fill"></i>
+            </div>
+
+            <div class="icono__notification">
+                <i class="ri-settings-4-fill"></i>
+            </div>
+
+            <img class="nav__img" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+
+            <div class="nav__menu" id="SubMenu">
+                <div class="menu__sub">
+                    <div class="sub__info">
+                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}">
+                        <h2 class="info__title">Keyner Reyes</h2>
+                    </div>
+                    <hr>
+
+                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                        <i class="ri-user-fill"></i>
+                        <p class="link__text">Perfil</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                        <i class="ri-settings-5-fill"></i>
+                        <p class="link__text">Configuracion</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                        <i class="ri-notification-2-fill"></i>
+                        <p class="link__text">Notificaciones</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a href="" class="sub__link">
+                        <i class="ri-logout-box-r-fill"></i>
+                        <p class="link__text">Cerrar Seccion</p>
+                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="name__encabezado">
+        <i class="ri-arrow-left-line"></i>
+        <a class="encabezado__pages" th:href="@{/buques/index}">Regresar /</a>
+        <a class="encabezado__pages" href="">Pages /</a>
+        <a class="encabezado__pages" href="">Inicio</a>
+        <h1 class="encabezado__title">Inicio</h1>
+    </div>
+
+    <script th:src="@{/js/agentenaviero.js}"></script>
+</body>
+
+</html>
