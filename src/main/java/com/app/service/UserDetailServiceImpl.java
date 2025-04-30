@@ -68,6 +68,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Usuario usuario = Usuario.builder()
                 .tipoIdentificacion(tipoIdentificacion)
                 .numeroIdentificacion(numeroIdentificacion)
+                .imagen("user_default.jpg")
                 .nombres(nombres)
                 .apellidos(apellidos)
                 .telefono(telefono)

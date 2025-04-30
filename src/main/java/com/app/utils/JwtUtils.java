@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class JwtUtils {
 
     @Value("${security.jwt.key.private}")
-    private String  llavePrivada;
+    private String llavePrivada;
 
     @Value("${security.jwt.user.generator}")
     private String origenToken;
@@ -86,9 +86,9 @@ public class JwtUtils {
     }
 
     /**
-     * Método para obtener un Claim por su correo del token
+     * Método para obtener un Claim por su nombre del token
      * @param decodedJWT parámetro para la obtención del token decodificado (incluye el claim)
-     * @param claimName parámetro con el correo del Claim a obtener
+     * @param claimName parámetro con el nombre del Claim a obtener
      * @return el Claim solicitado
      */
     public Claim getClaimByName(DecodedJWT decodedJWT, String claimName) {

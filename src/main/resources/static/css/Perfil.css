@@ -113,7 +113,9 @@ body{
 
 /* Estilos del usuario cuando inicia seccion */
 .nav__img{
-    width: 80px;
+    width: 70px;
+    border-radius: 50%;
+    margin: 0px 0px 0px 10px;
     cursor: pointer;
 }
 
@@ -489,6 +491,8 @@ body{
     color: white;
 }
 
+
+
 .advertencia--change{
     max-width: 880px;
     margin-top:5px ;
@@ -657,6 +661,7 @@ body{
 
 .perfil__cabecera{
     position: relative;
+    grid-column: 1 / span 2;
 }
 
 .cabecera__img{
@@ -715,8 +720,6 @@ body{
     width: 120%;
     color: #797d7f;
 }
-
-
 
 .perfil__formulario{
     display: grid;

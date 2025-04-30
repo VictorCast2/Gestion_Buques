@@ -103,21 +103,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Ocultar advertencias y errores de select al interactuar
-    [selectPaisEdit, selectCiudadEdit,selectTipoIdentificacion].forEach(select => {
-        select.addEventListener("change", () => {
-            advertenciaEdit.style.display = "none";
+    [selectPaisEdit, selectCiudadEdit, selectTipoIdentificacion].forEach(select => {
+        if (select) {
+            select.addEventListener("change", () => {
+                if (advertenciaEdit) advertenciaEdit.style.display = "none";
 
-            if (select === selectPaisEdit && select.selectedIndex > 0) {
-                errorPaisEdit.style.display = "none";
-            }
-            if (select === selectCiudadEdit && select.selectedIndex > 0) {
-                errorCiudadEdit.style.display = "none";
-            }
-
-            if (select === selectTipoIdentificacion && select.selectedIndex > 0) {
-                errortipoIdentificacion.style.display = "none";
-            }
-        });
+                if (select === selectPaisEdit && select.selectedIndex > 0 && errorPaisEdit) {
+                    errorPaisEdit.style.display = "none";
+                }
+                if (select === selectCiudadEdit && select.selectedIndex > 0 && errorCiudadEdit) {
+                    errorCiudadEdit.style.display = "none";
+                }
+                if (select === selectTipoIdentificacion && select.selectedIndex > 0 && errortipoIdentificacion) {
+                    errortipoIdentificacion.style.display = "none";
+                }
+            });
+        }
     });
 
     // Validación al enviar el formulario
@@ -348,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     resetButton.addEventListener("click", function () {
-        fotoPreview.src = "assets/image/user_default.jpg";
+        fotoPreview.src = "gestion-buques/perfil-usuario/*";
         inputFoto.value = "";
     });
 
@@ -487,30 +488,34 @@ document.addEventListener("DOMContentLoaded", function () {
     // Api de pais y ciudad que barbaro
     // Función para cargar países en un select específico
     function cargarPaises(selectElement) {
+        if (!selectElement) return;
+
         fetch("https://restcountries.com/v3.1/all")
-            .then(res => res.json())
-            .then(data => {
-                const sortedCountries = data.sort((a, b) =>
-                    a.name.common.localeCompare(b.name.common)
-                );
+        .then(res => res.json())
+        .then(data => {
+            const sortedCountries = data.sort((a, b) =>
+                a.name.common.localeCompare(b.name.common)
+            );
 
-                const countriesSet = new Set();
+            const countriesSet = new Set();
 
-                sortedCountries.forEach(country => {
-                    if (!countriesSet.has(country.name.common)) {
-                        countriesSet.add(country.name.common);
-                        const option = document.createElement("option");
-                        option.value = country.name.common;
-                        option.textContent = country.name.common;
-                        selectElement.appendChild(option);
-                    }
-                });
-            })
-            .catch(error => console.error("Error al cargar países:", error));
+            sortedCountries.forEach(country => {
+                if (!countriesSet.has(country.name.common)) {
+                    countriesSet.add(country.name.common);
+                    const option = document.createElement("option");
+                    option.value = country.name.common;
+                    option.textContent = country.name.common;
+                    selectElement.appendChild(option);
+                }
+            });
+        })
+        .catch(error => console.error("Error al cargar países:", error));
     }
 
     // Función para cargar ciudades en un select según país
     function cargarCiudades(paisSelect, ciudadSelect) {
+        if (!paisSelect || !ciudadSelect) return;
+
         paisSelect.addEventListener("change", () => {
             const selectedCountry = paisSelect.value;
             ciudadSelect.innerHTML = '<option disabled selected>Ciudad</option>';

@@ -188,7 +188,9 @@ body {
 
 /* Estilos del usuario cuando inicia seccion */
 .nav__img{
-    width: 80px;
+    width: 70px;
+    border-radius: 50%;
+    margin: 0px 0px 0px 10px;
     cursor: pointer;
 }
 

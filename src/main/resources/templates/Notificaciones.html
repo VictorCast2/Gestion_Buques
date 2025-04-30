@@ -20,7 +20,7 @@
     <div class="content">
         <div class="profile-header">
             <div class="profile-info">
-                <img class="info__img" alt="Profile picture of Esthera Jackson" th:src="@{/css/assets/image/testimonio3.avif}" />
+                <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" />
                 <div class="info__user">
                     <h1 class="user__title">
                         Keyner Alfonso Reyes Tejedor

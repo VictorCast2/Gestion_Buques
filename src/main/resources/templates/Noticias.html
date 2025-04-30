@@ -39,17 +39,17 @@
                 </li>
             </ul>
 
-            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${#authentication.principal?.imagen}}" th:alt="${#authentication.principal?.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}" >
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${#authentication.principal?.imagen}}" th:alt="${#authentication.principal?.imagen}">
                         <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/perfil}" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
@@ -67,15 +67,14 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <!-- Formulario oculto para logout -->
-                    <form th:action="@{/auth/logout}" method="post" id="logoutForm" style="display: none;">
-                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
                     </form>
-                    <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
                 </div>
             </div>
 

@@ -27,6 +27,7 @@ public class CustomUserDetails implements UserDetails {
     // Atributos adicionales de la clase Usuario
     private String nombres;
     private String apellidos;
+    private String imagen;
 
     public CustomUserDetails(Usuario usuario) {
         this.correo = usuario.getCorreo();
@@ -38,6 +39,7 @@ public class CustomUserDetails implements UserDetails {
         this.credentialNoExpired = usuario.isCredentialNoExpired();
         this.nombres = usuario.getNombres();
         this.apellidos = usuario.getApellidos();
+        this.imagen = usuario.getImagen();
     }
 
     @Override

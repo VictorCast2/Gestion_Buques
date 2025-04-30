@@ -37,10 +37,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                // habilitamos la protección CSRF usando cookies
+                .csrf(csrf -> csrf.disable()) // deshabilitamos csrf por incompatibilidades con jwt
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // asi el tiempo de expiración de la session dependerá del tiempo de expiración del token (recordar que jwt se basa en una política sin sesiones)
                 )
                 .authorizeHttpRequests(auth -> {
                     // Configurar endpoints públicos estáticos (sin autenticación)
@@ -52,9 +51,11 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 
                     // Configurar endpoints privados
+                    // test
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
+                    // buques
                     auth.requestMatchers(HttpMethod.GET, "/buques/perfil").authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-contraseña").authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-datos").authenticated();
@@ -67,7 +68,7 @@ public class SecurityConfig {
                 // Configuración de logout
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth/login?logout") // redirección después de cerrar sesión
+                        .logoutSuccessUrl("/buques/?logout") // redirección después de cerrar sesión (falta configurar el parámetro ?logout)
                         .clearAuthentication(true)
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID", "access_token")

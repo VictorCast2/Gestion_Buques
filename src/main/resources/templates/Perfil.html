@@ -32,12 +32,12 @@
                 </li>
             </ul>
 
-            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}" >
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
                         <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
@@ -60,15 +60,14 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <!-- Formulario oculto para logout -->
-                    <!--                    <form th:action="@{/auth/logout}" method="post" id="logoutForm" style="display: none;">-->
-                    <!--                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />-->
-                    <!--                    </form>-->
-                    <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
 
                 </div>
             </div>
@@ -78,7 +77,7 @@
 
     <div class="parent">
         <div class="parent__item">
-            <img class="item__img" th:src="@{/css/assets/image/user_default.jpg}" alt="">
+            <img class="item__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
             <h2 class="item__nombre" th:text="${usuario.nombres + ' ' + usuario.apellidos}">Nombre Usuario</h2>
             <h3 class="item__rol" th:text="${usuario.rol}">Ninguno</h3>
             <h4 class="item__details">Detalles</h4>
@@ -147,7 +146,7 @@
         <div class="div2">
             <h2 class="pass__title">Cambiar Contraseña</h2>
 
-            <form action="/buques/actualizar-contraseña" method="post" class="formulario">
+            <form action="/buques/perfil/actualizar-contraseña" method="post" class="formulario">
 
                 <div class="formulario__input">
                     <div class="input-box">
@@ -198,7 +197,7 @@
                         th:text="${mensaje}">
                      </p>
                 </div>
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:') && !#strings.startsWith(mensaje, 'Sus')}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:') && !#strings.startsWith(mensaje, 'Sus') && !#strings.startsWith(mensaje, 'Se')}">
                     <p id="mensaje-password-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">
@@ -297,27 +296,27 @@
 
         </div>
         <div class="div4" th:if="${usuario.rol.name == 'INVITADO' || usuario.rol.name == 'AGENTE_NAVIERO'}">
-            <div class="perfil__cabecera">
-                <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{/css/assets/image/user_default.jpg}" alt="Foto de perfil">
 
-                <div class="perfil__botones">
-                    <!-- Input file oculto -->
-                    <input type="file" id="input-foto" name="foto" accept="image/*" style="display: none;">
+            <form action="/buques/perfil/vincular-empresa" method="post" class="perfil__formulario" enctype="multipart/form-data">
+                <div class="perfil__cabecera">
+                    <img id="foto-preview" class="cabecera__img perfil__imagen" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
 
-                    <!-- Label que actúa como botón -->
-                    <label for="input-foto" class="perfil__boton perfil__boton--upload">
-                        Cargar Nueva Foto
-                    </label>
+                    <div class="perfil__botones">
+                        <!-- Input file oculto -->
+                        <input type="file" id="input-foto" name="imagen" accept="image/*" style="display: none;">
 
-                    <button class="perfil__boton perfil__boton--reset">Reiniciar</button>
-                    <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 800K</small>
+                        <!-- Label que actúa como botón -->
+                        <label for="input-foto" class="perfil__boton perfil__boton--upload">
+                            Cargar Nueva Foto
+                        </label>
+
+                        <button class="perfil__boton perfil__boton--reset">Reiniciar</button>
+                        <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 5MB</small>
+                    </div>
                 </div>
-            </div>
-
-            <form class="perfil__formulario">
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Nit" id="nit">
+                        <input type="text" autocomplete="off" placeholder="" name="nit" id="nit">
                         <label class="label" for="nit">Nit</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -328,7 +327,7 @@
                 </div>
                 <div class="formulario__input input--cambio">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Name" id="nombreEmpresa">
+                        <input type="text" autocomplete="off" placeholder="" name="nombre" id="nombreEmpresa">
                         <label class="label" for="nombreEmpresa">Nombre Empresa</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -341,7 +340,7 @@
                 <!-- Selector de país -->
                 <div class="formulario__input">
                     <div class="custom-select-wrapper wrapper--changed1">
-                        <select class="styled-select select--changed1" id="selectPais">
+                        <select class="styled-select select--changed1" name="pais" id="selectPais">
                             <option disabled selected>Pais</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -352,7 +351,7 @@
                 <!-- Selector de ciudad -->
                 <div class="formulario__input">
                     <div class="custom-select-wrapper wrapper--changed1">
-                        <select class="styled-select select--changed1" id="selectCiudad">
+                        <select class="styled-select select--changed1" name="ciudad" id="selectCiudad">
                             <option disabled selected>Ciudad</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -362,7 +361,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Direccion" id="direccion">
+                        <input type="text" autocomplete="off" placeholder="" name="direccion" id="direccion">
                         <label class="label" for="direccion">Direccion</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -375,7 +374,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="email" autocomplete="off" placeholder="" name="email" id="emailEmpresa">
+                        <input type="email" autocomplete="off" placeholder="" name="correo" id="emailEmpresa">
                         <label class="label" for="emailEmpresa">Email Empresa</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -387,7 +386,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--changed">
-                        <input type="text" autocomplete="off" placeholder="" name="Telefono" id="telefono">
+                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="telefono">
                         <label class="label" for="telefono">Telefono</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -399,6 +398,13 @@
 
                 <div class="formulario__input">
                     <button class="formulario__button" type="submit">Registrar</button>
+                </div>
+
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Sus')}">
+                    <p id="mensaje-empresa-exitoso"
+                       class="input__mensaje__satisfactorio"
+                       th:text="${mensaje}">
+                    </p>
                 </div>
 
                 <p class="input__advertencia advertencia--changed">
@@ -434,7 +440,7 @@
             <span class="close">&times;</span>
             <h2 class="content__titulo">Editar Información</h2>
 
-            <form action="/buques/actualizar-datos" method="post" class="edit__formulario">
+            <form action="/buques/perfil/actualizar-datos" method="post" class="edit__formulario">
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
@@ -587,7 +593,7 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña')}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Se')}">
                     <p id="mensaje-update-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">
