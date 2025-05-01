@@ -22,11 +22,11 @@
             <div class="profile-info">
                 <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" />
                 <div class="info__user">
-                    <h1 class="user__title">
-                        Keyner Alfonso Reyes Tejedor
+                    <h1 class="user__title" th:text="${usuario.nombres + ' ' + usuario.apellidos}">
+                        Nombre Usuario
                     </h1>
-                    <p class="user__text">
-                        Keinerreyestejedor@gmail.com
+                    <p class="user__text" th:text="${usuario.correo}">
+                        Email Usuario
                     </p>
                 </div>
             </div>

@@ -49,8 +49,14 @@ public class EmpresaService {
 
         String imagen = this.asignarImagen(multipartFile);
 
+        // validamos que la imagen no sea nula
+        if (imagen != null) {
+            usuarioEmpresa.setImagen(imagen); // esta es la nueva imagen, la que cargo en el input file
+        } else {
+            usuarioEmpresa.setImagen(empresaRequest.imagenOriginal()); // esta es la imagen que tiene por defecto, en caso le de al botón reiniciar
+        }
+
         usuarioEmpresa.setEmpresa(empresa);
-        usuarioEmpresa.setImagen(imagen);
         usuarioEmpresa.setRol(ERol.AGENTE_NAVIERO);
 
         usuarioRepository.save(usuarioEmpresa);
@@ -72,7 +78,7 @@ public class EmpresaService {
 
         try {
             if (!imagen.isEmpty()) {
-                int index = imagen.getOriginalFilename().indexOf("."); //hola.jpg
+                int index = imagen.getOriginalFilename().indexOf("."); // hola.jpg
                 String extension = "." + imagen.getOriginalFilename().substring(index + 1);
                 String nombreFoto = System.currentTimeMillis() + extension;
 
@@ -82,10 +88,11 @@ public class EmpresaService {
 
                 return nombreFoto;
             } else {
-                throw new RuntimeException("La imagen no puede estar vaciá");
+                //throw new RuntimeException("Error: la imagen no puede estar vaciá");
+                return null;
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error: ha ocurrido un error al guardar la imagen" + e.getMessage(), e);
+            throw new RuntimeException("Error: ha ocurrido un error al guardar la imagen " + e.getMessage(), e);
         }
     }
 
