@@ -339,6 +339,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const fotoPreview = document.getElementById("foto-preview");
     const resetButton = document.querySelector(".perfil__boton--reset");
 
+    // Guardamos la URL original de la imagen (al cargar la página)
+    const imagenOriginal = fotoPreview.src;
+
+    // cargar una nueva imagen
     inputFoto.addEventListener("change", function (event) {
         const file = event.target.files[0];
 
@@ -348,8 +352,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // restablecer la imágen
     resetButton.addEventListener("click", function () {
-        fotoPreview.src = "gestion-buques/perfil-usuario/*";
+        fotoPreview.src = imagenOriginal;
         inputFoto.value = "";
     });
 
