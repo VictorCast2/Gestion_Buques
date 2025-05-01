@@ -150,7 +150,7 @@ body{
 
 /* Estilos del usuario cuando inicia seccion */
 .nav__img{
-    width: 70px;
+    width: 60px;
     border-radius: 50%;
     margin: 0px 0px 0px 10px;
     cursor: pointer;
