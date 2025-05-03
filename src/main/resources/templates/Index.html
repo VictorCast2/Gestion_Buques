@@ -97,7 +97,7 @@
                             Optimiza operaciones, agiliza procesos y accede a información en tiempo real sobre arribos,
                             salidas y logística marítima.
                         </p>
-                        <a class="content__btn" href="">Mas Informacion</a>
+                        <a class="content__btn" th:href="@{/buques/noticias}">Mas Informacion</a>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                             Aquí, cada muelle es testigo del esfuerzo y la dedicación de quienes trabajan día a día
                             para que el comercio, la exploración y la conexión entre naciones nunca se detengan.
                         </p>
-                        <a class="content__btn" href="">Mas Informacion</a>
+                        <a class="content__btn" th:href="@{/buques/noticias}">Mas Informacion</a>
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@
                             Grandes embarcaciones mercantes, elegantes barcos de pasajeros y resistentes naves de carga
                             surcan nuestras aguas, llevando consigo historias, productos y esperanzas.
                         </p>
-                        <a class="content__btn" href="">Mas Informacion</a>
+                        <a class="content__btn" th:href="@{/buques/noticias}">Mas Informacion</a>
                     </div>
                 </div>
 
@@ -170,7 +170,7 @@
     </section>
 
     <section class="servicios">
-        <a th:href="@{/auth/Servicios}" class="servicios__btn">Ver Todos</a>
+        <a th:href="@{/buques/servicios}" class="servicios__btn">Ver Todos</a>
         <h2 class="servicios__title">servicios</h2>
         <p class="servicios__text">
             En nuestra plataforma, ofrecemos una solución integral para la gestión eficiente de buques y contenedores.
@@ -256,7 +256,7 @@
 
     
     <section class="noticias">
-        <a class="noticias__btn" href="Noticias.html">Ver Todas</a>
+        <a class="noticias__btn" th:href="@{/buques/noticias}">Ver Todas</a>
         <h2 class="noticias__title">Noticias</h2>
     
         <div class="noticias__content">

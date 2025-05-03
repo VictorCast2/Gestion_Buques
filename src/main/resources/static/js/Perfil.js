@@ -121,52 +121,91 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Obtenemos la cookie con el token
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
+    // Decodificamos el token
+    function decodeJwt(token) {
+        if (!token) return null;
+
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        ).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    // Obtenemos el rol del usuario en el token
+    function getRolFromJwt(token) {
+        const decoded = decodeJwt(token);
+        if (decoded && decoded.authorities) {
+            return decoded.authorities; // Ej: "ROLE_AGENTE_NAVIERO"
+        }
+        return null;
+    }
+
     // Validación al enviar el formulario
     formEdit.addEventListener("submit", function (e) {
         e.preventDefault();
 
         let formularioValido = true;
-        let todosInputsValidos = true;
+        const token = getCookie("access_token");
+        const rolUsuario = getRolFromJwt(token);
+        const esAgenteNaviero = rolUsuario === "ROLE_AGENTE_NAVIERO";
 
-        // Validar todos los inputs
+        // Validar solo los inputs visibles para el rol actual
         Object.keys(fieldEdit).forEach(fieldId => {
             const input = document.getElementById(fieldId);
-            const regex = fieldEdit[fieldId].regex;
 
-            if (!regex.test(input.value.trim())) {
-                formularioValido = false;
-                todosInputsValidos = false;
+            // Si el input existe y es visible (no está oculto por th:if)
+            if (input && input.offsetParent !== null) {
+                const regex = fieldEdit[fieldId].regex;
+                const esValido = regex.test(input.value.trim());
+                const errorMsg = input.closest(".formulario__input")?.querySelector(".input__error");
+
+                if (!esValido) {
+                    formularioValido = false;
+                    if (errorMsg) errorMsg.style.display = "block";
+                } else {
+                    if (errorMsg) errorMsg.style.display = "none";
+                }
             }
         });
 
-        const paisSeleccionado = selectPaisEdit.selectedIndex > 0;
-        const ciudadSeleccionada = selectCiudadEdit.selectedIndex > 0;
+        // Validar selects según el rol
         const tipoIdentificacionSeleccionada = selectTipoIdentificacion.selectedIndex > 0;
+        let selectsValidos = tipoIdentificacionSeleccionada;
 
-        // Caso: Inputs válidos, pero selects incompletos
-        if (todosInputsValidos && (!paisSeleccionado || !ciudadSeleccionada || !tipoIdentificacionSeleccionada)) {
-            if (!paisSeleccionado) errorPaisEdit.style.display = "block";
-            if (!ciudadSeleccionada) errorCiudadEdit.style.display = "block";
-            if (!tipoIdentificacionSeleccionada) errortipoIdentificacion.style.display = "block";
-            advertenciaEdit.style.display = "block";
-            return;
+        if (esAgenteNaviero) {
+            const paisSeleccionado = selectPaisEdit.selectedIndex > 0;
+            const ciudadSeleccionada = selectCiudadEdit.selectedIndex > 0;
+            selectsValidos = selectsValidos && paisSeleccionado && ciudadSeleccionada;
+
+            // Mostrar errores solo para AGENTE_NAVIERO
+            if (errorPaisEdit) errorPaisEdit.style.display = paisSeleccionado ? "none" : "block";
+            if (errorCiudadEdit) errorCiudadEdit.style.display = ciudadSeleccionada ? "none" : "block";
         }
 
-        // Caso: Inputs o selects inválidos
-        if (!formularioValido) {
-            advertenciaEdit.style.display = "block";
-            //  no mostramos errores de selects si inputs están mal
-            return;
+        if (errortipoIdentificacion) {
+            errortipoIdentificacion.style.display = tipoIdentificacionSeleccionada ? "none" : "block";
         }
 
-        // Todo correcto: ocultar advertencias y errores
-        advertenciaEdit.style.display = "none";
-        errorPaisEdit.style.display = "none";
-        errorCiudadEdit.style.display = "none";
+        // Mostrar advertencia general si hay errores
+        if (advertenciaEdit) {
+            advertenciaEdit.style.display = (formularioValido && selectsValidos) ? "none" : "block";
+        }
 
-
-        // Enviar formulario
-        formEdit.submit();
+        // Si todo está válido, enviar el formulario
+        if (formularioValido && selectsValidos) {
+            formEdit.submit();
+        }
     });
 
 
@@ -339,24 +378,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const fotoPreview = document.getElementById("foto-preview");
     const resetButton = document.querySelector(".perfil__boton--reset");
 
-    // Guardamos la URL original de la imagen (al cargar la página)
-    const imagenOriginal = fotoPreview.src;
+    if (inputFoto && fotoPreview) {
+        // Guardamos la URL original de la imagen (al cargar la página)
+        const imagenOriginal = fotoPreview.src;
 
-    // cargar una nueva imagen
-    inputFoto.addEventListener("change", function (event) {
-        const file = event.target.files[0];
+        // cargar una nueva imagen
+        inputFoto.addEventListener("change", function (event) {
+            const file = event.target.files[0];
 
-        if (file) {
-            const objectURL = URL.createObjectURL(file);
-            fotoPreview.src = objectURL;
-        }
-    });
+            if (file) {
+                const objectURL = URL.createObjectURL(file);
+                fotoPreview.src = objectURL;
+            }
+        });
 
-    // restablecer la imágen
-    resetButton.addEventListener("click", function () {
-        fotoPreview.src = imagenOriginal;
-        inputFoto.value = "";
-    });
+        // restablecer la imágen
+        resetButton.addEventListener("click", function () {
+            fotoPreview.src = imagenOriginal;
+            inputFoto.value = "";
+        });
+    }
 
     // Validaciones de Completar Empresa
     const formulario = document.querySelector(".perfil__formulario");
@@ -431,64 +472,70 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // creamos las constantes de los select
+    const selects = [selectPaisPerfil, selectCiudadPerfil];
     // Ocultar advertencias y errores de select al interactuar
-    [selectPaisPerfil, selectCiudadPerfil].forEach(select => {
-        select.addEventListener("change", () => {
-            mensajeAdvertencia.style.display = "none";
+    selects.forEach(select => {
+        if (select) {
+            select.addEventListener("change", () => {
+                mensajeAdvertencia.style.display = "none";
 
-            if (select === selectPaisPerfil && select.selectedIndex > 0) {
-                errorPais.style.display = "none";
-            }
-            if (select === selectCiudadPerfil && select.selectedIndex > 0) {
-                errorCiudad.style.display = "none";
-            }
-        });
+                if (select === selectPaisPerfil && select.selectedIndex > 0) {
+                    errorPais.style.display = "none";
+                }
+                if (select === selectCiudadPerfil && select.selectedIndex > 0) {
+                    errorCiudad.style.display = "none";
+                }
+            });
+        }
     });
 
     // Validación al enviar el formulario
-    formulario.addEventListener("submit", function (e) {
-        e.preventDefault();
+    if (formulario) {
+        formulario.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-        let formularioValido = true;
-        let todosInputsValidos = true;
+            let formularioValido = true;
+            let todosInputsValidos = true;
 
-        // Validar todos los inputs
-        Object.keys(perfilFields).forEach(fieldId => {
-            const input = document.getElementById(fieldId);
-            const regex = perfilFields[fieldId].regex;
+            // Validar todos los inputs
+            Object.keys(perfilFields).forEach(fieldId => {
+                const input = document.getElementById(fieldId);
+                const regex = perfilFields[fieldId].regex;
 
-            if (!regex.test(input.value.trim())) {
-                formularioValido = false;
-                todosInputsValidos = false;
+                if (!regex.test(input.value.trim())) {
+                    formularioValido = false;
+                    todosInputsValidos = false;
+                }
+            });
+
+            const paisSeleccionado = selectPaisPerfil.selectedIndex > 0;
+            const ciudadSeleccionada = selectCiudadPerfil.selectedIndex > 0;
+
+            // Caso: Inputs válidos, pero selects incompletos
+            if (todosInputsValidos && (!paisSeleccionado || !ciudadSeleccionada)) {
+                if (!paisSeleccionado) errorPais.style.display = "block";
+                if (!ciudadSeleccionada) errorCiudad.style.display = "block";
+                mensajeAdvertencia.style.display = "block";
+                return;
             }
+
+            // Caso: Inputs o selects inválidos
+            if (!formularioValido) {
+                mensajeAdvertencia.style.display = "block";
+                // NOTA: no mostramos errores de selects si inputs están mal
+                return;
+            }
+
+            // Todo correcto: ocultar advertencias y errores
+            mensajeAdvertencia.style.display = "none";
+            errorPais.style.display = "none";
+            errorCiudad.style.display = "none";
+
+            // Enviar formulario
+            formulario.submit();
         });
-
-        const paisSeleccionado = selectPaisPerfil.selectedIndex > 0;
-        const ciudadSeleccionada = selectCiudadPerfil.selectedIndex > 0;
-
-        // Caso: Inputs válidos, pero selects incompletos
-        if (todosInputsValidos && (!paisSeleccionado || !ciudadSeleccionada)) {
-            if (!paisSeleccionado) errorPais.style.display = "block";
-            if (!ciudadSeleccionada) errorCiudad.style.display = "block";
-            mensajeAdvertencia.style.display = "block";
-            return;
-        }
-
-        // Caso: Inputs o selects inválidos
-        if (!formularioValido) {
-            mensajeAdvertencia.style.display = "block";
-            // NOTA: no mostramos errores de selects si inputs están mal
-            return;
-        }
-
-        // Todo correcto: ocultar advertencias y errores
-        mensajeAdvertencia.style.display = "none";
-        errorPais.style.display = "none";
-        errorCiudad.style.display = "none";
-
-        // Enviar formulario
-        formulario.submit();
-    });
+    }
 
     // Api de pais y ciudad que barbaro
     // Función para cargar países en un select específico
@@ -556,6 +603,85 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Error al obtener ciudades:", err);
                 });
         });
+    }
+
+    // Obtenemos el rol del usuario desde el JWT
+    const token = getCookie("access_token");
+    const rolUsuario = getRolFromJwt(token);
+    const esAgenteNaviero = rolUsuario === "ROLE_AGENTE_NAVIERO";
+
+    if (esAgenteNaviero) {
+        // obtenemos los datos de los inputs ocultos con el pais y la ciudad del usuario
+        const paisActual = document.getElementById("paisActual")?.value;
+        const ciudadActual = document.getElementById("ciudadActual")?.value;
+        // Aquí es donde cargamos los campos del select por defecto del modal editar
+        fetch("https://restcountries.com/v3.1/all")
+            .then(res => res.json())
+            .then(data => {
+                const sortedCountries = data.sort((a, b) =>
+                    a.name.common.localeCompare(b.name.common)
+                );
+
+                const countriesSet = new Set();
+
+                sortedCountries.forEach(country => {
+                    if (!countriesSet.has(country.name.common)) {
+                        countriesSet.add(country.name.common);
+                        const option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+
+                        // Seleccionar el país del usuario
+                        if (country.name.common === paisActual) {
+                            option.selected = true;
+                        }
+
+                        selectPais2.appendChild(option);
+                    }
+                });
+
+                // Solo cargar ciudades si ya teníamos país seleccionado
+                if (paisActual && ciudadActual) {
+                    fetch("https://countriesnow.space/api/v0.1/countries/cities", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ country: paisActual })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            const cities = data.data;
+                            const citiesSet = new Set();
+
+                            if (Array.isArray(cities) && cities.length > 0) {
+                                cities.forEach(city => {
+                                    if (!citiesSet.has(city)) {
+                                        citiesSet.add(city);
+                                        const option = document.createElement("option");
+                                        option.value = city;
+                                        option.textContent = city;
+
+                                        // Seleccionar la ciudad del usuario
+                                        if (city === ciudadActual) {
+                                            option.selected = true;
+                                        }
+
+                                        selectCiudad2.appendChild(option);
+                                    }
+                                });
+                            } else {
+                                const option = document.createElement("option");
+                                option.disabled = true;
+                                option.textContent = "No se encontraron ciudades.";
+                                selectCiudad2.appendChild(option);
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error al obtener ciudades:", err);
+                        });
+                }
+
+            })
+            .catch(error => console.error("Error al cargar países:", error));
     }
 
     // Obtener todos los selects
