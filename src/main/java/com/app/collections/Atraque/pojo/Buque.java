@@ -1,5 +1,6 @@
 package com.app.collections.Atraque.pojo;
 
+import com.app.collections.Atraque.Enum.ETipoBuque;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -13,6 +14,6 @@ public class Buque {
     private String matricula;
     private String nombre;
     @Field("tipo_buque")
-    private String tipoBuque;
+    private ETipoBuque tipoBuque;
     private Dimension dimensiones;
 }
