@@ -22,8 +22,9 @@ public class Proceso {
     @Field("tipo_producto")
     private String tipoProducto; // especifica el producto a cargar o descargar
     private int cantidad;
-    @Field("peso_total")
-    private double pesoTotal;
+    @Field("precio_unitario")
+    private int precioUnitario;
+    private int subtotal;
     private String descripcion; // descripción de la solicitud del proceso a realizar
 
     private Set<Maquina> maquinas = new HashSet<>();

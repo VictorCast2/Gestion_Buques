@@ -1,7 +1,8 @@
 package com.app.collections.Factura;
 
-import com.app.collections.Factura.pojo.DetalleProcesos;
 import com.app.collections.Factura.Enum.EEstadoFactura;
+import com.app.collections.Factura.pojo.Proceso;
+import com.app.collections.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -24,7 +25,11 @@ public class Factura {
 
     @Id
     private String id;
+    @Field("descripcion_servicio")
+    private String descripcionServicio; // esto lo especifica el admin, donde detalla que se le esta facturando al usuario
+
     private Integer total;
+
     @Transient
     private double iva;
 
@@ -38,7 +43,8 @@ public class Factura {
 
     private EEstadoFactura estado;
 
-    @DBRef
-    private Set<DetalleProcesos> detalles = new HashSet<>();
+    private Set<Proceso> procesos = new HashSet<>();
 
+    @DBRef
+    private Set<Usuario> usuarios = new HashSet<>();
 }

@@ -448,7 +448,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="nombres" id="nombre">
+                        <input type="text" autocomplete="off" placeholder="" name="nombres" id="nombre" th:value="${usuario.nombres}">
                         <label class="label label--change" for="nombre">Nombre</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -460,7 +460,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido">
+                        <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido" th:value="${usuario.apellidos}">
                         <label class="label label--change" for="apellido">Apellido</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -472,7 +472,7 @@
 
                 <div class="formulario__input " th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="empresa.nombre" id="nameEmpresa">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.nombre" id="nameEmpresa" th:value="${usuario.empresa.nombre}">
                         <label class="label label--change" for="nameEmpresa">Nombre Empresa</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -484,7 +484,7 @@
 
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="email" autocomplete="off" placeholder="" name="empresa.correo" id="emailCompany">
+                        <input type="email" autocomplete="off" placeholder="" name="empresa.correo" id="emailCompany" th:value="${usuario.empresa.correo}">
                         <label class="label label--change" for="emailCompany">Email Empresa</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -496,7 +496,7 @@
 
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="empresa.nit" id="niT">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.nit" id="niT" th:value="${usuario.empresa.nit}">
                         <label class="label label--change" for="niT">Nit</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -508,7 +508,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="email" autocomplete="off" placeholder="" name="correo" id="email">
+                        <input type="email" autocomplete="off" placeholder="" name="correo" id="email" th:value="${usuario.correo}">
                         <label class="label label--change" for="email">Email </label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -525,6 +525,7 @@
                             <option th:each="tipo : ${tiposIdentificacion}"
                                     th:value="${tipo.name()}"
                                     th:text="${tipo.descripcion}"
+                                    th:selected="${#strings.equalsIgnoreCase(tipo.name(), usuario.tipoIdentificacion)}"
                             ></option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -536,7 +537,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion">
+                        <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion" th:value="${usuario.numeroIdentificacion}">
                         <label class="label label--change" for="identificacion">Identificacion</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -550,18 +551,23 @@
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="custom-select-wrapper wrapper--changed1">
                         <select class="styled-select select--changed1" name="empresa.pais" id="selectPais2">
-                            <option disabled selected>Pais</option>
+                            <option disabled selected th:selected="${usuario.empresa.pais}">Pais</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
                     <p class="input__error error--pais">Por favor, seleccione un país.</p>
                 </div>
 
+                <!-- input oculto para cargar el pais actual del usuario -->
+                <input th:if="${usuario.empresa != null}" type="hidden" id="paisActual" th:value="${usuario.empresa.pais}">
+                <!-- input oculto para cargar la ciudad actual del usuario -->
+                <input th:if="${usuario.empresa != null}" type="hidden" id="ciudadActual" th:value="${usuario.empresa.ciudad}">
+
                 <!-- Selector de ciudad -->
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="custom-select-wrapper wrapper--changed1">
                         <select class="styled-select select--changed1" name="empresa.ciudad" id="selectCiudad2">
-                            <option disabled selected>Ciudad</option>
+                            <option disabled selected th:selected="${usuario.empresa.ciudad}">Ciudad</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -570,7 +576,7 @@
 
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="empresa.direccion" id="address">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.direccion" id="address" th:value="${usuario.empresa.direccion}">
                         <label class="label label--change" for="address">Direccion</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -583,7 +589,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="phone">
+                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="phone" th:value="${usuario.telefono}">
                         <label class="label label--change" for="phone">Telefono</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
