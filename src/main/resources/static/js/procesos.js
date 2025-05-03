@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para validar los formularios
     function validarFormulario(formulario) {
         const fieldAdd = {
-            PesoTotal: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|10000)$/, errorMessage: "El peso mínimo es de 50 y el máximo de 1000." },
+            cantidad: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|10000)$/, errorMessage: "La cantidad minima es de 50 y el máximo de 1000." },
             descripcion: { regex: /^.{1,}$/, errorMessage: "Por favor, ingrese una descripción." }
         };
 
