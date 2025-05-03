@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesos</title>
+    <link rel="stylesheet" th:href="@{/css/Procesos.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <aside class="sidebar">
+        <hr>
+        <ul class="sidebar__menu">
+            <li class="sidebar__item">
+                <i class="ri-home-2-fill"></i>
+                <span class="sidebar__text">Inicio</span>
+            </li>
+            <li class="sidebar__item">
+                <i class="ri-ship-fill"></i>
+                <span class="sidebar__text">Solicitud Atraque</span>
+            </li>
+            <li class="sidebar__item active">
+                <i class="ri-flow-chart"></i>
+                <span class="sidebar__text">Procesos</span>
+            </li>
+            <div class="sidebar__indicator"></div>
+        </ul>
+
+        <div class="card">
+            <div class="circle">
+                <i class="ri-moon-fill"></i>
+            </div>
+            <h2 class="card__title">Upgrade to PRO</h2>
+            <p class="card__text">Improve your development process and start doing more with Horizon UI PRO!</p>
+            <button class="card__btn" type="button">Upgrade to PRO</button>
+        </div>
+    </aside>
+
+    <header class="header">
+        <nav class="header__nav">
+
+            <div class="nav__search">
+                <i class="ri-search-line search__icon"></i>
+                <input type="text" placeholder="Buscar..." class="search__input" />
+            </div>
+
+            <div class="language-wrapper">
+                <div class="language-selector" data-flag="https://flagcdn.com/w40/es.png"
+                    onclick="toggleLanguageMenu()">
+                    <img id="currentFlag" src="https://flagcdn.com/w40/es.png" alt="Español" />
+                </div>
+
+                <div class="language-menu" id="languageMenu">
+                    <div class="language-option" data-lang="es" data-flag="https://flagcdn.com/w40/es.png">
+                        <img src="https://flagcdn.com/w40/es.png" alt="Español" />
+                        <span>Español</span>
+                    </div>
+                    <div class="language-option" data-lang="zh" data-flag="https://flagcdn.com/w40/cn.png">
+                        <img src="https://flagcdn.com/w40/cn.png" alt="Chino" />
+                        <span>Chino</span>
+                    </div>
+                    <div class="language-option" data-lang="en" data-flag="https://flagcdn.com/w40/us.png">
+                        <img src="https://flagcdn.com/w40/us.png" alt="Inglés" />
+                        <span>Inglés</span>
+                    </div>
+                    <div class="language-option" data-lang="pt" data-flag="https://flagcdn.com/w40/pt.png">
+                        <img src="https://flagcdn.com/w40/pt.png" alt="Portugués" />
+                        <span>Portugués</span>
+                    </div>
+                    <div class="language-option" data-lang="fr" data-flag="https://flagcdn.com/w40/fr.png">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="Francés" />
+                        <span>Francés</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-toggle" title="Cambiar tema">
+                <i class="ri-moon-fill" id="moon-icon" onclick="setDarkTheme()"></i>
+            </div>
+
+
+            <div class="icono__notification">
+                <i class="ri-notification-2-fill"></i>
+            </div>
+
+            <div class="icono__notification">
+                <i class="ri-settings-4-fill"></i>
+            </div>
+
+            <img class="nav__img" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+
+            <div class="nav__menu" id="SubMenu">
+                <div class="menu__sub">
+                    <div class="sub__info">
+                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}">
+                        <h2 class="info__title">Keyner Reyes</h2>
+                    </div>
+                    <hr>
+
+                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                        <i class="ri-user-fill"></i>
+                        <p class="link__text">Perfil</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                        <i class="ri-settings-5-fill"></i>
+                        <p class="link__text">Configuracion</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                        <i class="ri-notification-2-fill"></i>
+                        <p class="link__text">Notificaciones</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a href="" class="sub__link">
+                        <i class="ri-logout-box-r-fill"></i>
+                        <p class="link__text">Cerrar Seccion</p>
+                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="name__encabezado">
+        <i class="ri-arrow-left-line"></i>
+        <a class="encabezado__pages" th:href="@{/buques/index}">Regresar /</a>
+        <a class="encabezado__pages" href="">Pages /</a>
+        <a class="encabezado__pages" href="">Procesos</a>
+        <h1 class="encabezado__title">Procesos</h1>
+    </div>
+
+
+    <main class="main__content">
+        <section class="table__container">
+
+            <div class="container__button">
+                <button class="button__add">
+                    <i class="ri-add-fill"></i>
+                    <p class="add__text">Crear Nuevo Registro</p>
+                </button>
+            </div>
+
+
+            <div class="container__table">
+                <h2 class="notification__title">Procesos</h2>
+
+                <div class="notification__search-container">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="notificationSearch" placeholder="Buscar..." class="notification__search">
+                </div>
+
+                <div class="content__descarga">
+                    <i class="ri-more-fill"></i>
+                    <div class="exportar">
+                        <div class="exportar-header">
+                            Exportar A <i class="ri-arrow-right-long-line"></i>
+                        </div>
+                        <div class="exportar__item">
+                            <div class="exportar-option">
+                                <span>PDF</span>
+                                <img th:src="@{/css/assets/image/pdf.png}" alt="Exportar PDF">
+                            </div>
+                            <div class="exportar-option">
+                                <span>JSON</span>
+                                <img th:src="@{/css/assets/image/json.png}" alt="Exportar JSON">
+                            </div>
+                            <div class="exportar-option">
+                                <span>CSV</span>
+                                <img th:src="@{/css/assets/image/csv.png}" alt="Exportar CSV">
+                            </div>
+                            <div class="exportar-option">
+                                <span>EXCEL</span>
+                                <img th:src="@{/css/assets/image/excel.png}" alt="Exportar Excel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification__table-container">
+                    <table class="notification__table">
+                        <thead>
+                            <tr>
+                                <th>Tipo Operacion</th>
+                                <th>Tipo Carga</th>
+                                <th>Tipo Producto</th>
+                                <th>Peso Total</th>
+                                <th>Descripción</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notificationBody">
+                            <tr>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Más filas si es necesario -->
+                        </tbody>
+                    </table>
+
+                    <div class="notification__pagination">
+                        <p class="pagination__text">Mostrando 1-4 De 16</p>
+                        <button class="pagination__flec"><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="pagination__btn active">1</button>
+                        <button class="pagination__btn">2</button>
+                        <button class="pagination__btn">3</button>
+                        <button class="pagination__flec"><i class="ri-arrow-right-s-line"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL PARA CONFIRMACIÓN editar -->
+    <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
+        <div class="modal__contenido">
+            <p class="contenido__text">¿Estas Seguro que quieres editar este registro?</p>
+            <button class="boton boton-si">Sí</button>
+            <button class="boton boton-no">No</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA CONFIRMACIÓN eliminar -->
+    <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
+        <div class="modal__contenido">
+            <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
+            <button class="boton2 boton-si2">Sí</button>
+            <button class="boton2 boton-no2">No</button>
+        </div>
+    </div>
+
+    <!--Ventana Modal interna de la tabla-->
+    <div id="modalNotificacion" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2 class="modal-title">📝 Detalles de la Notificación</h2>
+            <div class="modal-info">
+                <p class="modal__text"><strong class="text__str">Tipo Operacion:</strong> <span
+                        id="modalOperacion"></span></p>
+                <p class="modal__text"><strong class="text__str">Tipo Carga:</strong> <span id="modalCarga"></span></p>
+                <p class="modal__text"><strong class="text__str">Tipo Producto:</strong> <span
+                        id="modalProducto"></span></p>
+                <p class="modal__text"><strong class="text__str">Peso Total:</strong> <span id="modalPeso"></span>
+                </p>
+            </div>
+            <div class="modal-description">
+                <h3>📄 Descripción:</h3>
+                <p id="modalDescripcion"></p>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal añadir nuevo registro-->
+    <div class="modal__newadd newadd--hidden" id="modalnewadd">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h2 class="content__titulo">Añadir Nuevo Registro</h2>
+            <div class="content__relleno"></div>
+            <form class="add__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="tipoOperaciones">
+                            <option disabled selected>Tipo De Operacion</option>
+                            <option value="SC">SC (Solicitud De Carga)</option>
+                            <option value="SD">SD (Solicitud De Descarga)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoOperaciones">
+                        Por favor, seleccione un tipo de operacion.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="tipoCarga">
+                            <option disabled selected>Tipo De Carga</option>
+                            <option value="RO">RO (Carga RORO)</option>
+                            <option value="CS">CS (Carga Suelta)</option>
+                            <option value="CN">CN (Contenedores)</option>
+                            <option value="GL">GL (Granel Limpio)</option>
+                            <option value="GS">GS (Granel Sucio)</option>
+                            <option value="LQ">LQ (Liquido)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoCarga">
+                        Por favor, seleccione un tipo de carga.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper wrapper--changed">
+                        <select class="styled-select" id="tipoProducto">
+                            <option disabled selected>Tipo De Producto</option>
+                            <option value="otros">Otros</option>
+                            <option value="accesorios">Accesorios</option>
+                            <option value="accesorios_para_mascotas">Accesorios para mascotas</option>
+                            <option value="alfombras">Alfombras</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="articulos_de_camping">Artículos de camping</option>
+                            <option value="articulos_de_limpieza">Artículos de limpieza</option>
+                            <option value="articulos_deportivos">Artículos deportivos</option>
+                            <option value="articulos_de_oficina">Artículos de oficina</option>
+                            <option value="articulos_para_el_hogar">Artículos para el hogar</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="bicicletas">Bicicletas</option>
+                            <option value="bolsos">Bolsos</option>
+                            <option value="calzado">Calzado</option>
+                            <option value="calzado_deportivo">Calzado deportivo</option>
+                            <option value="camisetas">Camisetas</option>
+                            <option value="cazuelas">Cazuelas</option>
+                            <option value="cepillos">Cepillos</option>
+                            <option value="cepillos_de_dientes">Cepillos de dientes</option>
+                            <option value="cinturones">Cinturones</option>
+                            <option value="colchones">Colchones</option>
+                            <option value="computadoras">Computadoras</option>
+                            <option value="cortinas">Cortinas</option>
+                            <option value="cremas_hidratantes">Cremas hidratantes</option>
+                            <option value="cucharas">Cucharas</option>
+                            <option value="cucharones">Cucharones</option>
+                            <option value="desodorantes">Desodorantes</option>
+                            <option value="electrónica">Electrónica</option>
+                            <option value="faldas">Faldas</option>
+                            <option value="fregaderos">Fregaderos</option>
+                            <option value="guantes">Guantes</option>
+                            <option value="herramientas">Herramientas</option>
+                            <option value="herramientas_de_jardinería">Herramientas de jardinería</option>
+                            <option value="impresoras">Impresoras</option>
+                            <option value="jardinería">Jardinería</option>
+                            <option value="juguetes">Juguetes</option>
+                            <option value="juguetes_educativos">Juguetes educativos</option>
+                            <option value="joyas">Joyas</option>
+                            <option value="lámparas">Lámparas</option>
+                            <option value="lentes_de_sol">Lentes de sol</option>
+                            <option value="material_de_arte">Material de arte</option>
+                            <option value="mesas">Mesas</option>
+                            <option value="monitores">Monitores</option>
+                            <option value="muñecas">Muñecas</option>
+                            <option value="muebles">Muebles</option>
+                            <option value="mochilas">Mochilas</option>
+                            <option value="material_escolar">Material escolar</option>
+                            <option value="ollas">Ollas</option>
+                            <option value="perfumes">Perfumes</option>
+                            <option value="perfumes_para_hombre">Perfumes para hombre</option>
+                            <option value="perfumes_para_mujer">Perfumes para mujer</option>
+                            <option value="planchas">Planchas</option>
+                            <option value="plantas">Plantas</option>
+                            <option value="platos">Platos</option>
+                            <option value="pijamas">Pijamas</option>
+                            <option value="pinturas">Pinturas</option>
+                            <option value="portátiles">Portátiles</option>
+                            <option value="relojes">Relojes</option>
+                            <option value="ropa">Ropa</option>
+                            <option value="ropa_deportiva">Ropa deportiva</option>
+                            <option value="ropa_interior">Ropa interior</option>
+                            <option value="sabanas">Sabanas</option>
+                            <option value="secadores_de_cabello">Secadores de cabello</option>
+                            <option value="sillas">Sillas</option>
+                            <option value="sofás">Sofás</option>
+                            <option value="sombreros">Sombreros</option>
+                            <option value="tazas">Tazas</option>
+                            <option value="televisores">Televisores</option>
+                            <option value="telas">Telas</option>
+                            <option value="tijeras">Tijeras</option>
+                            <option value="trajes">Trajes</option>
+                            <option value="videojuegos">Videojuegos</option>
+                            <option value="vasos">Vasos</option>
+                            <option value="zapatos">Zapatos</option>
+                            <option value="zapatillas">Zapatillas</option>
+
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoProducto">
+                        Por favor, seleccione un tipo de producto.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Cantidad"
+                        id="cantidad">
+                        <label class="label" for="cantidad">Cantidad</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--cantidad">
+                        La cantidad minima es de 50 y el maximo de 1000.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <textarea autocomplete="off" placeholder="" name="Descripcion" id="descripcion"></textarea>
+                        <label class="label" for="descripcion">Descripcion</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--descripcion">Por favor, ingrese una descripción.</p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Nuevo Registro</button>
+            </form>
+        </div>
+    </div>
+
+    <!--Modal de editar-->
+    <div class="modal__newadd newadd--hidden" id="modalnewadd2">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h2 class="content__titulo">Editar Registro</h2>
+            <div class="content__relleno"></div>
+            <form class="add__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="tipoOperaciones">
+                            <option disabled selected>Tipo De Operacion</option>
+                            <option value="SC">SC (Solicitud De Carga)</option>
+                            <option value="SD">SD (Solicitud De Descarga)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoOperaciones">
+                        Por favor, seleccione un tipo de operacion.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="tipoCarga">
+                            <option disabled selected>Tipo De Carga</option>
+                            <option value="RO">RO (Carga RORO)</option>
+                            <option value="CS">CS (Carga Suelta)</option>
+                            <option value="CN">CN (Contenedores)</option>
+                            <option value="GL">GL (Granel Limpio)</option>
+                            <option value="GS">GS (Granel Sucio)</option>
+                            <option value="LQ">LQ (Liquido)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoCarga">
+                        Por favor, seleccione un tipo de carga.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper wrapper--changed">
+                        <select class="styled-select" id="tipoProducto">
+                            <option disabled selected>Tipo De Producto</option>
+                            <option value="otros">Otros</option>
+                            <option value="accesorios">Accesorios</option>
+                            <option value="accesorios_para_mascotas">Accesorios para mascotas</option>
+                            <option value="alfombras">Alfombras</option>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="articulos_de_camping">Artículos de camping</option>
+                            <option value="articulos_de_limpieza">Artículos de limpieza</option>
+                            <option value="articulos_deportivos">Artículos deportivos</option>
+                            <option value="articulos_de_oficina">Artículos de oficina</option>
+                            <option value="articulos_para_el_hogar">Artículos para el hogar</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="bicicletas">Bicicletas</option>
+                            <option value="bolsos">Bolsos</option>
+                            <option value="calzado">Calzado</option>
+                            <option value="calzado_deportivo">Calzado deportivo</option>
+                            <option value="camisetas">Camisetas</option>
+                            <option value="cazuelas">Cazuelas</option>
+                            <option value="cepillos">Cepillos</option>
+                            <option value="cepillos_de_dientes">Cepillos de dientes</option>
+                            <option value="cinturones">Cinturones</option>
+                            <option value="colchones">Colchones</option>
+                            <option value="computadoras">Computadoras</option>
+                            <option value="cortinas">Cortinas</option>
+                            <option value="cremas_hidratantes">Cremas hidratantes</option>
+                            <option value="cucharas">Cucharas</option>
+                            <option value="cucharones">Cucharones</option>
+                            <option value="desodorantes">Desodorantes</option>
+                            <option value="electrónica">Electrónica</option>
+                            <option value="faldas">Faldas</option>
+                            <option value="fregaderos">Fregaderos</option>
+                            <option value="guantes">Guantes</option>
+                            <option value="herramientas">Herramientas</option>
+                            <option value="herramientas_de_jardinería">Herramientas de jardinería</option>
+                            <option value="impresoras">Impresoras</option>
+                            <option value="jardinería">Jardinería</option>
+                            <option value="juguetes">Juguetes</option>
+                            <option value="juguetes_educativos">Juguetes educativos</option>
+                            <option value="joyas">Joyas</option>
+                            <option value="lámparas">Lámparas</option>
+                            <option value="lentes_de_sol">Lentes de sol</option>
+                            <option value="material_de_arte">Material de arte</option>
+                            <option value="mesas">Mesas</option>
+                            <option value="monitores">Monitores</option>
+                            <option value="muñecas">Muñecas</option>
+                            <option value="muebles">Muebles</option>
+                            <option value="mochilas">Mochilas</option>
+                            <option value="material_escolar">Material escolar</option>
+                            <option value="ollas">Ollas</option>
+                            <option value="perfumes">Perfumes</option>
+                            <option value="perfumes_para_hombre">Perfumes para hombre</option>
+                            <option value="perfumes_para_mujer">Perfumes para mujer</option>
+                            <option value="planchas">Planchas</option>
+                            <option value="plantas">Plantas</option>
+                            <option value="platos">Platos</option>
+                            <option value="pijamas">Pijamas</option>
+                            <option value="pinturas">Pinturas</option>
+                            <option value="portátiles">Portátiles</option>
+                            <option value="relojes">Relojes</option>
+                            <option value="ropa">Ropa</option>
+                            <option value="ropa_deportiva">Ropa deportiva</option>
+                            <option value="ropa_interior">Ropa interior</option>
+                            <option value="sabanas">Sabanas</option>
+                            <option value="secadores_de_cabello">Secadores de cabello</option>
+                            <option value="sillas">Sillas</option>
+                            <option value="sofás">Sofás</option>
+                            <option value="sombreros">Sombreros</option>
+                            <option value="tazas">Tazas</option>
+                            <option value="televisores">Televisores</option>
+                            <option value="telas">Telas</option>
+                            <option value="tijeras">Tijeras</option>
+                            <option value="trajes">Trajes</option>
+                            <option value="videojuegos">Videojuegos</option>
+                            <option value="vasos">Vasos</option>
+                            <option value="zapatos">Zapatos</option>
+                            <option value="zapatillas">Zapatillas</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--tipoProducto">
+                        Por favor, seleccione un tipo de producto.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Cantidad"
+                        id="cantidad">
+                        <label class="label" for="cantidad">Cantidad</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--cantidad">
+                        La cantidad minima es de 50 y el maximo de 1000.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <textarea autocomplete="off" placeholder="" name="Descripcion" id="descripcion"></textarea>
+                        <label class="label" for="descripcion">Descripcion</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--descripcion">Por favor, ingrese una descripción.</p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Actualizacion</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script th:src="@{/js/procesos.js}"></script>
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- autoTable (complemento para jsPDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.22/jspdf.plugin.autotable.min.js"></script>
+    <!-- autoTable (complemento para Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</body>
+
+</html>
