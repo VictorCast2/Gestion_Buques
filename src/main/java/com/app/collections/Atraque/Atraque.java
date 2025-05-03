@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +42,12 @@ public class Atraque {
     private String puertoDestino;
 
     @Field("fecha_llegada")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime fechaLlegada;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate fechaLlegada;
 
     @Field("fecha_salida")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime fechaSalida;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate fechaSalida;
 
     @Field("estado_solicitud")
     private EResultado estadoSolicitud;
@@ -57,9 +58,9 @@ public class Atraque {
 
     @DBRef
     @Field("admin")
-    private List<Usuario> admin = new ArrayList<>();
+    private Usuario admin;
 
     @DBRef
     @Field("agente_naviero")
-    private List<Usuario> agenteNavieros = new ArrayList<>();
+    private Usuario agenteNaviero;
 }
