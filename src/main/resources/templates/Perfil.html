@@ -79,17 +79,34 @@
         <div class="parent__item">
             <img class="item__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
             <h2 class="item__nombre" th:text="${usuario.nombres + ' ' + usuario.apellidos}">Nombre Usuario</h2>
-            <h3 class="item__rol" th:text="${usuario.rol}">Ninguno</h3>
+            <div class="container__item__rol">
+                <h3 class="item__rol" th:text="${usuario.rol}">Ninguno</h3>
+            </div>
             <h4 class="item__details">Detalles</h4>
             <hr>
             <p class="item__info">
-                <strong class="info__imp">Nombre:</strong>
+                <strong class="info__imp">Tipo Identificación:</strong>
+                <span th:text="${usuario.tipoIdentificacion.descripcion}">Tipo de Identifiacaión</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Identificación:</strong>
+                <span th:text="${usuario.numeroIdentificacion}">Número de Identificación</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Nombres:</strong>
                 <span th:text="${usuario.nombres}">Nombres</span>
             </p>
 
             <p class="item__info">
-                <strong class="info__imp">Apellido:</strong>
+                <strong class="info__imp">Apellidos:</strong>
                 <span th:text="${usuario.apellidos}">Apellidos</span>
+            </p>
+
+            <p class="item__info">
+                <strong class="info__imp">Email:</strong>
+                <span th:text="${usuario.correo}">Correo Usuario</span>
             </p>
 
             <p class="item__info" th:if="${usuario.empresa != null}">
@@ -102,24 +119,9 @@
                 <span th:text="${usuario.empresa.nit}">N.I.T</span>
             </p>
 
-            <p class="item__info">
-                <strong class="info__imp">Email:</strong>
-                <span th:text="${usuario.correo}">Correo Usuario</span>
-            </p>
-
             <p class="item__info" th:if="${usuario.empresa != null}">
                 <strong class="info__imp">Email Empresa:</strong>
                 <span th:text="${usuario.empresa.correo}">Correo Empresa</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Tipo Identificación:</strong>
-                <span th:text="${usuario.tipoIdentificacion.descripcion}">Tipo de Identifiacaión</span>
-            </p>
-
-            <p class="item__info">
-                <strong class="info__imp">Identificación:</strong>
-                <span th:text="${usuario.numeroIdentificacion}">Número de Identificación</span>
             </p>
 
             <p class="item__info">
@@ -209,7 +211,7 @@
         </div>
         <div class="div3">
             <h2 class="notification__title">Notificaciones</h2>
-            <a th:href="@{/buques/Notificaciones.html}" target="_blank" class="notification__btn">Ver Todo</a>
+            <a th:href="@{/buques/notificaciones}" class="notification__btn">Ver Todo</a>
 
             <div class="notification__table-container">
                 <table class="notification__table">
@@ -310,8 +312,10 @@
                             Cargar Nueva Foto
                         </label>
 
-                        <button class="perfil__boton perfil__boton--reset">Reiniciar</button>
-                        <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 5MB</small>
+                        <!-- Input oculto con el nombre de la imagen original -->
+                        <input type="hidden" id="imagenActual" name="imagenOriginal" th:value="${usuario.imagen}">
+                        <button class="perfil__boton perfil__boton--reset" type="button">Reiniciar</button>
+                        <small class="perfil__nota">Allowed JPG, GIF o PNG. Tamaño Máximo de 15MB</small>
                     </div>
                 </div>
                 <div class="formulario__input">
@@ -444,7 +448,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="nombres" id="nombre">
+                        <input type="text" autocomplete="off" placeholder="" name="nombres" id="nombre" th:value="${usuario.nombres}">
                         <label class="label label--change" for="nombre">Nombre</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -456,7 +460,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido">
+                        <input type="text" autocomplete="off" placeholder="" name="apellidos" id="apellido" th:value="${usuario.apellidos}">
                         <label class="label label--change" for="apellido">Apellido</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -468,7 +472,7 @@
 
                 <div class="formulario__input " th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="empresa.nombre" id="nameEmpresa">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.nombre" id="nameEmpresa" th:value="${usuario.empresa.nombre}">
                         <label class="label label--change" for="nameEmpresa">Nombre Empresa</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -480,7 +484,7 @@
 
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="email" autocomplete="off" placeholder="" name="empresa.correo" id="emailCompany">
+                        <input type="email" autocomplete="off" placeholder="" name="empresa.correo" id="emailCompany" th:value="${usuario.empresa.correo}">
                         <label class="label label--change" for="emailCompany">Email Empresa</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -492,7 +496,7 @@
 
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="empresa.nit" id="niT">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.nit" id="niT" th:value="${usuario.empresa.nit}">
                         <label class="label label--change" for="niT">Nit</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -504,7 +508,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="email" autocomplete="off" placeholder="" name="correo" id="email">
+                        <input type="email" autocomplete="off" placeholder="" name="correo" id="email" th:value="${usuario.correo}">
                         <label class="label label--change" for="email">Email </label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -521,6 +525,7 @@
                             <option th:each="tipo : ${tiposIdentificacion}"
                                     th:value="${tipo.name()}"
                                     th:text="${tipo.descripcion}"
+                                    th:selected="${#strings.equalsIgnoreCase(tipo.name(), usuario.tipoIdentificacion)}"
                             ></option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -532,7 +537,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion">
+                        <input type="text" autocomplete="off" placeholder="" name="numeroIdentificacion" id="identificacion" th:value="${usuario.numeroIdentificacion}">
                         <label class="label label--change" for="identificacion">Identificacion</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -546,18 +551,23 @@
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="custom-select-wrapper wrapper--changed1">
                         <select class="styled-select select--changed1" name="empresa.pais" id="selectPais2">
-                            <option disabled selected>Pais</option>
+                            <option disabled selected th:selected="${usuario.empresa.pais}">Pais</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
                     <p class="input__error error--pais">Por favor, seleccione un país.</p>
                 </div>
 
+                <!-- input oculto para cargar el pais actual del usuario -->
+                <input th:if="${usuario.empresa != null}" type="hidden" id="paisActual" th:value="${usuario.empresa.pais}">
+                <!-- input oculto para cargar la ciudad actual del usuario -->
+                <input th:if="${usuario.empresa != null}" type="hidden" id="ciudadActual" th:value="${usuario.empresa.ciudad}">
+
                 <!-- Selector de ciudad -->
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="custom-select-wrapper wrapper--changed1">
                         <select class="styled-select select--changed1" name="empresa.ciudad" id="selectCiudad2">
-                            <option disabled selected>Ciudad</option>
+                            <option disabled selected th:selected="${usuario.empresa.ciudad}">Ciudad</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -566,7 +576,7 @@
 
                 <div class="formulario__input" th:if="${usuario.empresa != null}">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="empresa.direccion" id="address">
+                        <input type="text" autocomplete="off" placeholder="" name="empresa.direccion" id="address" th:value="${usuario.empresa.direccion}">
                         <label class="label label--change" for="address">Direccion</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -579,7 +589,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box box--change">
-                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="phone">
+                        <input type="text" autocomplete="off" placeholder="" name="telefono" id="phone" th:value="${usuario.telefono}">
                         <label class="label label--change" for="phone">Telefono</label>
                         <span class="box__icon icon--change"><i class="ri-check-line"></i></span>
                         <span class="box__icon icon--change"><i class="ri-close-line"></i></span>
@@ -614,6 +624,7 @@
             const MENSAJE_PASSWORD_ERROR = document.getElementById('mensaje-password-error');
             const MENSAJE_PASSWORD_EXISTOSO = document.getElementById('mensaje-password-exitoso');
             const MENSAJE_UPDATE_EXISTOSO = document.getElementById('mensaje-update-exitoso');
+            const MENSAJE_EMPRESA_EXITOSO = document.getElementById('mensaje-empresa-exitoso');
 
             if (MENSAJE_PASSWORD_ERROR) {
                 MENSAJE_PASSWORD_ERROR.style.display = 'none';
@@ -621,6 +632,8 @@
                 MENSAJE_PASSWORD_EXISTOSO.style.display = 'none';
             } else if (MENSAJE_UPDATE_EXISTOSO) {
                 MENSAJE_UPDATE_EXISTOSO.style.display = 'none';
+            } else if (MENSAJE_EMPRESA_EXITOSO) {
+                MENSAJE_EMPRESA_EXITOSO.style.display = 'none';
             }
         }, 5000);
     </script>

@@ -164,7 +164,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      */
     public AuthResponse updateUsuario(@Valid UpdateUsuarioRequest updateUsuarioRequest, CustomUserDetails customUserDetails) {
 
-        Usuario usuarioActualizado = this.getUsuarioByCorreo(customUserDetails.getCorreo()); // usuarioActualizado actual de la sesión
+        Usuario usuarioActualizado = this.getUsuarioByCorreo(customUserDetails.getCorreo()); // usuario actual de la sesión
 
         // Le seteamos los nuevos datos al usuarioActualizado
         usuarioActualizado.setTipoIdentificacion(EIdentificacion.valueOf(updateUsuarioRequest.tipoIdentificacion()));

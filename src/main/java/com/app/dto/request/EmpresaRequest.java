@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Validated
 public record EmpresaRequest(
         MultipartFile imagen,
+        String imagenOriginal,
         String nit,
         String nombre,
         String pais,

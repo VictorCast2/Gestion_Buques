@@ -100,7 +100,23 @@ document.addEventListener("DOMContentLoaded", function () {
         startAutoScroll();
     }
 
-    
+    /* Apertura del <details> */
+    function openDetails(details, content) {
+        details.open = true;
+        content.style.height = content.scrollHeight + "px";
+        content.style.opacity = "1";
+    }
+
+    /* Cierre del <details> */
+    function closeDetails(details, content) {
+        content.style.height = "0";
+        content.style.opacity = "0";
+
+        setTimeout(() => {
+            details.open = false;
+        }, 300);
+    }
+
     /* Apertura y cierre suave de <details> */
     const detailsElements = document.querySelectorAll(".questions__details");
 
@@ -123,12 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
-    function openDetails(details, content) {
-        details.open = true;
-        content.style.height = content.scrollHeight + "px";
-        content.style.opacity = "1";
-    }
 
     /* Menú desplegable del perfil */
     const subMenu = document.getElementById("SubMenu");
