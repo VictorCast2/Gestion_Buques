@@ -8,6 +8,7 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.security.CustomUserDetails;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Data
 @Service
 public class EmpresaService {
 
