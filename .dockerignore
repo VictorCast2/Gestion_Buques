@@ -12,3 +12,12 @@ target/
 
 # Ignorar repositorio Git
 .git
+
+# Ignorar archivos de configuración de Gradle
+.gradle
+
+# Ignorar archivos de configuración de Maven
+.mvn/
+
+*.iml
+*.md

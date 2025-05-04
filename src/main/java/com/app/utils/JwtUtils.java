@@ -46,12 +46,11 @@ public class JwtUtils {
                 .withIssuer(origenToken) // usuario que generara el token
                 .withSubject(usuario) // sujeto al que se le genera el token
                 .withClaim("authorities", permisos) // generación del claim con los permisos del usuario
-                .withIssuedAt(new Date()) // fecha de creación del token
-                .withExpiresAt(new Date(System.currentTimeMillis() + 7200000)) // fecha de vigencia del token (hora de generación actual en milisegundos + los milisegundos para la expiración {2hrs})
+                .withIssuedAt(new Date(System.currentTimeMillis())) // fecha de creación del token
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 70 * 70)) // fecha de vigencia del token (hora de generación actual en milisegundos + los milisegundos para la expiración {2hrs})
                 .withJWTId(UUID.randomUUID().toString()) // generación del id del token
                 .withNotBefore(new Date()) // especifica el momento en el que el token se considera válido (en este caso, desde su generación)
                 .sign(algorithm); // firma del token
-
         return jwtToken;
     }
 

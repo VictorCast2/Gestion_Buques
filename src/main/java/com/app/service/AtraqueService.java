@@ -1,23 +1,21 @@
 package com.app.service;
 
 import com.app.collections.Atraque.Atraque;
-import com.app.collections.Atraque.Enum.EResultado;
-import com.app.collections.Atraque.Enum.ETipoBuque;
-import com.app.collections.Atraque.pojo.Buque;
-import com.app.collections.Atraque.pojo.Dimension;
+import com.app.collections.Atraque.Enum.*;
+import com.app.collections.Atraque.pojo.*;
 import com.app.collections.Usuario.Usuario;
-import com.app.dto.request.AtraqueRequest;
-import com.app.dto.request.BuqueRequest;
+import com.app.dto.request.*;
 import com.app.dto.request.DimensionRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.repository.AtraqueRepository;
-import com.app.repository.UsuarioRepository;
+import com.app.repository.*;
 import com.app.security.CustomUserDetails;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@Data
 @Service
 public class AtraqueService {
 
