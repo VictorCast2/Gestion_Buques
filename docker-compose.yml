@@ -8,14 +8,21 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+        - "8080:8080"
     depends_on:
-      - mongodb
-      - redis
+        - mongodb
+        - redis
+    environment:
+        - MONGODB_DATABASE=GestionBuques
+        - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
+        - REDIS_HOST=localhost
+        - REDIS_URI=redis://localhost:6379/Usuarios
+        - REDIS_DATABASE=Usuarios
+        - REDIS_PORT=6379
     env_file:
-      - .env
+        - .env
     networks:
-      - buques-network
+        - buques-network
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
       interval: 30s
@@ -27,8 +34,8 @@ services:
     image: mongo:latest
     container_name: mongo-buques
     environment:
-      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
-      - MONGO_URL=${MONGO_URL}
+      - MONGODB_DATABASE=GestionBuques
+      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
     ports:
       - "27017:27017"
     networks:
