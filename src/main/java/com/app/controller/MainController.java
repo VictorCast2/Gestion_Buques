@@ -1,19 +1,13 @@
 package com.app.controller;
 
 import com.app.collections.Usuario.Usuario;
-import com.app.dto.request.AtraqueRequest;
-import com.app.service.AtraqueService;
 import com.app.service.UserDetailServiceImpl;
-
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/buques")
@@ -21,9 +15,6 @@ public class MainController {
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
-
-    @Autowired
-    private AtraqueService atraqueService;
 
     @RequestMapping("/")
     public String index() {
@@ -80,19 +71,6 @@ public class MainController {
     @RequestMapping("/SolicitudAtraque")
     public String SolicitudAtraque() {
         return "SolicitudAtraque";
-    }
-
-    @PostMapping("/atraques/actualizar")
-    public String actualizarSolicitud(
-            @RequestParam String id, 
-            @ModelAttribute @Valid AtraqueRequest request,
-            RedirectAttributes redirectAttributes) {
-
-        atraqueService.actualizarSolicitudAtraque(id, request);
-
-        redirectAttributes.addFlashAttribute("mensaje", "Solicitud de atraque actualizada exitosamente");
-
-        return "redirect:/atraques/lista";
     }
 
 }
