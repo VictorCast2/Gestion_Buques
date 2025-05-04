@@ -27,6 +27,9 @@ FROM eclipse-temurin:21.0.3_9-jre
 LABEL authors="Víctor-José-Yubliam-Keyner"
 WORKDIR /app
 
+# Instalar curl (imagen basada en Debian slim)
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
 # Copiar el JAR desde la etapa builder
 COPY --from=builder /app/target/buques-0.0.1-SNAPSHOT.jar ./buques.jar
 
