@@ -93,26 +93,4 @@ public class AtraqueService {
                 .ancho(dimensionRequest.ancho())
                 .build();
     }
-
-    public AuthResponse actualizarSolicitudAtraque(String idAtraque, @Valid AtraqueRequest atraqueRequest) {
-        Atraque atraqueExistente = atraqueRepository.findById(idAtraque)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró la solicitud de atraque con ID: " + idAtraque));
-    
-        Buque nuevoBuque = asignarBuque(atraqueRequest.buque());
-    
-        atraqueExistente.setPaisProcedencia(atraqueRequest.paisProcedencia());
-        atraqueExistente.setCiudadProcedencia(atraqueRequest.ciudadProcedencia());
-        atraqueExistente.setPuertoProcedencia(atraqueRequest.puertoProcedencia());
-        atraqueExistente.setPaisDestino(atraqueRequest.paisDestino());
-        atraqueExistente.setCiudadDestino(atraqueRequest.ciudadDestino());
-        atraqueExistente.setPuertoDestino(atraqueRequest.puertoDestino());
-        atraqueExistente.setFechaLlegada(atraqueRequest.fechaLlegada());
-        atraqueExistente.setFechaSalida(atraqueRequest.fechaSalida());
-        atraqueExistente.setBuque(nuevoBuque);
-    
-        atraqueRepository.save(atraqueExistente);
-    
-        return new AuthResponse("Solicitud de atraque actualizada exitosamente");
-    }
-
 }
