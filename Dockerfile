@@ -6,7 +6,6 @@ WORKDIR /app
 
 # Copiar archivos necesarios para preparar dependencias
 COPY pom.xml ./
-COPY .mvn .mvn
 COPY mvnw ./
 
 # Descargar dependencias sin compilar
