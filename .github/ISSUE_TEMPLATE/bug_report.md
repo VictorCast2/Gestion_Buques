@@ -1,38 +1,78 @@
----
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+about: Reporta un error en el sistema de gestión de buques y horarios
+title: '[BUG] Título claro del error'
+labels: bug
+assignees: 'VictorCast2'
 
----
+body:
+- type: markdown
+  attributes:
+  value: |
+  ### 🐛 Descripción del error
+  Explica de forma clara qué está fallando en el sistema.
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+- type: textarea
+  id: bug-description
+  attributes:
+  label: ¿Qué sucede?
+  placeholder: Ejemplo: Al registrar un nuevo horario para un buque, el sistema lanza un error 500...
+  validations:
+  required: true
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+- type: textarea
+  id: reproduction-steps
+  attributes:
+  label: ¿Cómo reproducirlo?
+  description: Describe los pasos para reproducir el error.
+  value: |
+  1. Ir a '...'
+  2. Hacer clic en '...'
+  3. Ingresar datos '...'
+  4. Ver el error
+  validations:
+  required: true
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+- type: textarea
+  id: expected-behavior
+  attributes:
+  label: Comportamiento esperado
+  placeholder: Ejemplo: El nuevo horario debería guardarse correctamente en la colección `horarios`.
+  validations:
+  required: true
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+- type: textarea
+  id: screenshots
+  attributes:
+  label: Capturas de pantalla
+  description: Adjunta imágenes si ayudan a entender el problema.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+- type: input
+  id: api-endpoint
+  attributes:
+  label: Endpoint afectado (si aplica)
+  placeholder: Ej. POST /api/horarios, GET /api/buques/{id}
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+- type: textarea
+  id: error-logs
+  attributes:
+  label: Logs del error
+  description: Pega aquí el mensaje de error que aparece en consola o el log de Spring Boot.
+  placeholder: Ejemplo: `org.springframework.data.mongodb.UncategorizedMongoDbException: ...`
 
-**Additional context**
-Add any other context about the problem here.
+- type: input
+  id: spring-version
+  attributes:
+  label: Versión de Spring Boot
+  placeholder: Ej. 3.2.1
+
+- type: input
+  id: mongodb-version
+  attributes:
+  label: Versión de MongoDB
+  placeholder: Ej. 6.0.4
+
+- type: textarea
+  id: additional-context
+  attributes:
+  label: Contexto adicional
+  description: Cualquier otra información útil (por ejemplo, cambios recientes, dependencias nuevas, etc).
