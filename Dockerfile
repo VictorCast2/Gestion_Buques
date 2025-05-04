@@ -18,6 +18,9 @@ COPY src ./src
 # Construir el JAR sin ejecutar tests
 RUN ./mvnw clean package -DskipTests
 
+# Limpiar el caché de Maven para reducir el tamaño de la imagen
+RUN rm -rf ~/.m2/repository
+
 # Etapa 2: Imagen final
 FROM eclipse-temurin:21.0.3_9-jre
 
