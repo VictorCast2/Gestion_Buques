@@ -719,7 +719,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
+    const botonSiEliminar = modalEliminar.querySelector('.boton-si2');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
+
+    // Id del formulario de eliminar una solicitud de atraque
+    const formEliminar = document.getElementById('formEliminar');
 
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
@@ -760,6 +764,15 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEditar);     // Cerramos el modal de confirmación
         modalEditRegistro.classList.remove('newadd--hidden');
         modalEditRegistro.classList.add('newadd--visible');
+    });
+
+    // Evento cuando hace click en "Si" en eliminar
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const id = boton.getAttribute('data-id');
+            formEliminar.setAttribute('action', `/buques/solicitud-atraque/eliminar-solicitud/${id}`);
+            abrirModal(modalEliminar);
+        });
     });
 
     // Cerrar modal al hacer click fuera del contenido

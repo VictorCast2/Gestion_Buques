@@ -46,8 +46,10 @@ public class SecurityConfig {
                     auth.requestMatchers("/", "/css/**", "/js/**").permitAll();
 
                     // Configurar endpoints públicos (sin autenticación)
+                    // autenticación
                     auth.requestMatchers(HttpMethod.GET, "/auth/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    // test
                     auth.requestMatchers(HttpMethod.GET, "/test/hello").permitAll();
 
                     // Configurar endpoints privados
@@ -55,15 +57,23 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/test/hello-protegido").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/test/admin").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/test/inspector").hasRole("INSPECTOR");
-                    // buques
-                    auth.requestMatchers(HttpMethod.GET, "/buques/perfil").authenticated();
-                    auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-contraseña").authenticated();
-                    auth.requestMatchers(HttpMethod.POST, "/buques/actualizar-datos").authenticated();
+                    // perfil
+                    auth.requestMatchers(HttpMethod.GET, "/buques/perfil/").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/buques/perfil/vincular-empresa").hasAnyRole("AGENTE_NAVIERO", "INVITADO");
+                    auth.requestMatchers(HttpMethod.POST, "/buques/perfil/**").authenticated();
+                    // atraque
+                    auth.requestMatchers(HttpMethod.GET, "/buques/solicitud-atraque/").hasRole("AGENTE_NAVIERO");
+                    auth.requestMatchers(HttpMethod.POST, "/buques/solicitud-atraque/**").hasRole("AGENTE_NAVIERO");
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();
                     auth.anyRequest().permitAll(); // cambiar luego
                 })
+
+                // Configuración de errores
+                .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/error/403")
+                )
 
                 // Configuración de logout
                 .logout(logout -> logout

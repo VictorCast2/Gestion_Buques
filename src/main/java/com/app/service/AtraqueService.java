@@ -18,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 public class AtraqueService {
 
@@ -26,6 +29,10 @@ public class AtraqueService {
 
     @Autowired
     private AtraqueRepository atraqueRepository;
+
+    public List<Atraque> getAtraquesByUsuario(Usuario agenteNaviero) {
+        return atraqueRepository.findByAgenteNaviero(agenteNaviero);
+    }
 
     /**
      * Método para crear una solicitud de atraque
@@ -92,5 +99,15 @@ public class AtraqueService {
                 .largo(dimensionRequest.largo())
                 .ancho(dimensionRequest.ancho())
                 .build();
+    }
+
+    public AuthResponse updateSolicitudAtraque(String id) {
+
+        return new AuthResponse("La solicitud ha sido actualizada con exitosamente");
+    }
+
+    public AuthResponse deleteSolicitudAtraque(String id) {
+        atraqueRepository.deleteById(id);
+        return new AuthResponse("La solicitud ha sido eliminada exitosamente");
     }
 }
