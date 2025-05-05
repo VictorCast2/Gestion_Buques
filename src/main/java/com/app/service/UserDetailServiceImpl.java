@@ -93,6 +93,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .credentialNoExpired(true)
                 .build();
         usuarioRepository.save(usuario); // salvamos al usuario
+
+        // Guardamos el usuario en Redis
+        if(!redisTemplate.hasKey("login:" + correo)) {
+            AuthLoginRequest authLoginRequest = new AuthLoginRequest(correo, encoder.encode(password));
+            redisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
+        }
+
         return new AuthResponse("usuario creado exitosamente");
     }
 
@@ -105,14 +112,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String correo = authLoginRequest.correo();
         String password = authLoginRequest.password();
 
-        // Guardamos temporalmente el AuthLoginRequest en Redis
-        redisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
         try {
             Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
+            redisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
             return jwtUtils.crearToken(authentication);
-
         } catch (BadCredentialsException | UsernameNotFoundException exception) {
             throw exception;
         }
@@ -149,7 +153,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
         // Actualizar o insertar en Redis
-        AuthLoginRequest newCache = new AuthLoginRequest(correo, password);
+        AuthLoginRequest newCache = new AuthLoginRequest(correo, encoder.encode(password));
         redisTemplate.opsForValue().set("login:" + correo, newCache);
 
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
@@ -177,13 +181,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
             return new AuthResponse("Error: la nueva contraseña no puede ser igual a la anterior");
         }
 
-        usuario.setPassword(encoder.encode(newPassword));
-        usuarioRepository.save(usuario);
-
         // Actualizamos el valor en Redis
-        AuthLoginRequest updatedCache = new AuthLoginRequest(usuario.getCorreo(), newPassword);
+        AuthLoginRequest updatedCache = new AuthLoginRequest(usuario.getCorreo(), encoder.encode(newPassword));
         redisTemplate.opsForValue().set("login:" + usuario.getCorreo(), updatedCache);
 
+        usuario.setPassword(encoder.encode(newPassword));
+        usuarioRepository.save(usuario);
         return new AuthResponse("contraseña actualizada exitosamente");
     }
 
@@ -221,7 +224,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         redisTemplate.delete("login:" + correoAnterior);
 
         // 3. Creamos la nueva entrada con el nuevo correo y la misma contraseña
-        AuthLoginRequest updatedCache = new AuthLoginRequest(usuarioActualizado.getCorreo(), currentPasswordCache);
+        AuthLoginRequest updatedCache = new AuthLoginRequest(usuarioActualizado.getCorreo(), encoder.encode(currentPasswordCache));
         redisTemplate.opsForValue().set("login:" + usuarioActualizado.getCorreo(), updatedCache);
 
         return new AuthResponse("Sus datos se han actualizado exitosamente");
