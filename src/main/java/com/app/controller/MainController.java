@@ -58,19 +58,14 @@ public class MainController {
         return "AgenteNaviero";
     }
 
-    @RequestMapping("/Configuraciones")
+    @RequestMapping("/configuraciones")
     public String Configuraciones() {
         return "Configuraciones";
     }
 
-    @RequestMapping("/Procesos")
+    @RequestMapping("/procesos")
     public String Procesos() {
         return "Procesos";
-    }
-
-    @RequestMapping("/SolicitudAtraque")
-    public String SolicitudAtraque() {
-        return "SolicitudAtraque";
     }
 
 }

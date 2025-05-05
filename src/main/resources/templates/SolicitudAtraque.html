@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -93,39 +93,43 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
-            <div class="nav__menu" id="SubMenu">
+            <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" target="_blank" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" target="_blank" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" target="_blank" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a href="" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
+                    
                 </div>
             </div>
         </nav>
@@ -139,7 +143,7 @@
         <h1 class="encabezado__title">Solicitud Atraque</h1>
     </div>
 
-
+    <!-- Tabla -->
     <main class="main__content">
         <section class="table__container">
             <div class="container__button">
@@ -200,83 +204,30 @@
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr>
-                                <td>ABC123</td>
-                                <td>Buque Esperanza</td>
-                                <td>Carga</td>
-                                <td>España/Barcelona/Puerto De Barcelona</td>
-                                <td>Portugal/Madeira/Puerto De Madeira</td>
-                                <td>03/05/2025</td>
-                                <td>06/15/2025</td>
+                            <tr th:if="${listarAtraques.isEmpty()}">
+                                <td colspan="8" style="text-align: center; font-style: italic; color: #888;">
+                                    Aún no tiene solicitudes de atraque registradas.
+                                </td>
+                            </tr>
+                            <tr th:each="atraque : ${listarAtraques}">
+                                <td th:text="${atraque.buque.matricula}">Matrícula</td>
+                                <td th:text="${atraque.buque.nombre}">Nombre</td>
+                                <td th:text="${atraque.buque.tipoBuque}">Tipo Buque</td>
+                                <td th:text="${atraque.paisProcedencia + '/' + atraque.ciudadProcedencia + '/' + atraque.puertoProcedencia}">
+                                    Procedencia
+                                </td>
+                                <td th:text="${atraque.paisDestino + '/' + atraque.ciudadDestino + '/' + atraque.puertoDestino}">
+                                    Destino
+                                </td>
+                                <td th:text="${#temporals.format(atraque.fechaSalida, 'dd-MM-yyyy')}">Fecha Salida</td>
+                                <td th:text="${#temporals.format(atraque.fechaLlegada, 'dd-MM-yyyy')}">Fecha Llegada</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <button class="content__icon icon--edit">
-                                            <i class="ri-pencil-line"></i>
-                                        </button>
-                                        <button class="content__icon icon--delete">
-                                            <i class="ri-delete-bin-6-line"></i>
-                                        </button>
+                                        <button class="content__icon icon--edit"><i class="ri-pencil-line"></i></button>
+                                        <button class="content__icon icon--delete" th:data-id="${atraque.id}"><i class="ri-delete-bin-6-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>ABC123</td>
-                                <td>Buque Esperanza</td>
-                                <td>Carga</td>
-                                <td>España/Barcelona/Puerto De Barcelona</td>
-                                <td>Portugal/Madeira/Puerto De Madeira</td>
-                                <td>03/05/2025</td>
-                                <td>06/15/2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="content__icon icon--edit">
-                                            <i class="ri-pencil-line"></i>
-                                        </button>
-                                        <button class="content__icon icon--delete">
-                                            <i class="ri-delete-bin-6-line"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>ABC123</td>
-                                <td>Buque Esperanza</td>
-                                <td>Carga</td>
-                                <td>España/Barcelona/Puerto De Barcelona</td>
-                                <td>Portugal/Madeira/Puerto De Madeira</td>
-                                <td>03/05/2025</td>
-                                <td>06/15/2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="content__icon icon--edit">
-                                            <i class="ri-pencil-line"></i>
-                                        </button>
-                                        <button class="content__icon icon--delete">
-                                            <i class="ri-delete-bin-6-line"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>ABC123</td>
-                                <td>Buque Esperanza</td>
-                                <td>Carga</td>
-                                <td>España/Barcelona/Puerto De Barcelona</td>
-                                <td>Portugal/Madeira/Puerto De Madeira</td>
-                                <td>03/05/2025</td>
-                                <td>06/15/2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="content__icon icon--edit">
-                                            <i class="ri-pencil-line"></i>
-                                        </button>
-                                        <button class="content__icon icon--delete">
-                                            <i class="ri-delete-bin-6-line"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!-- Más filas si es necesario -->
                         </tbody>
                     </table>
 
@@ -305,9 +256,11 @@
     <!-- MODAL PARA CONFIRMACIÓN eliminar -->
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
-            <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <p class="contenido__text">¿Estas seguro que quieres eliminar este registro?</p>
+            <form method="post" id="formEliminar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 
@@ -340,13 +293,13 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Añadir Nueva Solicitud Atraque</h2>
             <div class="content__relleno"></div>
-            <form class="add__formulario" action="">
+            <form action="/buques/solicitud-atraque/crear-solicitud" method="post" class="add__formulario">
 
                 <fieldset class="buque__field">
-                    <legend class="field__legend">Acomplete los siguientes datos por favor.</legend>
+                    <legend class="field__legend">Favor diligenciar el siguiente formulario</legend>
                     <div class="formulario__input">
                         <div class="input-box ">
-                            <input type="text" autocomplete="off" placeholder="" name="Matricula" id="matricula">
+                            <input type="text" autocomplete="off" placeholder="" name="buque.matricula" id="matricula">
                             <label class="label label--changed1" for="matricula">Matricula</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -360,7 +313,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box">
-                            <input type="text" autocomplete="off" placeholder="" name="NombreBuque" id="nombreBuque">
+                            <input type="text" autocomplete="off" placeholder="" name="buque.nombre" id="nombreBuque">
                             <label class="label label--changed1" for="nombreBuque">Nombre</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -372,17 +325,12 @@
 
                     <div class="formulario__input">
                         <div class="custom-select-wrapper">
-                            <select class="styled-select" id="tipoBuque">
+                            <select class="styled-select" name="buque.tipoBuque" id="tipoBuque">
                                 <option disabled selected>Tipo De Buque</option>
-                                <option value="CG">Carga General</option>
-                                <option value="PC">Portacontenedores</option>
-                                <option value="GR">Graneleros</option>
-                                <option value="PT">Petroleros</option>
-                                <option value="GS">Gaseros</option>
-                                <option value="FR">Frigoríficos</option>
-                                <option value="CR">Cargamento Rodado</option>
-                                <option value="GA">Ganado</option>
-                            </select>
+                                <option th:each="tipo : ${tiposBuque}"
+                                        th:value="${tipo.name()}"
+                                        th:text="${tipo.descripcion}">Tipos Buque</option>
+                                </select>
                             <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                         </div>
                         <p class="input__error error--tipoBuque">
@@ -393,7 +341,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box">
-                            <input type="number" min="50" max="5000" autocomplete="off" placeholder="" name="Ancho"
+                            <input type="number" min="50" max="5000" autocomplete="off" placeholder="" name="buque.dimensiones.ancho"
                                 id="ancho">
                             <label class="label label--changed1" for="ancho">Ancho (M)</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -406,9 +354,9 @@
 
                     <div class="formulario__input">
                         <div class="input-box">
-                            <input type="number" min="50" max="5000" autocomplete="off" placeholder="" name="Altura"
+                            <input type="number" min="50" max="5000" autocomplete="off" placeholder="" name="buque.dimensiones.largo"
                                 id="altura">
-                            <label class="label label--changed1" for="altura">Altura (M)</label>
+                            <label class="label label--changed1" for="altura">Largo (M)</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
                         </div>
@@ -419,7 +367,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box">
-                            <input type="number" min="50" max="5000" autocomplete="off" placeholder="" name="Peso"
+                            <input type="number" min="50" max="5000" autocomplete="off" placeholder="" name="buque.dimensiones.peso"
                                 id="peso">
                             <label class="label label--changed1" for="peso">Peso (T)</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -433,7 +381,7 @@
                     <!-- Selector de país -->
                     <div class="formulario__input">
                         <div class="custom-select-wrapper">
-                            <select class="styled-select" id="selectPaisProcedencia">
+                            <select class="styled-select" name="paisProcedencia" id="selectPaisProcedencia">
                                 <option disabled selected>Pais Procedencia</option>
                             </select>
                             <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -444,7 +392,7 @@
                     <!-- Selector de ciudad -->
                     <div class="formulario__input">
                         <div class="custom-select-wrapper wrapper--changed">
-                            <select class="styled-select" id="selectCiudadProcedencia">
+                            <select class="styled-select" name="ciudadProcedencia" id="selectCiudadProcedencia">
                                 <option disabled selected>Ciudad Procedencia</option>
                             </select>
                             <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -455,7 +403,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="PuertoProcedencia"
+                            <input type="text" autocomplete="off" placeholder="" name="puertoProcedencia"
                                 id="puertoProcedencia">
                             <label class="label label--changed" for="puertoProcedencia">Puerto Procedencia</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -471,7 +419,7 @@
                     <!-- Selector de país -->
                     <div class="formulario__input">
                         <div class="custom-select-wrapper">
-                            <select class="styled-select" id="selectPaisDestino">
+                            <select class="styled-select" name="paisDestino" id="selectPaisDestino">
                                 <option disabled selected>Pais Destino</option>
                             </select>
                             <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -482,7 +430,7 @@
                     <!-- Selector de ciudad -->
                     <div class="formulario__input">
                         <div class="custom-select-wrapper wrapper--changed">
-                            <select class="styled-select" id="selectCiudadDestino">
+                            <select class="styled-select" name="ciudadDestino" id="selectCiudadDestino">
                                 <option disabled selected>Ciudad Destino</option>
                             </select>
                             <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
@@ -494,7 +442,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="PuertoDestino"
+                            <input type="text" autocomplete="off" placeholder="" name="puertoDestino"
                                 id="puertoDestino">
                             <label class="label label--changed" for="puertoDestino">Puerto Destino</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -509,9 +457,9 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="FechaSalida" id="fechaSalida"
-                                title="Formato requerido: dd/mm/yyyy">
-                            <label class="label label--changed1" for="fechaSalida">Fecha Salida</label>
+                            <input type="text" autocomplete="off" placeholder="" name="fechaLlegada" id="fechaEntrada"
+                                   title="Formato requerido: dd/mm/yyyy">
+                            <label class="label label--changed1" for="fechaEntrada">Fecha Entrada</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
                         </div>
@@ -523,9 +471,9 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="FechaEntrada" id="fechaEntrada"
+                            <input type="text" autocomplete="off" placeholder="" name="fechaSalida" id="fechaSalida"
                                 title="Formato requerido: dd/mm/yyyy">
-                            <label class="label label--changed1" for="fechaEntrada">Fecha Entrada</label>
+                            <label class="label label--changed1" for="fechaSalida">Fecha Salida</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
                         </div>
@@ -550,7 +498,6 @@
         </div>
     </div>
 
-
     <!--Modal añadir EDIT-->
     <div class="modal__newadd newadd--hidden" id="modalnewadd2">
         <div class="modal__content">
@@ -560,7 +507,7 @@
             <form class="edit__formulario" action="">
 
                 <fieldset class="buque__field">
-                    <legend class="field__legend">Edite los siguientes datos por favor.</legend>
+                    <legend class="field__legend">Favor diligenciar el siguiente formulario.</legend>
                     <div class="formulario__input">
                         <div class="input-box ">
                             <input type="text" autocomplete="off" placeholder="" name="Matricula" id="tuition">
