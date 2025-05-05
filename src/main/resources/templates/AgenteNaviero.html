@@ -13,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
 <body>
@@ -139,8 +140,62 @@
         <a class="encabezado__pages" href="">Inicio</a>
         <h1 class="encabezado__title">Inicio</h1>
     </div>
+    
+    
+    <main class="main__content">
+        <section class="content__inicio">
+            <div class="inicio__agentenaviero">
+                <div class="agentenaviero__welcome">
+                    <h4 class="welcome__title">🌊 ¡Bienvenido a bordo!</h4>
+                    <h2 class="welcome__agentenaviero">Keiner Reyes Tejedor</h2>
+                    <p class="welcome__text">
+                        Nos complace darte la bienvenida a nuestra plataforma digital, donde la eficiencia,
+                        la organización y el compromiso con el servicio portuario se encuentran al centro de nuestra
+                        misión.
+                    </p>
+                </div>
+                <div class="agentenaviero__atraque">
+                    <i class="ri-bar-chart-fill"></i>
+                    <h4 class="atraque__title">El Atraque De Hoy</h4>
+                    <span class="atraque__cantidad">1,000 <strong class="cantidad__porciento">+5%</strong></span>
+                </div>
+                <div class="agentenavierto__proceso">
+                    <i class="ri-folders-fill"></i>
+                    <h4 class="proceso__title">El Proceso De Hoy</h4>
+                    <span class="proceso__cantidad">2,000 <strong class="cantidad__porciento">+3%</strong></span>
+                </div>
+                <div class="agentenaviero__total">
+                    <i class="ri-shopping-cart-2-fill"></i>
+                    <h4 class="total__title">Operaciones Totales</h4>
+                    <span class="total__cantidad">3,000 <strong class="cantidad__porciento">+5%</strong></span>
+                </div>
+            </div>
+
+            <div id="chartdiv"></div>
+
+            <div id="chartdiv2"></div>
+            <div class="controls">
+                <div class="controls__btn">
+                    <button class="control-button" onclick="changeChart('buques')">Tipos De Buques</button>
+                    <div class="separator"></div>
+                    <button class="control-button button--changed" onclick="changeChart('carga')">Tipos De Cargas</button>
+                </div>
+                <select class="select__periodicidad" id="timeframe-select" onchange="changeTimeframe(this.value)">
+                    <option value="week">Semanas</option>
+                    <option value="month">Meses</option>
+                    <option value="year">Años</option>
+                </select>
+            </div>
+        </section>
+    </main>
 
     <script th:src="@{/js/agentenaviero.js}"></script>
+    <script th:src="@{/js/graficos.js}"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 </body>
 
 </html>
