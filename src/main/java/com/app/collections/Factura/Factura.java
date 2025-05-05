@@ -12,7 +12,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -43,8 +45,8 @@ public class Factura {
 
     private EEstadoFactura estado;
 
-    private Set<Proceso> procesos = new HashSet<>();
+    private List<Proceso> procesos = new ArrayList<>();
 
     @DBRef
-    private Set<Usuario> usuarios = new HashSet<>();
+    private Set<Usuario> agenteNaviero = new HashSet<>();
 }
