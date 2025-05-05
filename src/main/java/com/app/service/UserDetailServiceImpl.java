@@ -11,6 +11,7 @@ import com.app.utils.JwtUtils;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private RedisTemplate<String, AuthLoginRequest> redisTemplate;
 
     /**
      * Método para cargar al usuario por su correo
@@ -98,7 +102,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @return el token codificado, el cual en el controller se le pasa a una cookie de session
      */
     public String loginUser(AuthLoginRequest authLoginRequest) {
-
         String correo = authLoginRequest.correo();
         String password = authLoginRequest.password();
 
