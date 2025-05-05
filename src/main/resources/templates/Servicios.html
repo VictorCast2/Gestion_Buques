@@ -67,6 +67,12 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
+                    <a th:href="@{/buques/solicitud-atraque/}" class="sub__link">
+                        <i class="ri-dashboard-fill"></i>
+                        <p class="link__text">Panel Control</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
                     <!-- Formulario para logout -->
                     <form th:action="@{/auth/logout}" method="post" id="logoutForm">
                         <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
@@ -75,6 +81,7 @@
                             <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
                         </a>
                     </form>
+
                 </div>
             </div>
 

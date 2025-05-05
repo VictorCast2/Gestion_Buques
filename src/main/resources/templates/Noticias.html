@@ -44,7 +44,7 @@
             <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${#authentication.principal?.imagen}}" th:alt="${#authentication.principal?.imagen}">
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${#authentication.principal?.imagen}}" th:alt="${#authentication.principal?.imagen}" >
                         <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
@@ -67,6 +67,12 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
+                    <a th:href="@{/buques/solicitud-atraque/}" class="sub__link">
+                        <i class="ri-dashboard-fill"></i>
+                        <p class="link__text">Panel Control</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
                     <!-- Formulario para logout -->
                     <form th:action="@{/auth/logout}" method="post" id="logoutForm">
                         <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
@@ -75,6 +81,7 @@
                             <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
                         </a>
                     </form>
+
                 </div>
             </div>
 

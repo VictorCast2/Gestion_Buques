@@ -722,7 +722,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonSiEliminar = modalEliminar.querySelector('.boton-si2');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
 
-    // Id del formulario de eliminar una solicitud de atraque
+    // Formularios
+    const formEditar = document.getElementById('formEditar')
     const formEliminar = document.getElementById('formEliminar');
 
     // Funciones para abrir y cerrar modales
@@ -736,9 +737,13 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('confirmacion--hidden');
     }
 
+    // Variable global para guardar el id de la solicitud que se va a editar
+    let idEditarSeleccionado = null;
+
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            idEditarSeleccionado = boton.getAttribute('data-id'); // Guardamos el id
             abrirModal(modalEditar);
         });
     });
@@ -760,10 +765,44 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Evento cuando hacen click en "Sí" en editar
-    botonSiEditar.addEventListener('click', () => {
-        cerrarModal(modalEditar);     // Cerramos el modal de confirmación
-        modalEditRegistro.classList.remove('newadd--hidden');
-        modalEditRegistro.classList.add('newadd--visible');
+    botonSiEditar.addEventListener('click', async () => {
+        cerrarModal(modalEditar); // Cerramos modal confirmación
+        // Establecer la acción del formulario con el ID seleccionado
+        formEditar.setAttribute('action', `/buques/solicitud-atraque/actualizar-solicitud/${idEditarSeleccionado}`);
+
+        try {
+            const response = await fetch(`/api/solicitud-atraque/${idEditarSeleccionado}`);
+            if (!response.ok) throw new Error('Error al obtener los datos');
+
+            const data = await response.json();
+
+            document.getElementById("tuition").value = data.buque.matricula;
+            document.getElementById("nameVessel").value = data.buque.nombre;
+            document.getElementById("tipoBuque2").value = data.buque.tipoBuque;
+            document.getElementById("ancho2").value = data.buque.dimensiones.ancho;
+            document.getElementById("altura2").value = data.buque.dimensiones.largo;
+            document.getElementById("peso2").value = data.buque.dimensiones.peso;
+
+            document.getElementById("selectPaisProcedencia2").value = data.paisProcedencia;
+            document.getElementById("selectCiudadProcedencia2").value = data.ciudadProcedencia;
+            document.getElementById("portOrigin").value = data.puertoProcedencia;
+
+            document.getElementById("selectPaisDestino2").value = data.paisDestino;
+            document.getElementById("selectCiudadDestino2").value = data.ciudadDestino;
+            document.getElementById("portDestination").value = data.puertoDestino;
+
+            document.getElementById("fechaEntrada2").value = data.fechaLlegada;
+            document.getElementById("fechaSalida2").value = data.fechaSalida;
+
+
+            // Abrimos el modal de edición
+            modalEditRegistro.classList.remove('newadd--hidden');
+            modalEditRegistro.classList.add('newadd--visible');
+
+        } catch (error) {
+            console.error(error);
+            alert('No se pudieron cargar los datos del formulario');
+        }
     });
 
     // Evento cuando hace click en "Si" en eliminar

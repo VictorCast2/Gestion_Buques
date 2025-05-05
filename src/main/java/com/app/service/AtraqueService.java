@@ -34,6 +34,11 @@ public class AtraqueService {
         return atraqueRepository.findByAgenteNaviero(agenteNaviero);
     }
 
+    public Atraque getAtraqueById(String id) {
+        return atraqueRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
+    }
+
     /**
      * Método para crear una solicitud de atraque
      * @param atraqueRequest parámetro con los datos de la solicitud
@@ -101,7 +106,34 @@ public class AtraqueService {
                 .build();
     }
 
-    public AuthResponse updateSolicitudAtraque(String id) {
+    public AuthResponse updateSolicitudAtraque(@Valid AtraqueRequest atraqueRequest, String id) {
+
+        Atraque atraqueActualizado = this.getAtraqueById(id);
+
+        // Actualizamos los datos de las dimensiones de buque
+        Dimension dimensionActualizada = atraqueActualizado.getBuque().getDimensiones();
+        dimensionActualizada.setPeso(atraqueRequest.buque().dimensiones().peso());
+        dimensionActualizada.setLargo(atraqueRequest.buque().dimensiones().largo());
+        dimensionActualizada.setAncho(atraqueRequest.buque().dimensiones().ancho());
+        
+        // Actualizamos los datos del buque
+        Buque buqueActualizado = atraqueActualizado.getBuque();
+        buqueActualizado.setMatricula(atraqueRequest.buque().matricula());
+        buqueActualizado.setNombre(atraqueRequest.buque().nombre());
+        buqueActualizado.setDimensiones(dimensionActualizada);
+
+        // Actualizamos los datos de la Solicitud de Atraque
+        atraqueActualizado.setPaisProcedencia(atraqueRequest.paisProcedencia());
+        atraqueActualizado.setCiudadDestino(atraqueRequest.ciudadDestino());
+        atraqueActualizado.setPaisProcedencia(atraqueRequest.puertoProcedencia());
+        atraqueActualizado.setPaisDestino(atraqueRequest.paisDestino());
+        atraqueActualizado.setCiudadDestino(atraqueRequest.ciudadDestino());
+        atraqueActualizado.setPuertoDestino(atraqueRequest.puertoDestino());
+        atraqueActualizado.setFechaLlegada(atraqueRequest.fechaLlegada());
+        atraqueActualizado.setFechaSalida(atraqueRequest.fechaSalida());
+        atraqueActualizado.setBuque(buqueActualizado);
+        
+        atraqueRepository.save(atraqueActualizado);
 
         return new AuthResponse("La solicitud ha sido actualizada con exitosamente");
     }

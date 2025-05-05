@@ -53,19 +53,16 @@ public class MainController {
         return "Notificaciones";
     }
 
-    @RequestMapping("/AgenteNaviero")
+    @RequestMapping("/panel-control")
     public String AgenteNaviero() {
         return "AgenteNaviero";
     }
 
     @RequestMapping("/configuraciones")
-    public String Configuraciones() {
+    public String Configuraciones(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
+        model.addAttribute("usuario", usuario);
         return "Configuraciones";
-    }
-
-    @RequestMapping("/procesos")
-    public String Procesos() {
-        return "Procesos";
     }
 
 }

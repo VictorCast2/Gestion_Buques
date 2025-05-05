@@ -51,6 +51,13 @@ public class AtraqueController {
         return "redirect:/buques/solicitud-atraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 
+    @PostMapping("/actualizar-solicitud/{id}")
+    public String actualizarSolicitud(@ModelAttribute @Valid AtraqueRequest atraqueRequest, @PathVariable String id) {
+        AuthResponse response = atraqueService.updateSolicitudAtraque(atraqueRequest, id);
+        String mensaje = response.mensaje();
+        return "redirect:/buques/solicitud-atraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+    }
+
     @PostMapping("eliminar-solicitud/{id}")
     public String eliminarSolicitudAtraque(@PathVariable String id) {
         AuthResponse response = atraqueService.deleteSolicitudAtraque(id);
