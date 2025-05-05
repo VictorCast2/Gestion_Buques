@@ -9,6 +9,7 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.JwtUtils;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Data
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -30,6 +32,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
+    /**
+     * Método para cargar al usuario por su correo
+     * @param correo parámetro por el cual vamos a buscar al usuario, este campo es único
+     * @return un objeto de tipo UserDetails con los datos del usuario
+     */
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByCorreo(correo)
@@ -205,8 +212,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return empresaActualizada;
     }
 
+    /**
+     * Método para eliminar al usuario
+     * @param customUserDetails parámetro para extraer al usuario de la session
+     */
     private void deleteUsuario(CustomUserDetails customUserDetails) {
         Usuario usuario = this.getUsuarioByCorreo(customUserDetails.getCorreo());
         usuarioRepository.delete(usuario);
     }
+
 }
