@@ -102,6 +102,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String correo = authLoginRequest.correo();
         String password = authLoginRequest.password();
 
+        // Guardamos temporalmente el AuthLoginRequest en Redis
+        redisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
         try {
             Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -123,6 +125,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public Authentication authentication(String correo, String password) {
         UserDetails userDetails = this.loadUserByUsername(correo);
 
+        AuthLoginRequest cachedRequest = redisTemplate.opsForValue().get("login:" + correo);
+
+        if (cachedRequest != null) {
+            // Si la contraseña coincide, autenticamos directamente sin consultar MongoDB
+            if (cachedRequest.password().equals(password)) {
+                return new UsernamePasswordAuthenticationToken(
+                        correo, userDetails.getPassword(), userDetails.getAuthorities());
+            }
+        }
+
         // si el usuario es nulo, significa que no existe en la base de datos, asi que mandamos un error
         if (userDetails == null) {
             throw new BadCredentialsException("Correo o contraseña incorrectos");
@@ -132,6 +144,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (!encoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
+
+        // Actualizar o insertar en Redis
+        AuthLoginRequest newCache = new AuthLoginRequest(correo, password);
+        redisTemplate.opsForValue().set("login:" + correo, newCache);
+
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
@@ -160,6 +177,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         usuario.setPassword(encoder.encode(newPassword));
         usuarioRepository.save(usuario);
 
+        // Actualizamos el valor en Redis
+        AuthLoginRequest updatedCache = new AuthLoginRequest(usuario.getCorreo(), newPassword);
+        redisTemplate.opsForValue().set("login:" + usuario.getCorreo(), updatedCache);
+
         return new AuthResponse("contraseña actualizada exitosamente");
     }
 
@@ -170,8 +191,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
      */
     public AuthResponse updateUsuario(@Valid UpdateUsuarioRequest updateUsuarioRequest, CustomUserDetails customUserDetails) {
-
         Usuario usuarioActualizado = this.getUsuarioByCorreo(customUserDetails.getCorreo()); // usuario actual de la sesión
+        String correoAnterior = usuarioActualizado.getCorreo();
 
         // Le seteamos los nuevos datos al usuarioActualizado
         usuarioActualizado.setTipoIdentificacion(EIdentificacion.valueOf(updateUsuarioRequest.tipoIdentificacion()));
@@ -188,6 +209,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
         usuarioRepository.save(usuarioActualizado);
+
+        // 1. Guardamos la contraseña actual desde Redis (si existe)
+        AuthLoginRequest oldCache = redisTemplate.opsForValue().get("login:" + correoAnterior);
+        String currentPasswordCache = (oldCache != null) ? oldCache.password() : usuarioActualizado.getPassword(); // fallback a BD si no está en Redis
+
+        // 2. Borramos la key anterior
+        redisTemplate.delete("login:" + correoAnterior);
+
+        // 3. Creamos la nueva entrada con el nuevo correo y la misma contraseña
+        AuthLoginRequest updatedCache = new AuthLoginRequest(usuarioActualizado.getCorreo(), currentPasswordCache);
+        redisTemplate.opsForValue().set("login:" + usuarioActualizado.getCorreo(), updatedCache);
 
         return new AuthResponse("Sus datos se han actualizado exitosamente");
     }
@@ -218,6 +250,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
      */
     private void deleteUsuario(CustomUserDetails customUserDetails) {
         Usuario usuario = this.getUsuarioByCorreo(customUserDetails.getCorreo());
+        // Eliminar la entrada en Redis
+        redisTemplate.delete("login:" + usuario.getCorreo());
+
+        // Eliminar el usuario de la base de datos
         usuarioRepository.delete(usuario);
     }
 

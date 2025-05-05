@@ -11,6 +11,7 @@ import com.app.service.EmpresaService;
 import com.app.service.UserDetailServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ public class PerfilController {
     }
 
     @PostMapping("/actualizar-contraseña")
+    @ResponseStatus(value = HttpStatus.OK)
     public String updatePassword(@ModelAttribute @Valid UpdatePasswordRequest updatePasswordRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
         AuthResponse response = userDetailService.updatePassword(updatePasswordRequest, userDetails);
         String mensaje = response.mensaje();
@@ -48,6 +50,7 @@ public class PerfilController {
     }
 
     @PostMapping("/actualizar-datos")
+    @ResponseStatus(value = HttpStatus.OK)
     public String updateUsuario(@ModelAttribute @Valid UpdateUsuarioRequest updateUsuarioRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
         AuthResponse response = userDetailService.updateUsuario(updateUsuarioRequest, userDetails);
         String mensaje = response.mensaje();
@@ -55,6 +58,7 @@ public class PerfilController {
     }
 
     @PostMapping("/vincular-empresa")
+    @ResponseStatus(value = HttpStatus.OK)
     public String vincularEmpresa(@ModelAttribute @Valid EmpresaRequest empresaRequest, @AuthenticationPrincipal CustomUserDetails userDetails) throws IOException {
         AuthResponse response = empresaService.asignarEmpresa(empresaRequest, userDetails);
         String mensaje = response.mensaje();

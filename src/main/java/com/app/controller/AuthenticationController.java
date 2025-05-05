@@ -9,6 +9,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public String postLogin(@ModelAttribute @Valid AuthLoginRequest authLoginRequest, HttpServletResponse response, Model model) {
 
         try {
