@@ -12,22 +12,42 @@ services:
     depends_on:
       - mongodb
       - redis
+    environment:
+      - MONGODB_DATABASE=GestionBuques
+      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
+      - REDIS_HOST=localhost
+      - REDIS_URI=redis://localhost:6379/Usuarios
+      - REDIS_DATABASE=Usuarios
+      - REDIS_PORT=6379
     env_file:
       - .env
     networks:
       - buques-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
 
   mongodb:
     image: mongo:latest
     container_name: mongo-buques
     environment:
-      - MONGO_INITDB_DATABASE=GestionBuques
+      - MONGODB_DATABASE=GestionBuques
+      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
     ports:
       - "27017:27017"
     networks:
       - buques-network
     volumes:
       - mongodb_data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.runCommand('ping')" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
 
   redis:
     image: redis:latest
@@ -38,9 +58,16 @@ services:
       - buques-network
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
 
 networks:
   buques-network:
+    driver: bridge
 
 volumes:
   mongodb_data:
