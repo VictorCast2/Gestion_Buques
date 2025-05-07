@@ -1,9 +1,15 @@
 package com.app;
 
+import com.app.collections.Atraque.Atraque;
+import com.app.collections.Atraque.Enum.EResultado;
+import com.app.collections.Atraque.Enum.ETipoBuque;
+import com.app.collections.Atraque.pojo.Buque;
+import com.app.collections.Atraque.pojo.Dimension;
 import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
 import com.app.collections.Usuario.pojo.Empresa;
+import com.app.repository.AtraqueRepository;
 import com.app.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
@@ -22,7 +29,7 @@ public class BuquesApplication {
 	}
 
 	@Bean
-	public CommandLineRunner init(UsuarioRepository usuarioRepository) {
+	public CommandLineRunner init(UsuarioRepository usuarioRepository, AtraqueRepository atraqueRepository) {
 		return args -> {
 
 			/* Crear Usuarios */
@@ -88,6 +95,35 @@ public class BuquesApplication {
 					.credentialNoExpired(true)
 					.build();
 
+			/* Crear solicitud de atraque */
+			Dimension dimension = Dimension.builder()
+					.peso(50)
+					.largo(50)
+					.ancho(50)
+					.build();
+
+			Buque buque = Buque.builder()
+					.matricula("TE-AAH-32569")
+					.nombre("Buque Portacontenedores")
+					.tipoBuque(ETipoBuque.PC)
+					.dimensiones(dimension)
+					.build();
+
+			Atraque atraque = Atraque.builder()
+					.paisProcedencia("Argentina")
+					.ciudadProcedencia("Bello")
+					.puertoProcedencia("Puerto Argentina")
+					.paisDestino("Colombia")
+					.ciudadDestino("Cartagena")
+					.puertoDestino("Puerto Cartagena")
+					.fechaLlegada(LocalDate.now())
+					.fechaSalida(LocalDate.now().plusDays(30))
+					.estadoSolicitud(EResultado.APROBADO)
+					.buque(buque)
+					.agenteNaviero(userTheresa)
+					.build();
+
+
 			if (!usuarioRepository.existsByCorreo(userJose.getCorreo())) {
 				usuarioRepository.save(userJose);
 			}
@@ -98,6 +134,7 @@ public class BuquesApplication {
 
 			if (!usuarioRepository.existsByCorreo(userTheresa.getCorreo())) {
 				usuarioRepository.save(userTheresa);
+				atraqueRepository.save(atraque);
 			}
 
 		};

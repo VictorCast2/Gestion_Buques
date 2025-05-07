@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css');
 
@@ -23,7 +22,7 @@ body {
     background-color: #f5f5f5;
 }
 
-hr{
+hr {
     border: 0;
     height: 1px;
     background-color: #ccc;
@@ -31,17 +30,17 @@ hr{
 
 /**Encabezado */
 .header {
-    width: 90%; 
-    max-width: 680px; 
+    width: 90%;
+    max-width: 680px;
     height: 80px;
     position: fixed;
-    top: 15px; 
+    top: 15px;
     left: 76.5%;
-    transform: translateX(-50%); 
+    transform: translateX(-50%);
     background-color: var(--color-tercario);
-    border-radius: 50px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    padding: 0 20px; 
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
 }
 
 .header__nav {
@@ -51,30 +50,30 @@ hr{
     height: 100%;
 }
 
-.name__encabezado{
+.name__encabezado {
     position: absolute;
     top: 20px;
     left: 22%;
 }
 
-.encabezado__pages{
+.encabezado__pages {
     font: 400 15px "Noto Sans";
-    color:#222;
+    color: #222;
     text-decoration: none;
     transition: text-decoration .5s ease;
 }
 
-.encabezado__pages:hover{
+.encabezado__pages:hover {
     text-decoration: underline;
 }
 
-.encabezado__title{
+.encabezado__title {
     font: 600 35px "Poppins";
     margin-top: -1px;
-    color:#34495e;
+    color: #34495e;
 }
 
-.name__encabezado i{
+.name__encabezado i {
     font-size: 20px;
 }
 
@@ -369,12 +368,12 @@ hr{
     border-radius: 50%;
 }
 
-.card__title{
+.card__title {
     font: 600 1.125rem/1.33 "Poppins";
     margin: 0 0 0.5rem 0;
 }
 
-.card__text{
+.card__text {
     font: 400 0.875rem/ 1.43 "Montserrat";
     margin: 0 0 1.5rem 0;
     padding: 0 0.5rem;
@@ -476,4 +475,233 @@ hr{
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.main__content,
+.content__inicio {
+    margin-left: 168px;
+    padding-top: 70px;
+}
+
+
+
+.inicio__agentenaviero {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.agentenaviero__welcome {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    background-color: var(--color-tercario);
+    border-radius: 20px;
+    padding: 20px 20px;
+    margin: 0 5px 0 0;
+}
+
+.welcome__title {
+    font: 500 16px "Poppins";
+}
+
+.welcome__agentenaviero {
+    font: 600 28px "Poppins";
+    margin: 5px 0 10px 0;
+}
+
+.welcome__text {
+    font: 500 15px "Montserrat";
+}
+
+.agentenaviero__atraque {
+    grid-row: span 3 / span 3;
+    grid-column-start: 3;
+    background-color: var(--color-tercario);
+    border-radius: 20px;
+    padding: 20px 20px;
+    width: 100%;
+    max-width: 220px;
+}
+
+.agentenaviero__atraque i {
+    background-color: #f4fbff;
+    color: #3651d4;
+    font-size: 30px;
+    padding: 15px 15px;
+    border-radius: 50%;
+    position: relative;
+    top: 10px;
+    left: -5px;
+}
+
+.atraque__title {
+    font: 500 16px "Poppins";
+    margin: 40px 0 2px 0;
+    color: #888;
+}
+
+.atraque__cantidad {
+    font: 600 30px "Noto Sans";
+}
+
+.cantidad__porciento {
+    font: 600 25px "Noto Sans";
+    color: #4caf50;
+}
+
+.agentenavierto__proceso {
+    grid-row: span 3 / span 3;
+    grid-column-start: 4;
+    background-color: var(--color-tercario);
+    border-radius: 20px;
+    padding: 20px 20px;
+    width: 100%;
+    max-width: 220px;
+}
+
+.agentenavierto__proceso i {
+    background-color: #f4fbff;
+    color: #3651d4;
+    font-size: 30px;
+    padding: 15px 15px;
+    border-radius: 50%;
+    position: relative;
+    top: 10px;
+    left: -5px;
+}
+
+.proceso__title {
+    font: 500 16px "Poppins";
+    margin: 40px 0 2px 0;
+    color: #888;
+}
+
+.proceso__cantidad {
+    font: 600 30px "Noto Sans";
+}
+
+.cantidad__porciento {
+    font: 600 25px "Noto Sans";
+    color: #4caf50;
+}
+
+.agentenaviero__total {
+    grid-row: span 3 / span 3;
+    grid-column-start: 5;
+    background-color: var(--color-tercario);
+    border-radius: 20px;
+    padding: 20px 20px;
+    width: 100%;
+    max-width: 220px;
+}
+
+
+.agentenaviero__total i {
+    background-color: #f4fbff;
+    color: #3651d4;
+    font-size: 30px;
+    padding: 15px 15px;
+    border-radius: 50%;
+    position: relative;
+    top: 10px;
+    left: -5px;
+}
+
+.total__title {
+    font: 500 16px "Poppins";
+    margin: 40px 0 2px 0;
+    color: #888;
+}
+
+.total__cantidad {
+    font: 600 30px "Noto Sans";
+}
+
+.cantidad__porciento {
+    font: 600 25px "Noto Sans";
+    color: #4caf50;
+}
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+
+
+#chartdiv {
+    width: 100%;
+    max-width: 770px;
+    height: 450px;
+    background-color: var(--color-tercario);
+    border-radius: 20px;
+    margin: -120px 0 0 0;
+
+}
+
+#chartdiv2 {
+    width: 100%;
+    max-width: 400px;
+    height: 450px;
+    border-radius: 20px;
+    background-color: var(--color-tercario);
+    margin: -28em 0 0 49em;
+}
+
+
+.controls {
+    position: relative;
+}
+
+.controls__btn {
+    position: absolute;
+    top: -50px;
+    left: 50em;
+}
+
+.control-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font: 600 17px "Noto Sans";
+    background-color: transparent;
+    margin: 0 0 0 3px;
+    color: var(--color-quintario);
+}
+
+.button--changed {
+    margin: 0 0 0 90px;
+}
+
+.separator {
+    position: absolute;
+    top: -5px;
+    left: 179px;
+    width: 1px;
+    /* El grosor de la barra */
+    height: 40px;
+    /* La altura de la barra */
+    background-color: #ccc;
+    /* Color de la barra */
+    margin: 0 10px;
+    /* Espaciado a la izquierda y derecha */
+}
+
+.select__periodicidad {
+    position: absolute;
+    top: -27em;
+    left: 67.6em;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font: 600 16px "Noto Sans";
+    color: #888;
+}
+
+.select__periodicidad option {
+    font: 600 13px "Noto Sans";
 }
