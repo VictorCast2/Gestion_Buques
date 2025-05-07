@@ -67,4 +67,18 @@ public class MainController {
         return "Configuraciones";
     }
 
+    @RequestMapping("/configuraciones/eliminar-usuario")
+    public String EliminarUsuario(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
+        model.addAttribute("usuario", usuario);
+        return "Configuraciones";
+    }
+
+    @RequestMapping("/configuraciones/acticcion-autenticacion-2-pasos")
+    public String ActiccionAutenticacion2pasos(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
+        model.addAttribute("usuario", usuario);
+        return "Configuraciones";
+    }
+
 }
