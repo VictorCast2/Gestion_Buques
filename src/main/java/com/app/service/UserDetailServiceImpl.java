@@ -115,7 +115,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
         try {
             Authentication authentication = this.authentication(correo, password); // este método se llama abajo, es el que autentica al usuario
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            redisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
+
+            // Guardar contraseña encriptada en Redis
+            AuthLoginRequest existingCache = redisTemplate.opsForValue().get("login:" + correo);
+            if (existingCache == null) {
+                AuthLoginRequest encryptedCache = new AuthLoginRequest(correo, encoder.encode(password));
+                redisTemplate.opsForValue().set("login:" + correo, encryptedCache);
+            }
+
             return jwtUtils.crearToken(authentication);
         } catch (BadCredentialsException | UsernameNotFoundException exception) {
             throw exception;
@@ -135,8 +142,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         AuthLoginRequest cachedRequest = redisTemplate.opsForValue().get("login:" + correo);
 
         if (cachedRequest != null) {
-            // Si la contraseña coincide, autenticamos directamente sin consultar MongoDB
-            if (cachedRequest.password().equals(password)) {
+            // Comparamos la contraseña usando BCrypt (u otro encoder)
+            if (encoder.matches(password, cachedRequest.password())) {
                 return new UsernamePasswordAuthenticationToken(
                         correo, userDetails.getPassword(), userDetails.getAuthorities());
             }
@@ -152,8 +159,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
 
-        // Actualizar o insertar en Redis
-        AuthLoginRequest newCache = new AuthLoginRequest(correo, encoder.encode(password));
+        // Guardamos en Redis la contraseña codificada (para futuras autenticaciones más rápidas)
+        AuthLoginRequest newCache = new AuthLoginRequest(correo, userDetails.getPassword());
         redisTemplate.opsForValue().set("login:" + correo, newCache);
 
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
