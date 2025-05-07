@@ -269,12 +269,15 @@
         </div>
         <div class="div4">
             <div class="delete-container">
-                <h2 class="container__title">Eliminar Cuenta</h2>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="confirm-delete">
-                    <label class="wrapper__text" for="confirm-delete">Confirmo la desactivación de mi cuenta</label>
-                </div>
-                <button class="btn-delete" id="delete-btn" disabled>Desactivar cuenta</button>
+                <form th:action="@{/buques/configuraciones/eliminar-usuario}" method="post">
+                    <h2 class="container__title">Eliminar Cuenta</h2>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="confirm-delete" name="confirm">
+                        <input type="hidden" name="correo" th:value="${usuario.correo}">
+                        <label class="wrapper__text" for="confirm-delete">Confirmo que deseo eliminar mi cuenta permanentemente</label>
+                    </div>
+                    <button class="btn-delete" id="delete-btn" disabled>Desactivar cuenta</button>
+                </form>
             </div>
         </div>
     </div>
