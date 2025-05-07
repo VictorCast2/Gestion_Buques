@@ -1,18 +1,14 @@
-package com.app.config;
+package com.app.configuration;
 
-import com.app.config.filter.JwtTokenValidatorFilter;
+import com.app.configuration.filter.JwtTokenValidatorFilter;
 import com.app.repository.UsuarioRepository;
 import com.app.service.UserDetailServiceImpl;
 import com.app.utils.JwtUtils;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,9 +17,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+@Data
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -44,7 +41,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> {
                     // Configurar endpoints públicos estáticos (sin autenticación)
-                    auth.requestMatchers("/", "/css/**", "/js/**").permitAll();
+                    auth.requestMatchers("/", "/css/**", "/js/**", "/**").permitAll();
 
                     // Configurar endpoints públicos (sin autenticación)
                     // autenticación
@@ -68,7 +65,7 @@ public class SecurityConfig {
 
                     // Configurar endpoints NO ESPECIFICADOS
                     // auth.anyRequest().denyAll();
-                    auth.anyRequest().permitAll(); // cambiar luego
+                    auth.anyRequest().permitAll();
                 })
 
                 // Configuración de errores

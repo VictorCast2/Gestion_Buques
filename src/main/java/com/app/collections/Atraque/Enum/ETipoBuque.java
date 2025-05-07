@@ -1,7 +1,6 @@
 package com.app.collections.Atraque.Enum;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @RequiredArgsConstructor

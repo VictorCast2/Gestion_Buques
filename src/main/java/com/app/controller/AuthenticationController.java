@@ -8,14 +8,17 @@ import com.app.service.UserDetailServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Data
 @Controller
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -62,6 +65,17 @@ public class AuthenticationController {
         AuthResponse response = this.userDetailService.createUser(authCreateUserRequest);
         model.addAttribute("mensajeExitoso", response.mensaje());
         return "redirect:/auth/login";
+    }
+
+    @PostMapping("/auth/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("access_token", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return ResponseEntity.ok().build();
     }
 
 }
