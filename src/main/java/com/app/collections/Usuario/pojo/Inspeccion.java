@@ -3,7 +3,6 @@ package com.app.collections.Usuario.pojo;
 import com.app.collections.Atraque.Enum.EResultado;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Getter

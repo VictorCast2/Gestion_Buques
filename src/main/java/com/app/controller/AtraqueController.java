@@ -6,9 +6,9 @@ import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.AtraqueRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.security.CustomUserDetails;
-import com.app.service.AtraqueService;
-import com.app.service.UserDetailServiceImpl;
+import com.app.service.*;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Data
 @Controller
 @RequestMapping("/buques/solicitud-atraque")
 public class AtraqueController {
