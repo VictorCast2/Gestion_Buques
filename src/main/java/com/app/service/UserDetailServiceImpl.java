@@ -258,16 +258,20 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     /**
-     * Método para eliminar al usuario
-     * @param customUserDetails parámetro para extraer al usuario de la session
+     * Método para eliminar al usuario de la base de datos
+     * @param correo parámetro por el cual vamos a buscar al usuario, este campo es único
+     * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
      */
-    private void deleteUsuario(CustomUserDetails customUserDetails) {
-        Usuario usuario = this.getUsuarioByCorreo(customUserDetails.getCorreo());
-        // Eliminar la entrada en Redis
+    public AuthResponse deleteUsuario(String correo) {
+        // Obtenemos el usuario actual de la sesión
+        Usuario usuario = this.getUsuarioByCorreo(correo);
+
+        // Eliminar la key de Redis
         redisTemplate.delete("login:" + usuario.getCorreo());
 
         // Eliminar el usuario de la base de datos
         usuarioRepository.delete(usuario);
+        return new AuthResponse("Sus datos han sido eliminados exitosamente");
     }
 
 }
