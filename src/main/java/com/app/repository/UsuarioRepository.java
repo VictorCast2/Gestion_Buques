@@ -10,6 +10,5 @@ import java.util.Set;
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
     Optional<Usuario> findByCorreo(String correo);
     boolean existsByCorreo(String correo);
-
     Set<Usuario> findAllByEmpresa_Nit(String nit);
 }

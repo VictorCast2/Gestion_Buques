@@ -2,14 +2,12 @@ package com.app.controller;
 
 import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.collections.Usuario.Usuario;
-import com.app.dto.request.EmpresaRequest;
-import com.app.dto.request.UpdatePasswordRequest;
-import com.app.dto.request.UpdateUsuarioRequest;
+import com.app.dto.request.*;
 import com.app.dto.response.AuthResponse;
 import com.app.security.CustomUserDetails;
-import com.app.service.EmpresaService;
-import com.app.service.UserDetailServiceImpl;
+import com.app.service.*;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,10 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Data
 @Controller
 @RequestMapping("/buques/perfil")
 public class PerfilController {

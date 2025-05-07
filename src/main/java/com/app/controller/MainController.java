@@ -2,6 +2,7 @@ package com.app.controller;
 
 import com.app.collections.Usuario.Usuario;
 import com.app.service.UserDetailServiceImpl;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Data
 @Controller
 @RequestMapping("/buques")
 public class MainController {

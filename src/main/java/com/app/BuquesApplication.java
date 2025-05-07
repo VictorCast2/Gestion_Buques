@@ -123,7 +123,6 @@ public class BuquesApplication {
 					.agenteNaviero(userTheresa)
 					.build();
 
-
 			if (!usuarioRepository.existsByCorreo(userJose.getCorreo())) {
 				usuarioRepository.save(userJose);
 			}
