@@ -49,6 +49,6 @@ public class ProcesoController {
     public String registrarProcesos(@ModelAttribute @Valid FacturaProcesoRequest facturaProcesoRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
         AuthResponse response = facturaService.registrarProceso(facturaProcesoRequest, userDetails);
         String mensaje = response.mensaje();
-        return "redirect:/buques/procesos/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+        return "redirect:/buques/Procesos/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 }
