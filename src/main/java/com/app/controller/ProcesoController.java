@@ -21,7 +21,7 @@ import java.util.List;
 
 @Data
 @Controller
-@RequestMapping("/buques/procesos")
+@RequestMapping("/buques/Procesos")
 public class ProcesoController {
 
     @Autowired
