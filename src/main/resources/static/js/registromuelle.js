@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+
     /* Menú desplegable del perfil */
     const subMenu = document.getElementById("SubMenu");
     const profileImage = document.querySelector(".nav__img");
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 subMenu.classList.remove("open__menu");
             }
         });
+
     }
 
     //Sidebar
@@ -71,7 +73,55 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    //Pagination de la tabla
+    //Modo oscuro
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+
+        // Cambiar el ícono
+        if (document.body.classList.contains('dark-mode')) {
+            themeIcon.classList.remove('ri-moon-fill');
+            themeIcon.classList.add('ri-sun-line');
+        } else {
+            themeIcon.classList.remove('ri-sun-line');
+            themeIcon.classList.add('ri-moon-fill');
+        }
+    });
+
+
+    //Notificacion
+    const icon = document.getElementById('notificationIcon');
+    const box = document.getElementById('notificationBox');
+
+    icon.addEventListener('click', function (e) {
+        e.stopPropagation(); // Evita que el clic se propague
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Cerrar si se hace clic fuera
+    document.addEventListener('click', function () {
+        box.style.display = 'none';
+    });
+
+    // Evita cerrar al hacer clic dentro de la caja
+    box.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+
+
+    //Redireccion de las paginas
+    document.querySelectorAll('.sidebar__item').forEach(item => {
+        item.addEventListener('click', () => {
+            const url = item.getAttribute('data-url');
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+
+     //Pagination de la tabla
     const rows = Array.from(document.querySelectorAll("#notificationBody tr"));
     const paginationContainer = document.querySelector(".notification__pagination");
     const paginationButtons = paginationContainer.querySelectorAll(".pagination__btn");
@@ -140,16 +190,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Mostrar primera página al cargar
     showPage(1, filteredRows);
 
-    //Ventana Modal Procesos
+    
+    //Ventana Modal interna Registro Muelle
     const filas = document.querySelectorAll("#notificationBody tr");
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
-    const modalOperacion = document.getElementById("modalOperacion");
-    const modalCarga = document.getElementById("modalCarga");
-    const modalProducto = document.getElementById("modalProducto");
-    const modalPeso = document.getElementById("modalPeso");
-    const modalDescripcion = document.getElementById("modalDescripcion");
+    const modalNombreMuelle = document.getElementById("modalNombreMuelle");
+    const modalCapacidadBuques = document.getElementById("modalCapacidadBuques");
+    const modalCapacidadTotal = document.getElementById("modalCapacidadTotal");
+    const modalEstado = document.getElementById("modalEstado");
 
     filas.forEach(fila => {
         fila.addEventListener("click", (e) => {
@@ -163,12 +213,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
-            if (celdas.length >= 6) {
-                modalOperacion.textContent = celdas[0].textContent.trim();
-                modalCarga.textContent = celdas[1].textContent.trim();
-                modalProducto.textContent = celdas[2].textContent.trim();
-                modalPeso.textContent = celdas[3].textContent.trim();
-                modalDescripcion.textContent = celdas[4].textContent.trim();
+            if (celdas.length >= 3) {
+
+                modalNombreMuelle.textContent = celdas[0].textContent.trim();
+                modalCapacidadBuques.textContent = celdas[1].textContent.trim();
+                modalCapacidadTotal.textContent = celdas[2].textContent.trim();
+                modalEstado.textContent = celdas[3].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -211,153 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Función para validar los formularios
-    function validarFormulario(formulario) {
-        const fieldAdd = {
-            cantidad: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|10000)$/, errorMessage: "La cantidad minima es de 50 y el maximo de 1000." },
-            descripcion: { regex: /^.{1,}$/, errorMessage: "Por favor, ingrese una descripción." }
-        };
-
-        const advertencia = formulario.querySelector(".input__advertencia");
-        const selectTipoOperacion = formulario.querySelector("#tipoOperaciones");
-        const errortipoOperacion = formulario.querySelector(".error--tipoOperaciones");
-        const selecttipoCarga = formulario.querySelector("#tipoCarga");
-        const errortipoCarga = formulario.querySelector(".error--tipoCarga");
-        const selecttipoProducto = formulario.querySelector("#tipoProducto");
-        const errortipoProducto = formulario.querySelector(".error--tipoProducto");
-
-
-        // Validar en tiempo real los inputs
-        Object.keys(fieldAdd).forEach(fieldId => {
-            const input = formulario.querySelector(`#${fieldId}`);
-            if (!input) return;
-
-            const inputBox = input.closest(".input-box");
-            const checkIcon = inputBox.querySelector(".ri-check-line");
-            const errorIcon = inputBox.querySelector(".ri-close-line");
-            const errorMessage = inputBox.nextElementSibling;
-            const label = inputBox.querySelector("label");
-
-            input.addEventListener("input", () => {
-                advertencia.style.display = "none";
-
-                const value = input.value.trim();
-                if (value === "") {
-                    checkIcon.style.display = "none";
-                    errorIcon.style.display = "none";
-                    errorMessage.style.display = "none";
-                    input.style.border = "";
-                    label.style.color = "";
-                    inputBox.classList.remove("input-error");
-                } else if (fieldAdd[fieldId].regex.test(value)) {
-                    checkIcon.style.display = "inline-block";
-                    errorIcon.style.display = "none";
-                    errorMessage.style.display = "none";
-                    input.style.border = "2px solid #0034de";
-                    label.style.color = "";
-                    inputBox.classList.remove("input-error");
-                } else {
-                    checkIcon.style.display = "none";
-                    errorIcon.style.display = "inline-block";
-                    errorMessage.style.display = "block";
-                    input.style.border = "2px solid #fd1f1f";
-                    label.style.color = "red";
-                    inputBox.classList.add("input-error");
-                }
-            });
-        });
-
-        // Ocultar advertencias y errores de select al interactuar
-        [selectTipoOperacion, selecttipoCarga, selecttipoProducto].forEach(select => {
-            select.addEventListener("change", () => {
-                advertencia.style.display = "none";
-
-                if (select.selectedIndex > 0) {
-                    select.style.border = "2px solid #0034de";
-                } else {
-                    select.style.border = "";
-                }
-
-                if (select === selectTipoOperacion && select.selectedIndex > 0) {
-                    errortipoOperacion.style.display = "none";
-                }
-                if (select === selecttipoCarga && select.selectedIndex > 0) {
-                    errortipoCarga.style.display = "none";
-                }
-
-                if (select === selecttipoProducto && select.selectedIndex > 0) {
-                    errortipoProducto.style.display = "none";
-                }
-
-            });
-        });
-
-        // Validación al enviar el formulario
-        formulario.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            let formularioValido = true;
-            let todosInputsValidos = true;
-
-            // Validar todos los inputs
-            Object.keys(fieldAdd).forEach(fieldId => {
-                const input = formulario.querySelector(`#${fieldId}`);
-                const regex = fieldAdd[fieldId].regex;
-
-                if (!regex.test(input.value.trim())) {
-                    formularioValido = false;
-                    todosInputsValidos = false;
-                }
-            });
-
-            const tipoOperacionSeleccionada = selectTipoOperacion.selectedIndex > 0;
-            const tipoCargaSeleccionada = selecttipoCarga.selectedIndex > 0;
-            const tipoProductoSeleccionada = selecttipoProducto.selectedIndex > 0;
-
-
-            // Caso: Inputs válidos, pero selects incompletos
-            if (todosInputsValidos && (!tipoOperacionSeleccionada || !tipoCargaSeleccionada || !tipoProductoSeleccionada)) {
-                if (!tipoOperacionSeleccionada) {
-                    errortipoOperacion.style.display = "block";
-                    selectTipoOperacion.style.border = "2px solid #fd1f1f";
-                }
-                if (!tipoCargaSeleccionada) {
-                    errortipoCarga.style.display = "block";
-                    selecttipoCarga.style.border = "2px solid #fd1f1f";
-                }
-                if (!tipoProductoSeleccionada) {
-                    errortipoProducto.style.display = "block";
-                    selecttipoProducto.style.border = "2px solid #fd1f1f";
-                }
-
-
-                advertencia.style.display = "block";
-                return;
-            }
-
-            // Caso: Inputs o selects inválidos
-            if (!formularioValido) {
-                advertencia.style.display = "block";
-                return;
-            }
-
-            // Todo correcto: ocultar advertencias y errores
-            advertencia.style.display = "none";
-            errortipoOperacion.style.display = "none";
-            errortipoCarga.style.display = "none";
-            errortipoProducto.style.display = "none";
-
-            // Enviar formulario
-            formulario.submit();
-        });
-    }
-
-    // Llamar a la función de validación para ambos formularios
-    document.querySelectorAll('.add__formulario').forEach(form => {
-        validarFormulario(form);
-    });
-
-    //Ventana Modal de editar y eliminar
+     //Ventana Modal de editar y eliminar
     const botonesEditar = document.querySelectorAll('.icon--edit');
     const botonesEliminar = document.querySelectorAll('.icon--delete');
 
@@ -439,6 +343,155 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    //Control de los estado
+    const estados = document.querySelectorAll('.estado');
+
+    estados.forEach(td => {
+        const texto = td.textContent.trim().toUpperCase();
+
+        switch (texto) {
+            case 'DISPONIBLE':
+                td.classList.add('disponible');
+                break;
+            case 'EN USO':
+                td.classList.add('en-uso');
+                break;
+            case 'EN MANTENIMIENTO':
+                td.classList.add('mantenimiento');
+                break;
+            case 'FUERA DE SERVICIO':
+                td.classList.add('fuera-servicio');
+                break;
+            default:
+                // O puedes agregar una clase genérica si no coincide
+                td.style.backgroundColor = '#e0e0e0';
+                td.style.color = '#333';
+        }
+    });
+
+    // Función para validar los formularios
+    function validarFormulario(formulario) {
+        const fieldAdd = {
+            nombreMuelle:{regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s-]+$/, errorMessage:"  El nombre del muelle puede contener letras, números, espacios y caracteres como guiones o tildes."},
+            capacidadBuques: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|10000)$/, errorMessage: "La cantidad minima es de 50 y el maximo de 1000." },
+            capacidadTotal: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|10000)$/, errorMessage: "La cantidad minima es de 50 y el maximo de 1000." }
+        };
+
+        const advertencia = formulario.querySelector(".input__advertencia");
+        const selectEstado = formulario.querySelector("#selectEstado");
+        const errorEstado = formulario.querySelector(".error--Estado");
+
+
+
+        // Validar en tiempo real los inputs
+        Object.keys(fieldAdd).forEach(fieldId => {
+            const input = formulario.querySelector(`#${fieldId}`);
+            if (!input) return;
+
+            const inputBox = input.closest(".input-box");
+            const checkIcon = inputBox.querySelector(".ri-check-line");
+            const errorIcon = inputBox.querySelector(".ri-close-line");
+            const errorMessage = inputBox.nextElementSibling;
+            const label = inputBox.querySelector("label");
+
+            input.addEventListener("input", () => {
+                advertencia.style.display = "none";
+
+                const value = input.value.trim();
+                if (value === "") {
+                    checkIcon.style.display = "none";
+                    errorIcon.style.display = "none";
+                    errorMessage.style.display = "none";
+                    input.style.border = "";
+                    label.style.color = "";
+                    inputBox.classList.remove("input-error");
+                } else if (fieldAdd[fieldId].regex.test(value)) {
+                    checkIcon.style.display = "inline-block";
+                    errorIcon.style.display = "none";
+                    errorMessage.style.display = "none";
+                    input.style.border = "2px solid #0034de";
+                    label.style.color = "";
+                    inputBox.classList.remove("input-error");
+                } else {
+                    checkIcon.style.display = "none";
+                    errorIcon.style.display = "inline-block";
+                    errorMessage.style.display = "block";
+                    input.style.border = "2px solid #fd1f1f";
+                    label.style.color = "red";
+                    inputBox.classList.add("input-error");
+                }
+            });
+        });
+
+        // Ocultar advertencias y errores de select al interactuar
+        [selectEstado].forEach(select => {
+            select.addEventListener("change", () => {
+                advertencia.style.display = "none";
+
+                if (select.selectedIndex > 0) {
+                    select.style.border = "2px solid #0034de";
+                } else {
+                    select.style.border = "";
+                }
+
+                if (select === selectEstado && select.selectedIndex > 0) {
+                    errorEstado.style.display = "none";
+                }
+
+            });
+        });
+
+        // Validación al enviar el formulario
+        formulario.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let formularioValido = true;
+            let todosInputsValidos = true;
+
+            // Validar todos los inputs
+            Object.keys(fieldAdd).forEach(fieldId => {
+                const input = formulario.querySelector(`#${fieldId}`);
+                const regex = fieldAdd[fieldId].regex;
+
+                if (!regex.test(input.value.trim())) {
+                    formularioValido = false;
+                    todosInputsValidos = false;
+                }
+            });
+
+            const estadoSeleccionada = selectEstado.selectedIndex > 0;
+
+            // Caso: Inputs válidos, pero selects incompletos
+            if (todosInputsValidos && !estadoSeleccionada) {
+                if (!estadoSeleccionada) {
+                    errorEstado.style.display = "block";
+                    selectEstado.style.border = "2px solid #fd1f1f";
+                }
+
+                advertencia.style.display = "block";
+                return;
+            }
+
+            // Caso: Inputs o selects inválidos
+            if (!formularioValido) {
+                advertencia.style.display = "block";
+                return;
+            }
+
+            // Todo correcto: ocultar advertencias y errores
+            advertencia.style.display = "none";
+            errorEstado.style.display = "none";
+
+            // Enviar formulario
+            formulario.submit();
+        });
+    }
+    // Llamar a la función de validación para ambos formularios
+    document.querySelectorAll('.add__formulario').forEach(form => {
+        validarFormulario(form);
+    });
+
+
     //Apertura de la exportacion
     const iconoDescarga = document.querySelector('.content__descarga i');
     const exportarDiv = document.querySelector('.exportar');
@@ -447,7 +500,8 @@ document.addEventListener("DOMContentLoaded", function () {
         exportarDiv.classList.toggle('active');
     });
 
-    // Función para exportar a PDF
+
+     // Función para exportar a PDF
     function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -457,13 +511,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 5)  // Excluir el "Action" (índice 5)
+            .filter((header, index) => index !== 4)  // Excluir el "Action" (índice 4)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             return Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 5)  // Excluir la columna "Action" (índice 5)
+                .filter((cell, index) => index !== 4)  // Excluir la columna "Action" (índice 4)
                 .map(cell => cell.innerText);
         });
 
@@ -507,13 +561,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 5)  // Excluir el "Action" (índice 5)
+            .filter((header, index) => index !== 4)  // Excluir el "Action" (índice 4)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 5)  // Excluir la columna "Action" (índice 5)
+                .filter((cell, index) => index !== 4)  // Excluir la columna "Action" (índice 4)
                 .map(cell => cell.innerText);
             let rowObj = {};
 
@@ -549,13 +603,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 5) // Excluir columna "Action"
+            .filter((header, index) => index !== 4) // Excluir columna "Action"
             .map(header => `"${header.innerText.trim()}"`); // Poner en comillas por seguridad
 
         // Extraer las filas de la tabla, excluyendo la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 5) // Excluir columna "Action"
+                .filter((cell, index) => index !== 4) // Excluir columna "Action"
                 .map(cell => `"${cell.innerText.trim().replace(/"/g, '""')}"`); // Escapar comillas
             return rowData.join(',');
         });
@@ -585,13 +639,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 5)  // Excluir el "Action" (índice 5)
+            .filter((header, index) => index !== 4)  // Excluir el "Action" (índice 4)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 5)  // Excluir la columna "Action" (índice 5)
+                .filter((cell, index) => index !== 4)  // Excluir la columna "Action" (índice 4)
                 .map(cell => cell.innerText);
             return rowData;
         });
@@ -607,49 +661,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Escuchar el clic para exportar a Excel
     document.querySelector('.exportar-option:nth-child(4)').addEventListener('click', exportToExcel);
-
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
-
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-
-        // Cambiar el ícono
-        if (document.body.classList.contains('dark-mode')) {
-            themeIcon.classList.remove('ri-moon-fill');
-            themeIcon.classList.add('ri-sun-line');
-        } else {
-            themeIcon.classList.remove('ri-sun-line');
-            themeIcon.classList.add('ri-moon-fill');
-        }
-    })
-
-    const icon = document.getElementById('notificationIcon');
-    const box = document.getElementById('notificationBox');
-
-    icon.addEventListener('click', function (e) {
-        e.stopPropagation(); // Evita que el clic se propague
-        box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Cerrar si se hace clic fuera
-    document.addEventListener('click', function () {
-        box.style.display = 'none';
-    });
-
-    // Evita cerrar al hacer clic dentro de la caja
-    box.addEventListener('click', function (e) {
-        e.stopPropagation();
-    });
-
-    document.querySelectorAll('.sidebar__item').forEach(item => {
-        item.addEventListener('click', () => {
-            const url = item.getAttribute('data-url');
-            if (url) {
-                window.location.href = url;
-            }
-        });
-    });
-
-    
 });
