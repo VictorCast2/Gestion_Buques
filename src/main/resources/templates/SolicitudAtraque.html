@@ -19,18 +19,17 @@
     <aside class="sidebar">
         <hr>
         <ul class="sidebar__menu">
-            <li class="sidebar__item">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/panel-control}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
-            <li class="sidebar__item active">
+            <li class="sidebar__item active" data-url="">
                 <i class="ri-ship-fill"></i>
                 <span class="sidebar__text">Solicitud Atraque</span>
             </li>
             <div class="sidebar__indicator"></div>
-            <li class="sidebar__item">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/Procesos/}">
                 <i class="ri-flow-chart"></i>
-                <a th:href="@{/buques/procesos/}" style="text-decoration: none;">
                     <span class="sidebar__text">Procesos</span>
                 </a>
             </li>
@@ -84,11 +83,39 @@
             </div>
 
             <div class="theme-toggle" title="Cambiar tema">
-                <i class="ri-moon-fill" id="moon-icon"></i>
+                <i class="ri-moon-fill" id="theme-icon"></i>
             </div>
 
-            <div class="icono__notification">
+            <div class="icono__notification" id="notificationIcon">
                 <i class="ri-notification-2-fill"></i>
+                <div class="notification-box" id="notificationBox">
+                    <ul class="notification-list">
+                        <li class="notification-item">
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <div class="notification-content">
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
+                                <span class="content__time"><i class="ri-time-fill"></i></span>
+                                <span class="time"> hace 5 min</span>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <div class="notification-content">
+                                <p class="content__text"> mañana a las 9:00 AM.</p>
+                                <span class="content__time"><i class="ri-time-fill"></i></span>
+                                <span class="time"> hace 30 min</span>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <div class="notification-content">
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
+                                <span class="content__time"><i class="ri-time-fill"></i></span>
+                                <span class="time"> hace 1 hora</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <div class="icono__notification">
@@ -297,7 +324,7 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Añadir Nueva Solicitud Atraque</h2>
             <div class="content__relleno"></div>
-            <form action="/buques/solicitud-atraque/crear-solicitud" method="post" class="add__formulario">
+            <form action="/buques/SolicitudAtraque/crear-solicitud" method="post" class="add__formulario">
 
                 <fieldset class="buque__field">
                     <legend class="field__legend">Favor diligenciar el siguiente formulario</legend>
@@ -461,8 +488,8 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="fechaLlegada" id="fechaEntrada"
-                                   title="Formato requerido: dd/mm/yyyy">
+                            <input type="date" autocomplete="off" placeholder="" name="fechaLlegada" id="fechaEntrada"
+                                   title="Formato requerido: dd-mm-yyyy">
                             <label class="label label--changed1" for="fechaEntrada">Fecha Entrada</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -475,8 +502,8 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="fechaSalida" id="fechaSalida"
-                                title="Formato requerido: dd/mm/yyyy">
+                            <input type="date" autocomplete="off" placeholder="" name="fechaSalida" id="fechaSalida"
+                                title="Formato requerido: dd-mm-yyyy">
                             <label class="label label--changed1" for="fechaSalida">Fecha Salida</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -673,7 +700,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="fechaLlegada" id="fechaEntrada2"
+                            <input type="date" autocomplete="off" placeholder="" name="fechaLlegada" id="fechaEntrada2"
                                    title="Formato requerido: dd/mm/yyyy">
                             <label class="label label--changed1" for="fechaEntrada2">Fecha Entrada</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -687,7 +714,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box box--changed">
-                            <input type="text" autocomplete="off" placeholder="" name="fechaSalida" id="fechaSalida2"
+                            <input type="date" autocomplete="off" placeholder="" name="fechaSalida" id="fechaSalida2"
                                 title="Formato requerido: dd/mm/yyyy">
                             <label class="label label--changed1" for="fechaSalida2">Fecha Salida</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>

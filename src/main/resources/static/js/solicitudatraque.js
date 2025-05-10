@@ -19,18 +19,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //Sidebar
+    //Sidebar
     const items = document.querySelectorAll('.sidebar__item');
     const indicator = document.querySelector('.sidebar__indicator');
 
     function moveIndicatorTo(index) {
-        const itemHeight = items[0].offsetHeight + 8; // altura del ítem más el margen
-        const offset = index * itemHeight;
-        indicator.style.transform = `translateY(${offset}px)`;
+        const item = items[index];
+        const offsetTop = item.offsetTop;
+        indicator.style.transform = `translateY(${offsetTop}px)`;
     }
 
-    // Inicializamos la posición del indicador
+
+    // Mover el indicador al cargar la página
     moveIndicatorTo(1);
 
+    // Manejo de clics para mover el indicador dinámicamente
     items.forEach((item, index) => {
         item.addEventListener('click', () => {
             items.forEach(el => el.classList.remove('active'));
@@ -221,9 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
         altura: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "La altura minima es de 50 y el maximo de 5000." },
         peso: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "El peso minimo es de 50 y el maximo de 1000." },
         puertoProcedencia: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        puertoDestino: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        fechaSalida: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 03/05/2025)" },
-        fechaEntrada: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 04/05/2025)" },
+        puertoDestino: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." }
 
     };
 
@@ -468,9 +469,7 @@ document.addEventListener("DOMContentLoaded", function () {
         altura2: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "La altura minima es de 50 y el maximo de 5000." },
         peso2: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "El peso minimo es de 50 y el maximo de 1000." },
         portOrigin: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        portDestination: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        fechaSalida2: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 03/05/2025)" },
-        fechaEntrada2: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 04/05/2025)" }
+        portDestination: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." }
 
     };
 
@@ -726,6 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const formEditar = document.getElementById('formEditar')
     const formEliminar = document.getElementById('formEliminar');
 
+
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
         modal.classList.remove('confirmacion--hidden');
@@ -765,10 +765,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Evento cuando hacen click en "Sí" en editar
-    botonSiEditar.addEventListener('click', async () => {
+        botonSiEditar.addEventListener('click', async () => {
         cerrarModal(modalEditar); // Cerramos modal confirmación
         // Establecer la acción del formulario con el ID seleccionado
-        formEditar.setAttribute('action', `/buques/solicitud-atraque/actualizar-solicitud/${idEditarSeleccionado}`);
+        formEditar.setAttribute('action', `/buques/SolicitudAtraque/actualizar-solicitud/${idEditarSeleccionado}`);
 
         try {
             const response = await fetch(`/api/solicitud-atraque/${idEditarSeleccionado}`);
@@ -805,11 +805,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
+
+
     // Evento cuando hace click en "Si" en eliminar
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', () => {
             const id = boton.getAttribute('data-id');
-            formEliminar.setAttribute('action', `/buques/solicitud-atraque/eliminar-solicitud/${id}`);
+            formEliminar.setAttribute('action', `/buques/SolicitudAtraque/eliminar-solicitud/${id}`);
             abrirModal(modalEliminar);
         });
     });
@@ -1011,5 +1014,51 @@ document.addEventListener("DOMContentLoaded", function () {
     // Escuchar el clic para exportar a Excel
     document.querySelector('.exportar-option:nth-child(4)').addEventListener('click', exportToExcel);
 
+
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+
+        // Cambiar el ícono
+        if (document.body.classList.contains('dark-mode')) {
+            themeIcon.classList.remove('ri-moon-fill');
+            themeIcon.classList.add('ri-sun-line');
+        } else {
+            themeIcon.classList.remove('ri-sun-line');
+            themeIcon.classList.add('ri-moon-fill');
+        }
+    })
+
+
+    //Abrir notificacion del header
+    const icon = document.getElementById('notificationIcon');
+    const box = document.getElementById('notificationBox');
+
+    icon.addEventListener('click', function (e) {
+        e.stopPropagation(); // Evita que el clic se propague
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Cerrar si se hace clic fuera
+    document.addEventListener('click', function () {
+        box.style.display = 'none';
+    });
+
+    // Evita cerrar al hacer clic dentro de la caja
+    box.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+
+    //Navegacion del sidebar 
+    document.querySelectorAll('.sidebar__item').forEach(item => {
+        item.addEventListener('click', () => {
+            const url = item.getAttribute('data-url');
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
 });
 

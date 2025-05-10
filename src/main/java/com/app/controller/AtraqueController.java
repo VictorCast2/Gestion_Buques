@@ -21,7 +21,7 @@ import java.util.List;
 
 @Data
 @Controller
-@RequestMapping("/buques/solicitud-atraque")
+@RequestMapping("/buques/SolicitudAtraque")
 public class AtraqueController {
 
     @Autowired
@@ -48,20 +48,20 @@ public class AtraqueController {
     public String crearSolicitudAtraque(@ModelAttribute @Valid AtraqueRequest atraqueRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
         AuthResponse response = atraqueService.crearSolicitudAtraque(atraqueRequest, userDetails);
         String mensaje = response.mensaje();
-        return "redirect:/buques/solicitud-atraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+        return "redirect:/buques/SolicitudAtraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 
     @PostMapping("/actualizar-solicitud/{id}")
     public String actualizarSolicitud(@ModelAttribute @Valid AtraqueRequest atraqueRequest, @PathVariable String id) {
         AuthResponse response = atraqueService.updateSolicitudAtraque(atraqueRequest, id);
         String mensaje = response.mensaje();
-        return "redirect:/buques/solicitud-atraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+        return "redirect:/buques/SolicitudAtraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 
     @PostMapping("eliminar-solicitud/{id}")
     public String eliminarSolicitudAtraque(@PathVariable String id) {
         AuthResponse response = atraqueService.deleteSolicitudAtraque(id);
         String mensaje = response.mensaje();
-        return "redirect:/buques/solicitud-atraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+        return "redirect:/buques/SolicitudAtraque/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 }

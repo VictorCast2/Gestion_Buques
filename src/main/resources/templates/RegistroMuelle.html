@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registro Muelle</title>
+    <link rel="stylesheet" th:href="@{RegistroMuelle.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <aside class="sidebar">
+        <hr>
+        <ul class="sidebar__menu"> 
+            <li class="sidebar__item" data-url="">
+                <i class="ri-home-2-fill"></i>
+                <span class="sidebar__text">Inicio</span>
+            </li>
+            
+            <li class="sidebar__item" data-url="">
+                <i class="ri-dashboard-horizontal-fill"></i>
+                <span class="sidebar__text">Dashboard</span>
+            </li>
+
+            <li class="sidebar__item active" data-url="">
+                <i class="ri-ship-2-fill"></i>
+                <span class="sidebar__text">Registro Muelle</span>
+            </li>
+
+            <div class="sidebar__indicator"></div>
+        
+            <li class="sidebar__item" data-url="">
+                <i class="ri-calendar-todo-fill"></i>
+                <span class="sidebar__text">Horarios</span>
+            </li>
+
+            <li class="sidebar__item" data-url="">
+                <i class="ri-file-list-2-fill"></i>
+                <span class="sidebar__text">Gestion Solicitudes</span>
+            </li>
+
+            <li class="sidebar__item" data-url="">
+                <i class="ri-user-add-fill"></i>
+                <span class="sidebar__text">Registro Usuario</span>
+            </li>
+        </ul>
+
+        <div class="card">
+            <div class="circle">
+                <i class="ri-moon-fill"></i>
+            </div>
+            <h2 class="card__title">Upgrade to PRO</h2>
+            <p class="card__text">Improve your development process and start doing more with Horizon UI PRO!</p>
+            <button class="card__btn" type="button">Upgrade to PRO</button>
+        </div>
+    </aside>
+
+    <header class="header">
+        <nav class="header__nav">
+
+            <div class="nav__search">
+                <i class="ri-search-line search__icon"></i>
+                <input type="text" placeholder="Buscar..." class="search__input" />
+            </div>
+
+            <div class="language-wrapper">
+                <div class="language-selector" data-flag="https://flagcdn.com/w40/es.png"
+                    onclick="toggleLanguageMenu()">
+                    <img id="currentFlag" src="https://flagcdn.com/w40/es.png" alt="Español" />
+                </div>
+
+                <div class="language-menu" id="languageMenu">
+                    <div class="language-option" data-lang="es" data-flag="https://flagcdn.com/w40/es.png">
+                        <img src="https://flagcdn.com/w40/es.png" alt="Español" />
+                        <span>Español</span>
+                    </div>
+                    <div class="language-option" data-lang="zh" data-flag="https://flagcdn.com/w40/cn.png">
+                        <img src="https://flagcdn.com/w40/cn.png" alt="Chino" />
+                        <span>Chino</span>
+                    </div>
+                    <div class="language-option" data-lang="en" data-flag="https://flagcdn.com/w40/us.png">
+                        <img src="https://flagcdn.com/w40/us.png" alt="Inglés" />
+                        <span>Inglés</span>
+                    </div>
+                    <div class="language-option" data-lang="pt" data-flag="https://flagcdn.com/w40/pt.png">
+                        <img src="https://flagcdn.com/w40/pt.png" alt="Portugués" />
+                        <span>Portugués</span>
+                    </div>
+                    <div class="language-option" data-lang="fr" data-flag="https://flagcdn.com/w40/fr.png">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="Francés" />
+                        <span>Francés</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-toggle" title="Cambiar tema">
+                <i class="ri-moon-fill" id="theme-icon"></i>
+            </div>
+
+
+            <div class="icono__notification" id="notificationIcon">
+                <i class="ri-notification-2-fill"></i>
+                <div class="notification-box" id="notificationBox">
+                    <ul class="notification-list">
+                        <li class="notification-item">
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <div class="notification-content">
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
+                                <span class="content__time"><i class="ri-time-fill"></i></span>
+                                <span class="time"> hace 5 min</span>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <div class="notification-content">
+                                <p class="content__text"> mañana a las 9:00 AM.</p>
+                                <span class="content__time"><i class="ri-time-fill"></i></span>
+                                <span class="time"> hace 30 min</span>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <div class="notification-content">
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
+                                <span class="content__time"><i class="ri-time-fill"></i></span>
+                                <span class="time"> hace 1 hora</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="icono__notification">
+                <i class="ri-settings-4-fill"></i>
+            </div>
+
+            <img class="nav__img" th:src="@{assets/image/fotousuario.webp}" onclick="toggleMenu()">
+
+            <div class="nav__menu" id="SubMenu">
+                <div class="menu__sub">
+                    <div class="sub__info">
+                        <img class="info__img" th:src="@{assets/image/fotousuario.webp}">
+                        <h2 class="info__title">Keyner Reyes</h2>
+                    </div>
+                    <hr>
+
+                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                        <i class="ri-user-fill"></i>
+                        <p class="link__text">Perfil</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                        <i class="ri-settings-5-fill"></i>
+                        <p class="link__text">Configuracion</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                        <i class="ri-notification-2-fill"></i>
+                        <p class="link__text">Notificaciones</p>
+                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <a th:href="@{/buques/}" class="sub__link">
+                        <i class="ri-logout-box-r-fill"></i>
+                        <p class="link__text">Cerrar Seccion</p>
+                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="name__encabezado">
+        <i class="ri-arrow-left-line"></i>
+        <a class="encabezado__pages" th:href="@{/buques/}">Regresar /</a>
+        <a class="encabezado__pages" href="">Pages /</a>
+        <a class="encabezado__pages" href="">Registro Muelle</a>
+        <h1 class="encabezado__title">Registro Muelle</h1>
+    </div>
+    
+    <main class="main__content">
+        <section class="table__container">
+
+            <div class="container__button">
+                <button class="button__add">
+                    <i class="ri-add-fill"></i>
+                    <p class="add__text">Crear Nuevo Registro</p>
+                </button>
+            </div>
+
+
+            <div class="container__table">
+                <h2 class="notification__title">Registro Muelle</h2>
+
+                <div class="notification__search-container">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="notificationSearch" placeholder="Buscar..." class="notification__search">
+                </div>
+
+                <div class="content__descarga">
+                    <i class="ri-more-fill"></i>
+                    <div class="exportar">
+                        <div class="exportar-header">
+                            Exportar A <i class="ri-arrow-right-long-line"></i>
+                        </div>
+                        <div class="exportar__item">
+                            <div class="exportar-option">
+                                <span>PDF</span>
+                                <img th:src="@{assets/image/pdf.png}" alt="Exportar PDF">
+                            </div>
+                            <div class="exportar-option">
+                                <span>JSON</span>
+                                <img th:src="{assets/image/json.png}" alt="Exportar JSON">
+                            </div>
+                            <div class="exportar-option">
+                                <span>CSV</span>
+                                <img th:src="@{assets/image/csv.png}" alt="Exportar CSV">
+                            </div>
+                            <div class="exportar-option">
+                                <span>EXCEL</span>
+                                <img th:src="@{assets/image/excel.png}" alt="Exportar Excel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification__table-container">
+                    <table class="notification__table">
+                        <thead>
+                            <tr>
+                                <th>Nombre Muelle</th>
+                                <th>Capacidad Buques</th>
+                                <th>Capacidad Total</th>
+                                <th>Estado</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notificationBody">
+                            <tr>
+                                <td>Muelle Manga</td>
+                                <td>10</td>
+                                <td>200 kg</td>
+                                <td>
+                                    <button class="estado">DISPONIBLE</button>
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Muelle Manga</td>
+                                <td>10</td>
+                                <td>200 kg</td>
+                                <td>
+                                    <button class="estado">En USO</button>
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Muelle Manga</td>
+                                <td>10</td>
+                                <td>200 kg</td>
+                                <td>
+                                    <button class="estado">EN MANTENIMIENTO</button>
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Muelle Manga</td>
+                                <td>10</td>
+                                <td>200 kg</td>
+                                <td>
+                                    <button class="estado">FUERA DE SERVICIO</button>
+                                </td>
+                                <td>
+                                    <button class="content__icon icon--edit">
+                                        <i class="ri-pencil-line"></i>
+                                    </button>
+                                    <button class="content__icon icon--delete">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Más filas si es necesario -->
+                        </tbody>
+                    </table>
+
+                    <div class="notification__pagination">
+                        <p class="pagination__text">Mostrando 1-4 De 16</p>
+                        <button class="pagination__flec"><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="pagination__btn active">1</button>
+                        <button class="pagination__btn">2</button>
+                        <button class="pagination__btn">3</button>
+                        <button class="pagination__flec"><i class="ri-arrow-right-s-line"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Ventana Modal interna de la tabla-->
+    <div id="modalNotificacion" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2 class="modal-title">📝 Detalles Del Registro Muelle</h2>
+            <div class="modal-info">
+                <p class="modal__text"><strong class="text__str">Nombre Muelle:</strong> <span
+                        id="modalNombreMuelle"></span></p>
+                <p class="modal__text"><strong class="text__str">Capacidad Buques:</strong> <span id="modalCapacidadBuques"></span></p>
+                <p class="modal__text"><strong class="text__str">Capacidad total:</strong> <span
+                        id="modalCapacidadTotal"></span></p>
+                <p class="modal__text"><strong class="text__str">Estado:</strong> <span id="modalEstado"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA CONFIRMACIÓN editar -->
+    <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
+        <div class="modal__contenido">
+            <p class="contenido__text">¿Estas Seguro que quieres editar este registro?</p>
+            <button class="boton boton-si">Sí</button>
+            <button class="boton boton-no">No</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA CONFIRMACIÓN eliminar -->
+    <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
+        <div class="modal__contenido">
+            <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
+            <button class="boton2 boton-si2">Sí</button>
+            <button class="boton2 boton-no2">No</button>
+        </div>
+    </div>
+
+    <!--Modal añadir nuevo registro-->
+    <div class="modal__newadd newadd--hidden" id="modalnewadd">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h2 class="content__titulo">Añadir Nuevo Registro</h2>
+            <div class="content__relleno"></div>
+            <form class="add__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="text" autocomplete="off" placeholder="" name="NombreMuelle"
+                            id="nombreMuelle">
+                        <label class="label" for="nombreMuelle">Nombre Muelle</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--muelle">
+                        El nombre del muelle puede contener letras, números, espacios y caracteres como guiones o tildes.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="CapacidadBuques"
+                            id="capacidadBuques">
+                        <label class="label" for="capacidadBuques">Capacidad Buques</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        La cantidad minima es de 50 y el maximo de 1000.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Capacidad Total"
+                            id="capacidadTotal">
+                        <label class="label" for="capacidadTotal">Capacidad Total (T)</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        La cantidad minima es de 50 y el maximo de 1000.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="selectEstado">
+                            <option disabled selected>Estado</option>
+                            <option value="DI">DISPONIBLE</option>
+                            <option value="EU">EN USO</option>
+                            <option value="EM">EN MANTENIMIENTO</option>
+                            <option value="FS"> FUERA DE SERVICIO</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--Estado">
+                        Por favor, seleccione un estado
+                    </p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Nuevo Registro</button>
+            </form>
+        </div>
+    </div>
+
+    <!--Modal añadir nuevo editar-->
+    <div class="modal__newadd newadd--hidden" id="modalnewadd2">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h2 class="content__titulo">Editar Registro Muelle</h2>
+            <div class="content__relleno"></div>
+            <form class="add__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="text" autocomplete="off" placeholder="" name="NombreMuelle"
+                            id="nombreMuelle">
+                        <label class="label" for="nombreMuelle">Nombre Muelle</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--muelle">
+                        El nombre del muelle puede contener letras, números, espacios y caracteres como guiones o tildes.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="CapacidadBuques"
+                            id="capacidadBuques">
+                        <label class="label" for="capacidadBuques">Capacidad Buques</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        La cantidad minima es de 50 y el maximo de 1000.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Capacidad Total"
+                            id="capacidadTotal">
+                        <label class="label" for="capacidadTotal">Capacidad Total (T)</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error">
+                        La cantidad minima es de 50 y el maximo de 1000.
+                    </p>
+                </div>
+
+                <div class="formulario__input">
+                    <div class="custom-select-wrapper">
+                        <select class="styled-select" id="selectEstado">
+                            <option disabled selected>Estado</option>
+                            <option value="DI">DISPONIBLE</option>
+                            <option value="EU">EN USO</option>
+                            <option value="EM">EN MANTENIMIENTO</option>
+                            <option value="FS"> FUERA DE SERVICIO</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
+                    </div>
+                    <p class="input__error error--Estado">
+                        Por favor, seleccione un estado
+                    </p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Actualizacion</button>
+            </form>
+        </div>
+    </div>
+
+    <script th:src="@{/js/registromuelle.js}"></script>
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- autoTable (complemento para jsPDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.22/jspdf.plugin.autotable.min.js"></script>
+    <!-- autoTable (complemento para Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</body>
+</html>

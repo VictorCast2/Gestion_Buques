@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agente Naviero</title>
-    <link rel="stylesheet" th:href="@{/css/AgenteNaviero.css}">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{Dashboard.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,26 +14,40 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-
 <body>
     <aside class="sidebar">
         <hr>
         <ul class="sidebar__menu"> 
-            <li class="sidebar__item active" data-url="">
+            <li class="sidebar__item" data-url="">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
             
+            <li class="sidebar__item active" data-url="">
+                <i class="ri-dashboard-horizontal-fill"></i>
+                <span class="sidebar__text">Dashboard</span>
+            </li>
+
             <div class="sidebar__indicator"></div>
-        
-            <li class="sidebar__item" th:attr="data-url=@{/buques/SolicitudAtraque/}">
-                <i class="ri-ship-fill"></i>
-                <span class="sidebar__text">Solicitud Atraque</span>
+
+            <li class="sidebar__item" data-url="">
+                <i class="ri-ship-2-fill"></i>
+                <span class="sidebar__text">Registro Muelle</span>
             </li>
         
-            <li class="sidebar__item" th:attr="data-url=@{/buques/Procesos/}">
-                <i class="ri-flow-chart"></i>
-                <span class="sidebar__text">Procesos</span>
+            <li class="sidebar__item" data-url="">
+                <i class="ri-calendar-todo-fill"></i>
+                <span class="sidebar__text">Horarios</span>
+            </li>
+
+            <li class="sidebar__item" data-url="">
+                <i class="ri-file-list-2-fill"></i>
+                <span class="sidebar__text">Gestion Solicitudes</span>
+            </li>
+
+            <li class="sidebar__item" data-url="">
+                <i class="ri-user-add-fill"></i>
+                <span class="sidebar__text">Registro Usuario</span>
             </li>
         </ul>
 
@@ -169,63 +182,10 @@
         <i class="ri-arrow-left-line"></i>
         <a class="encabezado__pages" th:href="@{/buques/}">Regresar /</a>
         <a class="encabezado__pages" href="">Pages /</a>
-        <a class="encabezado__pages" href="">Inicio</a>
-        <h1 class="encabezado__title">Inicio</h1>
+        <a class="encabezado__pages" href="">Dashboard</a>
+        <h1 class="encabezado__title">Dashboard</h1>
     </div>
 
-    <main class="main__content">
-        <section class="content__inicio">
-            <div class="inicio__agentenaviero">
-                <div class="agentenaviero__welcome">
-                    <h4 class="welcome__title">🌊 ¡Bienvenido a bordo!</h4>
-                    <h2 class="welcome__agentenaviero">Keiner Reyes Tejedor</h2>
-                    <p class="welcome__text">
-                        Nos complace darte la bienvenida a nuestra plataforma digital, donde la eficiencia,
-                        la organización y el compromiso con el servicio portuario se encuentran al centro de nuestra
-                        misión.
-                    </p>
-                </div>
-                <div class="agentenaviero__atraque">
-                    <i class="ri-bar-chart-fill"></i>
-                    <h4 class="atraque__title">El Atraque De Hoy</h4>
-                    <span class="atraque__cantidad">1,000 <strong class="cantidad__porciento">+5%</strong></span>
-                </div>
-                <div class="agentenavierto__proceso">
-                    <i class="ri-folders-fill"></i>
-                    <h4 class="proceso__title">El Proceso De Hoy</h4>
-                    <span class="proceso__cantidad">2,000 <strong class="cantidad__porciento">+3%</strong></span>
-                </div>
-                <div class="agentenaviero__total">
-                    <i class="ri-shopping-cart-2-fill"></i>
-                    <h4 class="total__title">Operaciones Totales</h4>
-                    <span class="total__cantidad">3,000 <strong class="cantidad__porciento">+5%</strong></span>
-                </div>
-            </div>
-
-            <div id="chartdiv"></div>
-
-            <div id="chartdiv2"></div>
-            <div class="controls">
-                <div class="controls__select">
-                    <h2 class="select__title" id="title__change">Distribución Tipo De Buques</h2>
-                </div>
-
-                <div class="controls__btn">
-                    <button class="control-button" onclick="changeChart('buques')">Tipos De Buques</button>
-                    <div class="separator"></div>
-                    <button class="control-button button--changed" onclick="changeChart('carga')">Tipos De
-                        Cargas</button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script th:src="@{/js/agentenaviero.js}"></script>
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
 </body>
-
 </html>
