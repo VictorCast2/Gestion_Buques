@@ -21,7 +21,7 @@ import java.util.List;
 
 @Data
 @Controller
-@RequestMapping("/buques/solicitud-atraque")
+@RequestMapping("/buques/SolicitudAtraque")
 public class AtraqueController {
 
     @Autowired

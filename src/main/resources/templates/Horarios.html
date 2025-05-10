@@ -125,7 +125,7 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img src="assets/image/fotousuario.webp" alt=""/>
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
                                 <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -140,35 +140,35 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" src="assets/image/fotousuario.webp" onclick="toggleMenu()">
+            <img class="nav__img" th:src="@{assets/image/fotousuario.webp}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" src="assets/image/fotousuario.webp">
+                        <img class="info__img" th:src="@{assets/image/fotousuario.webp}">
                         <h2 class="info__title">Keyner Reyes</h2>
                     </div>
                     <hr>
 
-                    <a href="Perfil.html" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a href="Configuraciones.html" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a href="Notificaciones.html" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a href="index.html" class="sub__link">
+                    <a th:href="@{/buques/}" class="sub__link">
                         <i class="ri-logout-box-r-fill"></i>
                         <p class="link__text">Cerrar Seccion</p>
                         <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
@@ -180,12 +180,12 @@
 
     <div class="name__encabezado">
         <i class="ri-arrow-left-line"></i>
-        <a class="encabezado__pages" href="index.html">Regresar /</a>
+        <a class="encabezado__pages" th:href="@{/buques/}">Regresar /</a>
         <a class="encabezado__pages" href="">Pages /</a>
         <a class="encabezado__pages" href="">Horarios</a>
         <h1 class="encabezado__title">Horarios</h1>
     </div>
 
-    <script src="js/dashboard.js"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
 </body>
 </html>
