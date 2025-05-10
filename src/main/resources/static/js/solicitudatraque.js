@@ -29,12 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
         indicator.style.transform = `translateY(${offsetTop}px)`;
     }
 
-    // Detectar cuál item tiene la clase 'active'
-    let activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
-    if (activeIndex === -1) activeIndex = 0;
 
     // Mover el indicador al cargar la página
-    moveIndicatorTo(activeIndex);
+    moveIndicatorTo(1);
 
     // Manejo de clics para mover el indicador dinámicamente
     items.forEach((item, index) => {
@@ -227,9 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
         altura: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "La altura minima es de 50 y el maximo de 5000." },
         peso: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "El peso minimo es de 50 y el maximo de 1000." },
         puertoProcedencia: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        puertoDestino: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        fechaSalida: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 03/05/2025)" },
-        fechaEntrada: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 04/05/2025)" },
+        puertoDestino: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." }
 
     };
 
@@ -474,9 +469,7 @@ document.addEventListener("DOMContentLoaded", function () {
         altura2: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "La altura minima es de 50 y el maximo de 5000." },
         peso2: { regex: /^(?:50|[5-9][0-9]|[1-9][0-9]{2}|[1-4][0-9]{3}|5000)$/, errorMessage: "El peso minimo es de 50 y el maximo de 1000." },
         portOrigin: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        portDestination: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." },
-        fechaSalida2: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 03/05/2025)" },
-        fechaEntrada2: { regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, errorMessage: "Fecha no válida. Ingrese una fecha en formato dd/mm/yyyy (ej. 04/05/2025)" }
+        portDestination: { regex: /^(?:[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+|[A-Z]{4,5})$/, errorMessage: "Puerto no válido. Ingrese un nombre valido (ej. Puerto de Barcelona) o un código válido(ej. ESBCN)." }
 
     };
 
@@ -725,7 +718,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
+    const botonSiEliminar = modalEliminar.querySelector('.boton-si2');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
+
+    // Formularios
+    const formEditar = document.getElementById('formEditar')
+    const formEliminar = document.getElementById('formEliminar');
+
 
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
@@ -738,9 +737,13 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('confirmacion--hidden');
     }
 
+    // Variable global para guardar el id de la solicitud que se va a editar
+    let idEditarSeleccionado = null;
+
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            idEditarSeleccionado = boton.getAttribute('data-id'); // Guardamos el id
             abrirModal(modalEditar);
         });
     });
@@ -762,10 +765,56 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Evento cuando hacen click en "Sí" en editar
-    botonSiEditar.addEventListener('click', () => {
-        cerrarModal(modalEditar);     // Cerramos el modal de confirmación
-        modalEditRegistro.classList.remove('newadd--hidden');
-        modalEditRegistro.classList.add('newadd--visible');
+        botonSiEditar.addEventListener('click', async () => {
+        cerrarModal(modalEditar); // Cerramos modal confirmación
+        // Establecer la acción del formulario con el ID seleccionado
+        formEditar.setAttribute('action', `/buques/SolicitudAtraque/actualizar-solicitud/${idEditarSeleccionado}`);
+
+        try {
+            const response = await fetch(`/api/solicitud-atraque/${idEditarSeleccionado}`);
+            if (!response.ok) throw new Error('Error al obtener los datos');
+
+            const data = await response.json();
+
+            document.getElementById("tuition").value = data.buque.matricula;
+            document.getElementById("nameVessel").value = data.buque.nombre;
+            document.getElementById("tipoBuque2").value = data.buque.tipoBuque;
+            document.getElementById("ancho2").value = data.buque.dimensiones.ancho;
+            document.getElementById("altura2").value = data.buque.dimensiones.largo;
+            document.getElementById("peso2").value = data.buque.dimensiones.peso;
+
+            document.getElementById("selectPaisProcedencia2").value = data.paisProcedencia;
+            document.getElementById("selectCiudadProcedencia2").value = data.ciudadProcedencia;
+            document.getElementById("portOrigin").value = data.puertoProcedencia;
+
+            document.getElementById("selectPaisDestino2").value = data.paisDestino;
+            document.getElementById("selectCiudadDestino2").value = data.ciudadDestino;
+            document.getElementById("portDestination").value = data.puertoDestino;
+
+            document.getElementById("fechaEntrada2").value = data.fechaLlegada;
+            document.getElementById("fechaSalida2").value = data.fechaSalida;
+
+
+            // Abrimos el modal de edición
+            modalEditRegistro.classList.remove('newadd--hidden');
+            modalEditRegistro.classList.add('newadd--visible');
+
+        } catch (error) {
+            console.error(error);
+            alert('No se pudieron cargar los datos del formulario');
+        }
+    });
+
+
+
+
+    // Evento cuando hace click en "Si" en eliminar
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const id = boton.getAttribute('data-id');
+            formEliminar.setAttribute('action', `/buques/SolicitudAtraque/eliminar-solicitud/${id}`);
+            abrirModal(modalEliminar);
+        });
     });
 
     // Cerrar modal al hacer click fuera del contenido
