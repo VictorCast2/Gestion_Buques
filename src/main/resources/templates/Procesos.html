@@ -20,24 +20,22 @@
     <aside class="sidebar">
         <hr>
         <ul class="sidebar__menu">
-            <li class="sidebar__item" th:attr="data-url=@{/buques/panel-control}">
+            <li class="sidebar__item" data-url="@{/buques/AgenteNaviero}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
-
-            <li class="sidebar__item" th:attr="data-url=@{/buques/SolicitudAtraque/}">
+            <li class="sidebar__item" data-url="@{/buques/SolicitudAtraque}">
                 <i class="ri-ship-fill"></i>
+                <a th:href="@{/buques/solicitud-atraque}" style="text-decoration: none;">
                 <span class="sidebar__text">Solicitud Atraque</span>
+                </a>
             </li>
-
             <li class="sidebar__item active">
                 <i class="ri-flow-chart"></i>
                 <span class="sidebar__text">Procesos</span>
             </li>
-
             <div class="sidebar__indicator"></div>
         </ul>
-
 
         <div class="card">
             <div class="circle">
@@ -97,16 +95,15 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -114,10 +111,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -130,14 +126,12 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}"
-                th:alt="${usuario.imagen}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}"
-                            th:alt="${usuario.imagen}">
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
                         <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
@@ -162,8 +156,7 @@
 
                     <!-- Formulario para logout -->
                     <form th:action="@{/auth/logout}" method="post" id="logoutForm">
-                        <a href="#" class="sub__link"
-                            onclick="document.getElementById('logoutForm').submit(); return false;">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
                             <i class="ri-logout-box-r-fill"></i>
                             <p class="link__text">Cerrar Seccion</p>
                             <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
@@ -328,8 +321,7 @@
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" name="procesoRequests[0].tipoOperacion" id="tipoOperaciones"
-                            required>
+                        <select class="styled-select" name="procesoRequests[0].tipoOperacion" id="tipoOperaciones" required>
                             <option disabled selected>Tipo De Operación</option>
                             <th:block th:each="op : ${tipoOperacion}">
                                 <option th:value="${op.name()}" th:text="${op.descripcion}"></option>
@@ -394,8 +386,8 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="number" min="50" max="10000" autocomplete="off" placeholder=""
-                            name="procesoRequests[0].cantidad" id="cantidad">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="procesoRequests[0].cantidad"
+                        id="cantidad">
                         <label class="label" for="cantidad">Cantidad</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -407,8 +399,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <textarea autocomplete="off" placeholder="" name="procesoRequests[0].descripcion"
-                            id="descripcion"></textarea>
+                        <textarea autocomplete="off" placeholder="" name="procesoRequests[0].descripcion" id="descripcion"></textarea>
                         <label class="label" for="descripcion">Descripcion</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -555,7 +546,7 @@
                 <div class="formulario__input">
                     <div class="input-box">
                         <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Cantidad"
-                            id="cantidad">
+                        id="cantidad">
                         <label class="label" for="cantidad">Cantidad</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
