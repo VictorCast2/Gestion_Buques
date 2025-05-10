@@ -2,8 +2,7 @@ package com.app.collections.Usuario;
 
 import com.app.collections.Factura.Factura;
 import com.app.collections.Usuario.pojo.Empresa;
-import com.app.collections.Usuario.Enum.EIdentificacion;
-import com.app.collections.Usuario.Enum.ERol;
+import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.pojo.Inspeccion;
 import lombok.*;
 import org.springframework.data.annotation.Id;

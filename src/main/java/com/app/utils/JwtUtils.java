@@ -4,17 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import lombok.Data;
+import com.auth0.jwt.interfaces.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,8 +35,7 @@ public class JwtUtils {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-
-        String jwtToken = JWT.create()
+        return JWT.create()
                 .withIssuer(origenToken) // usuario que generara el token
                 .withSubject(usuario) // sujeto al que se le genera el token
                 .withClaim("authorities", permisos) // generación del claim con los permisos del usuario
@@ -50,8 +43,7 @@ public class JwtUtils {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 70 * 70)) // fecha de vigencia del token (hora de generación actual en milisegundos + los milisegundos para la expiración {2hrs})
                 .withJWTId(UUID.randomUUID().toString()) // generación del id del token
                 .withNotBefore(new Date()) // especifica el momento en el que el token se considera válido (en este caso, desde su generación)
-                .sign(algorithm); // firma del token
-        return jwtToken;
+                .sign(algorithm);
     }
 
     /**
@@ -65,11 +57,8 @@ public class JwtUtils {
 
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(origenToken) // usuario que genero el token (en este caso el backend)
-                    .build();
-
-            DecodedJWT decodedJWT = verifier.verify(token);
-
-            return decodedJWT;
+                    .build(); // reusable verifier instance
+            return verifier.verify(token);
         } catch (JWTVerificationException exception) {
             throw new JWTVerificationException("Token Invalido, NO Autorizado");
         }

@@ -2,31 +2,26 @@ package com.app.service;
 
 import com.app.collections.Atraque.Atraque;
 import com.app.collections.Atraque.Enum.EResultado;
-import com.app.collections.Factura.Enum.ECarga;
-import com.app.collections.Factura.Enum.EEstadoFactura;
-import com.app.collections.Factura.Enum.EOperacion;
+import com.app.collections.Factura.Enum.*;
 import com.app.collections.Factura.Factura;
 import com.app.collections.Factura.pojo.Proceso;
 import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
 import com.app.collections.Usuario.pojo.Empresa;
-import com.app.dto.request.FacturaProcesoRequest;
-import com.app.dto.request.ProcesoRequest;
+import com.app.dto.request.*;
 import com.app.dto.response.AuthResponse;
-import com.app.repository.AtraqueRepository;
-import com.app.repository.FacturaRespository;
-import com.app.repository.UsuarioRepository;
+import com.app.repository.*;
 import com.app.security.CustomUserDetails;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+@Data
 @Service
 public class FacturaService {
 

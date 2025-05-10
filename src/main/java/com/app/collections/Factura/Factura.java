@@ -5,17 +5,10 @@ import com.app.collections.Factura.pojo.Proceso;
 import com.app.collections.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
+import org.springframework.data.annotation.*;
+import org.springframework.data.mongodb.core.mapping.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter

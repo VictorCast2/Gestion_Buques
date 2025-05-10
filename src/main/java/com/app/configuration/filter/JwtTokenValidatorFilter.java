@@ -1,4 +1,4 @@
-package com.app.config.filter;
+package com.app.configuration.filter;
 
 import com.app.collections.Usuario.Usuario;
 import com.app.repository.UsuarioRepository;
@@ -7,11 +7,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.app.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.*;
+import lombok.*;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,8 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 
     private JwtUtils jwtUtils;

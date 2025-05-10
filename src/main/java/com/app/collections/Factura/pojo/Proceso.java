@@ -1,10 +1,8 @@
 package com.app.collections.Factura.pojo;
 
-import com.app.collections.Factura.Enum.ECarga;
-import com.app.collections.Factura.Enum.EOperacion;
+import com.app.collections.Factura.Enum.*;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;
-
 import java.util.HashSet;
 import java.util.Set;
 

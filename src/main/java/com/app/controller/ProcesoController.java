@@ -1,31 +1,25 @@
 package com.app.controller;
 
-import com.app.collections.Factura.Enum.ECarga;
-import com.app.collections.Factura.Enum.EOperacion;
+import com.app.collections.Factura.Enum.*;
 import com.app.collections.Factura.pojo.Proceso;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.FacturaProcesoRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.repository.FacturaRespository;
-import com.app.repository.UsuarioRepository;
 import com.app.security.CustomUserDetails;
-import com.app.service.FacturaService;
-import com.app.service.UserDetailServiceImpl;
+import com.app.service.*;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Data
 @Controller
 @RequestMapping("/buques/procesos")
 public class ProcesoController {
