@@ -19,7 +19,7 @@
     <aside class="sidebar">
         <hr>
         <ul class="sidebar__menu">
-            <li class="sidebar__item" th:attr="data-url=@{/buques/panel-control}">
+            <li class="sidebar__item" data-url="{@/buques/AgenteNaviero}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
@@ -28,7 +28,7 @@
                 <span class="sidebar__text">Solicitud Atraque</span>
             </li>
             <div class="sidebar__indicator"></div>
-            <li class="sidebar__item" th:attr="data-url=@{/buques/Procesos/}">
+            <li class="sidebar__item" data-url="{@/buques/Procesos.html}">
                 <i class="ri-flow-chart"></i>
                     <span class="sidebar__text">Procesos</span>
                 </a>
@@ -324,7 +324,7 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Añadir Nueva Solicitud Atraque</h2>
             <div class="content__relleno"></div>
-            <form action="/buques/SolicitudAtraque/crear-solicitud" method="post" class="add__formulario">
+            <form action="/buques/solicitud-atraque/crear-solicitud" method="post" class="add__formulario">
 
                 <fieldset class="buque__field">
                     <legend class="field__legend">Favor diligenciar el siguiente formulario</legend>

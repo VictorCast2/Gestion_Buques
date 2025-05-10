@@ -19,21 +19,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //Sidebar
-    //Sidebar
     const items = document.querySelectorAll('.sidebar__item');
     const indicator = document.querySelector('.sidebar__indicator');
 
     function moveIndicatorTo(index) {
-        const item = items[index];
-        const offsetTop = item.offsetTop;
-        indicator.style.transform = `translateY(${offsetTop}px)`;
+        const itemHeight = items[0].offsetHeight + 8; // altura del ítem más el margen
+        const offset = index * itemHeight;
+        indicator.style.transform = `translateY(${offset}px)`;
     }
-
 
     // Mover el indicador al cargar la página
     moveIndicatorTo(1);
 
-    // Manejo de clics para mover el indicador dinámicamente
     items.forEach((item, index) => {
         item.addEventListener('click', () => {
             items.forEach(el => el.classList.remove('active'));
@@ -725,7 +722,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const formEditar = document.getElementById('formEditar')
     const formEliminar = document.getElementById('formEliminar');
 
-
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
         modal.classList.remove('confirmacion--hidden');
@@ -804,9 +800,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('No se pudieron cargar los datos del formulario');
         }
     });
-
-
-
 
     // Evento cuando hace click en "Si" en eliminar
     botonesEliminar.forEach(boton => {
@@ -1014,51 +1007,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Escuchar el clic para exportar a Excel
     document.querySelector('.exportar-option:nth-child(4)').addEventListener('click', exportToExcel);
 
-
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
-
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-
-        // Cambiar el ícono
-        if (document.body.classList.contains('dark-mode')) {
-            themeIcon.classList.remove('ri-moon-fill');
-            themeIcon.classList.add('ri-sun-line');
-        } else {
-            themeIcon.classList.remove('ri-sun-line');
-            themeIcon.classList.add('ri-moon-fill');
-        }
-    })
-
-
-    //Abrir notificacion del header
-    const icon = document.getElementById('notificationIcon');
-    const box = document.getElementById('notificationBox');
-
-    icon.addEventListener('click', function (e) {
-        e.stopPropagation(); // Evita que el clic se propague
-        box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Cerrar si se hace clic fuera
-    document.addEventListener('click', function () {
-        box.style.display = 'none';
-    });
-
-    // Evita cerrar al hacer clic dentro de la caja
-    box.addEventListener('click', function (e) {
-        e.stopPropagation();
-    });
-
-    //Navegacion del sidebar 
-    document.querySelectorAll('.sidebar__item').forEach(item => {
-        item.addEventListener('click', () => {
-            const url = item.getAttribute('data-url');
-            if (url) {
-                window.location.href = url;
-            }
-        });
-    });
 });
 
