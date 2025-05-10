@@ -1,4 +1,4 @@
-package com.app.configuration;
+package com.app.configuration.Redis;
 
 import com.app.dto.request.AuthLoginRequest;
 import lombok.Data;
