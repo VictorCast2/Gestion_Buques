@@ -61,10 +61,20 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/SolicitudAtraque/}" class="sub__link">
+                    <!-- Panel de Control para AGENTE_NAVIERO -->
+                    <a th:href="@{/buques/panel-control}" class="sub__link"
+                       sec:authorize="hasAuthority('ROLE_AGENTE_NAVIERO')">
                         <i class="ri-dashboard-fill"></i>
                         <p class="link__text">Panel Control</p>
-                        <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
+                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                    </a>
+
+                    <!-- Panel de Control para ADMIN -->
+                    <a th:href="@{/buques/panel-control}" class="sub__link"
+                       sec:authorize="hasAuthority('ROLE_ADMIN')">
+                        <i class="ri-dashboard-fill"></i>
+                        <p class="link__text">Panel Control</p>
+                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
                     <!-- Formulario para logout -->
