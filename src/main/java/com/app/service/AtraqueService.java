@@ -31,9 +31,37 @@ public class AtraqueService {
         return atraqueRepository.findByAgenteNaviero(agenteNaviero);
     }
 
-    public Atraque getAtraqueById(String id) {
-        return atraqueRepository.findById(id)
+    /**
+     * Método para obtener un AtraqueRequest por su id
+     * @param id parámetro para obtener un atraque específico de la base de datos
+     * @return un objeto de tipo AtraqueRequest con los datos del atraque
+     * @nota: no se usa directamente el objeto Atraque por motivos de seguridad y asi no exponer al modelo de datos
+     */
+    public AtraqueRequest getAtraqueRequestById(String id) {
+
+        Atraque atraque = atraqueRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
+
+        DimensionRequest dimensionRequest = new DimensionRequest(
+                atraque.getBuque().getDimensiones().getPeso(),
+                atraque.getBuque().getDimensiones().getLargo(),
+                atraque.getBuque().getDimensiones().getAncho()
+        );
+
+        BuqueRequest buqueRequest = new BuqueRequest(atraque.getBuque().getMatricula(),
+                atraque.getBuque().getNombre(),
+                atraque.getBuque().getTipoBuque().toString(),
+                dimensionRequest);
+
+        return new AtraqueRequest(atraque.getPaisProcedencia(),
+                atraque.getCiudadProcedencia(),
+                atraque.getPuertoProcedencia(),
+                atraque.getPaisDestino(),
+                atraque.getCiudadDestino(),
+                atraque.getPuertoDestino(),
+                atraque.getFechaLlegada(),
+                atraque.getFechaSalida(),
+                buqueRequest);
     }
 
     /**
@@ -105,7 +133,8 @@ public class AtraqueService {
 
     public AuthResponse updateSolicitudAtraque(@Valid AtraqueRequest atraqueRequest, String id) {
 
-        Atraque atraqueActualizado = this.getAtraqueById(id);
+        Atraque atraqueActualizado = atraqueRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
 
         // Actualizamos los datos de las dimensiones de buque
         Dimension dimensionActualizada = atraqueActualizado.getBuque().getDimensiones();

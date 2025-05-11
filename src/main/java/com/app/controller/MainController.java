@@ -62,7 +62,9 @@ public class MainController {
     }
 
     @RequestMapping("/panel-control")
-    public String AgenteNaviero() {
+    public String AgenteNaviero(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
+        model.addAttribute("usuario", usuario);
         return "AgenteNaviero";
     }
 

@@ -98,16 +98,15 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -115,10 +114,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -250,8 +248,8 @@
                                 </td>
                             </tr>
                             <tr th:each="proceso : ${procesos}">
-                                <td th:text="${proceso.tipoOperacion}">Tipo Operacion</td>
-                                <td th:text="${proceso.tipoCarga}">Tipo Carga</td>
+                                <td th:text="${proceso.tipoOperacion.descripcion}">Tipo Operacion</td>
+                                <td th:text="${proceso.tipoCarga.descripcion}">Tipo Carga</td>
                                 <td th:text="${proceso.tipoProducto}">Tipo Producto</td>
                                 <td th:text="${proceso.cantidad}">Cantidad</td>
                                 <td th:text="${proceso.descripcion}" class="notification__description">Descripción</td>
@@ -585,8 +583,9 @@
         </div>
     </div>
 
+    <script th:src="@{/js/procesos.js}"></script>
     <script>
-        const tipoBuqueSelect = document.getElementById("tipoBuque");
+        const tipoCargaSelect = document.getElementById("tipoCarga");
         const tipoProductoSelect = document.getElementById("tipoProducto");
 
         // Diccionario de opciones por tipo de buque
@@ -637,9 +636,8 @@
                 tipoProductoSelect.appendChild(option);
             });
         });
-    </script>
 
-    <script th:src="@{/js/procesos.js}"></script>
+    </script>
     <!-- jsPDF para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- autoTable (complemento para jsPDF) -->

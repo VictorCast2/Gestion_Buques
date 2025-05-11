@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 @Service
@@ -29,18 +30,21 @@ public class FacturaService {
     UsuarioRepository usuarioRepository;
 
     @Autowired
-    private FacturaRespository facturaRespository;
+    private FacturaRespository facturaRepository;
 
     @Autowired
     private AtraqueRepository atraqueRepository;
 
     /**
      * Método para obtener los procesos de un agentenaviero
-     * @param agentenaviero parámetro pra obtener los procesos ligados a este usuario
+     * @param agenteNaviero parámetro pra obtener los procesos ligados a este usuario
      * @return una lista de facturas con los procesos ligados al usuario
      */
-    public List<Proceso> getProcesoByUsuario(Usuario agentenaviero) {
-        return facturaRespository.findByAgenteNaviero(agentenaviero);
+    public List<Proceso> getProcesoByUsuario(Usuario agenteNaviero) {
+        List<Factura> facturas = facturaRepository.findByAgenteNaviero(agenteNaviero);
+        return facturas.stream()
+                .flatMap(f -> f.getProcesos().stream())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -88,7 +92,7 @@ public class FacturaService {
                 .total(total)
                 .build();
 
-        facturaRespository.save(factura);
+        facturaRepository.save(factura);
 
         agenteNaviero.getFacturas().add(factura);
         usuarioRepository.save(agenteNaviero);
