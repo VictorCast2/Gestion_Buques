@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin inicio</title>
-    <link rel="stylesheet" th:href="@{Admin.css}">
+    <link rel="stylesheet" th:href="@{/css/Admin.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,8 @@
 <body>
     <aside class="sidebar">
         <hr>
-        <ul class="sidebar__menu"> 
+        <ul class="sidebar__menu">
+
             <li class="sidebar__item active" data-url="">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
@@ -26,12 +27,12 @@
             
             <div class="sidebar__indicator"></div>
         
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/dashboard}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/registro-muelle}">
                 <i class="ri-ship-2-fill"></i>
                 <span class="sidebar__text">Registro Muelle</span>
             </li>
@@ -50,6 +51,7 @@
                 <i class="ri-user-add-fill"></i>
                 <span class="sidebar__text">Registro Usuario</span>
             </li>
+
         </ul>
 
         <div class="card">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Registro Muelle</title>
-    <link rel="stylesheet" th:href="@{RegistroMuelle.css}">
+    <link rel="stylesheet" th:href="@{/css/RegistroMuelle.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +19,12 @@
     <aside class="sidebar">
         <hr>
         <ul class="sidebar__menu"> 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
             
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/dashboard}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
             </li>
@@ -50,6 +50,7 @@
                 <i class="ri-user-add-fill"></i>
                 <span class="sidebar__text">Registro Usuario</span>
             </li>
+
         </ul>
 
         <div class="card">
@@ -60,6 +61,7 @@
             <p class="card__text">Improve your development process and start doing more with Horizon UI PRO!</p>
             <button class="card__btn" type="button">Upgrade to PRO</button>
         </div>
+
     </aside>
 
     <header class="header">
