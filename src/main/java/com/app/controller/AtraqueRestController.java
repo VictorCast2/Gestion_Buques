@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import com.app.collections.Atraque.Atraque;
+import com.app.dto.request.AtraqueRequest;
 import com.app.service.AtraqueService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class AtraqueRestController {
     private AtraqueService atraqueService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Atraque> getSolicitudAtraque(@PathVariable String id) {
-        return new ResponseEntity<>(this.atraqueService.getAtraqueById(id), HttpStatus.OK);
+    public ResponseEntity<AtraqueRequest> getSolicitudAtraque(@PathVariable String id) {
+        return new ResponseEntity<>(this.atraqueService.getAtraqueRequestById(id), HttpStatus.OK);
     }
 }
