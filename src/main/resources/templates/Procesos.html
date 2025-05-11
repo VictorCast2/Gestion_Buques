@@ -242,22 +242,22 @@
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr th:if="${procesos.isEmpty()}">
+                            <tr th:if="${facturas.isEmpty()}">
                                 <td colspan="6" style="text-align: center; font-style: italic; color: #888;">
                                     Aún no tiene registros de procesos.
                                 </td>
                             </tr>
-                            <tr th:each="proceso : ${procesos}">
-                                <td th:text="${proceso.tipoOperacion.descripcion}">Tipo Operacion</td>
-                                <td th:text="${proceso.tipoCarga.descripcion}">Tipo Carga</td>
-                                <td th:text="${proceso.tipoProducto}">Tipo Producto</td>
-                                <td th:text="${proceso.cantidad}">Cantidad</td>
-                                <td th:text="${proceso.descripcion}" class="notification__description">Descripción</td>
+                            <tr th:each="factura : ${facturas}">
+                                <td th:text="${factura.procesos[0].tipoOperacion.descripcion}">Tipo Operacion</td>
+                                <td th:text="${factura.procesos[0].tipoCarga.descripcion}">Tipo Carga</td>
+                                <td th:text="${factura.procesos[0].tipoProducto}">Tipo Producto</td>
+                                <td th:text="${factura.procesos[0].cantidad}">Cantidad</td>
+                                <td th:text="${factura.procesos[0].descripcion}" class="notification__description">Descripción</td>
                                 <td>
                                     <button class="content__icon icon--edit">
                                         <i class="ri-pencil-line"></i>
                                     </button>
-                                    <button class="content__icon icon--delete">
+                                    <button class="content__icon icon--delete" th:if="${factura.procesos[0].estadoProceso.name() == 'PENDIENTE'}" th:data-id="${factura.id}">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </td>
@@ -291,8 +291,10 @@
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <form method="post" id="formEliminar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 

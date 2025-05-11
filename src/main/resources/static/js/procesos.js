@@ -366,6 +366,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalEliminar = document.getElementById('modalConfirmacion2');
     const modalEditRegistro = document.getElementById('modalnewadd2');
 
+    // Formularios
+    const formEliminar = document.getElementById('formEliminar');
+
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
@@ -410,6 +413,15 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEditar);     // Cerramos el modal de confirmación
         modalEditRegistro.classList.remove('newadd--hidden');
         modalEditRegistro.classList.add('newadd--visible');
+    });
+
+    // Evento cuando hace click en "Si" en eliminar
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const id = boton.getAttribute('data-id');
+            formEliminar.setAttribute('action', `/buques/Procesos/eliminar-factura/${id}`);
+            abrirModal(modalEliminar);
+        });
     });
 
     // Cerrar modal al hacer click fuera del contenido

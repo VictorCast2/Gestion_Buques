@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,6 +25,7 @@ public class Proceso {
     private int precioUnitario;
     private int subtotal;
     private String descripcion; // descripción de la solicitud del proceso a realizar
+    private EEstadoProceso estadoProceso;
 
     private Set<Maquina> maquinas = new HashSet<>();
 }
