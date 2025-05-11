@@ -23,7 +23,7 @@ public class Factura {
     @Field("descripcion_servicio")
     private String descripcionServicio; // esto lo especifica el admin, donde detalla que se le esta facturando al usuario
 
-    private Integer total;
+    private double total;
 
     @Transient
     private double iva;
