@@ -1,24 +1,26 @@
 package com.app.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.app.service.UserDetailServiceImpl;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.*;
+import lombok.Data;
 
 @Data
 @Controller
-@RequestMapping("/buques/admin")
-public class AdminController {
+@RequestMapping("/buques/registro-muelle")
+public class RegistroMuelleController {
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
     @GetMapping("/")
-    public String adminHome() {
-        return "Admin";
+    public String adminRegistroMuelle() {
+        return "RegistroMuelle";
     }
 
 }
