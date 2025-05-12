@@ -252,7 +252,7 @@
                         <tbody id="notificationBody">
                             <tr th:if="${listarMuelles.isEmpty()}">
                                 <td colspan="8" style="text-align: center; font-style: italic; color: #888;">
-                                    Aún no tiene solicitudes de atraque registradas.
+                                    Aún no tiene muelles registrados.
                                 </td>
                             </tr>
                             <tr th:each="muelle : ${listarMuelles}">
@@ -317,8 +317,10 @@
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <form method="post" id="formEliminar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 

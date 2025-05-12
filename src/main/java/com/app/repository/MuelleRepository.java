@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MuellerRepository extends MongoRepository<Muelle, String> {
+public interface MuelleRepository extends MongoRepository<Muelle, String> {
 }

@@ -275,6 +275,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonNoEditar = modalEditar.querySelector('.boton-no');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
 
+    // Formularios
+    const formEditar = document.getElementById('formEditar')
+    const formEliminar = document.getElementById('formEliminar');
+
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
         modal.classList.remove('confirmacion--hidden');
@@ -285,6 +289,9 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.remove('confirmacion--visible');
         modal.classList.add('confirmacion--hidden');
     }
+
+    // Variable global para guardar el id de la solicitud que se va a editar
+    let idEditarSeleccionado = null;
 
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
@@ -314,6 +321,15 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEditar);     // Cerramos el modal de confirmación
         modalEditRegistro.classList.remove('newadd--hidden');
         modalEditRegistro.classList.add('newadd--visible');
+    });
+
+    // Evento cuando hace click en "Si" en eliminar
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const id = boton.getAttribute('data-id');
+            formEliminar.setAttribute('action', `/buques/registro-muelle/eliminar-muelle/${id}`);
+            abrirModal(modalEliminar);
+        });
     });
 
     // Cerrar modal al hacer click fuera del contenido

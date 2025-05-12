@@ -4,21 +4,27 @@ import com.app.collections.Muelle.Enum.EEstado;
 import com.app.collections.Muelle.Muelle;
 import com.app.dto.request.MuelleRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.repository.MuellerRepository;
+import com.app.repository.MuelleRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class MuelleService {
 
     @Autowired
-    private MuellerRepository muellerRepository;
+    private MuelleRepository muelleRepository;
+
+    public Muelle getMuelleById(String id) {
+        return muelleRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Error: el muelle con id " + id + " no existe o ha sido eliminado"));
+    }
 
     public List<Muelle> getMuelles() {
-        return muellerRepository.findAll();
+        return muelleRepository.findAll();
     }
 
     public AuthResponse crearMuelle(@Valid MuelleRequest muelleRequest) {
@@ -30,8 +36,17 @@ public class MuelleService {
                 .estado(EEstado.valueOf(muelleRequest.estadoMuelle()))
                 .build();
 
-        muellerRepository.save(muelle);
+        muelleRepository.save(muelle);
 
         return new AuthResponse("Muelle creado exitosamente");
+    }
+
+    public AuthResponse deleteMuelleById(String id) {
+
+        Muelle muelle = this.getMuelleById(id);
+
+        muelleRepository.delete(muelle);
+
+        return new AuthResponse("Muelle eliminado exitosamente");
     }
 }

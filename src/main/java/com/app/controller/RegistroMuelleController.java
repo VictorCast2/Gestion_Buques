@@ -10,9 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.app.service.UserDetailServiceImpl;
 
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -53,6 +50,13 @@ public class RegistroMuelleController {
     @PostMapping("/crear-muelle")
     public String crearMuelle(@Valid MuelleRequest muelleRequest) {
         AuthResponse response = muelleService.crearMuelle(muelleRequest);
+        String mensaje = response.mensaje();
+        return "redirect:/buques/registro-muelle/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+    }
+
+    @PostMapping("/eliminar-muelle/{id}")
+    public String eliminarMuelle(@PathVariable String id) {
+        AuthResponse response = muelleService.deleteMuelleById(id);
         String mensaje = response.mensaje();
         return "redirect:/buques/registro-muelle/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
