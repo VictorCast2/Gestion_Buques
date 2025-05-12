@@ -1,13 +1,11 @@
 package com.app.collections.Usuario;
 
 import com.app.collections.Factura.Factura;
-import com.app.collections.Usuario.pojo.Empresa;
 import com.app.collections.Usuario.Enum.*;
-import com.app.collections.Usuario.pojo.Inspeccion;
+import com.app.collections.Usuario.pojo.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,9 +35,6 @@ public class Usuario {
 
     @DBRef
     private Set<Factura> facturas = new HashSet<>();
-
-    @Field(name = "is_2fa_enabled")
-    private boolean isTwoFactorEnabled = false;
 
     @Field(name = "is_enabled")
     private boolean isEnabled;

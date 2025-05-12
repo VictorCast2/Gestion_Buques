@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import com.app.collections.Usuario.Usuario;
+import com.app.collections.Usuario.pojo.TwoFactorEnabledRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.service.UserDetailServiceImpl;
 import jakarta.validation.Valid;
@@ -81,10 +82,8 @@ public class MainController {
         return "redirect:/auth/logout";
     }
 
-    @RequestMapping("/configuraciones/acticcion-autenticacion-2-pasos")
-    public String ActiccionAutenticacion2pasos(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Usuario usuario  = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
-        model.addAttribute("usuario", usuario);
+    @PostMapping("/configuraciones/acticcion-autenticacion-2-pasos")
+    public String ActiccionAutenticacion2pasos(@ModelAttribute TwoFactorEnabledRequest request) {
         return "Configuraciones";
     }
 

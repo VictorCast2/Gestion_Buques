@@ -1,5 +1,6 @@
 package com.app.configuration.Redis;
 
+import com.app.collections.Usuario.pojo.TwoFactorEnabledRequest;
 import com.app.dto.request.AuthLoginRequest;
 import lombok.Data;
 import org.springframework.context.annotation.*;
@@ -11,15 +12,24 @@ import org.springframework.data.redis.serializer.*;
 @Configuration
 public class RedisConfig {
 
-    @Bean
-    public RedisTemplate<String, AuthLoginRequest> redisTemplate(RedisConnectionFactory connectionFactory) {
+    @Bean(name = "authLoginRequestRedisTemplate")
+    public RedisTemplate<String, AuthLoginRequest> authLoginRequestRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, AuthLoginRequest> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-        // Serializador para claves
         template.setKeySerializer(new StringRedisSerializer());
-        // Serializador para valores (usa JSON)
         Jackson2JsonRedisSerializer<AuthLoginRequest> valueSerializer =
                 new Jackson2JsonRedisSerializer<>(AuthLoginRequest.class);
+        template.setValueSerializer(valueSerializer);
+        return template;
+    }
+
+    @Bean(name = "twoFactorEnabledRequestRedisTemplate")
+    public RedisTemplate<String, TwoFactorEnabledRequest> twoFactorEnabledRequestRedisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, TwoFactorEnabledRequest> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        Jackson2JsonRedisSerializer<TwoFactorEnabledRequest> valueSerializer =
+                new Jackson2JsonRedisSerializer<>(TwoFactorEnabledRequest.class);
         template.setValueSerializer(valueSerializer);
         return template;
     }

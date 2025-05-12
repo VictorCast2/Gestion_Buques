@@ -169,7 +169,7 @@
                 <div class="container__switch">
                     <span class="switch__title">¿Activar autenticación en dos pasos?</span>
                     <label class="switch__label">
-                        <input type="checkbox">
+                        <input type="checkbox" name="isTwoFactorEnabled" th:checked="${usuario.twoFactorEnabled}">>
                         <span class="slider__label"></span>
                     </label>
                 </div>
