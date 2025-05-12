@@ -54,6 +54,13 @@ public class RegistroMuelleController {
         return "redirect:/buques/registro-muelle/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 
+    @PostMapping("/actualizar-muelle/{id}")
+    public String actualizarMuelle(@Valid MuelleRequest muelleRequest, @PathVariable String id) {
+        AuthResponse response = muelleService.updateMuelle(muelleRequest, id);
+        String mensaje = response.mensaje();
+        return "redirect:/buques/registro-muelle/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+    }
+
     @PostMapping("/eliminar-muelle/{id}")
     public String eliminarMuelle(@PathVariable String id) {
         AuthResponse response = muelleService.deleteMuelleById(id);
