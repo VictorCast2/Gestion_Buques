@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Gestion Solicitudes</title>
-    <link rel="stylesheet" th:href="@{GestionSolicitudes.css}">
+    <link rel="stylesheet" th:href="@{/css/GestionSolicitudes.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,38 +16,39 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
+
 <body>
     <aside class="sidebar">
         <hr>
-        <ul class="sidebar__menu"> 
-            <li class="sidebar__item" data-url="">
+        <ul class="sidebar__menu">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
-            
-            <li class="sidebar__item" data-url="">
+
+            <li class="sidebar__item" th:attr="data-url=@{/buques/dashboard-admin/}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/registro-muelle/}">
                 <i class="ri-ship-2-fill"></i>
                 <span class="sidebar__text">Registro Muelle</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/horarios/}">
                 <i class="ri-calendar-todo-fill"></i>
                 <span class="sidebar__text">Horarios</span>
             </li>
 
-            <li class="sidebar__item active" data-url="">
+            <li class="sidebar__item active" data-url="#">
                 <i class="ri-file-list-2-fill"></i>
                 <span class="sidebar__text">Gestion Solicitudes</span>
             </li>
 
             <div class="sidebar__indicator"></div>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/registro-usuarios/}">
                 <i class="ri-user-add-fill"></i>
                 <span class="sidebar__text">Registro Usuario</span>
             </li>
@@ -110,15 +112,16 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
                             <div class="notification-content">
-                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
+                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
+                                    médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -126,9 +129,10 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
                             <div class="notification-content">
-                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
+                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
+                                    una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -191,4 +195,5 @@
 
     <script th:src="@{/js/gestionsolicitudes.js}"></script>
 </body>
+
 </html>
