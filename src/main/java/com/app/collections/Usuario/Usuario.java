@@ -38,6 +38,9 @@ public class Usuario {
     @DBRef
     private Set<Factura> facturas = new HashSet<>();
 
+    @Field(name = "is_2fa_enabled")
+    private boolean isTwoFactorEnabled = false;
+
     @Field(name = "is_enabled")
     private boolean isEnabled;
 

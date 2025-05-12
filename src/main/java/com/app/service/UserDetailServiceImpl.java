@@ -1,7 +1,7 @@
 package com.app.service;
 
 import com.app.collections.Usuario.pojo.Empresa;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
