@@ -296,6 +296,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            idEditarSeleccionado = boton.getAttribute('data-id'); // Guardamos el id
             abrirModal(modalEditar);
         });
     });
@@ -317,10 +318,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Evento cuando hacen click en "Sí" en editar
-    botonSiEditar.addEventListener('click', () => {
+    botonSiEditar.addEventListener('click', async () => {
         cerrarModal(modalEditar);     // Cerramos el modal de confirmación
-        modalEditRegistro.classList.remove('newadd--hidden');
-        modalEditRegistro.classList.add('newadd--visible');
+        // Establecer la acción del formulario con el ID seleccionado
+        formEditar.setAttribute('action', `/buques/registro-muelle/actualizar-muelle/${idEditarSeleccionado}`);
+
+        try {
+            const response = await fetch(`/api/registro-muelle/${idEditarSeleccionado}`);
+            if (!response.ok) throw new Error('Error al obtener los datos');
+
+            const data = await response.json();
+
+            document.getElementById("nombreMuelle").value = data.nombre;
+            document.getElementById("capacidadBuques").value = data.capacidadBuques;
+            document.getElementById("capacidadTotal").value = data.capacidad;
+            document.getElementById("selectEstado").value = data.estadoMuelle;
+
+            // Abrimos el modal de edición
+            modalEditRegistro.classList.remove('newadd--hidden');
+            modalEditRegistro.classList.add('newadd--visible');
+        } catch {
+            console.error(error);
+            alert('No se pudieron cargar los datos del formulario');
+        }
     });
 
     // Evento cuando hace click en "Si" en eliminar
