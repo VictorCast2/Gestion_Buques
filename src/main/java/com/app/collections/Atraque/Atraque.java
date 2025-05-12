@@ -2,6 +2,7 @@ package com.app.collections.Atraque;
 
 import com.app.collections.Atraque.Enum.EResultado;
 import com.app.collections.Atraque.pojo.*;
+import com.app.collections.Muelle.Muelle;
 import com.app.collections.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -47,6 +48,8 @@ public class Atraque {
 
     private Buque buque;
 
+    @DBRef
+    @Field("muelle")
     private Muelle muelle;
 
     @DBRef

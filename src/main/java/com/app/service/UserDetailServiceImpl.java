@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Data
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -50,13 +49,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     /**
      * Método para buscar a un usuario en la base de datos
-     * @param correo parametro por el cual vamos a buscar al usuario, este campo es único
+     * @param correo parámetro por el cual vamos a buscar al usuario, este campo es único
      * @return al modelo Usuario con todos sus datos (tener cuidado con los datos que se mostraran en las vistas)
      */
     public Usuario getUsuarioByCorreo(String correo) {
-        Usuario usuario = usuarioRepository.findByCorreo(correo)
+        return usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("el correo " + correo + " no existe."));
-        return usuario;
     }
 
     /**
