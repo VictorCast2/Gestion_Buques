@@ -19,7 +19,6 @@ import org.springframework.web.util.UriUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-@Data
 @Controller
 @RequestMapping("/buques/SolicitudAtraque")
 public class AtraqueController {

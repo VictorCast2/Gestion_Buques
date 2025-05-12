@@ -1,7 +1,9 @@
-package com.app.collections.Atraque.pojo;
+package com.app.collections.Muelle;
 
-import com.app.collections.Atraque.Enum.EEstado;
+import com.app.collections.Muelle.Enum.EEstado;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
@@ -9,7 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Document(collection = "muelles")
 public class Muelle {
+
+    @Id
+    private String id;
 
     private String nombre;
     @Field("capacidad_Buques")

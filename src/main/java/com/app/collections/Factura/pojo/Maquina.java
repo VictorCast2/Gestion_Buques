@@ -1,6 +1,6 @@
 package com.app.collections.Factura.pojo;
 
-import com.app.collections.Atraque.Enum.EEstado;
+import com.app.collections.Muelle.Enum.EEstado;
 import lombok.*;
 
 @Getter

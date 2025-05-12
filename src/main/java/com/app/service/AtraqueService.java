@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Data
 @Service
 public class AtraqueService {
 
@@ -26,6 +25,26 @@ public class AtraqueService {
 
     @Autowired
     private AtraqueRepository atraqueRepository;
+
+    /**
+     * Método para obtener a un usuario por su correo
+     * @param correo parámetro para buscar al usuario en la base de datos y verificar si existe
+     * @return al usuario de la base de datos o un UsernameNotFoundException si este no fue encontrado
+     */
+    public Usuario getUsuarioByCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new UsernameNotFoundException("Error: el usuario no ha sido encontrado en el atraque " + correo));
+    }
+
+    /**
+     * Método para buscar un atraque en la base de datos por su id
+     * @param id del atraque a buscar
+     * @return el atraque si existe o un NoSuchElementException si no existe
+     */
+    public Atraque getAtraqueById(String id) {
+        return atraqueRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
+    }
 
     public List<Atraque> getAtraquesByUsuario(Usuario agenteNaviero) {
         return atraqueRepository.findByAgenteNaviero(agenteNaviero);
@@ -74,8 +93,7 @@ public class AtraqueService {
      */
     public AuthResponse crearSolicitudAtraque(@Valid AtraqueRequest atraqueRequest, CustomUserDetails userDetails) {
 
-        Usuario agenteNaviero = usuarioRepository.findByCorreo(userDetails.getCorreo())
-                .orElseThrow(() -> new UsernameNotFoundException("usuario no encontrado en la solicitud de atraque " + userDetails.getCorreo()));
+        Usuario agenteNaviero = this.getUsuarioByCorreo(userDetails.getCorreo());
 
         Buque buque = asignarBuque(atraqueRequest.buque()); // este método se llama abajo, aquí se crea el buque
 
@@ -133,10 +151,9 @@ public class AtraqueService {
 
     public AuthResponse updateSolicitudAtraque(@Valid AtraqueRequest atraqueRequest, String id) {
 
-        Atraque atraqueActualizado = atraqueRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
+        Atraque atraqueActualizado = this.getAtraqueById(id);
 
-        // Actualizamos los datos de las dimensiones de buque
+        // Actualizamos los datos de las dimensiones del buque
         Dimension dimensionActualizada = atraqueActualizado.getBuque().getDimensiones();
         dimensionActualizada.setPeso(atraqueRequest.buque().dimensiones().peso());
         dimensionActualizada.setLargo(atraqueRequest.buque().dimensiones().largo());

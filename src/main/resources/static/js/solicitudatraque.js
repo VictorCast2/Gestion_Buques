@@ -805,9 +805,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
-
-
     // Evento cuando hace click en "Si" en eliminar
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', () => {

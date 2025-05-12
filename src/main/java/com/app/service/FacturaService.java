@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Data
 @Service
 public class FacturaService {
 
@@ -110,7 +109,7 @@ public class FacturaService {
      * @param procesoRequest parámetro con los datos necesarios para crear el proceso
      * @return un proceso creado, usado para crear la factura en el método registrarProceso
      */
-    public Proceso crearProcesos(ProcesoRequest procesoRequest) {
+    public Proceso crearProcesos(@Valid ProcesoRequest procesoRequest) {
         int precioUnitario = 0; // por ahora ese será el valor por defecto
 
         if (procesoRequest.tipoCarga().equals(ECarga.RO.toString())) {
@@ -143,10 +142,41 @@ public class FacturaService {
                 .build();
     }
 
+    public AuthResponse updateProceso(@Valid FacturaProcesoRequest facturaProcesoRequest, String id) {
+
+        Factura factura = facturaRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("La factura con id: '" + id + "' no existe"));
+
+        if (factura.getEstado() != EEstadoFactura.PENDIENTE) {
+            throw new IllegalStateException("Error: no se puede editar una factura con estado diferente a 'PENDIENTE'");
+        }
+
+        factura.getProcesos().clear();
+
+        List<Proceso> nuevosProcesos = facturaProcesoRequest.procesoRequests().stream()
+                .map(this::crearProcesos).toList();
+
+        float iva = nuevosProcesos.stream().mapToInt(Proceso::getSubtotal).sum() * 0.19f;
+
+        double total = nuevosProcesos.stream().mapToInt(Proceso::getSubtotal).sum() + iva;
+
+        factura.setProcesos(nuevosProcesos);
+        factura.setTotal(total);
+
+        facturaRepository.save(factura);
+
+        return new AuthResponse("el proceso se ha actualizado exitosamente");
+    }
+
+    /**
+     * Método para eliminar un proceso (factura) por su id
+     * @param id parámetro para obtener la factura a eliminar
+     * @return un objeto de tipo AuthResponse con un mensaje de satisfacción o un error dependiendo del estado del proceso
+     */
     public AuthResponse deleteFactura(String id) {
 
         Factura factura = facturaRepository.findById(id)
-                        .orElseThrow(() -> new UsernameNotFoundException("La factura no existe"));
+                        .orElseThrow(() -> new NoSuchElementException("Factura no encontrada"));
 
         Proceso proceso = factura.getProcesos().getFirst();
 
@@ -155,7 +185,7 @@ public class FacturaService {
             return new AuthResponse("El proceso ha sido eliminado exitosamente");
         }
 
-        return new AuthResponse("No se puede eliminar un proceso que este en un estado diferente a 'PENDIENTE'");
+        return new AuthResponse("Error: No se puede eliminar un proceso que este en un estado diferente a 'PENDIENTE'");
     }
 
 }
