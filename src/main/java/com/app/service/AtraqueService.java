@@ -136,7 +136,7 @@ public class AtraqueService {
         Atraque atraqueActualizado = atraqueRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
 
-        // Actualizamos los datos de las dimensiones de buque
+        // Actualizamos los datos de las dimensiones del buque
         Dimension dimensionActualizada = atraqueActualizado.getBuque().getDimensiones();
         dimensionActualizada.setPeso(atraqueRequest.buque().dimensiones().peso());
         dimensionActualizada.setLargo(atraqueRequest.buque().dimensiones().largo());

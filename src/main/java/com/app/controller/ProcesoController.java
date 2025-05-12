@@ -53,6 +53,13 @@ public class ProcesoController {
         return "redirect:/buques/Procesos/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
     }
 
+    @PostMapping("/actualizar-proceso/{id}")
+    public String actualizarProcesos(@ModelAttribute @Valid FacturaProcesoRequest facturaProcesoRequest, @PathVariable String id) {
+        AuthResponse response = facturaService.updateProceso(facturaProcesoRequest, id);
+        String mensaje = response.mensaje();
+        return "redirect:/buques/Procesos/?mensaje=" + UriUtils.encode(mensaje, StandardCharsets.UTF_8);
+    }
+
     @PostMapping("/eliminar-factura/{id}")
     public String eliminarFactura(@PathVariable String id) {
         AuthResponse response = facturaService.deleteFactura(id);
