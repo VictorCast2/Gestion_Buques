@@ -58,8 +58,7 @@ public class AtraqueService {
      */
     public AtraqueRequest getAtraqueRequestById(String id) {
 
-        Atraque atraque = atraqueRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
+        Atraque atraque = this.getAtraqueById(id);
 
         DimensionRequest dimensionRequest = new DimensionRequest(
                 atraque.getBuque().getDimensiones().getPeso(),

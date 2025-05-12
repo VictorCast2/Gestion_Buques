@@ -23,6 +23,18 @@ public class MuelleService {
                 .orElseThrow(() -> new NoSuchElementException("Error: el muelle con id " + id + " no existe o ha sido eliminado"));
     }
 
+    public MuelleRequest getMuelleRequestById(String id) {
+
+        Muelle muelle = this.getMuelleById(id);
+
+        return new MuelleRequest(
+                muelle.getNombre(),
+                muelle.getCapacidadBuques(),
+                muelle.getCapacidad(),
+                muelle.getEstado().toString()
+        );
+    }
+
     public List<Muelle> getMuelles() {
         return muelleRepository.findAll();
     }
@@ -39,6 +51,20 @@ public class MuelleService {
         muelleRepository.save(muelle);
 
         return new AuthResponse("Muelle creado exitosamente");
+    }
+
+    public AuthResponse updateMuelle(@Valid MuelleRequest muelleRequest, String id) {
+
+        Muelle muelleActualizado = this.getMuelleById(id);
+
+        muelleActualizado.setNombre(muelleRequest.nombre());
+        muelleActualizado.setCapacidadBuques(muelleRequest.capacidadBuques());
+        muelleActualizado.setCapacidad(muelleRequest.capacidad());
+        muelleActualizado.setEstado(EEstado.valueOf(muelleRequest.estadoMuelle()));
+
+        muelleRepository.save(muelleActualizado);
+
+        return new AuthResponse("Muelle actualizado exitosamente");
     }
 
     public AuthResponse deleteMuelleById(String id) {
