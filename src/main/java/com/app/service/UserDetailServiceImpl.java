@@ -1,7 +1,8 @@
 package com.app.service;
 
 import com.app.collections.Usuario.pojo.Empresa;
-import com.app.security.CustomUserDetails;
+import com.app.collections.Usuario.pojo.Redis.TwoFactorEnabledRequest;
+import com.app.utils.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
@@ -11,6 +12,7 @@ import com.app.utils.JwtUtils;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,7 +35,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Autowired
-    private RedisTemplate<String, AuthLoginRequest> redisTemplate;
+    @Qualifier("twoFactorEnabledRequestRedisTemplate")
+    private RedisTemplate<String, TwoFactorEnabledRequest> twoFactorRedisTemplate;
+
+    @Autowired
+    @Qualifier("authLoginRequestRedisTemplate")
+    private RedisTemplate<String, AuthLoginRequest> authRedisTemplate;
+
 
     /**
      * Método para cargar al usuario por su correo
@@ -93,9 +101,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         usuarioRepository.save(usuario); // salvamos al usuario
 
         // Guardamos el usuario en Redis
-        if(!redisTemplate.hasKey("login:" + correo)) {
+        if(!authRedisTemplate.hasKey("login:" + correo)) {
             AuthLoginRequest authLoginRequest = new AuthLoginRequest(correo, encoder.encode(password));
-            redisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
+            authRedisTemplate.opsForValue().set("login:" + correo, authLoginRequest);
         }
 
         return new AuthResponse("usuario creado exitosamente");
@@ -115,10 +123,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Guardar contraseña encriptada en Redis
-            AuthLoginRequest existingCache = redisTemplate.opsForValue().get("login:" + correo);
+            AuthLoginRequest existingCache = authRedisTemplate.opsForValue().get("login:" + correo);
             if (existingCache == null) {
                 AuthLoginRequest encryptedCache = new AuthLoginRequest(correo, encoder.encode(password));
-                redisTemplate.opsForValue().set("login:" + correo, encryptedCache);
+                authRedisTemplate.opsForValue().set("login:" + correo, encryptedCache);
             }
 
             return jwtUtils.crearToken(authentication);
@@ -137,7 +145,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public Authentication authentication(String correo, String password) {
         UserDetails userDetails = this.loadUserByUsername(correo);
 
-        AuthLoginRequest cachedRequest = redisTemplate.opsForValue().get("login:" + correo);
+        AuthLoginRequest cachedRequest = authRedisTemplate.opsForValue().get("login:" + correo);
 
         if (cachedRequest != null) {
             // Comparamos la contraseña usando BCrypt (u otro encoder)
@@ -159,7 +167,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         // Guardamos en Redis la contraseña codificada (para futuras autenticaciones más rápidas)
         AuthLoginRequest newCache = new AuthLoginRequest(correo, userDetails.getPassword());
-        redisTemplate.opsForValue().set("login:" + correo, newCache);
+        authRedisTemplate.opsForValue().set("login:" + correo, newCache);
 
         return new UsernamePasswordAuthenticationToken(correo, userDetails.getPassword(), userDetails.getAuthorities());
     }
@@ -188,7 +196,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         // Actualizamos el valor en Redis
         AuthLoginRequest updatedCache = new AuthLoginRequest(usuario.getCorreo(), encoder.encode(newPassword));
-        redisTemplate.opsForValue().set("login:" + usuario.getCorreo(), updatedCache);
+        authRedisTemplate.opsForValue().set("login:" + usuario.getCorreo(), updatedCache);
 
         usuario.setPassword(encoder.encode(newPassword));
         usuarioRepository.save(usuario);
@@ -222,15 +230,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
         usuarioRepository.save(usuarioActualizado);
 
         // 1. Guardamos la contraseña actual desde Redis (si existe)
-        AuthLoginRequest oldCache = redisTemplate.opsForValue().get("login:" + correoAnterior);
+        AuthLoginRequest oldCache = authRedisTemplate.opsForValue().get("login:" + correoAnterior);
         String currentPasswordCache = (oldCache != null) ? oldCache.password() : usuarioActualizado.getPassword(); // fallback a BD si no está en Redis
 
         // 2. Borramos la key anterior
-        redisTemplate.delete("login:" + correoAnterior);
+        authRedisTemplate.delete("login:" + correoAnterior);
 
         // 3. Creamos la nueva entrada con el nuevo correo y la misma contraseña
         AuthLoginRequest updatedCache = new AuthLoginRequest(usuarioActualizado.getCorreo(), encoder.encode(currentPasswordCache));
-        redisTemplate.opsForValue().set("login:" + usuarioActualizado.getCorreo(), updatedCache);
+        authRedisTemplate.opsForValue().set("login:" + usuarioActualizado.getCorreo(), updatedCache);
 
         return new AuthResponse("Sus datos se han actualizado exitosamente");
     }
@@ -265,11 +273,43 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Usuario usuario = this.getUsuarioByCorreo(correo);
 
         // Eliminar la key de Redis
-        redisTemplate.delete("login:" + usuario.getCorreo());
+        authRedisTemplate.delete("login:" + usuario.getCorreo());
 
         // Eliminar el usuario de la base de datos
         usuarioRepository.delete(usuario);
         return new AuthResponse("Sus datos han sido eliminados exitosamente");
+    }
+
+    /**
+     * Método para habilitar o deshabilitar el 2FA
+     * @param twoFactorEnabledRequest parámetro con los datos necesarios para habilitar o deshabilitar el 2FA
+     * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
+     */
+    public AuthResponse autentication2FactorRedis(@Valid TwoFactorEnabledRequest twoFactorEnabledRequest) {
+        // Obtenemos el usuario actual de la sesión
+        Usuario usuarioActualizado = this.getUsuarioByCorreo(twoFactorEnabledRequest.getCorreo());
+
+        // Guardar los datos de TwoFactor en Redis
+        String keyTwoFactor = "Auth2Factor:" + usuarioActualizado.getCorreo();
+        twoFactorRedisTemplate.opsForValue().set(keyTwoFactor, twoFactorEnabledRequest);
+
+        // Guardar el estado de TwoFactor en el usuario
+        return new AuthResponse("Autenticación de dos pasos activada y almacenada correctamente");
+    }
+
+    /**
+     * Método para verificar las preguntas de seguridad del 2FA
+     * @param correo parámetro por el cual vamos a buscar al usuario, este campo es único
+     * @param respuesta1 respuesta a la primera pregunta de seguridad
+     * @param respuesta2 respuesta a la segunda pregunta de seguridad
+     * @return true si las respuestas son correctas, false en caso contrario
+     */
+    public boolean verificarPreguntas(String correo, String respuesta1, String respuesta2) {
+        String key = "Auth2Factor:" + correo;
+        TwoFactorEnabledRequest datos = twoFactorRedisTemplate.opsForValue().get(key);
+        if (datos == null) return false;
+        return datos.getRespuesta1().equalsIgnoreCase(respuesta1.trim()) &&
+                datos.getRespuesta2().equalsIgnoreCase(respuesta2.trim());
     }
 
 }

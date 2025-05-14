@@ -4,7 +4,7 @@ import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
 import com.app.dto.response.AuthResponse;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import com.app.service.*;
 import jakarta.validation.Valid;
 import lombok.Data;

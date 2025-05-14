@@ -5,7 +5,7 @@ import com.app.collections.Factura.Factura;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.FacturaProcesoRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import com.app.service.*;
 import jakarta.validation.Valid;
 import lombok.Data;

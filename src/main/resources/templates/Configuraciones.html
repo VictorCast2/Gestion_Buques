@@ -174,10 +174,11 @@
                     </label>
                 </div>
 
-                <form class="formulario">
+                <form class="formulario" th:action="@{/buques/configuraciones/acticcion-autenticacion-2-pasos}" method="post">
+                    <input type="hidden" th:name="correo" th:value="${usuario.correo}" />
                     <div class="formulario__input">
                         <div class="custom-select-wrapper">
-                            <select class="styled-select" id="pregunta1">
+                            <select class="styled-select" name="pregunta1" id="pregunta1" required>
                                 <option disabled selected>Selecciona una pregunta 1</option>
                                 <option value="Mascota">¿Cuál es el nombre de tu  mascota?</option>
                                 <option value="Colegio">¿Cuál fue tu primer colegio?</option>
@@ -192,7 +193,7 @@
 
                     <div class="formulario__input">
                         <div class="input-box">
-                            <input type="text" autocomplete="off" placeholder="" name="Respuesta" id="respuesta1">
+                            <input type="text" autocomplete="off" name="respuesta1" placeholder="Respuesta 1" id="respuesta1" required>
                             <label class="label" for="respuesta1">Respuesta 1</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -204,7 +205,7 @@
 
                     <div class="formulario__input input--changed">
                         <div class="custom-select-wrapper">
-                            <select class="styled-select" id="pregunta2">
+                            <select class="styled-select" id="pregunta2" name="pregunta2" required>
                                 <option disabled selected>Selecciona una pregunta 2</option>
                                 <option value="Comida">¿Cuál es tu comida favorita?</option>
                                 <option value="Trabajo">¿Cuál fue tu primer trabajo?</option>
@@ -219,7 +220,7 @@
 
                     <div class="formulario__input input--changed">
                         <div class="input-box">
-                            <input type="text" autocomplete="off" placeholder="" name="Respuesta" id="respuesta2">
+                            <input type="text" autocomplete="off" name="respuesta2" placeholder="Respuesta 2" id="respuesta2" required>
                             <label class="label" for="respuesta2">Respuesta 2</label>
                             <span class="box__icon"><i class="ri-check-line"></i></span>
                             <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -240,7 +241,6 @@
 
                 </form>
             </div>
-
         </div>
         <div class="div3">
             <div class="content">

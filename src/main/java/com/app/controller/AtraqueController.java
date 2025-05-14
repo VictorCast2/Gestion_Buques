@@ -5,7 +5,7 @@ import com.app.collections.Atraque.Enum.ETipoBuque;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.AtraqueRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import com.app.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

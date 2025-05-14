@@ -8,7 +8,7 @@ import com.app.dto.request.*;
 import com.app.dto.request.DimensionRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.*;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
