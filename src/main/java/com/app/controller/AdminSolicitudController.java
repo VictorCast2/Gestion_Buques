@@ -9,10 +9,9 @@ import com.app.service.UserDetailServiceImpl;
 
 import lombok.Data;
 
-@Data
 @Controller
 @RequestMapping("/buques/gestion-solicitud")
-public class GestionSolicitud {
+public class AdminSolicitudController {
 
         @Autowired
     private UserDetailServiceImpl userDetailService;

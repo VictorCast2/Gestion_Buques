@@ -146,13 +146,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
-    const modalNit = document.getElementById("modalNit");
-    const modalNombreEmpresa = document.getElementById("modalNombreEmpresa");
-    const modalPais = document.getElementById("modalPais");
-    const modalCiudad = document.getElementById("modalCiudad");
-    const modalDireccion = document.getElementById("modalDireccion");
-    const modalEmail = document.getElementById("modalEmail");
-    const modalTelefono = document.getElementById("modalTelefono");
+    const modalAgenteNaviero = document.getElementById("modalAgenteNaviero");
+    const modalMatricula = document.getElementById("modalMatricula");
+    const modalTipoBuque = document.getElementById("modalTipoBuque");
+    const modalProcedencia = document.getElementById("modalProcedencia");
+    const modalFechaEntrada = document.getElementById("modalFechaEntrada");
+    const modalFechaSalida = document.getElementById("modalFechaSalida");
+    const modalDimensiones = document.getElementById("modalDimensiones");
 
     filas.forEach(fila => {
         fila.addEventListener("click", (e) => {
@@ -167,13 +167,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
             if (celdas.length >= 6) {
-                modalNit.textContent = celdas[0].textContent.trim();
-                modalNombreEmpresa.textContent = celdas[1].textContent.trim();
-                modalPais.textContent = celdas[2].textContent.trim();
-                modalCiudad.textContent = celdas[3].textContent.trim();
-                modalDireccion.textContent = celdas[4].textContent.trim();
-                modalEmail.textContent = celdas[5].textContent.trim();
-                modalTelefono.textContent = celdas[6].textContent.trim();
+                modalAgenteNaviero.textContent = celdas[0].textContent.trim();
+                modalMatricula.textContent = celdas[1].textContent.trim();
+                modalTipoBuque.textContent = celdas[2].textContent.trim();
+                modalProcedencia.textContent = celdas[3].textContent.trim();
+                modalFechaEntrada.textContent = celdas[4].textContent.trim();
+                modalFechaSalida.textContent = celdas[5].textContent.trim();
+                modalDimensiones.textContent = celdas[6].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -229,7 +229,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    //retornar a las paginas
     document.querySelectorAll('.sidebar__item').forEach(item => {
         item.addEventListener('click', () => {
             const url = item.getAttribute('data-url');

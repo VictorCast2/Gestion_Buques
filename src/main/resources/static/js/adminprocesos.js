@@ -146,13 +146,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
-    const modalNit = document.getElementById("modalNit");
-    const modalNombreEmpresa = document.getElementById("modalNombreEmpresa");
-    const modalPais = document.getElementById("modalPais");
-    const modalCiudad = document.getElementById("modalCiudad");
-    const modalDireccion = document.getElementById("modalDireccion");
-    const modalEmail = document.getElementById("modalEmail");
-    const modalTelefono = document.getElementById("modalTelefono");
+    const modalOperacion = document.getElementById("modalOperacion");
+    const modalCarga = document.getElementById("modalCarga");
+    const modalProducto = document.getElementById("modalProducto");
+    const modalCantidadProducto = document.getElementById("modalCantidadProducto");
+    const modalDescripcion = document.getElementById("modalDescripcion");
 
     filas.forEach(fila => {
         fila.addEventListener("click", (e) => {
@@ -167,13 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
             if (celdas.length >= 6) {
-                modalNit.textContent = celdas[0].textContent.trim();
-                modalNombreEmpresa.textContent = celdas[1].textContent.trim();
-                modalPais.textContent = celdas[2].textContent.trim();
-                modalCiudad.textContent = celdas[3].textContent.trim();
-                modalDireccion.textContent = celdas[4].textContent.trim();
-                modalEmail.textContent = celdas[5].textContent.trim();
-                modalTelefono.textContent = celdas[6].textContent.trim();
+                modalOperacion.textContent = celdas[0].textContent.trim();
+                modalCarga.textContent = celdas[1].textContent.trim();
+                modalProducto.textContent = celdas[2].textContent.trim();
+                modalCantidadProducto.textContent = celdas[3].textContent.trim();
+                modalDescripcion.textContent = celdas[4].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -229,7 +225,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    //retornar a las paginas
     document.querySelectorAll('.sidebar__item').forEach(item => {
         item.addEventListener('click', () => {
             const url = item.getAttribute('data-url');
@@ -248,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
         exportarDiv.classList.toggle('active');
     });
 
-        document.querySelectorAll('.button__add').forEach(button => {
+    document.querySelectorAll('.button__add').forEach(button => {
         button.addEventListener('click', () => {
             const url = button.getAttribute('data-url');
             if (url) {

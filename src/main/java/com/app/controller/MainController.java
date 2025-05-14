@@ -2,7 +2,6 @@ package com.app.controller;
 
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.response.AuthResponse;
-import com.app.security.CustomUserDetails;
 import com.app.service.UserDetailServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

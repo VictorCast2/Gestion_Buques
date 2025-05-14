@@ -713,6 +713,7 @@ body.dark-mode .notification-content .time{
     margin-left: -80px;
 }
 
+
 /* Notificaciones */
 .container__table {
     background-color: var(--color-tercario);
@@ -771,6 +772,12 @@ body.dark-mode .notification-content .time{
     cursor: pointer;
 }
 
+.notification__description {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100px;
+}
 
 .notification__search-container {
     position: relative;
@@ -979,7 +986,6 @@ body.dark-mode .notification-content .time{
     margin: 5px 30px 0 0;
 }
 
-/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -1030,6 +1036,20 @@ body.dark-mode .notification-content .time{
 
 .modal-info .text__str {
     font: 600 1.2rem "Noto Sans";
+}
+
+.modal-description {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+    font: 500 0.95rem "Montserrat";
+    text-align: justify;
+}
+
+.modal-description .description__title {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #444;
 }
 
 .hidden {
