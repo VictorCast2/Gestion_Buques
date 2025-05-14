@@ -366,6 +366,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalEliminar = document.getElementById('modalConfirmacion2');
     const modalEditRegistro = document.getElementById('modalnewadd2');
 
+    // Formularios
+    const formEditar = document.getElementById('formEditar');
+    const formEliminar = document.getElementById('formEliminar');
+
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
@@ -382,9 +386,13 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('confirmacion--hidden');
     }
 
+    // Variable global para guardar el id de la solicitud que se va a editar
+    let idEditarSeleccionado = null;
+
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            idEditarSeleccionado = boton.getAttribute('data-id'); // Guardamos el id
             abrirModal(modalEditar);
         });
     });
@@ -406,10 +414,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Evento cuando hacen click en "Sí" en editar
-    botonSiEditar.addEventListener('click', () => {
-        cerrarModal(modalEditar);     // Cerramos el modal de confirmación
+    botonSiEditar.addEventListener('click', async () => {
+        cerrarModal(modalEditar);   // Cerramos el modal de confirmación
+        // Establecer la acción del formulario con el ID seleccionado
+        formEditar.setAttribute('action', `/buques/Procesos/actualizar-proceso/${idEditarSeleccionado}`);
+
+        // Abrimos el modal de edición
         modalEditRegistro.classList.remove('newadd--hidden');
         modalEditRegistro.classList.add('newadd--visible');
+    });
+
+    // Evento cuando hace click en "Si" en eliminar
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const id = boton.getAttribute('data-id');
+            formEliminar.setAttribute('action', `/buques/Procesos/eliminar-factura/${id}`);
+            abrirModal(modalEliminar);
+        });
     });
 
     // Cerrar modal al hacer click fuera del contenido

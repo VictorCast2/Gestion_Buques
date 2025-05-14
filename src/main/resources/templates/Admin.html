@@ -20,34 +20,34 @@
         <hr>
         <ul class="sidebar__menu">
 
-            <li class="sidebar__item active" data-url="">
+            <li class="sidebar__item active" data-url="#">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
             
             <div class="sidebar__indicator"></div>
         
-            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/dashboard}">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/dashboard-admin/}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
             </li>
 
-            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/registro-muelle}">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/registro-muelle/}">
                 <i class="ri-ship-2-fill"></i>
                 <span class="sidebar__text">Registro Muelle</span>
             </li>
         
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/horarios/}">
                 <i class="ri-calendar-todo-fill"></i>
                 <span class="sidebar__text">Horarios</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/gestion-solicitud/}">
                 <i class="ri-file-list-2-fill"></i>
                 <span class="sidebar__text">Gestion Solicitudes</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/registro-usuarios/}">
                 <i class="ri-user-add-fill"></i>
                 <span class="sidebar__text">Registro Usuario</span>
             </li>

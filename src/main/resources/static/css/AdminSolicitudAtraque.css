@@ -713,6 +713,7 @@ body.dark-mode .notification-content .time{
     margin-left: -80px;
 }
 
+
 /* Notificaciones */
 .container__table {
     background-color: var(--color-tercario);
@@ -763,7 +764,7 @@ body.dark-mode .notification-content .time{
 }
 
 .notification__table td {
-    padding: 35px 16px 35px 16px;
+    padding: 30px 16px 23px 16px;
     text-align: center;
     vertical-align: top;
     border-bottom: 1px solid #e0e0e0;
@@ -905,7 +906,7 @@ body.dark-mode .notification-content .time{
 .content__icon {
     border: none;
     outline: none;
-    width: 55px;       
+    width: 40px;       
     height: 30px;        
     border-radius: 6px;
     font: 600 14px "Noto Sans", sans-serif;

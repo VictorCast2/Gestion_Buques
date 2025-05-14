@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,29 +24,29 @@
                 <span class="sidebar__text">Inicio</span>
             </li>
             
-            <li class="sidebar__item" th:attr="data-url=@{/buques/admin/dashboard}">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/dashboard-admin/}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
             </li>
 
-            <li class="sidebar__item active" data-url="">
+            <li class="sidebar__item active" data-url="#">
                 <i class="ri-ship-2-fill"></i>
                 <span class="sidebar__text">Registro Muelle</span>
             </li>
 
             <div class="sidebar__indicator"></div>
         
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/horarios/}">
                 <i class="ri-calendar-todo-fill"></i>
                 <span class="sidebar__text">Horarios</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/gestion-solicitud/}">
                 <i class="ri-file-list-2-fill"></i>
                 <span class="sidebar__text">Gestion Solicitudes</span>
             </li>
 
-            <li class="sidebar__item" data-url="">
+            <li class="sidebar__item" th:attr="data-url=@{/buques/registro-usuarios/}">
                 <i class="ri-user-add-fill"></i>
                 <span class="sidebar__text">Registro Usuario</span>
             </li>
@@ -112,7 +112,7 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -120,7 +120,7 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -128,7 +128,7 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -143,39 +143,42 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/}" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -217,19 +220,19 @@
                         <div class="exportar__item">
                             <div class="exportar-option">
                                 <span>PDF</span>
-                                <img th:src="@{assets/image/pdf.png}" alt="Exportar PDF">
+                                <img th:src="@{/css/assets/image/pdf.png}" alt="Exportar PDF">
                             </div>
                             <div class="exportar-option">
                                 <span>JSON</span>
-                                <img th:src="{assets/image/json.png}" alt="Exportar JSON">
+                                <img th:src="@{/css/assets/image/json.png}" alt="Exportar JSON">
                             </div>
                             <div class="exportar-option">
                                 <span>CSV</span>
-                                <img th:src="@{assets/image/csv.png}" alt="Exportar CSV">
+                                <img th:src="@{/css/assets/image/csv.png}" alt="Exportar CSV">
                             </div>
                             <div class="exportar-option">
                                 <span>EXCEL</span>
-                                <img th:src="@{assets/image/excel.png}" alt="Exportar Excel">
+                                <img th:src="@{/css/assets/image/excel.png}" alt="Exportar Excel">
                             </div>
                         </div>
                     </div>
@@ -241,77 +244,33 @@
                             <tr>
                                 <th>Nombre Muelle</th>
                                 <th>Capacidad Buques</th>
-                                <th>Capacidad Total</th>
+                                <th>Capacidad Total (T)</th>
                                 <th>Estado</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr>
-                                <td>Muelle Manga</td>
-                                <td>10</td>
-                                <td>200 kg</td>
+                            <tr th:if="${listarMuelles.isEmpty()}">
+                                <td colspan="8" style="text-align: center; font-style: italic; color: #888;">
+                                    Aún no tiene muelles registrados.
+                                </td>
+                            </tr>
+                            <tr th:each="muelle : ${listarMuelles}">
+                                <td th:text="${muelle.nombre}">Nombre Muelle</td>
+                                <td th:text="${muelle.capacidadBuques}">Capacidad Buque</td>
+                                <td th:text="${muelle.capacidad}">Capacidad Total (T)</td>
                                 <td>
-                                    <button class="estado">DISPONIBLE</button>
+                                    <button class="estado" th:text="${muelle.estado.descripcion}">Estado Muelle</button>
                                 </td>
                                 <td>
-                                    <button class="content__icon icon--edit">
+                                    <button class="content__icon icon--edit" th:data-id="${muelle.id}">
                                         <i class="ri-pencil-line"></i>
                                     </button>
-                                    <button class="content__icon icon--delete">
+                                    <button class="content__icon icon--delete" th:data-id="${muelle.id}">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Muelle Manga</td>
-                                <td>10</td>
-                                <td>200 kg</td>
-                                <td>
-                                    <button class="estado">En USO</button>
-                                </td>
-                                <td>
-                                    <button class="content__icon icon--edit">
-                                        <i class="ri-pencil-line"></i>
-                                    </button>
-                                    <button class="content__icon icon--delete">
-                                        <i class="ri-delete-bin-6-line"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Muelle Manga</td>
-                                <td>10</td>
-                                <td>200 kg</td>
-                                <td>
-                                    <button class="estado">EN MANTENIMIENTO</button>
-                                </td>
-                                <td>
-                                    <button class="content__icon icon--edit">
-                                        <i class="ri-pencil-line"></i>
-                                    </button>
-                                    <button class="content__icon icon--delete">
-                                        <i class="ri-delete-bin-6-line"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Muelle Manga</td>
-                                <td>10</td>
-                                <td>200 kg</td>
-                                <td>
-                                    <button class="estado">FUERA DE SERVICIO</button>
-                                </td>
-                                <td>
-                                    <button class="content__icon icon--edit">
-                                        <i class="ri-pencil-line"></i>
-                                    </button>
-                                    <button class="content__icon icon--delete">
-                                        <i class="ri-delete-bin-6-line"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <!-- Más filas si es necesario -->
                         </tbody>
                     </table>
 
@@ -349,8 +308,11 @@
     <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas Seguro que quieres editar este registro?</p>
-            <button class="boton boton-si">Sí</button>
-            <button class="boton boton-no">No</button>
+            <form>
+                <button type="button" class="boton boton-si">Sí</button>
+                <button type="button" class="boton boton-no">No</button>
+            </form>
+
         </div>
     </div>
 
@@ -358,8 +320,10 @@
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <form method="post" id="formEliminar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 
@@ -369,11 +333,11 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Añadir Nuevo Registro</h2>
             <div class="content__relleno"></div>
-            <form class="add__formulario" action="">
+            <form action="/buques/registro-muelle/crear-muelle" method="post" class="add__formulario">
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="text" autocomplete="off" placeholder="" name="NombreMuelle"
+                        <input type="text" autocomplete="off" placeholder="" name="nombre"
                             id="nombreMuelle">
                         <label class="label" for="nombreMuelle">Nombre Muelle</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -386,7 +350,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="CapacidadBuques"
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="capacidadBuques"
                             id="capacidadBuques">
                         <label class="label" for="capacidadBuques">Capacidad Buques</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -399,7 +363,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Capacidad Total"
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="capacidad"
                             id="capacidadTotal">
                         <label class="label" for="capacidadTotal">Capacidad Total (T)</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -412,12 +376,11 @@
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" id="selectEstado">
+                        <select class="styled-select" name="estadoMuelle" id="selectEstado">
                             <option disabled selected>Estado</option>
-                            <option value="DI">DISPONIBLE</option>
-                            <option value="EU">EN USO</option>
-                            <option value="EM">EN MANTENIMIENTO</option>
-                            <option value="FS"> FUERA DE SERVICIO</option>
+                            <option th:each="estado : ${estadosMuelle}"
+                                    th:value="${estado.name()}"
+                                    th:text="${estado.descripcion}">Estados Muelle</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -441,11 +404,11 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Editar Registro Muelle</h2>
             <div class="content__relleno"></div>
-            <form class="add__formulario" action="">
+            <form method="post" class="add__formulario" id="formEditar">
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="text" autocomplete="off" placeholder="" name="NombreMuelle"
+                        <input type="text" autocomplete="off" placeholder="" name="nombre"
                             id="nombreMuelle">
                         <label class="label" for="nombreMuelle">Nombre Muelle</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -458,7 +421,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="CapacidadBuques"
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="capacidadBuques"
                             id="capacidadBuques">
                         <label class="label" for="capacidadBuques">Capacidad Buques</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -471,7 +434,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Capacidad Total"
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="capacidad"
                             id="capacidadTotal">
                         <label class="label" for="capacidadTotal">Capacidad Total (T)</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
@@ -484,12 +447,11 @@
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" id="selectEstado">
+                        <select class="styled-select" name="estadoMuelle" id="selectEstado">
                             <option disabled selected>Estado</option>
-                            <option value="DI">DISPONIBLE</option>
-                            <option value="EU">EN USO</option>
-                            <option value="EM">EN MANTENIMIENTO</option>
-                            <option value="FS"> FUERA DE SERVICIO</option>
+                            <option th:each="estado : ${estadosMuelle}"
+                                    th:value="${estado.name()}"
+                                    th:text="${estado.descripcion}">Estados Muelle</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -502,7 +464,7 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
-                <button class="formulario__button" type="submit">Guardar Actualizacion</button>
+                <button class="formulario__button" type="submit">Guardar Actualización</button>
             </form>
         </div>
     </div>

@@ -19,14 +19,4 @@ public class AdminController {
         return "Admin";
     }
 
-    @GetMapping("/dashboard")
-    public String adminDashboard() {
-        return "DashboardAdmin";
-    }
-
-    @GetMapping("/registro-muelle")
-    public String adminRegistroMuelle() {
-        return "RegistroMuelle";
-    }
-
 }

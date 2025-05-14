@@ -242,22 +242,22 @@
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr th:if="${procesos.isEmpty()}">
+                            <tr th:if="${facturas.isEmpty()}">
                                 <td colspan="6" style="text-align: center; font-style: italic; color: #888;">
                                     Aún no tiene registros de procesos.
                                 </td>
                             </tr>
-                            <tr th:each="proceso : ${procesos}">
-                                <td th:text="${proceso.tipoOperacion.descripcion}">Tipo Operacion</td>
-                                <td th:text="${proceso.tipoCarga.descripcion}">Tipo Carga</td>
-                                <td th:text="${proceso.tipoProducto}">Tipo Producto</td>
-                                <td th:text="${proceso.cantidad}">Cantidad</td>
-                                <td th:text="${proceso.descripcion}" class="notification__description">Descripción</td>
+                            <tr th:each="factura : ${facturas}">
+                                <td th:text="${factura.procesos[0].tipoOperacion.descripcion}">Tipo Operacion</td>
+                                <td th:text="${factura.procesos[0].tipoCarga.descripcion}">Tipo Carga</td>
+                                <td th:text="${factura.procesos[0].tipoProducto}">Tipo Producto</td>
+                                <td th:text="${factura.procesos[0].cantidad}">Cantidad</td>
+                                <td th:text="${factura.procesos[0].descripcion}" class="notification__description">Descripción</td>
                                 <td>
-                                    <button class="content__icon icon--edit">
+                                    <button class="content__icon icon--edit" th:if="${factura.procesos[0].estadoProceso.name() == 'PENDIENTE'}" th:data-id="${factura.id}">
                                         <i class="ri-pencil-line"></i>
                                     </button>
-                                    <button class="content__icon icon--delete">
+                                    <button class="content__icon icon--delete" th:if="${factura.procesos[0].estadoProceso.name() == 'PENDIENTE'}" th:data-id="${factura.id}">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </td>
@@ -282,8 +282,8 @@
     <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas Seguro que quieres editar este registro?</p>
-            <button class="boton boton-si">Sí</button>
-            <button class="boton boton-no">No</button>
+            <button type="button" class="boton boton-si">Sí</button>
+            <button type="button" class="boton boton-no">No</button>
         </div>
     </div>
 
@@ -291,8 +291,10 @@
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas Seguro que quieres eliminar este registro?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <form method="post" id="formEliminar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 
@@ -430,14 +432,15 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Editar Registro</h2>
             <div class="content__relleno"></div>
-            <form class="add__formulario" action="">
+            <form method="post" class="add__formulario" id="formEditar">
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" id="tipoOperaciones">
+                        <select class="styled-select" name="procesoRequests[0].tipoOperacion" id="tipoOperaciones">
                             <option disabled selected>Tipo De Operacion</option>
-                            <option value="SC">SC (Solicitud De Carga)</option>
-                            <option value="SD">SD (Solicitud De Descarga)</option>
+                            <th:block th:each="op : ${tipoOperacion}">
+                                <option th:value="${op.name()}" th:text="${op.descripcion}"></option>
+                            </th:block>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -448,14 +451,11 @@
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" id="tipoCarga">
+                        <select class="styled-select" name="procesoRequests[0].tipoCarga" id="tipoCarga">
                             <option disabled selected>Tipo De Carga</option>
-                            <option value="RO">RO (Carga RORO)</option>
-                            <option value="CS">CS (Carga Suelta)</option>
-                            <option value="CN">CN (Contenedores)</option>
-                            <option value="GL">GL (Granel Limpio)</option>
-                            <option value="GS">GS (Granel Sucio)</option>
-                            <option value="LQ">LQ (Liquido)</option>
+                            <th:block th:each="carga : ${tipoCarga}">
+                                <option th:value="${carga.name()}" th:text="${carga.descripcion}"></option>
+                            </th:block>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -466,83 +466,31 @@
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper wrapper--changed">
-                        <select class="styled-select" id="tipoProducto">
+                        <select class="styled-select" name="procesoRequests[0].tipoProducto" id="tipoProducto">
                             <option disabled selected>Tipo De Producto</option>
-                            <option value="otros">Otros</option>
-                            <option value="accesorios">Accesorios</option>
-                            <option value="accesorios_para_mascotas">Accesorios para mascotas</option>
-                            <option value="alfombras">Alfombras</option>
-                            <option value="alimentos">Alimentos</option>
-                            <option value="articulos_de_camping">Artículos de camping</option>
-                            <option value="articulos_de_limpieza">Artículos de limpieza</option>
-                            <option value="articulos_deportivos">Artículos deportivos</option>
-                            <option value="articulos_de_oficina">Artículos de oficina</option>
-                            <option value="articulos_para_el_hogar">Artículos para el hogar</option>
-                            <option value="bebidas">Bebidas</option>
-                            <option value="bicicletas">Bicicletas</option>
-                            <option value="bolsos">Bolsos</option>
-                            <option value="calzado">Calzado</option>
-                            <option value="calzado_deportivo">Calzado deportivo</option>
-                            <option value="camisetas">Camisetas</option>
-                            <option value="cazuelas">Cazuelas</option>
-                            <option value="cepillos">Cepillos</option>
-                            <option value="cepillos_de_dientes">Cepillos de dientes</option>
-                            <option value="cinturones">Cinturones</option>
-                            <option value="colchones">Colchones</option>
-                            <option value="computadoras">Computadoras</option>
-                            <option value="cortinas">Cortinas</option>
-                            <option value="cremas_hidratantes">Cremas hidratantes</option>
-                            <option value="cucharas">Cucharas</option>
-                            <option value="cucharones">Cucharones</option>
-                            <option value="desodorantes">Desodorantes</option>
-                            <option value="electrónica">Electrónica</option>
-                            <option value="faldas">Faldas</option>
-                            <option value="fregaderos">Fregaderos</option>
-                            <option value="guantes">Guantes</option>
-                            <option value="herramientas">Herramientas</option>
-                            <option value="herramientas_de_jardinería">Herramientas de jardinería</option>
-                            <option value="impresoras">Impresoras</option>
-                            <option value="jardinería">Jardinería</option>
-                            <option value="juguetes">Juguetes</option>
-                            <option value="juguetes_educativos">Juguetes educativos</option>
-                            <option value="joyas">Joyas</option>
-                            <option value="lámparas">Lámparas</option>
-                            <option value="lentes_de_sol">Lentes de sol</option>
-                            <option value="material_de_arte">Material de arte</option>
-                            <option value="mesas">Mesas</option>
-                            <option value="monitores">Monitores</option>
-                            <option value="muñecas">Muñecas</option>
-                            <option value="muebles">Muebles</option>
-                            <option value="mochilas">Mochilas</option>
-                            <option value="material_escolar">Material escolar</option>
-                            <option value="ollas">Ollas</option>
-                            <option value="perfumes">Perfumes</option>
-                            <option value="perfumes_para_hombre">Perfumes para hombre</option>
-                            <option value="perfumes_para_mujer">Perfumes para mujer</option>
-                            <option value="planchas">Planchas</option>
-                            <option value="plantas">Plantas</option>
-                            <option value="platos">Platos</option>
-                            <option value="pijamas">Pijamas</option>
-                            <option value="pinturas">Pinturas</option>
-                            <option value="portátiles">Portátiles</option>
-                            <option value="relojes">Relojes</option>
+                            <option value="electrodomesticos">Electrodomésticos</option>
                             <option value="ropa">Ropa</option>
-                            <option value="ropa_deportiva">Ropa deportiva</option>
-                            <option value="ropa_interior">Ropa interior</option>
-                            <option value="sabanas">Sabanas</option>
-                            <option value="secadores_de_cabello">Secadores de cabello</option>
-                            <option value="sillas">Sillas</option>
-                            <option value="sofás">Sofás</option>
-                            <option value="sombreros">Sombreros</option>
-                            <option value="tazas">Tazas</option>
-                            <option value="televisores">Televisores</option>
-                            <option value="telas">Telas</option>
-                            <option value="tijeras">Tijeras</option>
-                            <option value="trajes">Trajes</option>
-                            <option value="videojuegos">Videojuegos</option>
-                            <option value="vasos">Vasos</option>
-                            <option value="zapatos">Zapatos</option>
-                            <option value="zapatillas">Zapatillas</option>
+                            <option value="juguetes">Juguetes</option>
+                            <option value="alimentos_empacados">Alimentos empacados</option>
+                            <option value="equipos_electronicos">Equipos electrónicos</option>
+                            <option value="material_de_construccion">Material de construcción</option>
+                            <option value="muebles">Muebles</option>
+                            <option value="productos_farmacéuticos">Productos farmacéuticos</option>
+                            <option value="materia_prima">Materia prima</option>
+                            <option value="productos_agroindustriales">Productos agroindustriales</option>
+                            <option value="quimicos_no_peligrosos">Químicos no peligrosos</option>
+                            <option value="sacos_de_granos">Sacos de granos</option>
+                            <option value="bobinas_de_acero">Bobinas de acero</option>
+                            <option value="productos_forestales">Productos forestales</option>
+                            <option value="equipos_mecanicos">Equipos mecánicos</option>
+                            <option value="papel_y_carton">Papel y cartón</option>
+                            <option value="vehiculos">Vehículos</option>
+                            <option value="maquinaria_agricola">Maquinaria agrícola</option>
+                            <option value="camiones">Camiones</option>
+                            <option value="remolques">Remolques</option>
+                            <option value="tractores">Tractores</option>
+                            <option value="motocicletas">Motocicletas</option>
+                            <option value="equipos_industriales_rodantes">Equipos industriales rodantes</option>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -553,8 +501,8 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <input type="number" min="50" max="10000" autocomplete="off" placeholder="" name="Cantidad"
-                            id="cantidad">
+                        <input type="number" min="50" max="10000" autocomplete="off" placeholder=""
+                               name="procesoRequests[0].cantidad" id="cantidad">
                         <label class="label" for="cantidad">Cantidad</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>
@@ -566,7 +514,8 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <textarea autocomplete="off" placeholder="" name="Descripcion" id="descripcion"></textarea>
+                        <textarea autocomplete="off" placeholder="" name="procesoRequests[0].descripcion"
+                                  id="descripcion"></textarea>
                         <label class="label" for="descripcion">Descripcion</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>

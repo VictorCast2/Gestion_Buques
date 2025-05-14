@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Data
 @Service
 public class FacturaService {
 
@@ -36,19 +35,16 @@ public class FacturaService {
     private AtraqueRepository atraqueRepository;
 
     /**
-     * Método para obtener los procesos de un agentenaviero
-     * @param agenteNaviero parámetro pra obtener los procesos ligados a este usuario
-     * @return una lista de facturas con los procesos ligados al usuario
+     * Método para obtener las facturas de un usuario
+     * @param agenteNaviero parámetro pra obtener las facturas ligadas al usuario
+     * @return una lista de facturas ligadas al usuario
      */
-    public List<Proceso> getProcesoByUsuario(Usuario agenteNaviero) {
-        List<Factura> facturas = facturaRepository.findByAgenteNaviero(agenteNaviero);
-        return facturas.stream()
-                .flatMap(f -> f.getProcesos().stream())
-                .collect(Collectors.toList());
+    public List<Factura> getFacturasByUsuario(Usuario agenteNaviero) {
+        return facturaRepository.findByAgenteNaviero(agenteNaviero);
     }
 
     /**
-     * Método para validar que el usuario tenga una solicitud de atraque aprovada
+     * Método para validar que el usuario tenga una solicitud de atraque aprobada
      * @param agenteNaviero parámetro para extraer la solicitud a verificar
      * @return true si el estado es aprobado o false si el estado es PENDIENTE o RECHAZADO
      */
@@ -58,6 +54,12 @@ public class FacturaService {
                 .anyMatch(s -> s.getEstadoSolicitud() == EResultado.APROBADO);
     }
 
+    /**
+     * Método para registrar un Proceso
+     * @param facturaProcesoRequest parámetro con los datos necesarios para solicitar un proceso
+     * @param userDetails parámetro para obtener al usuario de la sesión
+     * @return un objeto de tipo AuthResponse con un mensaje de satisfacción si el proceso se completo exitosamente
+     */
     public AuthResponse registrarProceso(@Valid FacturaProcesoRequest facturaProcesoRequest, CustomUserDetails userDetails) {
 
         Usuario agenteNaviero = usuarioRepository.findByCorreo(userDetails.getCorreo())
@@ -78,14 +80,16 @@ public class FacturaService {
         }
 
         List<Proceso> procesos = facturaProcesoRequest.procesoRequests().stream()
-                .map(this::crearProcesos)
+                .map(this::crearProcesos) // este método se llama mas abajo
                 .toList();
 
-        int total = procesos.stream().mapToInt(Proceso::getSubtotal).sum();
+        float iva = procesos.stream().mapToInt(Proceso::getSubtotal).sum() * 0.19f;
+
+        double total = procesos.stream().mapToInt(Proceso::getSubtotal).sum() + iva;
 
         Factura factura = Factura.builder()
                 .fechaEmision(LocalDateTime.now())
-                .fechaVencimiento(LocalDateTime.now().plusDays(30))
+                .fechaVencimiento(LocalDateTime.now().plusDays(90))
                 .estado(EEstadoFactura.PENDIENTE)
                 .procesos(procesos)
                 .agenteNaviero(usuariosEmpresa)
@@ -102,11 +106,28 @@ public class FacturaService {
 
     /**
      * Método para crear el objeto Proceso
-     * @param procesoRequest parametro con los datos necesarios para crear el proceso
+     * @param procesoRequest parámetro con los datos necesarios para crear el proceso
      * @return un proceso creado, usado para crear la factura en el método registrarProceso
      */
-    public Proceso crearProcesos(ProcesoRequest procesoRequest) {
-        int precioUnitario = 1000; // por ahora ese será el valor por defecto
+    public Proceso crearProcesos(@Valid ProcesoRequest procesoRequest) {
+        int precioUnitario = 0; // por ahora ese será el valor por defecto
+
+        if (procesoRequest.tipoCarga().equals(ECarga.RO.toString())) {
+            precioUnitario = 10000;
+        } else if (procesoRequest.tipoCarga().equals(ECarga.CG.toString())) {
+            precioUnitario = 20000;
+        } else if (procesoRequest.tipoCarga().equals(ECarga.CN.toString())) {
+            precioUnitario = 30000;
+        } else if (procesoRequest.tipoCarga().equals(ECarga.GL.toString())) {
+            precioUnitario = 40000;
+        } else if (procesoRequest.tipoCarga().equals(ECarga.GS.toString())) {
+            precioUnitario = 50000;
+        } else if (procesoRequest.tipoCarga().equals(ECarga.LQ.toString())) {
+            precioUnitario = 60000;
+        } else {
+           throw new IllegalStateException("Error: El tipo de proceso no existe");
+        }
+
         int subtotal = procesoRequest.cantidad() * precioUnitario;
 
         return Proceso.builder()
@@ -117,7 +138,54 @@ public class FacturaService {
                 .descripcion(procesoRequest.descripcion())
                 .precioUnitario(precioUnitario)
                 .subtotal(subtotal)
+                .estadoProceso(EEstadoProceso.PENDIENTE)
                 .build();
+    }
+
+    public AuthResponse updateProceso(@Valid FacturaProcesoRequest facturaProcesoRequest, String id) {
+
+        Factura factura = facturaRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("La factura con id: '" + id + "' no existe"));
+
+        if (factura.getEstado() != EEstadoFactura.PENDIENTE) {
+            throw new IllegalStateException("Error: no se puede editar una factura con estado diferente a 'PENDIENTE'");
+        }
+
+        factura.getProcesos().clear();
+
+        List<Proceso> nuevosProcesos = facturaProcesoRequest.procesoRequests().stream()
+                .map(this::crearProcesos).toList();
+
+        float iva = nuevosProcesos.stream().mapToInt(Proceso::getSubtotal).sum() * 0.19f;
+
+        double total = nuevosProcesos.stream().mapToInt(Proceso::getSubtotal).sum() + iva;
+
+        factura.setProcesos(nuevosProcesos);
+        factura.setTotal(total);
+
+        facturaRepository.save(factura);
+
+        return new AuthResponse("el proceso se ha actualizado exitosamente");
+    }
+
+    /**
+     * Método para eliminar un proceso (factura) por su id
+     * @param id parámetro para obtener la factura a eliminar
+     * @return un objeto de tipo AuthResponse con un mensaje de satisfacción o un error dependiendo del estado del proceso
+     */
+    public AuthResponse deleteFactura(String id) {
+
+        Factura factura = facturaRepository.findById(id)
+                        .orElseThrow(() -> new NoSuchElementException("Factura no encontrada"));
+
+        Proceso proceso = factura.getProcesos().getFirst();
+
+        if (proceso.getEstadoProceso() == EEstadoProceso.PENDIENTE) {
+            facturaRepository.deleteById(id);
+            return new AuthResponse("El proceso ha sido eliminado exitosamente");
+        }
+
+        return new AuthResponse("Error: No se puede eliminar un proceso que este en un estado diferente a 'PENDIENTE'");
     }
 
 }
