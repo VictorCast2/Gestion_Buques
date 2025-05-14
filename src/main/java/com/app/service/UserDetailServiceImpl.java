@@ -1,7 +1,7 @@
 package com.app.service;
 
 import com.app.collections.Usuario.pojo.Empresa;
-import com.app.collections.Usuario.pojo.TwoFactorEnabledRequest;
+import com.app.collections.Usuario.pojo.Redis.TwoFactorEnabledRequest;
 import com.app.utils.CustomUserDetails;
 import com.app.collections.Usuario.Enum.*;
 import com.app.collections.Usuario.Usuario;
@@ -280,6 +280,38 @@ public class UserDetailServiceImpl implements UserDetailsService {
         // Eliminar el usuario de la base de datos
         usuarioRepository.delete(usuario);
         return new AuthResponse("Sus datos han sido eliminados exitosamente");
+    }
+
+    /**
+     * Método para habilitar o deshabilitar el 2FA
+     * @param twoFactorEnabledRequest parámetro con los datos necesarios para habilitar o deshabilitar el 2FA
+     * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
+     */
+    public AuthResponse autentication2FactorRedis(@Valid TwoFactorEnabledRequest twoFactorEnabledRequest) {
+        // Obtenemos el usuario actual de la sesión
+        Usuario usuarioActualizado = this.getUsuarioByCorreo(twoFactorEnabledRequest.getCorreo());
+
+        // Guardar los datos de TwoFactor en Redis
+        String keyTwoFactor = "Auth2Factor:" + usuarioActualizado.getCorreo();
+        twoFactorRedisTemplate.opsForValue().set(keyTwoFactor, twoFactorEnabledRequest);
+
+        // Guardar el estado de TwoFactor en el usuario
+        return new AuthResponse("Autenticación de dos pasos activada y almacenada correctamente");
+    }
+
+    /**
+     * Método para verificar las preguntas de seguridad del 2FA
+     * @param correo parámetro por el cual vamos a buscar al usuario, este campo es único
+     * @param respuesta1 respuesta a la primera pregunta de seguridad
+     * @param respuesta2 respuesta a la segunda pregunta de seguridad
+     * @return true si las respuestas son correctas, false en caso contrario
+     */
+    public boolean verificarPreguntas(String correo, String respuesta1, String respuesta2) {
+        String key = "Auth2Factor:" + correo;
+        TwoFactorEnabledRequest datos = twoFactorRedisTemplate.opsForValue().get(key);
+        if (datos == null) return false;
+        return datos.getRespuesta1().equalsIgnoreCase(respuesta1.trim()) &&
+                datos.getRespuesta2().equalsIgnoreCase(respuesta2.trim());
     }
 
 }

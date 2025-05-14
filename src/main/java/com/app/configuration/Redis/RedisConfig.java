@@ -1,6 +1,6 @@
 package com.app.configuration.Redis;
 
-import com.app.collections.Usuario.pojo.TwoFactorEnabledRequest;
+import com.app.collections.Usuario.pojo.Redis.TwoFactorEnabledRequest;
 import com.app.dto.request.AuthLoginRequest;
 import lombok.Data;
 import org.springframework.context.annotation.*;

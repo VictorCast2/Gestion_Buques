@@ -1,4 +1,4 @@
-package com.app.collections.Usuario.pojo;
+package com.app.collections.Usuario.pojo.Redis;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
