@@ -2,7 +2,6 @@ package com.app.controller;
 
 import com.app.collections.Factura.Enum.*;
 import com.app.collections.Factura.Factura;
-import com.app.collections.Factura.pojo.Proceso;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.FacturaProcesoRequest;
 import com.app.dto.response.AuthResponse;

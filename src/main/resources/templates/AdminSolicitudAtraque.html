@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Gestion Solicitudes</title>
-    <link rel="stylesheet" th:href="@{/css/GestionSolicitudes.css}">
+    <title>Admin Solicitud Atraque</title>
+    <link rel="stylesheet" th:href="@{/css/AdminSolicitudAtraque.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,16 +14,15 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-
 <body>
     <aside class="sidebar">
         <hr>
-        <ul class="sidebar__menu">
+        <ul class="sidebar__menu"> 
             <li class="sidebar__item" th:attr="data-url=@{/buques/admin/}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
-
+            
             <li class="sidebar__item" th:attr="data-url=@{/buques/dashboard-admin/}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
@@ -111,16 +109,15 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -128,10 +125,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -172,7 +168,7 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques}" class="sub__link">
+                    <a th:href="@{/buques/}" class="sub__link">
                         <i class="ri-logout-box-r-fill"></i>
                         <p class="link__text">Cerrar Seccion</p>
                         <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
@@ -194,11 +190,11 @@
         <section class="table__container">
 
             <div class="container__button">
-                <button class="button__add" data-url="#">
+                <button class="button__add" th:attr="data-url=@{/buques/gestion-solicitud/}">
                     <i class="fas fa-building"></i>
                     <p class="add__text text--empresa">Empresa</p>
                 </button>
-                <button class="button__add add--atraque" th:attr="data-url=@{/buques/gestion-solicitud/admin-atraque}">
+                <button class="button__add add--atraque" data-url="#">
                     <i class="ri-ship-fill"></i>
                     <p class="add__text">Solicitudes de Atraque</p>
                 </button>
@@ -209,7 +205,7 @@
             </div>
 
             <div class="container__table">
-                <h2 class="notification__title">Empresas</h2>
+                <h2 class="notification__title">Solicitud Atraque</h2>
 
                 <div class="notification__search-container">
                     <i class="ri-search-line"></i>
@@ -247,25 +243,25 @@
                     <table class="notification__table">
                         <thead>
                             <tr>
-                                <th>Nit</th>
-                                <th>Nombre Empresa</th>
-                                <th>País</th>
-                                <th>Ciudad</th>
-                                <th>Dirección</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
+                                <th>Agente Naviero</th>
+                                <th>Matricula</th>
+                                <th>Tipo Buque</th>
+                                <th>Procedencia</th>
+                                <th>Fecha entrada</th>
+                                <th>Fecha salida</th>
+                                <th>Dimensiones</th>
                                 <th>Validación</th>
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Jose Andrés Torres Diaz</td>
+                                <td>TE-AAH-32569</td>
+                                <td>PC</td>
+                                <td>Argentina/Bello/Puerto Argentina</td>
+                                <td>11-05-2025</td>
+                                <td>10-06-2025</td>
+                                <td>50/100/45</td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -276,13 +272,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Jose Andrés Torres Diaz</td>
+                                <td>TE-AAH-32569</td>
+                                <td>PC</td>
+                                <td>Argentina/Bello/Puerto Argentina</td>
+                                <td>11-05-2025</td>
+                                <td>10-06-2025</td>
+                                <td>50/100/45</td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -293,13 +289,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Jose Andrés Torres Diaz</td>
+                                <td>TE-AAH-32569</td>
+                                <td>PC</td>
+                                <td>Argentina/Bello/Puerto Argentina</td>
+                                <td>11-05-2025</td>
+                                <td>10-06-2025</td>
+                                <td>50/100/45</td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -310,13 +306,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Jose Andrés Torres Diaz</td>
+                                <td>TE-AAH-32569</td>
+                                <td>PC</td>
+                                <td>Argentina/Bello/Puerto Argentina</td>
+                                <td>11-05-2025</td>
+                                <td>10-06-2025</td>
+                                <td>50/100/45</td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -349,21 +345,20 @@
             <span class="modal-close" id="closeModal">&times;</span>
             <h2 class="modal-title">📝 Detalles De La Solicitud Atraque</h2>
             <div class="modal-info">
-                <p class="modal__text"><strong class="text__str">Nit:</strong> <span id="modalNit"></span></p>
-                <p class="modal__text"><strong class="text__str">Nombre Empresa:</strong> <span
-                        id="modalNombreEmpresa"></span></p>
-                <p class="modal__text"><strong class="text__str">Pais:</strong> <span id="modalPais"></span></p>
-                <p class="modal__text"><strong class="text__str">Ciudad:</strong> <span id="modalCiudad"></span></p>
-                <p class="modal__text"><strong class="text__str">Direccion:</strong> <span id="modalDireccion"></span>
+                <p class="modal__text"><strong class="text__str">Agente Naviero:</strong> <span
+                        id="modalAgenteNaviero"></span></p>
+                <p class="modal__text"><strong class="text__str">Matricula:</strong> <span id="modalMatricula"></span></p>
+                <p class="modal__text"><strong class="text__str">Tipo Buque:</strong> <span id="modalTipoBuque"></span></p>
+                <p class="modal__text"><strong class="text__str">Procedencia:</strong> <span id="modalProcedencia"></span></p>
+                <p class="modal__text"><strong class="text__str">Fecha Entrada:</strong> <span id="modalFechaEntrada"></span>
                 </p>
-                <p class="modal__text"><strong class="text__str">Email:</strong> <span id="modalEmail"></span>
+                <p class="modal__text"><strong class="text__str">Fecha Salida:</strong> <span id="modalFechaSalida"></span>
                 </p>
-                <p class="modal__text"><strong class="text__str">Telefono:</strong> <span id="modalTelefono"></span></p>
+                <p class="modal__text"><strong class="text__str">Dimensiones:</strong> <span id="modalDimensiones"></span></p>
             </div>
         </div>
     </div>
 
-    <script th:src="@{/js/gestionsolicitudes.js}"></script>
+    <script th:src="@{/js/adminsolicitudatraque.js}"></script>
 </body>
-
 </html>
