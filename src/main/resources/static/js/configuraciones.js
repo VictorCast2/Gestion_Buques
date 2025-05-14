@@ -32,18 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Validaciones
+    const fieldConfig = {
+        respuesta1: {regex: /^.{1,}$/,errorMessage: " La respuesta de la pregunta es obligatoria"},
+        respuesta2: {regex: /^.{1,}$/,errorMessage: " La respuesta de la pregunta es obligatoria"}
+    };
+
     const formConfig = document.querySelector(".formulario");
     const advertenciaConfig = document.querySelector(".input__advertencia");
     const selectRespuesta1 = document.getElementById("respuesta1");
     const selectRespuesta2 = document.getElementById("respuesta2");
     const errorRespuesta1 = document.querySelector(".error--respuesta1");
     const errorRespuesta2 = document.querySelector(".error--respuesta2");
-
-     // Validaciones
-        const fieldConfig = {
-            respuesta1: {regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s-]+$/,errorMessage: " La respuesta de la pregunta es obligatoria"},
-            respuesta2: {regex: /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s-]+$/,errorMessage: " La respuesta de la pregunta es obligatoria"}
-       };
 
       // Validar en tiempo real los inputs
     Object.keys(fieldConfig).forEach(fieldId => {
@@ -108,22 +108,16 @@ document.addEventListener("DOMContentLoaded", () => {
         let formularioValido = true;
         let todosInputsValidos = true;
 
+        // Validar todos los inputs
         Object.keys(fieldConfig).forEach(fieldId => {
             const input = document.getElementById(fieldId);
             const regex = fieldConfig[fieldId].regex;
-
-            if (!input) {
-                formularioValido = false;
-                todosInputsValidos = false;
-                return; // <-- importante
-            }
 
             if (!regex.test(input.value.trim())) {
                 formularioValido = false;
                 todosInputsValidos = false;
             }
         });
-
 
         const respuesta1Seleccionado = selectRespuesta1.selectedIndex > 0;
         const respuesta2Seleccionada = selectRespuesta2.selectedIndex > 0;
