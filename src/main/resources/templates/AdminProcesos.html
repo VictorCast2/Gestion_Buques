@@ -111,7 +111,7 @@
                         <li class="notification-item">
                             <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
+                                 <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
@@ -127,7 +127,7 @@
                         <li class="notification-item">
                             <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
+                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -378,6 +378,57 @@
         </div>
     </div>
 
+      <!-- MODAL PARA CONFIRMACIÓN si -->
+    <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
+        <div class="modal__contenido">
+            <p class="contenido__text">¿Estas seguro de aceptar la validacion?</p>
+            <button class="boton boton-si">Sí</button>
+            <button class="boton boton-no">No</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA CONFIRMACIÓN no -->
+    <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
+        <div class="modal__contenido">
+            <p class="contenido__text">¿Estas seguro de no aceptar la validacion?</p>
+            <button class="boton2 boton-si2">Sí</button>
+            <button class="boton2 boton-no2">No</button>
+        </div>
+    </div>
+
+    <!--Modal de aceptar validacion-->
+    <div class="modal__newadd newadd--hidden" id="modalnewadd2">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h2 class="content__titulo">Aceptar Validacion</h2>
+            <div class="content__relleno"></div>
+            <form class="add__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <textarea autocomplete="off" placeholder="" name="Descripcion" id="descripcion"></textarea>
+                        <label class="label" for="descripcion">Descripcion</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--descripcion">Por favor, ingrese una descripción.</p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Validacion</button>
+            </form>
+        </div>
+    </div>
+
     <script th:src="@{/js/adminprocesos.js}"></script>
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- autoTable (complemento para jsPDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.22/jspdf.plugin.autotable.min.js"></script>
+    <!-- autoTable (complemento para Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 </html>
