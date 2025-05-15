@@ -12,15 +12,11 @@ services:
     depends_on:
       - mongodb
       - redis
-    environment:
-      - MONGODB_DATABASE=GestionBuques
-      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
-      - REDIS_HOST=localhost
-      - REDIS_URI=redis://localhost:6379/Usuarios
-      - REDIS_DATABASE=Usuarios
-      - REDIS_PORT=6379
     env_file:
       - .env
+    environment:
+      - JWT_SECRET_BUQUES=LLAVE_TEMP_DEV
+      - JWT_ISSUER_BUQUES=USER_TEMP_DEV
     networks:
       - buques-network
     healthcheck:
@@ -32,16 +28,16 @@ services:
 
   mongodb:
     image: mongo:latest
-    container_name: mongo-buques
-    environment:
-      - MONGODB_DATABASE=GestionBuques
-      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
+    container_name: mongo_buques
     ports:
       - "27017:27017"
     networks:
       - buques-network
     volumes:
       - mongodb_data:/data/db
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
+      - MONGODB_DATABASE=GestionBuques
     healthcheck:
       test: [ "CMD", "mongo", "--eval", "db.runCommand('ping')" ]
       interval: 30s
@@ -51,13 +47,16 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis-buques
+    container_name: redis_buques
     ports:
       - "6379:6379"
     networks:
       - buques-network
     volumes:
       - redis_data:/data
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 30s

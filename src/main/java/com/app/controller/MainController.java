@@ -86,6 +86,9 @@ public class MainController {
     public String activarAutenticacion2Pasos(
             @ModelAttribute TwoFactorEnabledRequest request,
             RedirectAttributes redirectAttributes) {
+        System.out.println("************************************");
+        System.out.println("Activando autenticación de dos pasos");
+        System.out.println("************************************");
         AuthResponse response = userDetailService.autentication2FactorRedis(request);
         redirectAttributes.addFlashAttribute("twoFactor", response.mensaje());
         return "redirect:/buques/configuraciones";
