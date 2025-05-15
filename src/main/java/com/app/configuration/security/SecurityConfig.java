@@ -1,4 +1,4 @@
-package com.app.configuration;
+package com.app.configuration.security;
 
 import com.app.configuration.filter.JwtTokenValidatorFilter;
 import com.app.repository.UsuarioRepository;
@@ -18,7 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Data

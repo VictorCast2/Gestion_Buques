@@ -9,15 +9,16 @@ import com.app.service.UserDetailServiceImpl;
 
 
 @Controller
-@RequestMapping("/buques/registro-usuarios")
-public class RegistroUsuariosController {
+@RequestMapping("/buques/gestion-solicitud")
+public class AdminSolicitudProcesos {
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
-    @GetMapping("/")
-    public String adminRegistroUsuarios() {
-        return "RegistroUsuario";
+    @GetMapping("/admin-procesos")
+    public String AdminProcesos() {
+        return "AdminProcesos";
     }
+
 
 }

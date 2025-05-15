@@ -2,14 +2,12 @@ package com.app.controller;
 
 import com.app.collections.Factura.Enum.*;
 import com.app.collections.Factura.Factura;
-import com.app.collections.Factura.pojo.Proceso;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.FacturaProcesoRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import com.app.service.*;
 import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +18,6 @@ import org.springframework.web.util.UriUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-@Data
 @Controller
 @RequestMapping("/buques/Procesos")
 public class ProcesoController {

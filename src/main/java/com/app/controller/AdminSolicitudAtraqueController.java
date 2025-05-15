@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.app.service.UserDetailServiceImpl;
 
 
+
 @Controller
-@RequestMapping("/buques/registro-usuarios")
-public class RegistroUsuariosController {
+@RequestMapping("/buques/gestion-solicitud")
+public class AdminSolicitudAtraqueController {
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
-    @GetMapping("/")
-    public String adminRegistroUsuarios() {
-        return "RegistroUsuario";
+    @GetMapping("/admin-atraque")
+    public String adminGestionSolicitud() {
+        return "AdminSolicitudAtraque";
     }
 
 }

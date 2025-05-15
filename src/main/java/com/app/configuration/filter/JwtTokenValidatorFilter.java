@@ -2,7 +2,7 @@ package com.app.configuration.filter;
 
 import com.app.collections.Usuario.Usuario;
 import com.app.repository.UsuarioRepository;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.app.utils.JwtUtils;
 import jakarta.servlet.FilterChain;

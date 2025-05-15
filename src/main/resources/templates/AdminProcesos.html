@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Gestion Solicitudes</title>
-    <link rel="stylesheet" th:href="@{/css/GestionSolicitudes.css}">
+    <title>Admin Procesos</title>
+    <link rel="stylesheet" th:href="@{/css/AdminProcesos.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,16 +14,15 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-
 <body>
     <aside class="sidebar">
         <hr>
-        <ul class="sidebar__menu">
+        <ul class="sidebar__menu"> 
             <li class="sidebar__item" th:attr="data-url=@{/buques/admin/}">
                 <i class="ri-home-2-fill"></i>
                 <span class="sidebar__text">Inicio</span>
             </li>
-
+            
             <li class="sidebar__item" th:attr="data-url=@{/buques/dashboard-admin/}">
                 <i class="ri-dashboard-horizontal-fill"></i>
                 <span class="sidebar__text">Dashboard</span>
@@ -111,16 +109,15 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                 <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -128,10 +125,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img th:src="@{assets/image/fotousuario.webp}" alt=""/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -172,7 +168,7 @@
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques}" class="sub__link">
+                    <a th:href="@{/buques/}" class="sub__link">
                         <i class="ri-logout-box-r-fill"></i>
                         <p class="link__text">Cerrar Seccion</p>
                         <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
@@ -194,7 +190,7 @@
         <section class="table__container">
 
             <div class="container__button">
-                <button class="button__add" data-url="#">
+                <button class="button__add" th:attr="data-url=@{/buques/gestion-solicitud/}">
                     <i class="fas fa-building"></i>
                     <p class="add__text text--empresa">Empresa</p>
                 </button>
@@ -202,14 +198,14 @@
                     <i class="ri-ship-fill"></i>
                     <p class="add__text">Solicitudes de Atraque</p>
                 </button>
-                <button class="button__add add--procesos" th:attr="data-url=@{/buques/gestion-solicitud/admin-procesos}">
+                <button class="button__add add--procesos" data-url="#">
                     <i class="ri-flow-chart"></i>
                     <p class="add__text text--procesos">Procesos</p>
                 </button>
             </div>
 
             <div class="container__table">
-                <h2 class="notification__title">Empresas</h2>
+                <h2 class="notification__title">Procesos</h2>
 
                 <div class="notification__search-container">
                     <i class="ri-search-line"></i>
@@ -247,25 +243,28 @@
                     <table class="notification__table">
                         <thead>
                             <tr>
-                                <th>Nit</th>
-                                <th>Nombre Empresa</th>
-                                <th>País</th>
-                                <th>Ciudad</th>
-                                <th>Dirección</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
-                                <th>Validación</th>
+                                <th>Tipo Operacion</th>
+                                <th>Tipo Carga</th>
+                                <th>Tipo Producto</th>
+                                <th>Cantidad Producto</th>
+                                <th>Descripción</th>
+                                <th>Validacion</th>
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -276,13 +275,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -293,13 +297,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -310,13 +319,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                                <td>Solicitud De Carga</td>
+                                <td>Carga Suelta</td>
+                                <td>Televisores</td>
+                                <td>220kg</td>
+                                <td class="notification__description">
+                                    El buque "Ocean Pearl" ha llegado al puerto tras completar su travesía desde Asia,
+                                    trayendo mercancía importante para los sectores industriales clave del país.
+                                    Durante su viaje, enfrentó condiciones climáticas adversas que retrasaron
+                                    ligeramente su arribo, sin embargo, logró mantener la integridad de la carga.
+                                    Se espera que la descarga comience en las próximas horas, priorizando productos
+                                    tecnológicos, componentes automotrices y suministros médicos.
+                                </td>
                                 <td>
                                     <button class="content__icon icon--si">
                                         Si
@@ -347,23 +361,24 @@
     <div id="modalNotificacion" class="modal hidden">
         <div class="modal-content">
             <span class="modal-close" id="closeModal">&times;</span>
-            <h2 class="modal-title">📝 Detalles De La Solicitud Atraque</h2>
+            <h2 class="modal-title">📝 Detalles De Procesos</h2>
             <div class="modal-info">
-                <p class="modal__text"><strong class="text__str">Nit:</strong> <span id="modalNit"></span></p>
-                <p class="modal__text"><strong class="text__str">Nombre Empresa:</strong> <span
-                        id="modalNombreEmpresa"></span></p>
-                <p class="modal__text"><strong class="text__str">Pais:</strong> <span id="modalPais"></span></p>
-                <p class="modal__text"><strong class="text__str">Ciudad:</strong> <span id="modalCiudad"></span></p>
-                <p class="modal__text"><strong class="text__str">Direccion:</strong> <span id="modalDireccion"></span>
+                <p class="modal__text"><strong class="text__str">Tipo Operacion:</strong> <span
+                        id="modalOperacion"></span></p>
+                <p class="modal__text"><strong class="text__str">Tipo Carga:</strong> <span id="modalCarga"></span></p>
+                <p class="modal__text"><strong class="text__str">Tipo Producto:</strong> <span
+                        id="modalProducto"></span></p>
+                <p class="modal__text"><strong class="text__str">Cantidad Producto:</strong> <span id="modalCantidadProducto"></span>
                 </p>
-                <p class="modal__text"><strong class="text__str">Email:</strong> <span id="modalEmail"></span>
-                </p>
-                <p class="modal__text"><strong class="text__str">Telefono:</strong> <span id="modalTelefono"></span></p>
+            </div>
+            <div class="modal-description">
+                <h3 class="description__title">📄 Descripción:</h3>
+                <p id="modalDescripcion"></p>
             </div>
         </div>
     </div>
 
-        <!-- MODAL PARA CONFIRMACIÓN si -->
+      <!-- MODAL PARA CONFIRMACIÓN si -->
     <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas seguro de aceptar la validacion?</p>
@@ -381,7 +396,34 @@
         </div>
     </div>
 
-    <script th:src="@{/js/gestionsolicitudes.js}"></script>
+    <!--Modal de aceptar validacion-->
+    <div class="modal__newadd newadd--hidden" id="modalnewadd2">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h2 class="content__titulo">Aceptar Validacion</h2>
+            <div class="content__relleno"></div>
+            <form class="add__formulario" action="">
+
+                <div class="formulario__input">
+                    <div class="input-box">
+                        <textarea autocomplete="off" placeholder="" name="Descripcion" id="descripcion"></textarea>
+                        <label class="label" for="descripcion">Descripcion</label>
+                        <span class="box__icon"><i class="ri-check-line"></i></span>
+                        <span class="box__icon"><i class="ri-close-line"></i></span>
+                    </div>
+                    <p class="input__error error--descripcion">Por favor, ingrese una descripción.</p>
+                </div>
+
+                <p class="input__advertencia">
+                    <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
+                </p>
+
+                <button class="formulario__button" type="submit">Guardar Validacion</button>
+            </form>
+        </div>
+    </div>
+
+    <script th:src="@{/js/adminprocesos.js}"></script>
     <!-- jsPDF para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- autoTable (complemento para jsPDF) -->
@@ -389,5 +431,4 @@
     <!-- autoTable (complemento para Excel) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
-
 </html>

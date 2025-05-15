@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-
+    
     /* Menú desplegable del perfil */
     const subMenu = document.getElementById("SubMenu");
     const profileImage = document.querySelector(".nav__img");
@@ -146,13 +146,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
-    const modalNit = document.getElementById("modalNit");
-    const modalNombreEmpresa = document.getElementById("modalNombreEmpresa");
-    const modalPais = document.getElementById("modalPais");
-    const modalCiudad = document.getElementById("modalCiudad");
-    const modalDireccion = document.getElementById("modalDireccion");
-    const modalEmail = document.getElementById("modalEmail");
-    const modalTelefono = document.getElementById("modalTelefono");
+    const modalAgenteNaviero = document.getElementById("modalAgenteNaviero");
+    const modalMatricula = document.getElementById("modalMatricula");
+    const modalTipoBuque = document.getElementById("modalTipoBuque");
+    const modalProcedencia = document.getElementById("modalProcedencia");
+    const modalFechaEntrada = document.getElementById("modalFechaEntrada");
+    const modalFechaSalida = document.getElementById("modalFechaSalida");
+    const modalDimensiones = document.getElementById("modalDimensiones");
 
     filas.forEach(fila => {
         fila.addEventListener("click", (e) => {
@@ -167,13 +167,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
             if (celdas.length >= 6) {
-                modalNit.textContent = celdas[0].textContent.trim();
-                modalNombreEmpresa.textContent = celdas[1].textContent.trim();
-                modalPais.textContent = celdas[2].textContent.trim();
-                modalCiudad.textContent = celdas[3].textContent.trim();
-                modalDireccion.textContent = celdas[4].textContent.trim();
-                modalEmail.textContent = celdas[5].textContent.trim();
-                modalTelefono.textContent = celdas[6].textContent.trim();
+                modalAgenteNaviero.textContent = celdas[0].textContent.trim();
+                modalMatricula.textContent = celdas[1].textContent.trim();
+                modalTipoBuque.textContent = celdas[2].textContent.trim();
+                modalProcedencia.textContent = celdas[3].textContent.trim();
+                modalFechaEntrada.textContent = celdas[4].textContent.trim();
+                modalFechaSalida.textContent = celdas[5].textContent.trim();
+                modalDimensiones.textContent = celdas[6].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -229,7 +229,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    //retornar a las paginas
     document.querySelectorAll('.sidebar__item').forEach(item => {
         item.addEventListener('click', () => {
             const url = item.getAttribute('data-url');
@@ -239,7 +238,123 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    //Ventana Modal de editar y eliminar
+
+          // Función para validar los formularios
+        const fieldValid = {
+            descripcion: { regex: /^.{1,}$/, errorMessage: "Por favor, ingrese una descripción." }
+        };
+
+         // variables 
+    const formulario = document.querySelector(".add__formulario");
+    const advertencia = document.querySelector(".input__advertencia");
+    const selectMuelle = document.getElementById("Muelles");
+    const errorMuelle = document.querySelector(".error--Muelles");
+
+    // Validar en tiempo real los inputs
+    Object.keys(fieldValid).forEach(fieldId => {
+        const input = document.getElementById(fieldId);
+        if (!input) return;
+
+        const inputBox = input.closest(".input-box");
+        const checkIcon = inputBox.querySelector(".ri-check-line");
+        const errorIcon = inputBox.querySelector(".ri-close-line");
+        const errorMessage = inputBox.nextElementSibling;
+        const label = inputBox.querySelector("label");
+
+        input.addEventListener("input", () => {
+            advertencia.style.display = "none";
+
+            const value = input.value.trim();
+            if (value === "") {
+                checkIcon.style.display = "none";
+                errorIcon.style.display = "none";
+                errorMessage.style.display = "none";
+                input.style.border = "";
+                label.style.color = "";
+                inputBox.classList.remove("input-error");
+            } else if (fieldValid[fieldId].regex.test(value)) {
+                checkIcon.style.display = "inline-block";
+                errorIcon.style.display = "none";
+                errorMessage.style.display = "none";
+                input.style.border = "2px solid #0034de";
+                label.style.color = "";
+                inputBox.classList.remove("input-error");
+            } else {
+                checkIcon.style.display = "none";
+                errorIcon.style.display = "inline-block";
+                errorMessage.style.display = "block";
+                input.style.border = "2px solid #fd1f1f";
+                label.style.color = "red";
+                inputBox.classList.add("input-error");
+            }
+        });
+    });
+
+    // Ocultar advertencias y errores de select al interactuar
+    [selectMuelle].forEach(select => {
+        select.addEventListener("change", () => {
+            advertencia.style.display = "none";
+
+            if (select.selectedIndex > 0) {
+                select.style.border = "2px solid #0034de";
+            } else {
+                select.style.border = "";
+            }
+
+            if (select === selectMuelle && select.selectedIndex > 0) {
+                errorMuelle.style.display = "none";
+            }
+        });
+    });
+
+    // Validación al enviar el formulario
+    formulario.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let formularioValido = true;
+        let todosInputsValidos = true;
+
+        // Validar todos los inputs
+        Object.keys(fieldValid).forEach(fieldId => {
+            const input = document.getElementById(fieldId);
+            const regex = fieldValid[fieldId].regex;
+
+            if (!regex.test(input.value.trim())) {
+                formularioValido = false;
+                todosInputsValidos = false;
+            }
+        });
+
+
+        const muelleSeleccionada = selectMuelle.selectedIndex > 0;
+
+        // Caso: Inputs válidos, pero selects incompletos
+        if (todosInputsValidos && (!muelleSeleccionada)) {
+
+            if (!muelleSeleccionada) {
+                errorMuelle.style.display = "block";
+                selectMuelle.style.border = "2px solid #fd1f1f";
+            }
+
+            advertencia.style.display = "block";
+            return;
+        }
+
+        // Caso: Inputs o selects inválidos
+        if (!formularioValido) {
+            advertencia.style.display = "block";
+            return;
+        }
+
+        // Todo correcto: ocultar advertencias y errores
+        advertencia.style.display = "none";
+        errorMuelle.style.display = "none";
+
+        // Enviar formulario
+        formulario.submit();
+    });
+
+     //Ventana Modal de editar y eliminar
     const botonesEditar = document.querySelectorAll('.icon--si');
     const botonesEliminar = document.querySelectorAll('.icon--no');
 
@@ -287,6 +402,12 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEliminar);
     });
 
+    // Evento cuando hacen click en "Sí" en editar
+    botonSiEditar.addEventListener('click', () => {
+        cerrarModal(modalEditar);     // Cerramos el modal de confirmación
+        modalEditRegistro.classList.remove('newadd--hidden');
+        modalEditRegistro.classList.add('newadd--visible');
+    });
 
     // Cerrar modal al hacer click fuera del contenido
     modalEditar.addEventListener('click', (e) => {
@@ -301,6 +422,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    const botonCerrarModalEdit = modalEditRegistro.querySelector('.modal__close');
+
+    botonCerrarModalEdit.addEventListener('click', () => {
+        modalEditRegistro.classList.remove('newadd--visible');
+        modalEditRegistro.classList.add('newadd--hidden');
+    });
+
+    modalEditRegistro.addEventListener('click', (e) => {
+        if (e.target === modalEditRegistro) {
+            modalEditRegistro.classList.remove('newadd--visible');
+            modalEditRegistro.classList.add('newadd--hidden');
+        }
+    });
+
     //Apertura de la exportacion
     const iconoDescarga = document.querySelector('.content__descarga i');
     const exportarDiv = document.querySelector('.exportar');
@@ -309,7 +444,7 @@ document.addEventListener("DOMContentLoaded", function () {
         exportarDiv.classList.toggle('active');
     });
 
-    // Función para exportar a PDF
+         // Función para exportar a PDF
     function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -447,13 +582,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 5)
+            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 7)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 5)
+                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 7)
                 .map(cell => cell.innerText);
             return rowData;
         });
@@ -470,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Escuchar el clic para exportar a Excel
     document.querySelector('.exportar-option:nth-child(4)').addEventListener('click', exportToExcel);
 
-    document.querySelectorAll('.button__add').forEach(button => {
+        document.querySelectorAll('.button__add').forEach(button => {
         button.addEventListener('click', () => {
             const url = button.getAttribute('data-url');
             if (url) {

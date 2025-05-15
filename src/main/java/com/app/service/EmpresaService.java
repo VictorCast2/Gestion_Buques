@@ -6,7 +6,7 @@ import com.app.collections.Usuario.pojo.Empresa;
 import com.app.dto.request.EmpresaRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
-import com.app.security.CustomUserDetails;
+import com.app.utils.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

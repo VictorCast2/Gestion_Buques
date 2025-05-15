@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-
+    
     /* Menú desplegable del perfil */
     const subMenu = document.getElementById("SubMenu");
     const profileImage = document.querySelector(".nav__img");
@@ -146,13 +146,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
-    const modalNit = document.getElementById("modalNit");
-    const modalNombreEmpresa = document.getElementById("modalNombreEmpresa");
-    const modalPais = document.getElementById("modalPais");
-    const modalCiudad = document.getElementById("modalCiudad");
-    const modalDireccion = document.getElementById("modalDireccion");
-    const modalEmail = document.getElementById("modalEmail");
-    const modalTelefono = document.getElementById("modalTelefono");
+    const modalOperacion = document.getElementById("modalOperacion");
+    const modalCarga = document.getElementById("modalCarga");
+    const modalProducto = document.getElementById("modalProducto");
+    const modalCantidadProducto = document.getElementById("modalCantidadProducto");
+    const modalDescripcion = document.getElementById("modalDescripcion");
 
     filas.forEach(fila => {
         fila.addEventListener("click", (e) => {
@@ -167,13 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
             if (celdas.length >= 6) {
-                modalNit.textContent = celdas[0].textContent.trim();
-                modalNombreEmpresa.textContent = celdas[1].textContent.trim();
-                modalPais.textContent = celdas[2].textContent.trim();
-                modalCiudad.textContent = celdas[3].textContent.trim();
-                modalDireccion.textContent = celdas[4].textContent.trim();
-                modalEmail.textContent = celdas[5].textContent.trim();
-                modalTelefono.textContent = celdas[6].textContent.trim();
+                modalOperacion.textContent = celdas[0].textContent.trim();
+                modalCarga.textContent = celdas[1].textContent.trim();
+                modalProducto.textContent = celdas[2].textContent.trim();
+                modalCantidadProducto.textContent = celdas[3].textContent.trim();
+                modalDescripcion.textContent = celdas[4].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -229,7 +225,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    //retornar a las paginas
     document.querySelectorAll('.sidebar__item').forEach(item => {
         item.addEventListener('click', () => {
             const url = item.getAttribute('data-url');
@@ -238,6 +233,93 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    // validar formularios
+    const fieldValid = {
+        descripcion: { regex: /^.{1,}$/, errorMessage: "Por favor, ingrese una descripción." }
+    };
+
+    // variables 
+    const formulario = document.querySelector(".add__formulario");
+    const advertencia = document.querySelector(".input__advertencia");
+
+       // Validar en tiempo real los inputs
+     Object.keys(fieldValid).forEach(fieldId => {
+        const input = document.getElementById(fieldId);
+        if (!input) return;
+
+        const inputBox = input.closest(".input-box");
+        const checkIcon = inputBox.querySelector(".ri-check-line");
+        const errorIcon = inputBox.querySelector(".ri-close-line");
+        const errorMessage = inputBox.nextElementSibling;
+        const label = inputBox.querySelector("label");
+
+        input.addEventListener("input", () => {
+            advertencia.style.display = "none";
+
+            const value = input.value.trim();
+            if (value === "") {
+                checkIcon.style.display = "none";
+                errorIcon.style.display = "none";
+                errorMessage.style.display = "none";
+                input.style.border = "";
+                label.style.color = "";
+                inputBox.classList.remove("input-error");
+            } else if (fieldValid[fieldId].regex.test(value)) {
+                checkIcon.style.display = "inline-block";
+                errorIcon.style.display = "none";
+                errorMessage.style.display = "none";
+                input.style.border = "2px solid #0034de";
+                label.style.color = "";
+                inputBox.classList.remove("input-error");
+            } else {
+                checkIcon.style.display = "none";
+                errorIcon.style.display = "inline-block";
+                errorMessage.style.display = "block";
+                input.style.border = "2px solid #fd1f1f";
+                label.style.color = "red";
+                inputBox.classList.add("input-error");
+            }
+        });
+    });
+
+
+    // Validación al enviar el formulario
+    formulario.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const input = document.getElementById("descripcion");
+        const regex = fieldValid.descripcion.regex;
+        const valor = input.value.trim();
+
+        const inputBox = input.closest(".input-box");
+        const checkIcon = inputBox.querySelector(".ri-check-line");
+        const errorIcon = inputBox.querySelector(".ri-close-line");
+        const errorMessage = inputBox.nextElementSibling;
+        const label = inputBox.querySelector("label");
+
+        if (regex.test(valor)) {
+            checkIcon.style.display = "inline-block";
+            errorIcon.style.display = "none";
+            errorMessage.style.display = "none";
+            input.style.border = "2px solid #0034de";
+            label.style.color = "";
+            inputBox.classList.remove("input-error");
+
+            advertencia.style.display = "none";
+            formulario.submit();
+        } else {
+            checkIcon.style.display = "none";
+            errorIcon.style.display = "inline-block";
+            errorMessage.style.display = "block";
+            input.style.border = "2px solid #fd1f1f";
+            label.style.color = "red";
+            inputBox.classList.add("input-error");
+
+            advertencia.style.display = "block"; // Mostrar mensaje de advertencia general
+        }
+    });
+
 
     //Ventana Modal de editar y eliminar
     const botonesEditar = document.querySelectorAll('.icon--si');
@@ -287,6 +369,12 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEliminar);
     });
 
+    // Evento cuando hacen click en "Sí" en editar
+    botonSiEditar.addEventListener('click', () => {
+        cerrarModal(modalEditar);     // Cerramos el modal de confirmación
+        modalEditRegistro.classList.remove('newadd--hidden');
+        modalEditRegistro.classList.add('newadd--visible');
+    });
 
     // Cerrar modal al hacer click fuera del contenido
     modalEditar.addEventListener('click', (e) => {
@@ -301,6 +389,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    const botonCerrarModalEdit = modalEditRegistro.querySelector('.modal__close');
+
+    botonCerrarModalEdit.addEventListener('click', () => {
+        modalEditRegistro.classList.remove('newadd--visible');
+        modalEditRegistro.classList.add('newadd--hidden');
+    });
+
+    modalEditRegistro.addEventListener('click', (e) => {
+        if (e.target === modalEditRegistro) {
+            modalEditRegistro.classList.remove('newadd--visible');
+            modalEditRegistro.classList.add('newadd--hidden');
+        }
+    });
+
+
     //Apertura de la exportacion
     const iconoDescarga = document.querySelector('.content__descarga i');
     const exportarDiv = document.querySelector('.exportar');
@@ -309,7 +412,7 @@ document.addEventListener("DOMContentLoaded", function () {
         exportarDiv.classList.toggle('active');
     });
 
-    // Función para exportar a PDF
+         // Función para exportar a PDF
     function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -319,13 +422,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 7)
+            .filter((header, index) => index !== 5)  // Excluir el "Action" (índice 5)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             return Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 7)
+                .filter((cell, index) => index !== 5)  // Excluir la columna "Action" (índice 5)
                 .map(cell => cell.innerText);
         });
 
@@ -369,13 +472,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 7)
+            .filter((header, index) => index !== 5)  // Excluir el "Action" (índice 5)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 7)
+                .filter((cell, index) => index !== 5)  // Excluir la columna "Action" (índice 5)
                 .map(cell => cell.innerText);
             let rowObj = {};
 
@@ -411,13 +514,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 7) // Excluir columna "Action"
+            .filter((header, index) => index !== 5) // Excluir columna "Action"
             .map(header => `"${header.innerText.trim()}"`); // Poner en comillas por seguridad
 
         // Extraer las filas de la tabla, excluyendo la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 7) // Excluir columna "Action"
+                .filter((cell, index) => index !== 5) // Excluir columna "Action"
                 .map(cell => `"${cell.innerText.trim().replace(/"/g, '""')}"`); // Escapar comillas
             return rowData.join(',');
         });
@@ -447,13 +550,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Extraer los encabezados de la tabla (sin incluir "Action")
         const headers = Array.from(table.querySelectorAll('th'))
-            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 5)
+            .filter((header, index) => index !== 5)  // Excluir el "Action" (índice 5)
             .map(header => header.innerText);
 
         // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
         const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
             const rowData = Array.from(row.querySelectorAll('td'))
-                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 5)
+                .filter((cell, index) => index !== 5)  // Excluir la columna "Action" (índice 5)
                 .map(cell => cell.innerText);
             return rowData;
         });

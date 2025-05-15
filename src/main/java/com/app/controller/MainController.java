@@ -1,12 +1,12 @@
 package com.app.controller;
 
 import com.app.collections.Usuario.Usuario;
+import com.app.collections.Usuario.pojo.Redis.TwoFactorEnabledRequest;
 import com.app.dto.response.AuthResponse;
-import com.app.security.CustomUserDetails;
 import com.app.service.UserDetailServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Data
+
 @Controller
 @AllArgsConstructor
 @RequestMapping("/buques")
@@ -82,11 +82,34 @@ public class MainController {
         return "redirect:/auth/logout";
     }
 
-    @RequestMapping("/configuraciones/acticcion-autenticacion-2-pasos")
-    public String ActiccionAutenticacion2pasos(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Usuario usuario  = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
-        model.addAttribute("usuario", usuario);
-        return "Configuraciones";
+    @PostMapping("/configuraciones/acticcion-autenticacion-2-pasos")
+    public String activarAutenticacion2Pasos(
+            @ModelAttribute TwoFactorEnabledRequest request,
+            RedirectAttributes redirectAttributes) {
+        System.out.println("************************************");
+        System.out.println("Activando autenticación de dos pasos");
+        System.out.println("************************************");
+        AuthResponse response = userDetailService.autentication2FactorRedis(request);
+        redirectAttributes.addFlashAttribute("twoFactor", response.mensaje());
+        return "redirect:/buques/configuraciones";
+    }
+
+    @PostMapping("/verificar-autenticacion-2-pasos")
+    public String verificarAutenticacion(
+            @RequestParam String correo,
+            @RequestParam String respuesta1,
+            @RequestParam String respuesta2,
+            RedirectAttributes redirectAttributes) {
+        boolean validado = userDetailService.verificarPreguntas(correo, respuesta1, respuesta2);
+
+        if (validado) {
+            // Mal
+            redirectAttributes.addFlashAttribute("twoFactorSuccess", "Autenticación verificada con éxito.");
+        } else {
+            // Bien
+            redirectAttributes.addFlashAttribute("twoFactorError", "Respuestas incorrectas. Intenta de nuevo.");
+        }
+        return "redirect:/";
     }
 
 }
