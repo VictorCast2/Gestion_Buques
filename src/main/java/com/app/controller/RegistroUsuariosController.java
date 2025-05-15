@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.service.UserDetailServiceImpl;
 
-import lombok.Data;
 
-@Data
 @Controller
 @RequestMapping("/buques/registro-usuarios")
 public class RegistroUsuariosController {
