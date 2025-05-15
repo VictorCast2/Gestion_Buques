@@ -7,6 +7,7 @@ WORKDIR /app
 # Copiar archivos necesarios para preparar dependencias
 COPY pom.xml ./
 COPY mvnw ./
+COPY .mvn/ .mvn/
 
 # Descargar dependencias sin compilar
 RUN ./mvnw dependency:go-offline
