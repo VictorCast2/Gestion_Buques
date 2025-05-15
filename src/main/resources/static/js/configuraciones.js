@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     /* Menú desplegable del perfil */
     const subMenu = document.getElementById("SubMenu");
     const profileImage = document.querySelector(".nav__img");
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         respuesta2: {regex: /^.{1,}$/,errorMessage: " La respuesta de la pregunta es obligatoria"}
     };
 
-   const formulario = document.querySelector(".formulario");
+    const formulario = document.querySelector(".formulario");
     const advertencia = document.querySelector(".input__advertencia");
     const selectPregunta1 = document.getElementById("pregunta1");
     const errorPregunta1 = document.querySelector(".error--pregunta1");
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validación al enviar el formulario
     formulario.addEventListener("submit", function (e) {
-        e.preventDefault();
+              e.preventDefault();
 
         let formularioValido = true;
         let todosInputsValidos = true;
@@ -124,41 +123,38 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        const preguntra1Seleccionada  = selectRespuesta1.selectedIndex > 0;
-        const preguntra2Seleccionada  = selectRespuesta2.selectedIndex > 0;
+        const pregunta1Seleccionada  = selectPregunta1.selectedIndex > 0;
+        const pregunta2Seleccionada  = selectPregunta2.selectedIndex > 0;
 
 
         // Caso: Inputs válidos, pero selects incompletos
-        if (todosInputsValidos && (!preguntra1Seleccionada || !preguntra2Seleccionada)) {
-
-            if (!preguntra1Seleccionada) {
+        if (todosInputsValidos && (!pregunta1Seleccionada || !pregunta2Seleccionada)) {
+            if (!pregunta1Seleccionada) {
                 errorPregunta1.style.display = "block";
                 selectPregunta1.style.border = "2px solid #fd1f1f";
             }
-            if (!preguntra2Seleccionada) {
+            if (!pregunta2Seleccionada) {
                 errorPregunta2.style.display = "block";
                 selectPregunta2.style.border = "2px solid #fd1f1f";
             }
-
             advertencia.style.display = "block";
             return;
         }
 
-        // Caso: Inputs o selects inválidos
         if (!formularioValido) {
-            advertencia.style.display = "block";
-            //  no mostramos errores de selects si inputs están mal
-            return;
-        }
+                      console.log("Formulario inválido: error en campos");
+                      advertencia.style.display = "block";
+                      return;
+                  }
 
+                  console.log("Formulario válido. Enviando...");
+                  formulario.submit();
+        });
         // Todo correcto: ocultar advertencias y errores
         advertencia.style.display = "none";
         errorPregunta1.style.display = "none";
         errorPregunta2.style.display = "none";
 
-
-        // Enviar formulario
-        formulario.submit();
     });
 
 });
