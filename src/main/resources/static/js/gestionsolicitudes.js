@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    
+
     /* Menú desplegable del perfil */
     const subMenu = document.getElementById("SubMenu");
     const profileImage = document.querySelector(".nav__img");
@@ -239,6 +239,67 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    //Ventana Modal de editar y eliminar
+    const botonesEditar = document.querySelectorAll('.icon--si');
+    const botonesEliminar = document.querySelectorAll('.icon--no');
+
+    // Modales
+    const modalEditar = document.getElementById('modalConfirmacion');
+    const modalEliminar = document.getElementById('modalConfirmacion2');
+    const modalEditRegistro = document.getElementById('modalnewadd2');
+
+    // Botones "Sí" y "No"
+    const botonSiEditar = modalEditar.querySelector('.boton-si');
+    const botonNoEditar = modalEditar.querySelector('.boton-no');
+    const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
+
+    // Funciones para abrir y cerrar modales
+    function abrirModal(modal) {
+        modal.classList.remove('confirmacion--hidden');
+        modal.classList.add('confirmacion--visible');
+    }
+
+    function cerrarModal(modal) {
+        modal.classList.remove('confirmacion--visible');
+        modal.classList.add('confirmacion--hidden');
+    }
+
+    // Eventos abrir modal editar
+    botonesEditar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            abrirModal(modalEditar);
+        });
+    });
+
+    // Eventos abrir modal eliminar
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            abrirModal(modalEliminar);
+        });
+    });
+
+    // Eventos cerrar modales al hacer click en "No"
+    botonNoEditar.addEventListener('click', () => {
+        cerrarModal(modalEditar);
+    });
+
+    botonNoEliminar.addEventListener('click', () => {
+        cerrarModal(modalEliminar);
+    });
+
+
+    // Cerrar modal al hacer click fuera del contenido
+    modalEditar.addEventListener('click', (e) => {
+        if (e.target === modalEditar) {
+            cerrarModal(modalEditar);
+        }
+    });
+
+    modalEliminar.addEventListener('click', (e) => {
+        if (e.target === modalEliminar) {
+            cerrarModal(modalEliminar);
+        }
+    });
 
     //Apertura de la exportacion
     const iconoDescarga = document.querySelector('.content__descarga i');
@@ -248,7 +309,168 @@ document.addEventListener("DOMContentLoaded", function () {
         exportarDiv.classList.toggle('active');
     });
 
-        document.querySelectorAll('.button__add').forEach(button => {
+    // Función para exportar a PDF
+    function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Obtener la tabla
+        const table = document.querySelector('.notification__table');
+
+        // Extraer los encabezados de la tabla (sin incluir "Action")
+        const headers = Array.from(table.querySelectorAll('th'))
+            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 7)
+            .map(header => header.innerText);
+
+        // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
+            return Array.from(row.querySelectorAll('td'))
+                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 7)
+                .map(cell => cell.innerText);
+        });
+
+        // Usar autoTable para agregar la tabla al PDF con estilos mejorados
+        doc.autoTable({
+            head: [headers],  // Encabezados de la tabla
+            body: rows,      // Datos de las filas
+            startY: 20,      // Iniciar la tabla después de un margen superior
+            theme: 'striped', // Aplicar el tema de filas alternas
+            headStyles: {
+                fillColor: [70, 130, 180], // Azul marino cielo para los encabezados
+                textColor: 255, // Color del texto (blanco)
+                fontStyle: 'bold', // Estilo de la fuente en negrita
+                halign: 'center', // Alinear el texto de los encabezados al centro
+            },
+            bodyStyles: {
+                fontSize: 10, // Tamaño de la fuente para las filas
+                halign: 'center', // Alinear el texto al centro
+            },
+            alternateRowStyles: {
+                fillColor: [245, 245, 245], // Color de fondo para las filas alternas
+            },
+            margin: { top: 20 }, // Margen superior
+            didDrawPage: function (data) {
+                // Agregar un título o encabezado personalizado en la parte superior
+                doc.setFontSize(18);
+                doc.text('Tabla De Procesos', data.settings.margin.left, 15);
+            }
+        });
+
+        // Guardar el archivo PDF
+        doc.save('Tabla__Procesos.pdf');
+    }
+
+    document.querySelector('.exportar-option:nth-child(1)').addEventListener('click', exportToPDF);
+
+    // Función para exportar a JSON
+    function exportToJSON() {
+        // Obtener la tabla
+        const table = document.querySelector('.notification__table');
+
+        // Extraer los encabezados de la tabla (sin incluir "Action")
+        const headers = Array.from(table.querySelectorAll('th'))
+            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 7)
+            .map(header => header.innerText);
+
+        // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
+            const rowData = Array.from(row.querySelectorAll('td'))
+                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 7)
+                .map(cell => cell.innerText);
+            let rowObj = {};
+
+            // Asociar los valores con los encabezados
+            headers.forEach((header, index) => {
+                rowObj[header] = rowData[index];
+            });
+
+            return rowObj;
+        });
+
+        // Crear un objeto JSON con los datos
+        const jsonData = JSON.stringify(rows, null, 2); // Formato bonito con sangrías de 2 espacios
+
+        // Crear un enlace para descargar el archivo JSON
+        const blob = new Blob([jsonData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Tabla_Procesos.json'; // Nombre del archivo JSON
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a); // Limpiar el DOM
+    }
+
+    // Escuchar el clic para exportar a JSON
+    document.querySelector('.exportar-option:nth-child(2)').addEventListener('click', exportToJSON);
+
+    // Función para exportar a CSV
+    function exportToCSV() {
+        // Obtener la tabla
+        const table = document.querySelector('.notification__table');
+
+        // Extraer los encabezados de la tabla (sin incluir "Action")
+        const headers = Array.from(table.querySelectorAll('th'))
+            .filter((header, index) => index !== 7) // Excluir columna "Action"
+            .map(header => `"${header.innerText.trim()}"`); // Poner en comillas por seguridad
+
+        // Extraer las filas de la tabla, excluyendo la columna "Action"
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
+            const rowData = Array.from(row.querySelectorAll('td'))
+                .filter((cell, index) => index !== 7) // Excluir columna "Action"
+                .map(cell => `"${cell.innerText.trim().replace(/"/g, '""')}"`); // Escapar comillas
+            return rowData.join(',');
+        });
+
+        // Combinar encabezados y filas
+        const csvContent = [headers.join(','), ...rows].join('\n');
+
+        // Crear un Blob y generar el enlace de descarga
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Tabla_Procesos.csv'; // Nombre del archivo
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a); // Limpiar el DOM
+    }
+
+    // Escuchar el clic en el botón de exportar CSV
+    document.querySelector('.exportar-option:nth-child(3)').addEventListener('click', exportToCSV);
+
+    //Exportar A Excel
+    function exportToExcel() {
+        // Obtener la tabla
+        const table = document.querySelector('.notification__table');
+
+        // Extraer los encabezados de la tabla (sin incluir "Action")
+        const headers = Array.from(table.querySelectorAll('th'))
+            .filter((header, index) => index !== 7)  // Excluir el "Action" (índice 5)
+            .map(header => header.innerText);
+
+        // Extraer las filas de la tabla, asegurándonos de excluir la columna "Action"
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(row => {
+            const rowData = Array.from(row.querySelectorAll('td'))
+                .filter((cell, index) => index !== 7)  // Excluir la columna "Action" (índice 5)
+                .map(cell => cell.innerText);
+            return rowData;
+        });
+
+        // Crear un libro de trabajo de Excel
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);  // Combina los encabezados con las filas
+        const wb = XLSX.utils.book_new();  // Crea un libro nuevo
+        XLSX.utils.book_append_sheet(wb, ws, "Datos");  // Agrega la hoja con los datos
+
+        // Descargar el archivo Excel
+        XLSX.writeFile(wb, "Tabla__Procesos.xlsx");
+    }
+
+    // Escuchar el clic para exportar a Excel
+    document.querySelector('.exportar-option:nth-child(4)').addEventListener('click', exportToExcel);
+
+    document.querySelectorAll('.button__add').forEach(button => {
         button.addEventListener('click', () => {
             const url = button.getAttribute('data-url');
             if (url) {

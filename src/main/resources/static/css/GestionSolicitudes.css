@@ -23,6 +23,7 @@ body {
     transition: background-color 0.5s, color 0.5s;
 }
 
+
 /* Modo oscuro */
 body.dark-mode {
     background-color: #121212;
@@ -31,7 +32,8 @@ body.dark-mode {
 
 /* header modo oscuro */
 body.dark-mode .header,
-body.dark-mode .sidebar{
+body.dark-mode .sidebar,
+body.dark-mode .container__table{
     background-color: #1e1e1e;
     color: #f0f0f0;
 }
@@ -42,12 +44,28 @@ body.dark-mode .sidebar__indicator{
 
 /* Search modo oscuto */
 body.dark-mode .nav__search{
-    background-color: #121212;;
+    background-color: #121212;
     color: var(--color-tercario);
 }
 
+
 body.dark-mode .search__input{
     color: var(--color-tercario);
+}
+
+body.dark-mode .notification__search-container i{
+    color: #888;
+}
+
+body.dark-mode .notification__search{
+    background-color: #121212;
+    color: var(--color-tercario);
+    border: 1px solid #555;
+}
+
+body.dark-mode .notification__search:focus{
+    border-color: #5c9eff;
+    box-shadow: 0 0 0 2px rgba(92, 158, 255, 0.2);
 }
 
 body.dark-mode .language-menu{
@@ -64,8 +82,19 @@ body.dark-mode .icono__notification i{
 }
 
 body.dark-mode .encabezado__pages,
-body.dark-mode .encabezado__title {
+body.dark-mode .encabezado__title,
+body.dark-mode .notification__title,
+body.dark-mode .modal-title,
+body.dark-mode .contenido__text,
+body.dark-mode .info__title,
+body.dark-mode .link__text,
+body.dark-mode .link__flec {
     color: var(--color-tercario);
+}
+
+body.dark-mode .menu__sub{
+    background-color: #121212;
+    
 }
 
 body.dark-mode .agentenaviero__welcome,
@@ -81,27 +110,54 @@ body.dark-mode .agentenaviero__total i{
     background-color: #121212;
 }
 
-body.dark-mode #chartdiv,
-body.dark-mode #chartdiv2{
-    background-color: #1e1e1e;
-}
-
-body.dark-mode .menu__sub{
+body.dark-mode .content__descarga i:not(.ri-arrow-right-long-line){
     background-color: #121212;
-    
+    color: var(--color-tercario);
+    transition: background-color .8s ease;
 }
 
-body.dark-mode .info__title,
-body.dark-mode .link__text,
-body.dark-mode .link__flec{
+body.dark-mode .content__icon i{
     color: var(--color-tercario);
 }
 
-body.dark-mode .control-button{
+body.dark-mode .content__icon i:hover{
+    background-color: #444;
+}
+
+body.dark-mode .notification__table tbody tr{
+    transition: background-color .9s ease;
+}
+
+body.dark-mode .notification__table tbody tr:hover{
+    background-color: #121212;
+
+}
+
+body.dark-mode .modal-content{
+    background-color: #1e1e1e;
     color: var(--color-tercario);
 }
 
-body.dark-mode .select__title{
+body.dark-mode .modal-close{
+    color: var(--color-tercario);
+    transition: color .5s ease;
+}
+
+body.dark-mode .modal-close:hover{
+    color: #8d8d8d;
+}
+
+body.dark-mode .modal__contenido{
+    background-color: #1e1e1e;
+    color: var(--color-tercario);
+}
+
+body.dark-mode .modal__content{
+    background-color: #1e1e1e;
+    color: var(--color-tercario);
+}
+
+body.dark-mode .pagination__flec{
     color: var(--color-tercario);
 }
 
@@ -1035,6 +1091,155 @@ body.dark-mode .notification-content .time{
 .hidden {
     display: none;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal de action */
+.modal__confirmacion {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+/*Ventana modal del boton editar */
+.modal__contenido {
+    background-color: #ffffff;
+    margin: 20% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+.modal__contenido .contenido__text {
+    font: 600 1.2rem "Montserrat";
+    margin-bottom: 1.5rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Botones del modal */
+.modal__botones {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.boton {
+    width: 100%;
+    max-width: 150px;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.7s ease;
+    font: 500 1.1rem "Noto Sans", sans-serif;
+}
+
+/* Botón "Sí" */
+.boton-si {
+    background-color: #4caf50;
+    color: white;
+    margin: 0 0 0 90px;
+}
+
+.boton-si:hover {
+    background-color: #45a049;
+}
+
+/* Botón "No" */
+.boton-no {
+    background-color: #f44336;
+    color: white;
+    margin: 0 0 0 10px;
+}
+
+.boton-no:hover {
+    background-color: #d32f2f;
+}
+
+.confirmacion--hidden {
+    display: none;
+}
+
+.confirmacion--visible {
+    display: block;
+}
+
+/*Ventana modal del boton eliminar */
+.modal__confirmacion2 {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+.confirmacion--hidden2 {
+    display: none;
+}
+
+/* Botones del modal */
+.modal__botones2 {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.boton2 {
+    width: 100%;
+    max-width: 150px;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.7s ease;
+    font: 500 1.1rem "Noto Sans", sans-serif;
+}
+
+/* Botón "Sí" */
+.boton-si2 {
+    background-color: #4caf50;
+    color: white;
+    margin: 0 0 0 90px;
+}
+
+.boton-si2:hover {
+    background-color: #45a049;
+}
+
+/* Botón "No" */
+.boton-no2 {
+    background-color: #f44336;
+    color: white;
+    margin: 0 0 0 10px;
+}
+
+.boton-no2:hover {
+    background-color: #d32f2f;
+}
+
 
 @keyframes fadeIn {
     from {
