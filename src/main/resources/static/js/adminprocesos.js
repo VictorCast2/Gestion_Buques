@@ -234,8 +234,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // validar formularios
+    const fieldValid = {
+        descripcion: { regex: /^.{1,}$/, errorMessage: "Por favor, ingrese una descripción." }
+    };
+
+    // variables 
+    const formulario = document.querySelector(".add__formulario");
+    const advertencia = document.querySelector(".input__advertencia");
+
        // Validar en tiempo real los inputs
-    Object.keys(fieldValid).forEach(fieldId => {
+     Object.keys(fieldValid).forEach(fieldId => {
         const input = document.getElementById(fieldId);
         if (!input) return;
 
