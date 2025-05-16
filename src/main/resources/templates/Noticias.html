@@ -77,7 +77,7 @@
 
                     <!-- Panel de Control para ADMIN -->
                     <a th:href="@{/buques/admin/}" class="sub__link"
-                       sec:authorize="hasAuthority('ROLE_ADMIN')">
+                       sec:authorize="hasAuthority('ROLE_ADMIN') and #authentication.principal.empresa != null and #authentication.principal?.empresa.estadoEmpresa.name() == 'APROBADA'">
                         <i class="ri-dashboard-fill"></i>
                         <p class="link__text">Panel Control</p>
                         <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
@@ -87,7 +87,7 @@
                     <form th:action="@{/auth/logout}" method="post" id="logoutForm">
                         <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
                             <i class="ri-logout-box-r-fill"></i>
-                            <p class="link__text">Cerrar Seccion</p>
+                            <p class="link__text">Cerrar sesión</p>
                             <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
                         </a>
                     </form>
