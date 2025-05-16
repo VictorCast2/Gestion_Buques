@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -111,16 +111,15 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -128,10 +127,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -144,39 +142,42 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques}" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar Seccion</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar Seccion</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -247,86 +248,46 @@
                     <table class="notification__table">
                         <thead>
                             <tr>
+                                <th>Agente Naviero</th>
+                                <th class="ocultar-columna">Nombre</th>
+                                <th class="ocultar-columna">Correo</th>
                                 <th>Nit</th>
                                 <th>Nombre Empresa</th>
                                 <th>País</th>
                                 <th>Ciudad</th>
-                                <th>Dirección</th>
+                                <th class="ocultar-columna">Dirección</th>
                                 <th>Email</th>
                                 <th>Teléfono</th>
                                 <th>Validación</th>
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
+                            <tr th:if="${listarEmpresas.isEmpty()}">
+                                <td colspan="8" style="text-align: center; font-style: italic; color: #888;">
+                                    Aún no existen Solicitudes de Aprobación para empresas.
+                                </td>
+                            </tr>
+                            <tr th:each="agenteNaviero : ${listarEmpresas}"
+                                th:if="${agenteNaviero.empresa != null and agenteNaviero.empresa.estadoEmpresa.name() == 'PENDIENTE'}">
+                                <td th:text="${agenteNaviero.numeroIdentificacion}">Numero de Identificacion</td>
+                                <td class="ocultar-columna" th:text="${agenteNaviero.nombres}">Nombre</td>
+                                <td class="ocultar-columna" th:text="${agenteNaviero.correo}">Correo Agente Naviero</td>
+                                <td th:text="${agenteNaviero.empresa.nit}">Nit</td>
+                                <td th:text="${agenteNaviero.empresa.nombre}">Nombre Empresa</td>
+                                <td th:text="${agenteNaviero.empresa.pais}">Pais</td>
+                                <td th:text="${agenteNaviero.empresa.ciudad}">Ciudad</td>
+                                <td class="ocultar-columna" th:text="${agenteNaviero.empresa.direccion}">Dirección</td>
+                                <td th:text="${agenteNaviero.empresa.correo}">Correo</td>
+                                <td th:text="${agenteNaviero.empresa.telefono}">Telefono</td>
                                 <td>
-                                    <button class="content__icon icon--si">
+                                    <button class="content__icon icon--si" th:data-id="${agenteNaviero.id}">
                                         Si
                                     </button>
-                                    <button class="content__icon icon--no">
+                                    <button class="content__icon icon--no" th:data-id="${agenteNaviero.id}">
                                         No
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
-                                <td>
-                                    <button class="content__icon icon--si">
-                                        Si
-                                    </button>
-                                    <button class="content__icon icon--no">
-                                        No
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
-                                <td>
-                                    <button class="content__icon icon--si">
-                                        Si
-                                    </button>
-                                    <button class="content__icon icon--no">
-                                        No
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 123456789</td>
-                                <td>Lemaitre</td>
-                                <td>Ecuador</td>
-                                <td>No se</td>
-                                <td>San Nattiene Calle 14</td>
-                                <td>Empresa@mail.com</td>
-                                <td>3102255898</td>
-                                <td>
-                                    <button class="content__icon icon--si">
-                                        Si
-                                    </button>
-                                    <button class="content__icon icon--no">
-                                        No
-                                    </button>
-                                </td>
-                            </tr>
-                            <!-- Más filas si es necesario -->
                         </tbody>
                     </table>
 
@@ -347,8 +308,12 @@
     <div id="modalNotificacion" class="modal hidden">
         <div class="modal-content">
             <span class="modal-close" id="closeModal">&times;</span>
-            <h2 class="modal-title">📝 Detalles De La Solicitud Atraque</h2>
+            <h2 class="modal-title">📝 Detalles De La Empresa</h2>
             <div class="modal-info">
+                <p class="modal__text"><strong class="text__str">Numero Identificación:</strong>
+                    <span id="modalNumeroIdentificaccion"></span></p>
+                <p class="modal__text"><strong class="text__str">Nombre:</strong> <span id="modalNombreAgente"></span></p>
+                <p class="modal__text"><strong class="text__str">Correo:</strong> <span id="modalCorreoAgente"></span></p>
                 <p class="modal__text"><strong class="text__str">Nit:</strong> <span id="modalNit"></span></p>
                 <p class="modal__text"><strong class="text__str">Nombre Empresa:</strong> <span
                         id="modalNombreEmpresa"></span></p>
@@ -363,21 +328,25 @@
         </div>
     </div>
 
-        <!-- MODAL PARA CONFIRMACIÓN si -->
+    <!-- MODAL PARA CONFIRMACIÓN si -->
     <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas seguro de aceptar la validacion?</p>
-            <button class="boton boton-si">Sí</button>
-            <button class="boton boton-no">No</button>
+            <form method="post" id="formAprobar">
+                <button type="submit" class="boton boton-si">Sí</button>
+                <button type="button" class="boton boton-no">No</button>
+            </form>
         </div>
     </div>
 
-    <!-- MODAL PARA CONFIRMACIÓN no -->
+    <!-- MODAL PARA CONFIRMACIÓN no -->-
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas seguro de no aceptar la validacion?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <form method="post" id="formRechazar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 

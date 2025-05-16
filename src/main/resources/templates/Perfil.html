@@ -126,17 +126,17 @@
                 <span th:text="${usuario.correo}">Correo Usuario</span>
             </p>
 
-            <p class="item__info" th:if="${usuario.empresa != null}">
+            <p class="item__info" th:if="${usuario.empresa != null && usuario?.empresa.estadoEmpresa.name() == 'APROBADA'}">
                 <strong class="info__imp">Empresa:</strong>
                 <span th:text="${usuario.empresa.nombre}">Empresa</span>
             </p>
 
-            <p class="item__info" th:if="${usuario.empresa != null}">
+            <p class="item__info" th:if="${usuario.empresa != null && usuario?.empresa.estadoEmpresa.name() == 'APROBADA'}">
                 <strong class="info__imp">Nit:</strong>
                 <span th:text="${usuario.empresa.nit}">N.I.T</span>
             </p>
 
-            <p class="item__info" th:if="${usuario.empresa != null}">
+            <p class="item__info" th:if="${usuario.empresa != null && usuario?.empresa.estadoEmpresa.name() == 'APROBADA'}">
                 <strong class="info__imp">Email Empresa:</strong>
                 <span th:text="${usuario.empresa.correo}">Correo Empresa</span>
             </p>
@@ -146,17 +146,17 @@
                 <span th:text="${usuario.telefono}">telefono usuario</span>
             </p>
 
-            <p class="item__info" th:if="${usuario.empresa != null}">
+            <p class="item__info" th:if="${usuario.empresa != null && usuario?.empresa.estadoEmpresa.name() == 'APROBADA'}">
                 <strong class="info__imp">País:</strong>
                 <span th:text="${usuario.empresa.pais}">pais</span>
             </p>
 
-            <p class="item__info" th:if="${usuario.empresa != null}">
+            <p class="item__info" th:if="${usuario.empresa != null && usuario?.empresa.estadoEmpresa.name() == 'APROBADA'}">
                 <strong class="info__imp">Ciudad:</strong>
                 <span th:text="${usuario.empresa.ciudad}">ciudad</span>
             </p>
 
-            <p class="item__info" th:if="${usuario.empresa != null}">
+            <p class="item__info" th:if="${usuario.empresa != null && usuario?.empresa.estadoEmpresa.name() == 'APROBADA'}">
                 <strong class="info__imp">Dirección:</strong>
                 <span th:text="${usuario.empresa.direccion}">direccion</span>
             </p>
@@ -216,7 +216,7 @@
                         th:text="${mensaje}">
                      </p>
                 </div>
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:') && !#strings.startsWith(mensaje, 'Sus') && !#strings.startsWith(mensaje, 'Se')}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'Error:') && !#strings.startsWith(mensaje, 'Sus') && !#strings.startsWith(mensaje, 'Solicitud')}">
                     <p id="mensaje-password-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">
@@ -314,7 +314,7 @@
             </div>
 
         </div>
-        <div class="div4" th:if="${usuario.rol.name == 'INVITADO' || usuario.rol.name == 'AGENTE_NAVIERO'}">
+        <div class="div4" th:if="${usuario.rol.name == 'INVITADO' || usuario.rol.name == 'AGENTE_NAVIERO' && (usuario.empresa == null or usuario.empresa.estadoEmpresa.name() == 'RECHAZADA')}">
 
             <form action="/buques/perfil/vincular-empresa" method="post" class="perfil__formulario" enctype="multipart/form-data">
                 <div class="perfil__cabecera">
@@ -620,7 +620,7 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Se')}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Solicitud')}">
                     <p id="mensaje-update-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">

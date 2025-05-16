@@ -68,7 +68,7 @@
 
                     <!-- Panel de Control para AGENTE_NAVIERO -->
                     <a th:href="@{/buques/panel-control}" class="sub__link"
-                       sec:authorize="hasAuthority('ROLE_AGENTE_NAVIERO')">
+                       sec:authorize="hasAuthority('ROLE_AGENTE_NAVIERO') and #authentication.principal.empresa != null and #authentication.principal?.empresa.estadoEmpresa.name() == 'APROBADA'">
                         <i class="ri-dashboard-fill"></i>
                         <p class="link__text">Panel Control</p>
                         <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
