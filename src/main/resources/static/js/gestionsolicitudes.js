@@ -146,6 +146,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
+    const modalNumeroIdentificaccion = document.getElementById("modalNumeroIdentificaccion");
+    const modalNombreAgente = document.getElementById("modalNombreAgente");
+    const modalCorreoAgente = document.getElementById("modalCorreoAgente");
     const modalNit = document.getElementById("modalNit");
     const modalNombreEmpresa = document.getElementById("modalNombreEmpresa");
     const modalPais = document.getElementById("modalPais");
@@ -166,14 +169,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
-            if (celdas.length >= 6) {
-                modalNit.textContent = celdas[0].textContent.trim();
-                modalNombreEmpresa.textContent = celdas[1].textContent.trim();
-                modalPais.textContent = celdas[2].textContent.trim();
-                modalCiudad.textContent = celdas[3].textContent.trim();
-                modalDireccion.textContent = celdas[4].textContent.trim();
-                modalEmail.textContent = celdas[5].textContent.trim();
-                modalTelefono.textContent = celdas[6].textContent.trim();
+            if (celdas.length >= 10) {
+                modalNumeroIdentificaccion.textContent = celdas[0].textContent.trim();
+                modalNombreAgente.textContent = celdas[1].textContent.trim();
+                modalCorreoAgente.textContent = celdas[2].textContent.trim();
+                modalNit.textContent = celdas[3].textContent.trim();
+                modalNombreEmpresa.textContent = celdas[4].textContent.trim();
+                modalPais.textContent = celdas[5].textContent.trim();
+                modalCiudad.textContent = celdas[6].textContent.trim();
+                modalDireccion.textContent = celdas[7].textContent.trim();
+                modalEmail.textContent = celdas[8].textContent.trim();
+                modalTelefono.textContent = celdas[9].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -251,7 +257,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
+    const botonSiEliminar = modalEliminar.querySelector('.boton-si2');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
+
+    // Formularios
+    const formEditar = document.getElementById('formAprobar')
+    const formEliminar = document.getElementById('formRechazar');
 
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
@@ -264,16 +275,24 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('confirmacion--hidden');
     }
 
-    // Eventos abrir modal editar
+    // Variable global para guardar el id y la acción (estado aprobado o rechazado)
+    let usuarioIdSeleccionado = null;
+    let accionSeleccionada = null;
+
+    // Eventos abrir modal aprobar (sí)
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            usuarioIdSeleccionado = boton.getAttribute('data-id');
+            accionSeleccionada = true; // acción de aprobación
             abrirModal(modalEditar);
         });
     });
 
-    // Eventos abrir modal eliminar
+    // Eventos abrir modal rechazar (no)
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', () => {
+            usuarioIdSeleccionado = boton.getAttribute('data-id');
+            accionSeleccionada = false; // acción de rechazo
             abrirModal(modalEliminar);
         });
     });
@@ -287,7 +306,6 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEliminar);
     });
 
-
     // Cerrar modal al hacer click fuera del contenido
     modalEditar.addEventListener('click', (e) => {
         if (e.target === modalEditar) {
@@ -298,6 +316,24 @@ document.addEventListener("DOMContentLoaded", function () {
     modalEliminar.addEventListener('click', (e) => {
         if (e.target === modalEliminar) {
             cerrarModal(modalEliminar);
+        }
+    });
+
+    // Evento para enviar formulario aprobar
+    formEditar.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evita recarga completa
+        if (usuarioIdSeleccionado !== null) {
+            formEditar.action = `/buques/gestion-solicitud/validar-empresa/${usuarioIdSeleccionado}?aprovada=true`;
+            formEditar.submit(); // Enviar formulario con método POST
+        }
+    });
+
+    // Evento para enviar formulario rechazar
+    formEliminar.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evita recarga completa
+        if (usuarioIdSeleccionado !== null) {
+            formEliminar.action = `/buques/gestion-solicitud/validar-empresa/${usuarioIdSeleccionado}?aprovada=false`;
+            formEliminar.submit(); // Enviar formulario con método POST
         }
     });
 

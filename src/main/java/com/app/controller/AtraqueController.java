@@ -23,15 +23,12 @@ import java.util.List;
 public class AtraqueController {
 
     @Autowired
-    private UserDetailServiceImpl userDetailService;
-
-    @Autowired
     private AtraqueService atraqueService;
 
     @RequestMapping("/")
     public String SolicitudAtraque(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(value = "mensaje", required = false) String mensaje, Model model) {
 
-        Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
+        Usuario usuario = atraqueService.getUsuarioByCorreo(userDetails.getUsername());
         List<Atraque> atraques = atraqueService.getAtraquesByUsuario(usuario);
 
         model.addAttribute("usuario", usuario); // datos del usuario

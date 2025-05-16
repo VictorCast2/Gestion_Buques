@@ -37,6 +37,14 @@ public class AtraqueService {
     }
 
     /**
+     * Método para obtener todos los atraques de la base de datos
+     * @return una lista de atraques de todos los Agentes Navieros
+     */
+    public List<Atraque> getAtraques() {
+        return atraqueRepository.findAll();
+    }
+
+    /**
      * Método para buscar un atraque en la base de datos por su id
      * @param id del atraque a buscar
      * @return el atraque si existe o un NoSuchElementException si no existe
@@ -46,6 +54,11 @@ public class AtraqueService {
                 .orElseThrow(() -> new NoSuchElementException("No se ha encontrado una solicitud con el id: " + id));
     }
 
+    /**
+     * Método para obtener los atraques de un agenteNaviero
+     * @param agenteNaviero parámetro para obtener los atraques del usuario
+     * @return una lista con los atraques del usuario
+     */
     public List<Atraque> getAtraquesByUsuario(Usuario agenteNaviero) {
         return atraqueRepository.findByAgenteNaviero(agenteNaviero);
     }

@@ -22,6 +22,8 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -66,6 +68,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     /**
+     * Método para obtener la lista de Agentes Navieros con una empresa asociada
+     * @return una lista de usuarios con una empresa registrada
+     */
+    public List<Usuario> getAgentesNavieros() {
+        return usuarioRepository.findByEmpresaNotNull().stream()
+                .filter(u -> u.getEmpresa() != null && u.getEmpresa().getEstadoEmpresa().name().equals("PENDIENTE"))
+                .toList();
+    }
+
+    /**
      * Método para la creación de un usuario
      * @param authCreateUserRequest parámetro con los datos básicos del usuario
      * @return un objeto de tipo authResponse que contiene un mensaje de satisfacción
@@ -91,7 +103,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .telefono(telefono)
                 .correo(correo)
                 .password(encoder.encode(password))
-                .rol(ERol.INVITADO)
+                .rol(ERol.AGENTE_NAVIERO)
                 .empresa(null)
                 .isEnabled(true)
                 .accountNoExpired(true)

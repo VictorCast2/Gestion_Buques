@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.app.service.UserDetailServiceImpl;
 
 
-
 @Controller
 @RequestMapping("/buques/gestion-solicitud")
 public class AdminSolicitudAtraqueController {
