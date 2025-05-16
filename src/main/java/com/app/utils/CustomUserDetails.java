@@ -1,6 +1,8 @@
 package com.app.utils;
 
+import com.app.collections.Usuario.Enum.EEstadoEmpresa;
 import com.app.collections.Usuario.Usuario;
+import com.app.collections.Usuario.pojo.Empresa;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +30,7 @@ public class CustomUserDetails implements UserDetails {
     private String nombres;
     private String apellidos;
     private String imagen;
+    private Empresa empresa;
 
     public CustomUserDetails(Usuario usuario) {
         this.correo = usuario.getCorreo();
@@ -40,6 +43,7 @@ public class CustomUserDetails implements UserDetails {
         this.nombres = usuario.getNombres();
         this.apellidos = usuario.getApellidos();
         this.imagen = usuario.getImagen();
+        this.empresa = usuario.getEmpresa();
     }
 
     @Override

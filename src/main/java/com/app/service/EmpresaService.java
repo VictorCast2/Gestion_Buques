@@ -1,6 +1,6 @@
 package com.app.service;
 
-import com.app.collections.Usuario.Enum.ERol;
+import com.app.collections.Usuario.Enum.EEstadoEmpresa;
 import com.app.collections.Usuario.Usuario;
 import com.app.collections.Usuario.pojo.Empresa;
 import com.app.dto.request.EmpresaRequest;
@@ -8,13 +8,13 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.UsuarioRepository;
 import com.app.utils.CustomUserDetails;
 import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.NoSuchElementException;
 
 @Service
 public class EmpresaService {
@@ -41,6 +41,7 @@ public class EmpresaService {
                 .direccion(empresaRequest.direccion())
                 .telefono(empresaRequest.telefono())
                 .correo(empresaRequest.correo())
+                .estadoEmpresa(EEstadoEmpresa.PENDIENTE)
                 .build();
 
         MultipartFile multipartFile = empresaRequest.imagen();
@@ -55,11 +56,33 @@ public class EmpresaService {
         }
 
         usuarioEmpresa.setEmpresa(empresa);
-        usuarioEmpresa.setRol(ERol.AGENTE_NAVIERO);
 
         usuarioRepository.save(usuarioEmpresa);
 
-        return new AuthResponse("Se ha vinculado a la empresa '" + empresa.getNombre() + "' exitosamente");
+        return new AuthResponse("Solicitud de vinculación enviada a la empresa '" + empresa.getNombre() + "'");
+    }
+
+    public AuthResponse validarEmpresa(String agenteNavieroId, boolean aprobada) {
+
+        Usuario agenteNaviero = usuarioRepository.findById(agenteNavieroId)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado en validar Empresa"));
+
+        Empresa empresa = agenteNaviero.getEmpresa();
+
+        if (empresa == null) {
+            throw new NoSuchElementException("El usuario no tiene una empresa asociada");
+        }
+
+        if (aprobada) {
+            empresa.setEstadoEmpresa(EEstadoEmpresa.APROBADA);
+        } else {
+            empresa.setEstadoEmpresa(EEstadoEmpresa.RECHAZADA);
+        }
+
+        agenteNaviero.setEmpresa(empresa);
+        usuarioRepository.save(agenteNaviero);
+
+        return new AuthResponse("Empresa " + (aprobada ? "aprobada" : "rechazada") + " correctamente");
     }
 
     /**

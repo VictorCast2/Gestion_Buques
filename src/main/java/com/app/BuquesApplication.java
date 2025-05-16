@@ -5,6 +5,7 @@ import com.app.collections.Atraque.Enum.EResultado;
 import com.app.collections.Atraque.Enum.ETipoBuque;
 import com.app.collections.Atraque.pojo.Buque;
 import com.app.collections.Atraque.pojo.Dimension;
+import com.app.collections.Usuario.Enum.EEstadoEmpresa;
 import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
@@ -75,6 +76,7 @@ public class BuquesApplication {
 					.direccion("ParquiAmérica - Mamonal Gambote")
 					.telefono("+57 310 2255889")
 					.correo("leamitre@perfumeria.com")
+					.estadoEmpresa(EEstadoEmpresa.APROBADA)
 					.build();
 
 			Usuario userTheresa = Usuario.builder()
