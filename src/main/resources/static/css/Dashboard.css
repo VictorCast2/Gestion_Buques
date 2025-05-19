@@ -89,7 +89,7 @@ body.dark-mode #chartdiv2{
 
 body.dark-mode .menu__sub{
     background-color: #121212;
-
+    
 }
 
 body.dark-mode .info__title,
@@ -220,7 +220,7 @@ hr {
     text-decoration: none;
     color: #525252;
     margin: 12px 0;
-
+    
 }
 
 .sub__link .link__text {
@@ -658,3 +658,4 @@ body.dark-mode .notification-content .time{
     margin-left: 155px;
     padding-top: 55px;
 }
+
