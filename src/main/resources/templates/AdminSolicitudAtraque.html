@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,13 +103,12 @@
                 <i class="ri-moon-fill" id="theme-icon"></i>
             </div>
 
-
             <div class="icono__notification" id="notificationIcon">
                 <i class="ri-notification-2-fill"></i>
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt=""/>
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -117,7 +116,7 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt=""/>
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -125,7 +124,7 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt=""/>
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -140,39 +139,42 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/}" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar sesión</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar sesión</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -254,75 +256,28 @@
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr>
-                                <td>Jose Andrés Torres Diaz</td>
-                                <td>TE-AAH-32569</td>
-                                <td>PC</td>
-                                <td>Argentina/Bello/Puerto Argentina</td>
-                                <td>11-05-2025</td>
-                                <td>10-06-2025</td>
-                                <td>50/100/45</td>
+                            <tr th:if="${listarAtraques.isEmpty()}">
+                                <td colspan="8" style="text-align: center; font-style: italic; color: #888;">
+                                    Aún no existen Solicitudes de Atraque.
+                                </td>
+                            </tr>
+                            <tr th:each="atraque : ${listarAtraques}">
+                                <td th:text="${atraque.agenteNaviero.nombres} + ' ' + ${atraque.agenteNaviero.apellidos}">Nombre Completo Agente Naviero</td>
+                                <td th:text="${atraque.buque.matricula}">Matricula buque</td>
+                                <td th:text="${atraque.buque.tipoBuque}">Tipo Buque</td>
+                                <td th:text="${atraque.paisProcedencia} + '/' + ${atraque.ciudadProcedencia} + '/' + ${atraque.puertoProcedencia}">Procedencia del Buque</td>
+                                <td th:text="${#temporals.format(atraque.fechaLlegada, 'dd-MM-yyyy')}">Fecha de llegada</td>
+                                <td th:text="${#temporals.format(atraque.fechaSalida, 'dd-MM-yyyy')}">Fecha salida</td>
+                                <td th:text="${atraque.buque.dimensiones.largo} + '/' + ${atraque.buque.dimensiones.ancho} + '/' + ${atraque.buque.dimensiones.peso}">Dimensiones del Buque</td>
                                 <td>
-                                    <button class="content__icon icon--si">
+                                    <button class="content__icon icon--si" th:data-id="${atraque.id}">
                                         Si
                                     </button>
-                                    <button class="content__icon icon--no">
+                                    <button class="content__icon icon--no" th:data-id="${atraque.id}">
                                         No
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Jose Andrés Torres Diaz</td>
-                                <td>TE-AAH-32569</td>
-                                <td>PC</td>
-                                <td>Argentina/Bello/Puerto Argentina</td>
-                                <td>11-05-2025</td>
-                                <td>10-06-2025</td>
-                                <td>50/100/45</td>
-                                <td>
-                                    <button class="content__icon icon--si">
-                                        Si
-                                    </button>
-                                    <button class="content__icon icon--no">
-                                        No
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Jose Andrés Torres Diaz</td>
-                                <td>TE-AAH-32569</td>
-                                <td>PC</td>
-                                <td>Argentina/Bello/Puerto Argentina</td>
-                                <td>11-05-2025</td>
-                                <td>10-06-2025</td>
-                                <td>50/100/45</td>
-                                <td>
-                                    <button class="content__icon icon--si">
-                                        Si
-                                    </button>
-                                    <button class="content__icon icon--no">
-                                        No
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Jose Andrés Torres Diaz</td>
-                                <td>TE-AAH-32569</td>
-                                <td>PC</td>
-                                <td>Argentina/Bello/Puerto Argentina</td>
-                                <td>11-05-2025</td>
-                                <td>10-06-2025</td>
-                                <td>50/100/45</td>
-                                <td>
-                                    <button class="content__icon icon--si">
-                                        Si
-                                    </button>
-                                    <button class="content__icon icon--no">
-                                        No
-                                    </button>
-                                </td>
-                            </tr>
-                            <!-- Más filas si es necesario -->
                         </tbody>
                     </table>
 
@@ -359,12 +314,14 @@
         </div>
     </div>
 
-        <!-- MODAL PARA CONFIRMACIÓN si -->
+    <!-- MODAL PARA CONFIRMACIÓN si -->
     <div id="modalConfirmacion" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas seguro de aceptar la validacion?</p>
-            <button class="boton boton-si">Sí</button>
-            <button class="boton boton-no">No</button>
+            <form>
+                <button type="button" class="boton boton-si">Sí</button>
+                <button type="button" class="boton boton-no">No</button>
+            </form>
         </div>
     </div>
 
@@ -372,8 +329,10 @@
     <div id="modalConfirmacion2" class="modal__confirmacion confirmacion--hidden">
         <div class="modal__contenido">
             <p class="contenido__text">¿Estas seguro de no aceptar la validacion?</p>
-            <button class="boton2 boton-si2">Sí</button>
-            <button class="boton2 boton-no2">No</button>
+            <form method="post" id="formRechazar">
+                <button type="submit" class="boton2 boton-si2">Sí</button>
+                <button type="button" class="boton2 boton-no2">No</button>
+            </form>
         </div>
     </div>
 
@@ -383,13 +342,15 @@
             <span class="modal__close">&times;</span>
             <h2 class="content__titulo">Aceptar Validacion</h2>
             <div class="content__relleno"></div>
-            <form class="add__formulario" action="">
+            <form method="post" class="add__formulario" id="formAprobar">
 
                 <div class="formulario__input">
                     <div class="custom-select-wrapper">
-                        <select class="styled-select" id="Muelles">
-                            <option disabled selected>Muelles</option>
-                            <option value=""></option>
+                        <select class="styled-select" name="muelleId" id="Muelles" required>
+                            <option disabled selected>Muelles disponibles</option>
+                            <th:block th:each="muelle : ${muellesDisponibles}">
+                                <option th:value="${muelle.id}" th:text="${muelle.nombre}"></option>
+                            </th:block>
                         </select>
                         <i class="fa-solid fa-chevron-down custom-arrow" id="arrowIcon"></i>
                     </div>
@@ -401,7 +362,7 @@
 
                 <div class="formulario__input">
                     <div class="input-box">
-                        <textarea autocomplete="off" placeholder="" name="Descripcion" id="descripcion"></textarea>
+                        <textarea autocomplete="off" placeholder="" name="descripcionSolicitud" id="descripcion"></textarea>
                         <label class="label" for="descripcion">Descripcion</label>
                         <span class="box__icon"><i class="ri-check-line"></i></span>
                         <span class="box__icon"><i class="ri-close-line"></i></span>

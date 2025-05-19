@@ -39,6 +39,14 @@ public class MuelleService {
         return muelleRepository.findAll();
     }
 
+    /**
+     * Método para obtener los muelles con esto 'DISPONIBLE'
+     * @return una lista de muelle con el estado 'DISPONIBLE'
+     */
+    public List<Muelle> getMuelleByEstadoDisponible() {
+        return muelleRepository.findByEstado(EEstado.DISPONIBLE);
+    }
+
     public AuthResponse crearMuelle(@Valid MuelleRequest muelleRequest) {
 
         Muelle muelle = Muelle.builder()

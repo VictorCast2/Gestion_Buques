@@ -62,6 +62,13 @@ public class EmpresaService {
         return new AuthResponse("Solicitud de vinculación enviada a la empresa '" + empresa.getNombre() + "'");
     }
 
+    /**
+     * Método para validar aceptar una empresa a un AgenteNaviero
+     * @param agenteNavieroId parámetro para buscar al AgenteNaviero en la base de datos
+     * @param aprobada parámetro de tipo boolean para validar si la solicitud fue aprobada o rechazada
+     * @return un objeto de tipo AuthResponse con un mensaje de satisfacción si la solicitud fue aprobada o
+     * un mensaje de insatisfacción en caso contrario
+     */
     public AuthResponse validarEmpresa(String agenteNavieroId, boolean aprobada) {
 
         Usuario agenteNaviero = usuarioRepository.findById(agenteNavieroId)
