@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formulario.submit();
     });
 
-     //Ventana Modal de editar y eliminar
+    //Ventana Modal de editar y eliminar
     const botonesEditar = document.querySelectorAll('.icon--si');
     const botonesEliminar = document.querySelectorAll('.icon--no');
 
@@ -366,7 +366,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
+    const botonSiEliminar = modalEliminar.querySelector('.boton-si2');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
+
+    // Formularios
+    const formEditar = document.getElementById('formAprobar')
+    const formEliminar = document.getElementById('formRechazar');
 
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
@@ -379,9 +384,15 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('confirmacion--hidden');
     }
 
+    // Variable global para guardar el id y la acción (estado aprobado o rechazado)
+    let atraqueId = null;
+    let accionSeleccionada = null;
+
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            atraqueId = boton.getAttribute('data-id'); // Captura el ID desde un atributo personalizado
+            accionSeleccionada = true; // aprobar
             abrirModal(modalEditar);
         });
     });
@@ -389,6 +400,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Eventos abrir modal eliminar
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', () => {
+            atraqueId = boton.getAttribute('data-id'); // Captura el ID desde un atributo personalizado
+            accionSeleccionada = false; // rechazar
             abrirModal(modalEliminar);
         });
     });
@@ -407,6 +420,19 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEditar);     // Cerramos el modal de confirmación
         modalEditRegistro.classList.remove('newadd--hidden');
         modalEditRegistro.classList.add('newadd--visible');
+        // Setear action del formulario para enviar a la ruta correcta
+        formEditar.setAttribute('action', `/buques/gestion-solicitud/validar-solicitud-atraque/${atraqueId}?estado=true`);
+    });
+
+    // Cuando rechazan (sí en eliminar)
+    botonSiEliminar.addEventListener('click', () => {
+        cerrarModal(modalEliminar);
+
+        // Setear action del formulario para enviar a la ruta correcta
+        formEliminar.setAttribute('action', `/buques/gestion-solicitud/validar-solicitud-atraque/${atraqueId}?estado=false`);
+
+        // Enviar el formulario inmediatamente si no hay más campos por llenar
+        formEliminar.submit();
     });
 
     // Cerrar modal al hacer click fuera del contenido

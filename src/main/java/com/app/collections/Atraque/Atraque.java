@@ -46,10 +46,13 @@ public class Atraque {
     @Field("estado_solicitud")
     private EResultado estadoSolicitud;
 
+    @Field("descripcion_solicitud")
+    private String descripcionSolicitud; // descripción dada por el admin cuando acepta la solicitud
+
     private Buque buque;
 
+
     @DBRef
-    @Field("muelle")
     private Muelle muelle;
 
     @DBRef

@@ -3,6 +3,8 @@ package com.app.service;
 import com.app.collections.Atraque.Atraque;
 import com.app.collections.Atraque.Enum.*;
 import com.app.collections.Atraque.pojo.*;
+import com.app.collections.Muelle.Enum.EEstado;
+import com.app.collections.Muelle.Muelle;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.request.*;
 import com.app.dto.request.DimensionRequest;
@@ -10,7 +12,6 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.*;
 import com.app.utils.CustomUserDetails;
 import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class AtraqueService {
     @Autowired
     private AtraqueRepository atraqueRepository;
 
+    @Autowired
+    private MuelleRepository muelleRepository;
+
     /**
      * Método para obtener a un usuario por su correo
      * @param correo parámetro para buscar al usuario en la base de datos y verificar si existe
@@ -40,8 +44,8 @@ public class AtraqueService {
      * Método para obtener todos los atraques de la base de datos
      * @return una lista de atraques de todos los Agentes Navieros
      */
-    public List<Atraque> getAtraques() {
-        return atraqueRepository.findAll();
+    public List<Atraque> getAtraquesByEstadoPendiente() {
+        return atraqueRepository.findByEstadoSolicitud(EResultado.PENDIENTE);
     }
 
     /**
@@ -196,5 +200,54 @@ public class AtraqueService {
     public AuthResponse deleteSolicitudAtraque(String id) {
         atraqueRepository.deleteById(id);
         return new AuthResponse("La solicitud ha sido eliminada exitosamente");
+    }
+
+    /**
+     * Método para validar una solicitud de atraque
+     * @param validarSolicitudAtraque dto con los parámetros necesarios para validar una solicitud de atraque
+     * @param userDetails parámetro para extraer al usuario de la sesión
+     * @param estado true si fue aprobada o false si fue rechazada
+     * @return un objeto de tipo AuthResponse con un mensaje según los siguientes criterios:
+     * estado del muelle, capacidad de buques que soporta el muelle, peso del buque en comparación con el muelle
+     * y un mensaje genérico donde se aprueba o rechaza la solicitud según su estado (tue o false)
+     */
+    public AuthResponse validarSolicitudAtraque(@Valid ValidarSolicitudAtraque validarSolicitudAtraque, CustomUserDetails userDetails, String atraqueId, boolean estado) {
+
+        Usuario admin = this.getUsuarioByCorreo(userDetails.getCorreo());
+
+        Atraque atraque = this.getAtraqueById(atraqueId);
+
+        if (estado) {
+
+            Muelle muelle = muelleRepository.findById(validarSolicitudAtraque.muelleId())
+                    .orElseThrow(() -> new NoSuchElementException("Muelle no encontrado en la Solicitud de Atraque"));
+
+            if (!muelle.getEstado().equals(EEstado.DISPONIBLE)) {
+                return new AuthResponse("El muelle '" + muelle.getNombre() + "' no está disponible actualmente.");
+            }
+
+            int atraquesAprobados = atraqueRepository.countByMuelleIdAndEstadoSolicitud(muelle.getId(), EResultado.APROBADO);
+            if (atraquesAprobados >= muelle.getCapacidadBuques()) {
+                muelle.setEstado(EEstado.EN_USO);
+                muelleRepository.save(muelle);
+                return new AuthResponse("El muelle '" + muelle.getNombre() + "' ya está lleno y no puede recibir más buques.");
+            }
+
+            double pesoBuque = atraque.getBuque().getDimensiones().getPeso();
+            if (pesoBuque > muelle.getCapacidad()) {
+                return new AuthResponse("El buque '" + atraque.getBuque().getMatricula() + "' excede la capacidad de carga del muelle '" + muelle.getNombre() + "'.");
+            }
+
+            atraque.setEstadoSolicitud(EResultado.APROBADO);
+            atraque.setDescripcionSolicitud(validarSolicitudAtraque.descripcionSolicitud());
+            atraque.setMuelle(muelle);
+        } else {
+            atraque.setEstadoSolicitud(EResultado.RECHAZADO);
+            atraque.setDescripcionSolicitud("La solicitud ha sido rechazada por razones administrativas. Para más información, comuníquese con el administrador.");
+        }
+
+        atraque.setAdmin(admin);
+        atraqueRepository.save(atraque);
+        return new AuthResponse("La solicitud de atraque fue " + (estado ? "aprobada" : "rechazada") + " correctamente");
     }
 }
