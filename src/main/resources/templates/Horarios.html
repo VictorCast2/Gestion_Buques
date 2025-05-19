@@ -192,68 +192,138 @@
 
     <main class="main__content">
         <section class="table__container">
-            <div class="container">
-                <div class="left">
-                    <div class="calendar">
-                        <div class="month">
-                            <i class="fas fa-angle-left prev"></i>
-                            <div class="date">december 2015</div>
-                            <i class="fas fa-angle-right next"></i>
+            <div class="container__table">
+                <h2 class="notification__title">Gestion Horarios</h2>
+
+                <div class="notification__search-container">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="notificationSearch" placeholder="Buscar..." class="notification__search">
+                </div>
+
+                <div class="content__descarga">
+                    <i class="ri-more-fill"></i>
+                    <div class="exportar">
+                        <div class="exportar-header">
+                            Exportar A <i class="ri-arrow-right-long-line"></i>
                         </div>
-                        <div class="weekdays">
-                            <div>Dom</div>
-                            <div>Lun</div>
-                            <div>Mar</div>
-                            <div>Mie</div>
-                            <div>Jue</div>
-                            <div>Vie</div>
-                            <div>Sab</div>
-                        </div>
-                        <div class="days"></div>
-                        <div class="goto-today">
-                            <div class="goto">
-                                <input type="text" placeholder="mm/yyyy" class="date-input" />
-                                <button class="goto-btn">Go</button>
+                        <div class="exportar__item">
+                            <div class="exportar-option">
+                                <span>PDF</span>
+                                <img th:src="@{/css/assets/image/pdf.png}" alt="Exportar PDF">
                             </div>
-                            <button class="today-btn">Today</button>
+                            <div class="exportar-option">
+                                <span>JSON</span>
+                                <img th:src="@{/css/assets/image/json.png}" alt="Exportar JSON">
+                            </div>
+                            <div class="exportar-option">
+                                <span>CSV</span>
+                                <img th:src="@{/css/assets/image/csv.png}" alt="Exportar CSV">
+                            </div>
+                            <div class="exportar-option">
+                                <span>EXCEL</span>
+                                <img th:src="@{/css/assets/image/excel.png}" alt="Exportar Excel">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="right">
-                    <div class="today-date">
-                        <div class="event-day">wed</div>
-                        <div class="event-date">12th december 2022</div>
-                    </div>
-                    <div class="events"></div>
-                    <div class="add-event-wrapper">
-                        <div class="add-event-header">
-                            <div class="title">Add Event</div>
-                            <i class="fas fa-times close"></i>
-                        </div>
-                        <div class="add-event-body">
-                            <div class="add-event-input">
-                                <input type="text" placeholder="Event Name" class="event-name" />
-                            </div>
-                            <div class="add-event-input">
-                                <input type="text" placeholder="Event Time From" class="event-time-from" />
-                            </div>
-                            <div class="add-event-input">
-                                <input type="text" placeholder="Event Time To" class="event-time-to" />
-                            </div>
-                        </div>
-                        <div class="add-event-footer">
-                            <button class="add-event-btn">Add Event</button>
-                        </div>
+
+                <div class="notification__table-container">
+                    <table class="notification__table">
+                        <thead>
+                            <tr>
+                                <th>Id Buques</th>
+                                <th>Fecha Entrada</th>
+                                <th>Fecha Salida</th>
+                                <th>Nombre Buque</th>
+                                <th>Empresa</th>
+                                <th>Agente Naviero</th>
+                                <th>Muelle</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notificationBody">
+                            <tr>
+                                <td>1</td>
+                                <td>18/05/2025</td>
+                                <td>22/05/2025</td>
+                                <td>Buque 007</td>
+                                <td>JDM Cars</td>
+                                <td>Nicki Morita</td>
+                                <td>Muelle 5</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>18/05/2025</td>
+                                <td>22/05/2025</td>
+                                <td>Buque 007</td>
+                                <td>JDM Cars</td>
+                                <td>Nicki Morita</td>
+                                <td>Muelle 5</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>18/05/2025</td>
+                                <td>22/05/2025</td>
+                                <td>Buque 007</td>
+                                <td>JDM Cars</td>
+                                <td>Nicki Morita</td>
+                                <td>Muelle 5</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>18/05/2025</td>
+                                <td>22/05/2025</td>
+                                <td>Buque 007</td>
+                                <td>JDM Cars</td>
+                                <td>Nicki Morita</td>
+                                <td>Muelle 5</td>
+                            </tr>
+                            <!-- Más filas si es necesario -->
+                        </tbody>
+                    </table>
+
+                    <div class="notification__pagination">
+                        <p class="pagination__text">Mostrando 1-4 De 16</p>
+                        <button class="pagination__flec"><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="pagination__btn active">1</button>
+                        <button class="pagination__btn">2</button>
+                        <button class="pagination__btn">3</button>
+                        <button class="pagination__flec"><i class="ri-arrow-right-s-line"></i></button>
                     </div>
                 </div>
-                <button class="add-event">
-                    <i class="fas fa-plus"></i>
-                </button>
             </div>
         </section>
     </main>
 
+    <!--Ventana Modal interna de la tabla-->
+    <div id="modalNotificacion" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2 class="modal-title">📝 Detalles De Horarios</h2>
+            <div class="modal-info">
+                <p class="modal__text"><strong class="text__str">ID Buque:</strong> <span
+                        id="modalIDBuque"></span></p>
+                <p class="modal__text"><strong class="text__str">Fecha Entrada:</strong> <span id="modalFechaEntrada"></span></p>
+                <p class="modal__text"><strong class="text__str">Fecha Salida:</strong> <span
+                        id="modalFechaSalida"></span></p>
+                <p class="modal__text"><strong class="text__str">Nombre Buque:</strong> <span id="modalNombreBuque"></span>
+                </p>
+                <p class="modal__text"><strong class="text__str">Empresa:</strong> <span id="modalEmpresa"></span>
+                </p>
+                <p class="modal__text"><strong class="text__str">Agente Naviero:</strong> <span id="modalAgenteNaviero"></span>
+                </p>
+                <p class="modal__text"><strong class="text__str">Muelle:</strong> <span id="modalMuelle"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
     <script th:src="@{/js/horarios.js}"></script>
+        <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- autoTable (complemento para jsPDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.22/jspdf.plugin.autotable.min.js"></script>
+    <!-- autoTable (complemento para Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 
 </html>

@@ -19,6 +19,7 @@
 
 body {
     overflow-x: hidden;
+    overflow-y: hidden;
     background-color: #f5f5f5;
     transition: background-color 0.5s, color 0.5s;
 }
@@ -650,3 +651,11 @@ body.dark-mode .notification-content .time{
         transform: translateY(0);
     }
 }
+
+
+.main__content,
+.table__container {
+    margin-left: 155px;
+    padding-top: 55px;
+}
+
