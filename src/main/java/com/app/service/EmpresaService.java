@@ -72,7 +72,7 @@ public class EmpresaService {
     public AuthResponse validarEmpresa(String agenteNavieroId, boolean aprobada) {
 
         Usuario agenteNaviero = usuarioRepository.findById(agenteNavieroId)
-                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado en validar Empresa"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado en validar Empresa"));
 
         Empresa empresa = agenteNaviero.getEmpresa();
 

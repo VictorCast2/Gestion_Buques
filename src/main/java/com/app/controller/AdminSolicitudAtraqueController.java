@@ -43,7 +43,7 @@ public class AdminSolicitudAtraqueController {
         List<Muelle> muellesDisponibles = muelleService.getMuelleByEstadoDisponible();
 
         model.addAttribute("usuario", usuario); // datos del usuario en sesión
-        model.addAttribute("listarAtraques", atraques); // lista de atraques para el formulario
+        model.addAttribute("listarAtraques", atraques); // lista de atraques para la tabla
         model.addAttribute("muellesDisponibles", muellesDisponibles); // para el campo <select> del formulario
         model.addAttribute("mensaje", mensaje); // mensaje de los distintos formularios, llegan mediante la url
         return "AdminSolicitudAtraque";

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -111,16 +111,15 @@
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -128,10 +127,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -144,39 +142,42 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/}" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar sesión</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar sesión</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -231,7 +232,7 @@
                     <table class="notification__table">
                         <thead>
                             <tr>
-                                <th>Id Buques</th>
+                                <th>Matricula Buque</th>
                                 <th>Fecha Entrada</th>
                                 <th>Fecha Salida</th>
                                 <th>Nombre Buque</th>
@@ -241,43 +242,20 @@
                             </tr>
                         </thead>
                         <tbody id="notificationBody">
-                            <tr>
-                                <td>1</td>
-                                <td>18/05/2025</td>
-                                <td>22/05/2025</td>
-                                <td>Buque 007</td>
-                                <td>JDM Cars</td>
-                                <td>Nicki Morita</td>
-                                <td>Muelle 5</td>
+                            <tr th:if="${listarAtraques.isEmpty()}">
+                                <td colspan="8" style="text-align: center; font-style: italic; color: #888;">
+                                    Aún no existen Solicitudes de Atraque Aprobadas.
+                                </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>18/05/2025</td>
-                                <td>22/05/2025</td>
-                                <td>Buque 007</td>
-                                <td>JDM Cars</td>
-                                <td>Nicki Morita</td>
-                                <td>Muelle 5</td>
+                            <tr th:each="atraque : ${listarAtraques}">
+                                <td th:text="${atraque.buque.matricula}">Matricula Buque</td>
+                                <td th:text="${#temporals.format(atraque.fechaLlegada, 'dd-MM-yyyy')}">Fecha Entrada</td>
+                                <td th:text="${#temporals.format(atraque.fechaSalida, 'dd-MM-yyyy')}">Fecha Salida</td>
+                                <td th:text="${atraque.buque.nombre}">Nombre Buque</td>
+                                <td th:text="${atraque.agenteNaviero.empresa.nombre}">Empresa</td>
+                                <td th:text="${atraque.agenteNaviero.nombres} + ' ' + ${atraque.agenteNaviero.apellidos}">Agente Naviero</td>
+                                <td th:text="${atraque.muelle.nombre}">Muelle</td>
                             </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>18/05/2025</td>
-                                <td>22/05/2025</td>
-                                <td>Buque 007</td>
-                                <td>JDM Cars</td>
-                                <td>Nicki Morita</td>
-                                <td>Muelle 5</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>18/05/2025</td>
-                                <td>22/05/2025</td>
-                                <td>Buque 007</td>
-                                <td>JDM Cars</td>
-                                <td>Nicki Morita</td>
-                                <td>Muelle 5</td>
-                            </tr>
-                            <!-- Más filas si es necesario -->
                         </tbody>
                     </table>
 

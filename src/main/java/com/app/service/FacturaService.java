@@ -13,14 +13,12 @@ import com.app.dto.response.AuthResponse;
 import com.app.repository.*;
 import com.app.utils.CustomUserDetails;
 import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class FacturaService {
@@ -41,6 +39,46 @@ public class FacturaService {
      */
     public List<Factura> getFacturasByUsuario(Usuario agenteNaviero) {
         return facturaRepository.findByAgenteNaviero(agenteNaviero);
+    }
+
+    /**
+     * Método para listar los procesos con estado 'PENDIENTE'
+     * @return una lista de procesos con el estado 'PENDIENTE'
+     */
+    public List<ProcesoDto> getProcesosPendientes() {
+        List<Factura> facturas = facturaRepository.findByProcesosEstadoProceso(EEstadoProceso.PENDIENTE);
+
+        List<ProcesoDto> procesosPendientes = new ArrayList<>();
+
+        for (Factura factura : facturas) {
+            for (Proceso proceso : factura.getProcesos()) {
+                if (proceso.getEstadoProceso() == EEstadoProceso.PENDIENTE) {
+                    String agenteNaviero = factura.getAgenteNaviero()
+                            .stream()
+                            .findFirst()
+                            .map(usuario -> usuario.getNombres() + " " + usuario.getApellidos())
+                            .orElse("Desconocido");
+
+                    String facturaId = factura.getId();
+                    Atraque atraque = factura.getAtraque();
+                    String matricula = (atraque != null && atraque.getBuque() != null) ? atraque.getBuque().getMatricula() : "N/A";
+                    String nombreBuque = (atraque != null && atraque.getBuque() != null) ? atraque.getBuque().getNombre() : "N/A";
+
+                    procesosPendientes.add(new ProcesoDto(
+                            facturaId,
+                            agenteNaviero,
+                            matricula,
+                            proceso.getTipoOperacion().getDescripcion(),
+                            proceso.getTipoCarga().getDescripcion(),
+                            proceso.getTipoProducto(),
+                            proceso.getCantidad(),
+                            proceso.getDescripcion(),
+                            nombreBuque
+                    ));
+                }
+            }
+        }
+        return procesosPendientes;
     }
 
     /**
@@ -69,6 +107,9 @@ public class FacturaService {
             throw new AccessDeniedException("No tienes permisos para crear un proceso");
         }
 
+        Atraque ultimoAtraque = atraqueRepository.findTopByAgenteNavieroAndEstadoSolicitudOrderByFechaAprobacionDesc(agenteNaviero, EResultado.APROBADO)
+                .orElseThrow(() -> new RuntimeException("No se encontró ningún atraque aprobado para este usuario"));
+
         Empresa empresa = agenteNaviero.getEmpresa();
         if (empresa == null) {
             throw new IllegalStateException("El usuario no está asociado a ninguna empresa.");
@@ -93,6 +134,7 @@ public class FacturaService {
                 .estado(EEstadoFactura.PENDIENTE)
                 .procesos(procesos)
                 .agenteNaviero(usuariosEmpresa)
+                .atraque(ultimoAtraque)
                 .total(total)
                 .build();
 
@@ -142,6 +184,12 @@ public class FacturaService {
                 .build();
     }
 
+    /**
+     * Método para actualizar un proceso
+     * @param facturaProcesoRequest parámetro con los datos necesarios para actualizar el proceso
+     * @param id del proceso a actualizar
+     * @return un objeto de tipo AuthResponse con un mensaje de satisfacción
+     */
     public AuthResponse updateProceso(@Valid FacturaProcesoRequest facturaProcesoRequest, String id) {
 
         Factura factura = facturaRepository.findById(id)
@@ -188,4 +236,43 @@ public class FacturaService {
         return new AuthResponse("Error: No se puede eliminar un proceso que este en un estado diferente a 'PENDIENTE'");
     }
 
+    /**
+     * Método para validar los Procesos
+     * @param userDetails parámetro para extraer al usuario de la sesión
+     * @param facturaId parámetro con la lista de procesos a validar
+     * @param descripcionServicio parámetro con un mensaje seteado por el usuario en sesión
+     * @param estado true si fue aprobada o false si fue rechazada
+     * @return un objeto de tipo AuthResponse con un mensaje de satisfacción si la solicitud fue aprobada o
+     * un mensaje de insatisfacción en caso contrario
+     */
+    public AuthResponse validarProceso(CustomUserDetails userDetails, String facturaId, String descripcionServicio, boolean estado) {
+
+        Usuario admin = usuarioRepository.findByCorreo(userDetails.getCorreo())
+                .orElseThrow(() -> new UsernameNotFoundException("Error: el usuario no ha sido encontrado en validar proceso"));
+
+        Factura factura = facturaRepository.findById(facturaId)
+                .orElseThrow(() -> new NoSuchElementException("El proceso no existe"));
+
+        List<Proceso> procesos = factura.getProcesos();
+
+        if (procesos.isEmpty()) {
+            throw new NoSuchElementException("No existen procesos para validar");
+        }
+
+        for (Proceso proceso : procesos) {
+            if (proceso.getEstadoProceso() == EEstadoProceso.PENDIENTE) {
+                if (estado) {
+                    factura.setDescripcionServicio(descripcionServicio);
+                    proceso.setEstadoProceso(EEstadoProceso.APROBADO);
+                } else {
+                    factura.setDescripcionServicio("Servicio rechazado tras revisión. Para más información, comuníquese con el administrador.");
+                    proceso.setEstadoProceso(EEstadoProceso.RECHAZADO);
+                }
+            }
+        }
+
+        factura.setAdmin(admin);
+        facturaRepository.save(factura);
+        return new AuthResponse("El procesos fueron " + (estado ? "aprobados" : "rechazados") + " correctamente");
+    }
 }

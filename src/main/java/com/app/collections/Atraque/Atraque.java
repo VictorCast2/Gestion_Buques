@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -49,8 +50,10 @@ public class Atraque {
     @Field("descripcion_solicitud")
     private String descripcionSolicitud; // descripción dada por el admin cuando acepta la solicitud
 
-    private Buque buque;
+    @Field("fecha_aprobacion")
+    private LocalDateTime fechaAprobacion;
 
+    private Buque buque;
 
     @DBRef
     private Muelle muelle;

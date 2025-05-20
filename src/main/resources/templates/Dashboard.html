@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -106,22 +106,20 @@
                 <i class="ri-moon-fill" id="theme-icon"></i>
             </div>
 
-
             <div class="icono__notification" id="notificationIcon">
                 <i class="ri-notification-2-fill"></i>
                 <div class="notification-box" id="notificationBox">
                     <ul class="notification-list">
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu
-                                    médico.</p>
+                                <p  class="content__text"><strong class="text__keywork">Nuevo mensaje</strong> de tu médico.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 5 min</span>
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
                                 <p class="content__text"> mañana a las 9:00 AM.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
@@ -129,10 +127,9 @@
                             </div>
                         </li>
                         <li class="notification-item">
-                            <img th:src="@{/css/assets/image/fotousuario.webp}" alt="" />
+                            <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}"/>
                             <div class="notification-content">
-                                <p class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto
-                                    una nueva solicitud.</p>
+                                <p  class="content__text"><strong class="text__keywork">Actualización</strong> Se acepto una nueva solicitud.</p>
                                 <span class="content__time"><i class="ri-time-fill"></i></span>
                                 <span class="time"> hace 1 hora</span>
                             </div>
@@ -145,39 +142,42 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
             <div class="nav__menu" id="SubMenu">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/}" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar sesión</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar sesión</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>

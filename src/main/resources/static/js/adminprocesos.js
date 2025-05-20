@@ -146,6 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("modalNotificacion");
     const closeModal = document.getElementById("closeModal");
 
+    const modalAgenteNaviero = document.getElementById("modalAgenteNaviero");
+    const modalMatricula = document.getElementById("modalMatricula");
     const modalOperacion = document.getElementById("modalOperacion");
     const modalCarga = document.getElementById("modalCarga");
     const modalProducto = document.getElementById("modalProducto");
@@ -165,11 +167,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si no fue un clic en un icono, abre el modal
             const celdas = fila.querySelectorAll("td");
             if (celdas.length >= 6) {
-                modalOperacion.textContent = celdas[0].textContent.trim();
-                modalCarga.textContent = celdas[1].textContent.trim();
-                modalProducto.textContent = celdas[2].textContent.trim();
-                modalCantidadProducto.textContent = celdas[3].textContent.trim();
-                modalDescripcion.textContent = celdas[4].textContent.trim();
+                modalAgenteNaviero.textContent = celdas[0].textContent.trim();
+                modalMatricula.textContent = celdas[1].textContent.trim();
+                modalOperacion.textContent = celdas[2].textContent.trim();
+                modalCarga.textContent = celdas[3].textContent.trim();
+                modalProducto.textContent = celdas[4].textContent.trim();
+                modalCantidadProducto.textContent = celdas[5].textContent.trim();
+                modalDescripcion.textContent = celdas[6].textContent.trim();
 
                 modal.classList.remove("hidden");
                 modal.style.display = "block";
@@ -333,7 +337,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Botones "Sí" y "No"
     const botonSiEditar = modalEditar.querySelector('.boton-si');
     const botonNoEditar = modalEditar.querySelector('.boton-no');
+    const botonSiEliminar = modalEliminar.querySelector('.boton-si2');
     const botonNoEliminar = modalEliminar.querySelector('.boton-no2');
+
+    // Formularios
+    const formEditar = document.getElementById('formAprobar')
+    const formEliminar = document.getElementById('formRechazar');
 
     // Funciones para abrir y cerrar modales
     function abrirModal(modal) {
@@ -346,9 +355,15 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('confirmacion--hidden');
     }
 
+    // Variable global para guardar el id y la acción (estado aprobado o rechazado)
+    let facturaId = null;
+    let accionSeleccionada = null;
+
     // Eventos abrir modal editar
     botonesEditar.forEach(boton => {
         boton.addEventListener('click', () => {
+            facturaId = boton.getAttribute('data-id'); // Captura el ID desde un atributo personalizado
+            accionSeleccionada = true; // aprobar
             abrirModal(modalEditar);
         });
     });
@@ -356,6 +371,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Eventos abrir modal eliminar
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', () => {
+            facturaId = boton.getAttribute('data-id'); // Captura el ID desde un atributo personalizado
+            accionSeleccionada = false; // rechazar
             abrirModal(modalEliminar);
         });
     });
@@ -374,6 +391,14 @@ document.addEventListener("DOMContentLoaded", function () {
         cerrarModal(modalEditar);     // Cerramos el modal de confirmación
         modalEditRegistro.classList.remove('newadd--hidden');
         modalEditRegistro.classList.add('newadd--visible');
+        formEditar.setAttribute('action', `/buques/gestion-solicitud/validar-procesos/${facturaId}?estado=true`);
+    });
+
+    // Cuando rechazan (sí en eliminar)
+    botonSiEliminar.addEventListener('click', () => {
+        cerrarModal(modalEliminar);
+        formEliminar.setAttribute('action', `/buques/gestion-solicitud/validar-procesos/${facturaId}?estado=false`);
+        formEliminar.submit();
     });
 
     // Cerrar modal al hacer click fuera del contenido
