@@ -17,10 +17,14 @@ services:
     environment:
       - JWT_SECRET_BUQUES=LLAVE_TEMP_DEV
       - JWT_ISSUER_BUQUES=USER_TEMP_DEV
+      - MONGODB_URI=mongodb://mongodb:27017/GestionBuques
+      - MONGODB_DATABASE=GestionBuques
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     networks:
       - buques-network
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://app:8080/actuator/health" ]
       interval: 30s
       retries: 3
       start_period: 10s
