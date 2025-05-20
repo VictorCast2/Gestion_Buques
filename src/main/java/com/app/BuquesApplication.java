@@ -5,12 +5,15 @@ import com.app.collections.Atraque.Enum.EResultado;
 import com.app.collections.Atraque.Enum.ETipoBuque;
 import com.app.collections.Atraque.pojo.Buque;
 import com.app.collections.Atraque.pojo.Dimension;
+import com.app.collections.Muelle.Enum.EEstado;
+import com.app.collections.Muelle.Muelle;
 import com.app.collections.Usuario.Enum.EEstadoEmpresa;
 import com.app.collections.Usuario.Enum.EIdentificacion;
 import com.app.collections.Usuario.Enum.ERol;
 import com.app.collections.Usuario.Usuario;
 import com.app.collections.Usuario.pojo.Empresa;
 import com.app.repository.AtraqueRepository;
+import com.app.repository.MuelleRepository;
 import com.app.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @SpringBootApplication
@@ -29,7 +33,7 @@ public class BuquesApplication {
 	}
 
 	@Bean
-	public CommandLineRunner init(UsuarioRepository usuarioRepository, AtraqueRepository atraqueRepository) {
+	public CommandLineRunner init(UsuarioRepository usuarioRepository, AtraqueRepository atraqueRepository, MuelleRepository muelleRepository) {
 		return args -> {
 
 			/* Crear Usuarios */
@@ -96,6 +100,14 @@ public class BuquesApplication {
 					.credentialNoExpired(true)
 					.build();
 
+			/* Crear Muelle */
+			Muelle muelle = Muelle.builder()
+					.nombre("Puerto Bahia")
+					.capacidadBuques(10)
+					.capacidad(800)
+					.estado(EEstado.DISPONIBLE)
+					.build();
+
 			/* Crear solicitud de atraque */
 			Dimension dimension = Dimension.builder()
 					.peso(50)
@@ -119,8 +131,10 @@ public class BuquesApplication {
 					.puertoDestino("Puerto Cartagena")
 					.fechaLlegada(LocalDate.now())
 					.fechaSalida(LocalDate.now().plusDays(30))
+					.fechaAprobacion(LocalDateTime.now())
 					.estadoSolicitud(EResultado.APROBADO)
 					.buque(buque)
+					.muelle(muelle)
 					.agenteNaviero(userTheresa)
 					.build();
 
@@ -134,6 +148,7 @@ public class BuquesApplication {
 
 			if (!usuarioRepository.existsByCorreo(userTheresa.getCorreo())) {
 				usuarioRepository.save(userTheresa);
+				muelleRepository.save(muelle);
 				atraqueRepository.save(atraque);
 			}
 

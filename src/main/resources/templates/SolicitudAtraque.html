@@ -252,8 +252,12 @@
                                 <td th:text="${#temporals.format(atraque.fechaLlegada, 'dd-MM-yyyy')}">Fecha Llegada</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <button class="content__icon icon--edit" th:data-id="${atraque.id}"><i class="ri-pencil-line"></i></button>
-                                        <button class="content__icon icon--delete" th:data-id="${atraque.id}"><i class="ri-delete-bin-6-line"></i></button>
+                                        <button class="content__icon icon--edit" th:if="${atraque.estadoSolicitud.name() == 'PENDIENTE'}" th:data-id="${atraque.id}">
+                                            <i class="ri-pencil-line"></i>
+                                        </button>
+                                        <button class="content__icon icon--delete" th:if="${atraque.estadoSolicitud.name() == 'PENDIENTE'}" th:data-id="${atraque.id}">
+                                            <i class="ri-delete-bin-6-line"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

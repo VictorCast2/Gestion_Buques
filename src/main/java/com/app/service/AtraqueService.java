@@ -15,6 +15,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,8 +43,16 @@ public class AtraqueService {
     }
 
     /**
-     * Método para obtener todos los atraques de la base de datos
-     * @return una lista de atraques de todos los Agentes Navieros
+     * Método para obtener los atraques de la base de datos con estado 'APROBADO'
+     * @return una lista de atraques con el estado 'APROBADO'
+     */
+    public List<Atraque> getAtraquesByEstadoAprobado() {
+        return atraqueRepository.findByEstadoSolicitud(EResultado.APROBADO);
+    }
+
+    /**
+     * Método para obtener los atraques de la base de datos con estado 'PENDIENTE'
+     * @return una lista de atraques con el estado 'PENDIENTE'
      */
     public List<Atraque> getAtraquesByEstadoPendiente() {
         return atraqueRepository.findByEstadoSolicitud(EResultado.PENDIENTE);
@@ -239,6 +249,7 @@ public class AtraqueService {
             }
 
             atraque.setEstadoSolicitud(EResultado.APROBADO);
+            atraque.setFechaAprobacion(LocalDateTime.now());
             atraque.setDescripcionSolicitud(validarSolicitudAtraque.descripcionSolicitud());
             atraque.setMuelle(muelle);
         } else {

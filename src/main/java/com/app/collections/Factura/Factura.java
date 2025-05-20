@@ -1,5 +1,6 @@
 package com.app.collections.Factura;
 
+import com.app.collections.Atraque.Atraque;
 import com.app.collections.Factura.Enum.EEstadoFactura;
 import com.app.collections.Factura.pojo.Proceso;
 import com.app.collections.Usuario.Usuario;
@@ -42,4 +43,10 @@ public class Factura {
 
     @DBRef
     private Set<Usuario> agenteNaviero = new HashSet<>();
+
+    @DBRef
+    private Usuario admin;
+
+    @DBRef
+    private Atraque atraque;
 }
