@@ -1,14 +1,21 @@
-**/.dockerignore
-**/.git
-**/.gitignore
-**/.idea
-**/.vscode
-**/target
+# Carpeta de compilación de Maven
+target/
 
-# Ignorar archivos de configuración de VsCode
+# Configuración de IDEs
+.idea/
 .vscode/
-
-# Ignorar archivos de configuración de proyecto y logs
-*.log
 *.iml
+
+# Git
+.git/
+.gitignore
+
+# Archivos Markdown
 *.md
+
+# Logs
+*.log
+
+# Otros archivos innecesarios
+Dockerfile
+docker-compose.yml

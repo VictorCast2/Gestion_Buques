@@ -5,9 +5,11 @@ LABEL authors="Víctor-José-Yubliam-Keyner"
 WORKDIR /app
 
 # Copiar archivos necesarios para preparar dependencias
-COPY pom.xml ./
-COPY mvnw ./
+COPY pom.xml mvnw ./
 COPY .mvn/ .mvn/
+
+# Otorgar permisos de ejecución al wrapper de Maven
+RUN chmod +x mvnw
 
 # Descargar dependencias sin compilar
 RUN ./mvnw dependency:go-offline
@@ -18,22 +20,17 @@ COPY src ./src
 # Construir el JAR sin ejecutar tests
 RUN ./mvnw clean package -DskipTests
 
-# Limpiar el caché de Maven para reducir el tamaño de la imagen
-RUN rm -rf ~/.m2/repository
-
-# Etapa 2: Imagen final
+# Etapa 2: Imagen final para producción
 FROM eclipse-temurin:21.0.3_9-jre
 
 LABEL authors="Víctor-José-Yubliam-Keyner"
 WORKDIR /app
 
-# Instalar curl (imagen basada en Debian slim)
-RUN apt-get update && apt-get install -y curl && apt-get clean
-
-# Copiar el JAR desde la etapa builder
+# Copiar el JAR desde la etapa de construcción
 COPY --from=builder /app/target/buques-0.0.1-SNAPSHOT.jar ./buques.jar
 
-# Exponer el puerto en el que Spring Boot escucha por defecto (8080)
+# Exponer el puerto por defecto de Spring Boot
 EXPOSE 8080
 
+# Ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "buques.jar"]
