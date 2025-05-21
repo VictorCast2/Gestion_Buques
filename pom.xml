@@ -146,6 +146,22 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-webapp-maven-plugin</artifactId>
+				<version>2.14.1</version>
+				<configuration>
+					<resourceGroup>mi-grupo-de-recursos</resourceGroup>
+					<appName>buques-app</appName>
+					<region>westeurope</region> <!-- o centralus, eastus, etc -->
+					<runtime>
+						<os>linux</os>
+						<javaVersion>Java_21</javaVersion>
+						<webContainer>Java SE</webContainer>
+					</runtime>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
