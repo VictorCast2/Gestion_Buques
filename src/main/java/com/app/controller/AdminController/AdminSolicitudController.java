@@ -1,9 +1,7 @@
-package com.app.controller;
+package com.app.controller.AdminController;
 
-import com.app.collections.Atraque.Atraque;
 import com.app.collections.Usuario.Usuario;
 import com.app.dto.response.AuthResponse;
-import com.app.service.AtraqueService;
 import com.app.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

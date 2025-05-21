@@ -109,7 +109,7 @@ body {
 .styled-select option {
     color: #333;
     background-color: #ffffff;
-    font: 500 17px "Noto Sans";
+    font: 500 17px "Montserrat";
 }
 
 .styled-select:focus {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -143,39 +143,42 @@
                 <i class="ri-settings-4-fill"></i>
             </div>
 
-            <img class="nav__img" th:src="@{/css/assets/image/fotousuario.webp}" onclick="toggleMenu()">
+            <img class="nav__img" sec:authorize="isAuthenticated()" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}" onclick="toggleMenu()">
 
-            <div class="nav__menu" id="SubMenu">
+            <div class="nav__menu" id="SubMenu" sec:authorize="isAuthenticated()">
                 <div class="menu__sub">
                     <div class="sub__info">
-                        <img class="info__img" th:src="@{/css/assets/image/fotousuario.webp}">
-                        <h2 class="info__title">Keyner Reyes</h2>
+                        <img class="info__img" th:src="@{'/perfil-usuario/' + ${usuario.imagen}}" th:alt="${usuario.imagen}">
+                        <h2 class="info__title" th:text="${#authentication.principal?.nombres}">Nombre Usuario</h2>
                     </div>
                     <hr>
 
-                    <a th:href="@{/buques/Perfil}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/perfil/}" class="sub__link">
                         <i class="ri-user-fill"></i>
                         <p class="link__text">Perfil</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Configuraciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/configuraciones}" class="sub__link">
                         <i class="ri-settings-5-fill"></i>
                         <p class="link__text">Configuracion</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/Notificaciones}" target="_blank" class="sub__link">
+                    <a th:href="@{/buques/notificaciones}" class="sub__link">
                         <i class="ri-notification-2-fill"></i>
                         <p class="link__text">Notificaciones</p>
                         <span class="link__flec"> <i class="ri-arrow-right-s-line"></i></span>
                     </a>
 
-                    <a th:href="@{/buques/}" class="sub__link">
-                        <i class="ri-logout-box-r-fill"></i>
-                        <p class="link__text">Cerrar sesión</p>
-                        <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
-                    </a>
+                    <!-- Formulario para logout -->
+                    <form th:action="@{/auth/logout}" method="post" id="logoutForm">
+                        <a href="#" class="sub__link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                            <i class="ri-logout-box-r-fill"></i>
+                            <p class="link__text">Cerrar sesión</p>
+                            <span class="link__flec"><i class="ri-arrow-right-s-line"></i></span>
+                        </a>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -189,6 +192,58 @@
         <h1 class="encabezado__title">Inicio</h1>
     </div>
 
-    <script th:src="@{/js/admin.js}"></script>
+    <main class="main__content">
+        <section class="content__inicio">
+            <div class="inicio__agentenaviero">
+                <div class="agentenaviero__welcome">
+                    <h4 class="welcome__title">🌊 ¡Bienvenido a bordo!</h4>
+                    <h2 class="welcome__agentenaviero" th:text="${#authentication.principal?.nombres + ' ' + #authentication.principal?.apellidos}">Nombres y Apellidos Usuario</h2>
+                    <p class="welcome__text">
+                        Nos complace darte la bienvenida a nuestra plataforma digital, donde la eficiencia,
+                        la organización y el compromiso con el servicio portuario se encuentran al centro de nuestra
+                        misión.
+                    </p>
+                </div>
+                <div class="agentenaviero__atraque">
+                    <i class="ri-bar-chart-fill"></i>
+                    <h4 class="atraque__title">Atraques De 2024</h4>
+                    <span class="atraque__cantidad">33,192 <strong class="cantidad__porciento">+5%</strong></span>
+                </div>
+                <div class="agentenavierto__proceso">
+                    <i class="ri-folders-fill"></i>
+                    <h4 class="proceso__title">Procesos De 2024</h4>
+                    <span class="proceso__cantidad">65,259 <strong class="cantidad__porciento">+10%</strong></span>
+                </div>
+                <div class="agentenaviero__total">
+                    <i class="ri-shopping-cart-2-fill"></i>
+                    <h4 class="total__title">Operaciones Totales</h4>
+                    <span class="total__cantidad">98,451 <strong class="cantidad__porciento">+7%</strong></span>
+                </div>
+            </div>
+
+            <div id="chartdiv"></div>
+
+            <div id="chartdiv2"></div>
+            <div class="controls">
+                <div class="controls__select">
+                    <h2 class="select__title" id="title__change">Distribución Tipo De Buques</h2>
+                </div>
+
+                <div class="controls__btn">
+                    <button class="control-button" onclick="changeChart('buques')">Tipos De Buques</button>
+                    <div class="separator"></div>
+                    <button class="control-button button--changed" onclick="changeChart('carga')">Tipos De
+                        Cargas</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script th:src="@{/js/agentenaviero.js}"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 </body>
 </html>

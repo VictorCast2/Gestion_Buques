@@ -1,4 +1,4 @@
-package com.app.controller;
+package com.app.controller.AgenteNavieroController;
 
 import com.app.collections.Factura.Enum.*;
 import com.app.collections.Factura.Factura;
@@ -28,7 +28,7 @@ public class ProcesoController {
     @Autowired
     FacturaService facturaService;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String Procesos(@AuthenticationPrincipal UserDetails  userDetails, @RequestParam(value = "mensaje", required = false) String mensaje, Model model) {
         Usuario usuario = userDetailService.getUsuarioByCorreo(userDetails.getUsername());
         List<Factura> facturas = facturaService.getFacturasByUsuario(usuario);
