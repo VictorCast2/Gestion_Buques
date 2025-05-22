@@ -1,13 +1,13 @@
 package com.app.collections.Factura.pojo;
 
-import com.app.collections.Atraque.Atraque;
+
 import com.app.collections.Factura.Enum.*;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Getter
 @Setter

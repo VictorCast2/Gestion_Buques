@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.service.UserDetailServiceImpl;
 
-import lombok.Data;
 
 import java.util.List;
 

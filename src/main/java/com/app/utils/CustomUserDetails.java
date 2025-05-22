@@ -1,6 +1,6 @@
 package com.app.utils;
 
-import com.app.collections.Usuario.Enum.EEstadoEmpresa;
+
 import com.app.collections.Usuario.Usuario;
 import com.app.collections.Usuario.pojo.Empresa;
 import lombok.*;

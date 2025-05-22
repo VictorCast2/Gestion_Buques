@@ -1,7 +1,6 @@
 package com.app.controller;
 
 import com.app.collections.Usuario.Usuario;
-import com.app.collections.Usuario.pojo.Redis.TwoFactorEnabledRequest;
 import com.app.dto.response.AuthResponse;
 import com.app.service.UserDetailServiceImpl;
 import jakarta.validation.Valid;
@@ -82,34 +81,5 @@ public class MainController {
         return "redirect:/auth/logout";
     }
 
-    @PostMapping("/configuraciones/acticcion-autenticacion-2-pasos")
-    public String activarAutenticacion2Pasos(
-            @ModelAttribute TwoFactorEnabledRequest request,
-            RedirectAttributes redirectAttributes) {
-        System.out.println("************************************");
-        System.out.println("Activando autenticación de dos pasos");
-        System.out.println("************************************");
-        AuthResponse response = userDetailService.autentication2FactorRedis(request);
-        redirectAttributes.addFlashAttribute("twoFactor", response.mensaje());
-        return "redirect:/buques/configuraciones";
-    }
-
-    @PostMapping("/verificar-autenticacion-2-pasos")
-    public String verificarAutenticacion(
-            @RequestParam String correo,
-            @RequestParam String respuesta1,
-            @RequestParam String respuesta2,
-            RedirectAttributes redirectAttributes) {
-        boolean validado = userDetailService.verificarPreguntas(correo, respuesta1, respuesta2);
-
-        if (validado) {
-            // Mal
-            redirectAttributes.addFlashAttribute("twoFactorSuccess", "Autenticación verificada con éxito.");
-        } else {
-            // Bien
-            redirectAttributes.addFlashAttribute("twoFactorError", "Respuestas incorrectas. Intenta de nuevo.");
-        }
-        return "redirect:/";
-    }
 
 }
