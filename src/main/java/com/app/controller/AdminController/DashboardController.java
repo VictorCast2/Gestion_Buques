@@ -1,4 +1,4 @@
-package com.app.controller;
+package com.app.controller.AdminController;
 
 import com.app.collections.Usuario.Usuario;
 import com.app.service.UserDetailServiceImpl;

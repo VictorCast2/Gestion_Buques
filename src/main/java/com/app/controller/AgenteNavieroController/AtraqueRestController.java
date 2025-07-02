@@ -1,4 +1,4 @@
-package com.app.controller;
+package com.app.controller.AgenteNavieroController;
 
 import com.app.dto.request.AtraqueRequest;
 import com.app.service.AtraqueService;

@@ -421,7 +421,7 @@
                     <button class="formulario__button" type="submit">Registrar</button>
                 </div>
 
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Sus')}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Sus') && !#strings.startsWith(mensaje, 'Error')}">
                     <p id="mensaje-empresa-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">
@@ -620,7 +620,7 @@
                     <i class="ri-error-warning-line"></i> <b>Error:</b> Por favor rellene el formulario correctamente.
                 </p>
 
-                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Solicitud')}">
+                <div th:if="${mensaje != null && !#strings.startsWith(mensaje, 'contraseña') && !#strings.startsWith(mensaje, 'Solicitud') && !#strings.startsWith(mensaje, 'Error')}">
                     <p id="mensaje-update-exitoso"
                        class="input__mensaje__satisfactorio"
                        th:text="${mensaje}">

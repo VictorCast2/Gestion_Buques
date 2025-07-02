@@ -1,4 +1,4 @@
-package com.app.controller;
+package com.app.controller.AdminController;
 
 import com.app.collections.Atraque.Atraque;
 import com.app.collections.Muelle.Muelle;

@@ -1,4 +1,4 @@
-package com.app.controller;
+package com.app.controller.AgenteNavieroController;
 
 import com.app.collections.Atraque.Atraque;
 import com.app.collections.Atraque.Enum.ETipoBuque;
@@ -25,7 +25,7 @@ public class AtraqueController {
     @Autowired
     private AtraqueService atraqueService;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String SolicitudAtraque(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(value = "mensaje", required = false) String mensaje, Model model) {
 
         Usuario usuario = atraqueService.getUsuarioByCorreo(userDetails.getUsername());
