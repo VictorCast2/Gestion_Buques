@@ -1,11 +1,21 @@
 version: 2
 updates:
+  # Actualizaciones para GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
 
+  # Actualizaciones para Maven (proyecto dentro de subcarpeta)
   - package-ecosystem: "maven"
+    directory: "/GestionBuques - Spring"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Node/NPM frontend (Angular en la raíz)
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 5
