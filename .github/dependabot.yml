@@ -8,14 +8,14 @@ updates:
 
   # Actualizaciones para Maven (proyecto dentro de subcarpeta)
   - package-ecosystem: "maven"
-    directory: "/GestionBuques - Spring"
+    directory: "/GestionBuques-Spring"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
 
   # Node/NPM frontend (Angular en la raíz)
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/GestionBuques-Angular"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
