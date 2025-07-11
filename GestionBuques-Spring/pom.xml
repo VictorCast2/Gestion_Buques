@@ -8,27 +8,40 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.Proyect.GestionBuques</groupId>
+	<groupId>com.Proyect</groupId>
 	<artifactId>GestionBuques</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>GestionBuques</name>
 	<description>Demo project for Spring Boot</description>
-	<url/>
+	<url>https://github.com/VictorCast2/Gestion_Buques</url>
+
 	<licenses>
-		<license/>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>Gestion_Buques</distribution>
+		</license>
 	</licenses>
+
 	<developers>
-		<developer/>
+		<developer>
+			<id>VictorCast2</id>
+			<name>Víctor Cast2</name>
+			<url>https://github.com/VictorCast2</url>
+		</developer>
 	</developers>
+
 	<scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
 		<url/>
 	</scm>
+
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,7 +86,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

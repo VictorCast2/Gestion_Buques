@@ -1,4 +1,4 @@
-package com.Proyect.GestionBuques.GestionBuques;
+package com.Proyect.GestionBuques;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

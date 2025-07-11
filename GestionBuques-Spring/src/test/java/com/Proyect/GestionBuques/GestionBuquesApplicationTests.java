@@ -1,4 +1,4 @@
-package com.Proyect.GestionBuques.GestionBuques;
+package com.Proyect.GestionBuques;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
